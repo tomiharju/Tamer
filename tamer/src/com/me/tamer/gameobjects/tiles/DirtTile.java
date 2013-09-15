@@ -2,14 +2,12 @@ package com.me.tamer.gameobjects.tiles;
 
 import com.me.tamer.actions.Action;
 import com.me.tamer.gameobjects.GameObject;
+import com.me.tamer.gameobjects.StaticObject;
 
-public class DirtTile implements Tile {
+public class DirtTile extends StaticObject implements Tile {
 
 	private Action action = null;
-	public DirtTile(Action action){
-		this.action = action;
-		
-	}
+	
 	@Override
 	public boolean isInsideTile(GameObject obj) {
 		// TODO Auto-generated method stub
@@ -17,6 +15,11 @@ public class DirtTile implements Tile {
 	}
 	public void executeAction() {
 		action.execute();
+		
+	}
+	@Override
+	public void setAction(Action action) {
+		// TODO Auto-generated method stub
 		
 	}
 	

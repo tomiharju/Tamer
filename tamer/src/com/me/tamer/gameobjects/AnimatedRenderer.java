@@ -23,12 +23,21 @@ public class AnimatedRenderer implements Renderer {
 	private Vector2 animPos;
 	private Sprite baseGraphics;
 	
-	public AnimatedRenderer(){
-		
+	
+	public AnimatedRenderer(String objectName){
+		loadGraphics(objectName);
 	}
 
 	@Override
 	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void loadGraphics(String objectName) {
 		// TODO Auto-generated method stub
 		
 	}

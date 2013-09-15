@@ -1,24 +1,33 @@
 package com.me.tamer;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class PlayScreen implements Screen{
 
-	private TamerMain main;
+	private TamerGame main;
+	private World world;
+	private Box2DDebugRenderer debugRenderer;
 	private Environment environment;
 	
-	public PlayScreen(TamerMain core){
+	public PlayScreen(TamerGame core){
 		this.main = main;
-		CreateEnvironment();
+	
 	}
 
-	public void CreateEnvironment(){
-		this.environment = new Environment();
-		
-	}
+
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
+		Camera camera = environment.getCamera();
+		Gdx.gl.glClearColor(0.529f, .808f, 1f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+	
+		environment.draw();
 		
 	}
 
@@ -30,6 +39,9 @@ public class PlayScreen implements Screen{
 
 	@Override
 	public void show() {
+
+		//This method is called when the app is loaded
+		this.environment = new Environment();
 		// TODO Auto-generated method stub
 		
 	}

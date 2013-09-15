@@ -21,4 +21,10 @@
 			<locationURI>PARENT-1-PROJECT_LOC/tamer-android/assets</locationURI>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>assets</name>
+			<value>PARENT-1-PROJECT_LOC/tamer-android/assets</value>
+		</variable>
+	</variableList>
 </projectDescription>

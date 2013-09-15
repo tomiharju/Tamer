@@ -9,6 +9,7 @@ public class DynamicObject implements GameObject{
 	private Vector2 force;
 	private Renderer renderer;
 	
+	
 	@Override
 	public void update() {
 		
@@ -20,6 +21,10 @@ public class DynamicObject implements GameObject{
 		renderer.draw();
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void setRenderer(Renderer renderer) {
+		this.renderer = renderer;
 	}
 	
 

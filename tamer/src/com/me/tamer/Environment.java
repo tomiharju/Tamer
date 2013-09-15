@@ -1,5 +1,6 @@
 package com.me.tamer;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
@@ -8,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  */
 
 
-public class Environment extends Stage{
+public class Environment implements InputProcessor{
 
 
 	/**
@@ -16,7 +17,7 @@ public class Environment extends Stage{
 	 * Is used to pass input to objects.
 	 */
 	public Environment(){
-		
+		Gdx.input.setInputProcessor(this);
 	}
 	
 	/**
@@ -25,4 +26,6 @@ public class Environment extends Stage{
 	public void CreateLevel(){
 		
 	}
+	
+	
 }

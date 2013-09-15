@@ -15,11 +15,11 @@ public static Tile createTile(TileType type,ActionType actionType){
 	Action action = ActionFactory.createAction(actionType);
 	switch(type){
 		case DIRT:
-			return new DirtTile(action);
+			return new DirtTile();
 		case GRASS:
-			return new GrassTile(action);
+			return new GrassTile();
 		case QUICKSAND:
-			return new QuickSandTile(action);
+			return new QuickSandTile();
 		default:
 			break;
 	
