@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
@@ -25,11 +26,11 @@ public class AnimatedRenderer implements Renderer {
 	
 	
 	public AnimatedRenderer(String objectName){
-		loadGraphics(objectName);
+		loadGraphics(objectName.toLowerCase());
 	}
 
 	@Override
-	public void draw() {
+	public void draw(SpriteBatch batch) {
 		// TODO Auto-generated method stub
 		
 	}

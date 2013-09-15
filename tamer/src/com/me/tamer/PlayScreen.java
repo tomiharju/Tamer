@@ -11,8 +11,6 @@ import com.badlogic.gdx.physics.box2d.World;
 public class PlayScreen implements Screen{
 
 	private TamerGame main;
-	private World world;
-	private Box2DDebugRenderer debugRenderer;
 	private Environment environment;
 	
 	public PlayScreen(TamerGame core){
@@ -23,10 +21,9 @@ public class PlayScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
-		Camera camera = environment.getCamera();
 		Gdx.gl.glClearColor(0.529f, .808f, 1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-	
+		environment.update(Gdx.graphics.getDeltaTime());
 		environment.draw();
 		
 	}

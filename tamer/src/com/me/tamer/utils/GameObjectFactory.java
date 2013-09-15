@@ -4,14 +4,15 @@ import java.lang.reflect.Constructor;
 
 import com.me.tamer.gameobjects.GameObject;
 import com.me.tamer.gameobjects.Renderer;
-import com.me.tamer.gameobjects.Renderer.RendererType;
+import com.me.tamer.gameobjects.Renderer.RenderType;
+
 
 
 public class GameObjectFactory {
 	
 	
 	
-	public static GameObject createGameObject(String className, RendererType rendType){
+	public static GameObject createGameObject(String className, RenderType rendType){
 		try {
 			Class<?> objectClass = Class.forName(className);
 			Constructor<?> constructor = objectClass.getConstructor();

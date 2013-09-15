@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * @author Kesyttäjät
@@ -12,23 +13,22 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 public class StaticRenderer implements Renderer {
 
-	private Texture texture;
 	private Sprite sprite;
 	
 	public StaticRenderer(String objectName){
-		loadGraphics(objectName);
+		loadGraphics(objectName.toLowerCase());
 	}
 	@Override
-	public void draw() {
-		// TODO Auto-generated method stub
+	public void draw(SpriteBatch batch) {
+		sprite.draw(batch);
 		
 	}
+	
 	@Override
 	public void loadGraphics(String objectName) {
-		texture = new Texture(Gdx.files.internal("data/tamer.png"));
-		sprite 	= new Sprite(texture);
-		sprite.setSize(256, 256);
-		sprite.setPosition(0,0);
+		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/"+objectName+".png")));
+		sprite.setSize(50, 50);
+		sprite.setPosition(5,5);
 		
 	}
 

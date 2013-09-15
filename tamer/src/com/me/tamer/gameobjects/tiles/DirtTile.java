@@ -19,7 +19,7 @@ public class DirtTile extends StaticObject implements Tile {
 	}
 	@Override
 	public void setAction(Action action) {
-		// TODO Auto-generated method stub
+		this.action = action;
 		
 	}
 	

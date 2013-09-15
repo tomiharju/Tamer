@@ -5,7 +5,6 @@ package com.me.tamer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.me.tamer.gameobjects.GameObject;
-import com.me.tamer.gameobjects.Renderer.RendererType;
 import com.me.tamer.utils.GameObjectFactory;
 
 
