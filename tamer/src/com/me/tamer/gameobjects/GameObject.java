@@ -34,6 +34,9 @@ public interface GameObject {
 	 * Causes the carbage collection cycle to remove this object
 	 */
 	public void markAsCarbage();
+	/**
+	 * Returns whether this object is marked as carbage
+	 */
 	public boolean isCarbage();
 }
 

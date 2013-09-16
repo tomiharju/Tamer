@@ -6,9 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.gameobjects.GameObject;
 import com.me.tamer.gameobjects.Renderer.RenderType;
+import com.me.tamer.utils.EnvironmentCreator;
 import com.me.tamer.utils.GameObjectFactory;
 
 /**
@@ -41,7 +41,7 @@ public class Environment implements InputProcessor{
 		gameobjects = new ArrayList<GameObject>();
 		carbages = new ArrayList<GameObject>();
 		setupCamera();
-		createLevel();
+		createLevel(1);
 	}
 	public void setupCamera(){
 		cam	= new OrthographicCamera(VIEWPORT_WIDTH,VIEWPORT_HEIGHT);
@@ -50,10 +50,12 @@ public class Environment implements InputProcessor{
 	}
 	
 	/**
+	 * @param current_level 
 	 * Create new level based on data read from level configuration file.
 	 */
-	public void createLevel(){
-		gameobjects.add(GameObjectFactory.createGameObject("com.me.tamer.gameobjects.tiles.GrassTile", RenderType.STATIC));
+	public void createLevel(int current_level){
+		new EnvironmentCreator().create(current_level);
+		//gameobjects.add(GameObjectFactory.createGameObject("com.me.tamer.gameobjects.tiles.GrassTile", RenderType.STATIC));
 	}
 	
 	
@@ -78,7 +80,7 @@ public class Environment implements InputProcessor{
 		for(GameObject o : gameobjects)
 			if(o.isCarbage())
 				carbages.add(o);
-		if(carbages.size()>0){
+		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
 			carbages.clear();
 		}

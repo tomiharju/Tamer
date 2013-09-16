@@ -3,6 +3,11 @@ package com.me.tamer.gameobjects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public interface Renderer {
+	/**
+	 * Different possible render types.
+	 * STATIC is for non-animated sprites.
+	 * ANIMATED is for animated sprites.
+	 */
 	public enum RenderType{
 		STATIC,ANIMATED
 	}
@@ -14,4 +19,6 @@ public interface Renderer {
 	 * Creates texture and sprite objects for this object.
 	 */
 	public void loadGraphics(String objectName);
+	
+	
 }
