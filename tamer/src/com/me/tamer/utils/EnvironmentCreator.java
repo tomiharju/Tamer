@@ -2,7 +2,13 @@ package com.me.tamer.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.me.tamer.gameobjects.GameObject;
+import com.me.tamer.gameobjects.Renderer.RenderType;
 
 /**
  * @author tharju
@@ -12,30 +18,38 @@ import java.util.Properties;
  */
 public class EnvironmentCreator {
 	
-	Properties props = null;
 	
 	
-	public void create(int level_number){
+
+	public static ArrayList<GameObject> create(int level_number){
 		Properties properties = new Properties();
+		ArrayList<GameObject> objects = new ArrayList<GameObject>();
 		try {
-		  properties.load(new FileInputStream("config.properties"));
-		  int lvl_number = Integer.parseInt(properties.getProperty("number"));
-		  int num_worms = Integer.parseInt(properties.getProperty("num_worms"));
-		  int num_quicksand = Integer.parseInt(properties.getProperty("num_quicksand"));
+			FileHandle file  = Gdx.files.internal("data/levels/level"+level_number+".properties");
+			properties.load(file.read());
+			int num_worms = Integer.parseInt(properties.getProperty("num_worms"));
+			int num_quicksand = Integer.parseInt(properties.getProperty("num_quicksand"));
+			
+			//Create worms
+			for(int i = 0 ; i < num_worms ; i++){
+				
+				objects.add(GameObjectFactory.createGameObject("com.me.tamer.gameobjects.Worm", RenderType.ANIMATED));
+			}
+		
+			//Return fresh new objects to be added into main gameobject list.
+			return objects;
 		  
-		  System.out.println(lvl_number +" "+ num_worms +" "+num_quicksand);
 		  
 		  
 		  
 		  
 		  
 		  
-		  
-		  
-		  
-		} catch (IOException e) {
+		} catch (Exception e) {
 		  System.out.println(e.getMessage());
+		  return null;
 		}
+		
 	
 	}
 

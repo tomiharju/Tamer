@@ -54,8 +54,7 @@ public class Environment implements InputProcessor{
 	 * Create new level based on data read from level configuration file.
 	 */
 	public void createLevel(int current_level){
-		new EnvironmentCreator().create(current_level);
-		//gameobjects.add(GameObjectFactory.createGameObject("com.me.tamer.gameobjects.tiles.GrassTile", RenderType.STATIC));
+		gameobjects.addAll(EnvironmentCreator.create(current_level));
 	}
 	
 	
