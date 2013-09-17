@@ -36,7 +36,6 @@ public class PlayScreen implements Screen{
 
 	@Override
 	public void show() {
-
 		//This method is called when the app is loaded
 		this.environment = new Environment();
 		// TODO Auto-generated method stub

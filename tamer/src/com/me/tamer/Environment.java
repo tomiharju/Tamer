@@ -30,6 +30,7 @@ public class Environment implements InputProcessor{
 	//Gameobject data
 	private ArrayList<GameObject> gameobjects = null;
 	private ArrayList<GameObject> carbages	= null;
+	private ArrayList<GameObject> newobjects = null;
 	
 	
 	
@@ -38,23 +39,27 @@ public class Environment implements InputProcessor{
 		Gdx.input.setInputProcessor(this);
 		//Spritebatch is used for drawing sprites
 		batch = new SpriteBatch();
-		gameobjects = new ArrayList<GameObject>();
-		carbages = new ArrayList<GameObject>();
+		gameobjects 	= new ArrayList<GameObject>();
+		carbages 		= new ArrayList<GameObject>();
+		newobjects 		= new ArrayList<GameObject>();
 		setupCamera();
 		createLevel(1);
 	}
 	public void setupCamera(){
 		cam	= new OrthographicCamera(VIEWPORT_WIDTH,VIEWPORT_HEIGHT);
-		cam.setToOrtho(true);
-		//cam.position.set(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
+		cam.position.set(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
 	}
 	
 	/**
 	 * @param current_level 
 	 * Create new level based on data read from level configuration file.
+	 * Give this as parameter, so that EnvironmentFactory can properly add objects to gameobjects
 	 */
 	public void createLevel(int current_level){
-		gameobjects.addAll(EnvironmentCreator.create(current_level));
+		EnvironmentCreator.create(current_level,this);
+	}
+	public void addGameObject(GameObject obj){
+		newobjects.add(obj);
 	}
 	
 	
@@ -72,6 +77,7 @@ public class Environment implements InputProcessor{
 	}
 	public void update(float dt){
 		runCarbageCollection();
+		addNewObjects();
 		for(GameObject o : gameobjects)
 			o.update(dt);
 	}
@@ -83,6 +89,13 @@ public class Environment implements InputProcessor{
 			gameobjects.removeAll(carbages);
 			carbages.clear();
 		}
+	}
+	public void addNewObjects(){
+		if(newobjects.size()>0){
+			gameobjects.addAll(newobjects);
+			newobjects.clear();
+		}
+		
 	}
 	
 	

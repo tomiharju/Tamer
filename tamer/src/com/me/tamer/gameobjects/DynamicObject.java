@@ -8,6 +8,8 @@ public class DynamicObject implements GameObject{
 	private Vector2 position;
 	private Vector2 velocity;
 	private Vector2 force;
+	private float mass;
+	private float invMass;
 	private Renderer renderer;
 	private boolean isCarbage = false;
 	

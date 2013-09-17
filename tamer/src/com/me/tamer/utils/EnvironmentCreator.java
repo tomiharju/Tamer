@@ -7,8 +7,10 @@ import java.util.Properties;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.me.tamer.Environment;
 import com.me.tamer.gameobjects.GameObject;
 import com.me.tamer.gameobjects.Renderer.RenderType;
+import com.me.tamer.gameobjects.SpawnPoint;
 
 /**
  * @author tharju
@@ -21,23 +23,20 @@ public class EnvironmentCreator {
 	
 	
 
-	public static ArrayList<GameObject> create(int level_number){
+	public static void create(int level_number,Environment env){
 		Properties properties = new Properties();
 		ArrayList<GameObject> objects = new ArrayList<GameObject>();
 		try {
 			FileHandle file  = Gdx.files.internal("data/levels/level"+level_number+".properties");
 			properties.load(file.read());
 			int num_worms = Integer.parseInt(properties.getProperty("num_worms"));
-			int num_quicksand = Integer.parseInt(properties.getProperty("num_quicksand"));
-			
-			//Create worms
-			for(int i = 0 ; i < num_worms ; i++){
-				
-				objects.add(GameObjectFactory.createGameObject("com.me.tamer.gameobjects.Worm", RenderType.ANIMATED));
-			}
+				//Example how to create a worm spawnpoint
+			//SpawnPoint(long init_sleep,long interval,int count,int position,String spawn_type)
+			SpawnPoint spawn = new SpawnPoint(5,10,2,25,"Worm");
+			spawn.addToEnvironment(env);
+			spawn.startSpawning();
 		
-			//Return fresh new objects to be added into main gameobject list.
-			return objects;
+			
 		  
 		  
 		  
@@ -47,7 +46,7 @@ public class EnvironmentCreator {
 		  
 		} catch (Exception e) {
 		  System.out.println(e.getMessage());
-		  return null;
+		
 		}
 		
 	
