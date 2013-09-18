@@ -17,8 +17,8 @@ public class QuickSandTile extends StaticObject implements Tile {
 		action.execute();
 	}
 	@Override
-	public void setAction(Action action) {
-		this.action = action;
+	public void setAction(String action) {
+		
 	}
 
 }

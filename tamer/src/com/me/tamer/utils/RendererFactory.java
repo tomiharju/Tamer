@@ -7,16 +7,13 @@ import com.me.tamer.gameobjects.StaticRenderer;
 
 public class RendererFactory {
 	
-	public static Renderer createRenderer(RenderType type,String objectName){
-		switch(type){
-		case ANIMATED:
-			return new AnimatedRenderer(objectName);
-		case STATIC:
-			return new StaticRenderer(objectName);
-		default:
-			return null;
-		
-		}
-	}
+	public static Renderer createRenderer(String type) throws IllegalArgumentException{
+		if(type.equalsIgnoreCase("static"))
+			return new AnimatedRenderer();
+		else if(type.equalsIgnoreCase("animated"))
+			return new AnimatedRenderer();
+		else
+			throw new IllegalArgumentException("Rendertype unknown");
+	}			
 
 }

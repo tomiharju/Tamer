@@ -28,7 +28,12 @@ public interface GameObject {
 	 *	 * @param renderer
 	 *	 Set renderer for object ( Static or Dynamic )
 	 */
-	public void setRenderer(Renderer renderer);
+	public void setRender(String renderer);
+	/**
+	 * @param graphics filepath for graphics files
+	 * Sets what graphics to draw.
+	 */
+	public void setGraphics(String graphics);
 	/**
 	 * Sets the value isCarbage = true
 	 * Causes the carbage collection cycle to remove this object
@@ -38,5 +43,12 @@ public interface GameObject {
 	 * Returns whether this object is marked as carbage
 	 */
 	public boolean isCarbage();
+	/**
+	 * @param w
+	 * @param h
+	 * Calls this.renderer.setSize(w,h);
+	 */
+	public void setGraphicSize(String size);
+	public void setPosition(String pos);
 }
 

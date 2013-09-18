@@ -8,7 +8,7 @@ public interface Tile {
 	public enum TileType{
 		GRASS,DIRT,QUICKSAND
 	}
-	public void setAction(Action action);
+	public void setAction(String action);
 	public boolean isInsideTile(GameObject obj);
 	public void executeAction();
 }

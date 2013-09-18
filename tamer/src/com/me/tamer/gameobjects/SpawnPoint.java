@@ -26,14 +26,10 @@ public class SpawnPoint extends StaticObject{
 	 * @param position grid number, which is turned into screen coordinate
 	 * @param spawn_type is the object type to spawn. Currently worm or ant
 	 */
-	public SpawnPoint(int init_sleep,int interval,int count,int position,String spawn_type){
-		this.spawn_type = spawn_type;
-		this.initial_sleep = init_sleep;
-		this.interval = interval;
-		this.worm_count = count;
-		//TODO: get position from some util isometric helper class
-		this.position = new Vector2();
+	public SpawnPoint(){
+		
 	}
+	
 	public void addToEnvironment(Environment env){
 		this.env = env;
 	}
@@ -49,7 +45,7 @@ public class SpawnPoint extends StaticObject{
 						//Set initial sleep to 0 to prevent further delay
 						initial_sleep = 0;
 						//Add newly created worm to main gameobject list
-						env.addGameObject(GameObjectFactory.createGameObject("com.me.tamer.gameobjects."+spawn_type, RenderType.ANIMATED));
+						//env.addGameObject(GameObjectFactory.createGameObject("com.me.tamer.gameobjects."+spawn_type, RenderType.ANIMATED));
 						//Sleep for the actual spawn interval
 						Thread.sleep(interval);
 					}

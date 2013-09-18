@@ -1,6 +1,11 @@
 package com.me.tamer.utils;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import com.me.tamer.gameobjects.GameObject;
 import com.me.tamer.gameobjects.Renderer;
@@ -12,13 +17,28 @@ public class GameObjectFactory {
 	
 	
 	
-	public static GameObject createGameObject(String className, RenderType rendType){
+	public static GameObject createGameObject(String className,Hashtable<String,String> configuration){
 		try {
+			
 			Class<?> objectClass = Class.forName(className);
 			Constructor<?> constructor = objectClass.getConstructor();
 			GameObject object = (GameObject) constructor.newInstance(new Object[]{});
-			Renderer renderer = RendererFactory.createRenderer(rendType,object.getClass().getSimpleName());
-			object.setRenderer(renderer);
+			
+			Iterator<Entry<String, String>> it = configuration.entrySet().iterator();
+			while (it.hasNext()) {
+			  Entry<String, String> entry = it.next();
+			  try{
+			  Method setter = objectClass.getMethod("set"+entry.getKey(),String.class);
+			  System.out.println("Setting value... ["+entry.getKey()+"]");
+			  setter.invoke(object, entry.getValue());
+			  }catch(NoSuchMethodException e){
+				  System.err.println("Trying to set invalid object property ["+entry.getKey()+"]");
+			  }catch(InvocationTargetException i){
+				  System.err.println("set" + entry.getKey() +" Failed to run succesfully\n" + i.getTargetException());
+			  }
+			 
+			}
+			System.out.println(object.toString());
 			return object;
 		} catch (Exception e) {
 			e.printStackTrace();

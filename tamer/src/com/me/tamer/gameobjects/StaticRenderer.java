@@ -15,8 +15,8 @@ public class StaticRenderer implements Renderer {
 
 	private Sprite sprite;
 	
-	public StaticRenderer(String objectName){
-		loadGraphics(objectName.toLowerCase());
+	public StaticRenderer(){
+	
 	}
 	@Override
 	public void draw(SpriteBatch batch) {
@@ -25,10 +25,14 @@ public class StaticRenderer implements Renderer {
 	}
 	
 	@Override
-	public void loadGraphics(String objectName) {
-		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/"+objectName+".png")));
-		sprite.setSize(2, 2);
-		sprite.setPosition(5,5);
+	public void loadGraphics(String graphicsName) {
+		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName)));
+		sprite.setPosition(4, 4);
+		
+	}
+	@Override
+	public void setSize(int w, int h) {
+		this.sprite.setSize(w, h);
 		
 	}
 

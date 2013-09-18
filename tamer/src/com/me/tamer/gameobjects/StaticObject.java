@@ -2,9 +2,11 @@ package com.me.tamer.gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.utils.RendererFactory;
 
 public class StaticObject implements GameObject{
 	private Vector2 position;
+	
 	private Renderer renderer;
 	private boolean isCarbage = false;
 	
@@ -22,10 +24,11 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void setRenderer(Renderer renderer) {
+	public void setRender(String rendertype) {
+		Renderer renderer = RendererFactory.createRenderer(rendertype);
 		this.renderer = renderer;
-		
 	}
+	
 
 	@Override
 	public void markAsCarbage() {
@@ -36,6 +39,28 @@ public class StaticObject implements GameObject{
 	@Override
 	public boolean isCarbage() {
 		return isCarbage;
+	}
+
+	@Override
+	public void setGraphicSize(String size) {
+		String[] values = size.split(":");
+		int w = Integer.parseInt(values[0]);
+		int h = Integer.parseInt(values[1]);
+		renderer.setSize(w, h);
+		
+	}
+	
+
+	@Override
+	public void setGraphics(String graphics) {
+		renderer.loadGraphics(graphics);
+		
+	}
+
+	@Override
+	public void setPosition(String pos) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -19,6 +19,11 @@ public interface Renderer {
 	 * Creates texture and sprite objects for this object.
 	 */
 	public void loadGraphics(String objectName);
-	
+	/**
+	 * @param w width
+	 * @param h	 height
+	 * Sets the width and height of this sprite
+	 */
+	public void setSize(int w, int h);
 	
 }

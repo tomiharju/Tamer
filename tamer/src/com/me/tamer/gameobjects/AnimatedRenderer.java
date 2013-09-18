@@ -25,8 +25,8 @@ public class AnimatedRenderer implements Renderer {
 	private Sprite baseGraphics;
 	
 	
-	public AnimatedRenderer(String objectName){
-		loadGraphics(objectName.toLowerCase());
+	public AnimatedRenderer(){
+		
 	}
 
 	@Override
@@ -39,6 +39,12 @@ public class AnimatedRenderer implements Renderer {
 
 	@Override
 	public void loadGraphics(String objectName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSize(int w, int h) {
 		// TODO Auto-generated method stub
 		
 	}
