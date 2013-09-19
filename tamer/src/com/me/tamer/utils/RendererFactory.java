@@ -9,7 +9,7 @@ public class RendererFactory {
 	
 	public static Renderer createRenderer(String type) throws IllegalArgumentException{
 		if(type.equalsIgnoreCase("static"))
-			return new AnimatedRenderer();
+			return new StaticRenderer();
 		else if(type.equalsIgnoreCase("animated"))
 			return new AnimatedRenderer();
 		else

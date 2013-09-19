@@ -59,7 +59,13 @@ public class StaticObject implements GameObject{
 
 	@Override
 	public void setPosition(String pos) {
-		// TODO Auto-generated method stub
+		// TODO ask grid object for real raw screen coordinate
+		String[] values = pos.split(":");
+		int x = Integer.parseInt(values[0]);
+		int y = Integer.parseInt(values[1]);
+		Vector2 position = new Vector2(x,y);
+		this.position = position;
+		renderer.setPosition(position);
 		
 	}
 

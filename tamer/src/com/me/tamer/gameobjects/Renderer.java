@@ -1,6 +1,7 @@
 package com.me.tamer.gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public interface Renderer {
 	/**
@@ -25,5 +26,5 @@ public interface Renderer {
 	 * Sets the width and height of this sprite
 	 */
 	public void setSize(int w, int h);
-	
+	public void setPosition(Vector2 pos);
 }

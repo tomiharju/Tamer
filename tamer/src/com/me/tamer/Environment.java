@@ -24,9 +24,8 @@ public class Environment implements InputProcessor{
 	private SpriteBatch batch 		= null;
 	
 	//Define viewport size
-	private final float VIEWPORT_WIDTH = 10;
-	private final float VIEWPORT_HEIGHT = 10;
-	
+	private final float VIEWPORT_WIDTH = 20;
+	private final float VIEWPORT_HEIGHT = 20;
 	//Gameobject data
 	private ArrayList<GameObject> gameobjects = null;
 	private ArrayList<GameObject> carbages	= null;
@@ -46,7 +45,7 @@ public class Environment implements InputProcessor{
 		createLevel(1);
 	}
 	public void setupCamera(){
-		cam	= new OrthographicCamera(VIEWPORT_WIDTH,VIEWPORT_HEIGHT);
+		cam	= new OrthographicCamera( VIEWPORT_WIDTH  , VIEWPORT_HEIGHT);
 		cam.position.set(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
 	}
 	
@@ -91,7 +90,7 @@ public class Environment implements InputProcessor{
 		}
 	}
 	public void addNewObjects(){
-		if(newobjects.size()>0){
+		if(newobjects.size() > 0){
 			gameobjects.addAll(newobjects);
 			newobjects.clear();
 		}
