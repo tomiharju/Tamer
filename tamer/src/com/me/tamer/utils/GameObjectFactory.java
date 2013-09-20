@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import com.me.tamer.gameobjects.GameObject;
@@ -17,7 +18,7 @@ public class GameObjectFactory {
 	
 	
 	
-	public static GameObject createGameObject(String className,Hashtable<String,String> configuration){
+	public static GameObject createGameObject(String className,LinkedHashMap<String,String> configuration){
 		try {
 			
 			Class<?> objectClass = Class.forName(className);
@@ -29,7 +30,7 @@ public class GameObjectFactory {
 			  Entry<String, String> entry = it.next();
 			  try{
 			  Method setter = objectClass.getMethod("set"+entry.getKey(),String.class);
-			  System.out.println("Setting value... ["+entry.getKey()+"]");
+			  System.out.println("Setting value... ["+entry.getKey()+"] -> " + entry.getValue());
 			  setter.invoke(object, entry.getValue());
 			  }catch(NoSuchMethodException e){
 				  System.err.println("Trying to set invalid object property ["+entry.getKey()+"]");
@@ -40,11 +41,21 @@ public class GameObjectFactory {
 			}
 			System.out.println(object.toString());
 			return object;
-		} catch (Exception e) {
+			
+			
+			
+			
+		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
-			return null;
+			
+		} catch(ClassNotFoundException c){
+			System.err.println("Unknown object type\n");
+		} catch(Exception e){
+			e.printStackTrace();
+			
 		}
-		
+		//If error
+		return null;
 	
 		
 		

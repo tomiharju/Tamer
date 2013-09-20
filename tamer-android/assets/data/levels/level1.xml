@@ -2,14 +2,30 @@
 <root>
     <GameObject type ="com.me.tamer.gameobjects.tiles.GrassTile">
         <data type="Action">NO-ACTION</data>
-        <data type="Render">static</data>
+      	<data type="Render">static</data>
         <data type="Graphics">grasstile.png</data>
-    	<data type="Position">2</data>
-       	<data type="GraphicSize">32:32</data>
-     
+        <data type="GraphicSize">2:2</data>
+      	<data type="Position">0:0</data>
     </GameObject>
     
+    <GameObject type ="com.me.tamer.gameobjects.tiles.GrassTile">
+        <data type="Action">NO-ACTION</data>
+      	<data type="Render">static</data>
+        <data type="Graphics">grasstile.png</data>
+        <data type="GraphicSize">2:2</data>
+      	<data type="Position">15:15</data>
+    </GameObject>
     
+    <GameObject type ="com.me.tamer.gameobjects.tiles.GrassTile">
+        <data type="Action">NO-ACTION</data>
+      	<data type="Render">static</data>
+        <data type="Graphics">grasstile.png</data>
+        <data type="GraphicSize">2:2</data>
+      	<data type="Position">5:5</data>
+    </GameObject>
+    
+  
+   
     
     
 </root>

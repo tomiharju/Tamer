@@ -48,4 +48,10 @@ public class AnimatedRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setPosition(Vector2 pos) {
+		// TODO Auto-generated method stub
+		
+	}
 }

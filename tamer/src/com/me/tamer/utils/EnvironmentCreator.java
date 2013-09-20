@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -30,44 +31,39 @@ public class EnvironmentCreator {
 	
 	
 
+	/**
+	 * @param level_number self explanatory
+	 * @param env link to environment object, needed to be able to add objects to environments gameobject list
+	 * EnvironmentCreator.create reads an xml file from tamer-android/assets/data/levels/level+lvlnumber.xml
+	 * Creates a hashtable to hold configurations for each object read from xml file
+	 * Calls GameObjectFactory.createGameObject with desired object type, and read configuration map.
+	 */
 	public static void create(int level_number,Environment env){
 		
 		XmlReader reader = new XmlReader();
 		try {
-			String objectType = null;
-			
-			
 			FileHandle file = Gdx.files.internal("data/levels/level"+level_number+".xml");
 			Element root = reader.parse(file);
-			System.out.println("Starting to read objects...");
+			
 			Array<Element> objects = root.getChildrenByName("GameObject");
-		
+			
 			for(Element gameobject : objects){
 				//First child is always GameObject
-				//Create new HashTable to hold all values for this gameobject
-				objectType = gameobject.getAttribute("type");
-				Hashtable<String,String> config = new Hashtable<String,String>();
+				//Create new LinkedHashMap ( it keeps input order ) to hold all values for this gameobject
+				String objectType = gameobject.getAttribute("type");
+				LinkedHashMap<String,String> config = new LinkedHashMap<String,String>();
 				Array<Element> datavalues = gameobject.getChildrenByName("data");
 				for(Element data : datavalues){
-					String type = data.getAttribute("type");
-					config.put(type,data.getText());
+					config.put(data.getAttribute("type"),data.getText());
 				}
-			 env.addGameObject(GameObjectFactory.createGameObject(objectType,config));
+		
+				env.addGameObject(GameObjectFactory.createGameObject(objectType,config));
 			
 				
 			
 			}
 			
-			//Example how to create a worm spawnpoint
-			//SpawnPoint(long init_sleep,long interval,int count,int position,String spawn_type)
-			//SpawnPoint spawn = new SpawnPoint(5,10,2,25,"Worm");
-			//spawn.addToEnvironment(env);
-			//spawn.startSpawning();
-		
-			
-		  
-		  
-		  
+			  
 		  
 		  
 		  

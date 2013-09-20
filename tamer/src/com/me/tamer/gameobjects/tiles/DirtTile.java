@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.tiles;
 import com.me.tamer.actions.Action;
 import com.me.tamer.gameobjects.GameObject;
 import com.me.tamer.gameobjects.StaticObject;
+import com.me.tamer.utils.ActionFactory;
 
 public class DirtTile extends StaticObject implements Tile {
 
@@ -19,7 +20,7 @@ public class DirtTile extends StaticObject implements Tile {
 	}
 	@Override
 	public void setAction(String action) {
-		
+		this.action = ActionFactory.createAction(action);
 		
 	}
 	
