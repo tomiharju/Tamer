@@ -2,12 +2,13 @@ package com.me.tamer.gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RendererFactory;
 
 public class StaticObject implements GameObject{
 	private Vector2 position;
 	
-	private Renderer renderer;
+	protected Renderer renderer;
 	private boolean isCarbage = false;
 	
 	@Override
@@ -63,7 +64,7 @@ public class StaticObject implements GameObject{
 		String[] values = pos.split(":");
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
-		Vector2 position = new Vector2(x,y);
+		Vector2 position = IsoHelper.twoDToIso(new Vector2(x,y));
 		this.position = position;
 		renderer.setPosition(position);
 		

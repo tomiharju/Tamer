@@ -23,7 +23,7 @@ public class PlayScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.529f, .808f, 1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		environment.update(Gdx.graphics.getDeltaTime());
+		environment.update(delta);
 		environment.draw();
 		
 	}

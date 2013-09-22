@@ -5,13 +5,13 @@ import com.me.tamer.gameobjects.GameObject;
 import com.me.tamer.gameobjects.StaticObject;
 import com.me.tamer.utils.ActionFactory;
 
-public class QuickSandTile extends StaticObject implements Tile {
+public class GroundTile extends StaticObject implements Tile {
 
 	private Action action = null;
-
+	
 	@Override
 	public boolean isInsideTile(GameObject obj) {
-		// TODO Calculation algorithm to determine whether the object is inside this tile
+		// TODO Auto-generated method stub
 		return false;
 	}
 	public void executeAction() {
@@ -20,6 +20,7 @@ public class QuickSandTile extends StaticObject implements Tile {
 	@Override
 	public void setAction(String action) {
 		this.action = ActionFactory.createAction(action);
+		
 	}
 
 }

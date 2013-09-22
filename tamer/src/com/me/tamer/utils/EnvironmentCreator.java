@@ -51,6 +51,7 @@ public class EnvironmentCreator {
 				//First child is always GameObject
 				//Create new LinkedHashMap ( it keeps input order ) to hold all values for this gameobject
 				String objectType = gameobject.getAttribute("type");
+				
 				LinkedHashMap<String,String> config = new LinkedHashMap<String,String>();
 				Array<Element> datavalues = gameobject.getChildrenByName("data");
 				for(Element data : datavalues){

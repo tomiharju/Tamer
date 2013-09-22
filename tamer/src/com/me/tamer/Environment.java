@@ -6,6 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.gameobjects.GameObject;
 import com.me.tamer.gameobjects.Renderer.RenderType;
 import com.me.tamer.utils.EnvironmentCreator;
@@ -24,8 +27,9 @@ public class Environment implements InputProcessor{
 	private SpriteBatch batch 		= null;
 	
 	//Define viewport size
-	private final float VIEWPORT_WIDTH = 20;
-	private final float VIEWPORT_HEIGHT = 20;
+	private final float VIEWPORT_WIDTH = 12;
+	private final float VIEWPORT_HEIGHT = 12;
+	private Matrix4 matrix = new Matrix4();
 	//Gameobject data
 	private ArrayList<GameObject> gameobjects = null;
 	private ArrayList<GameObject> carbages	= null;
@@ -37,16 +41,18 @@ public class Environment implements InputProcessor{
 		//Inputprocessor handles all the user interaction
 		Gdx.input.setInputProcessor(this);
 		//Spritebatch is used for drawing sprites
-		batch = new SpriteBatch();
+		batch 			= new SpriteBatch();
 		gameobjects 	= new ArrayList<GameObject>();
 		carbages 		= new ArrayList<GameObject>();
 		newobjects 		= new ArrayList<GameObject>();
-		setupCamera();
+		setupCamera(true);
 		createLevel(1);
 	}
-	public void setupCamera(){
-		cam	= new OrthographicCamera( VIEWPORT_WIDTH  , VIEWPORT_HEIGHT);
-		cam.position.set(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
+	public void setupCamera(boolean isometric){
+		System.err.println("Viewport size "+ Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
+		float ASPECT_RATIO = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
+		cam	= new OrthographicCamera( VIEWPORT_WIDTH , VIEWPORT_HEIGHT / ASPECT_RATIO);		
+		
 	}
 	
 	/**
@@ -68,7 +74,9 @@ public class Environment implements InputProcessor{
 		//Start uploading sprites
 		batch.begin();
 		//Set projection matrix to batch
-		batch.setProjectionMatrix(cam.combined);
+		
+		
+		batch.setProjectionMatrix(cam.combined); 
 		for(GameObject o : gameobjects)
 			o.draw(batch);
 		batch.end();
