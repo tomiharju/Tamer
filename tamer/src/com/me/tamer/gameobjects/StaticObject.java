@@ -6,7 +6,7 @@ import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RendererFactory;
 
 public class StaticObject implements GameObject{
-	private Vector2 position;
+	protected Vector2 position;
 	
 	protected Renderer renderer;
 	private boolean isCarbage = false;
@@ -69,5 +69,11 @@ public class StaticObject implements GameObject{
 		renderer.setPosition(position);
 		
 	}
+
+	@Override
+	public Vector2 getPosition() {
+		return position;
+	}
+	
 
 }

@@ -17,6 +17,8 @@ public class ActionFactory {
 			return new QuickSandAction();
 		else if(action.equalsIgnoreCase("startingpoint"))
 			return new StartingPointAction();
+		else if(action.equalsIgnoreCase("no-action"))
+			return null;
 		else
 			throw new IllegalArgumentException("Uknown action");
 	}

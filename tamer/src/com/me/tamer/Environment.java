@@ -27,9 +27,8 @@ public class Environment implements InputProcessor{
 	private SpriteBatch batch 		= null;
 	
 	//Define viewport size
-	private final float VIEWPORT_WIDTH = 12;
+	private final float VIEWPORT_WIDTH = 6;
 	private final float VIEWPORT_HEIGHT = 12;
-	private Matrix4 matrix = new Matrix4();
 	//Gameobject data
 	private ArrayList<GameObject> gameobjects = null;
 	private ArrayList<GameObject> carbages	= null;
@@ -51,7 +50,7 @@ public class Environment implements InputProcessor{
 	public void setupCamera(boolean isometric){
 		System.err.println("Viewport size "+ Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
 		float ASPECT_RATIO = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
-		cam	= new OrthographicCamera( VIEWPORT_WIDTH , VIEWPORT_HEIGHT / ASPECT_RATIO);		
+		cam	= new OrthographicCamera( VIEWPORT_WIDTH , VIEWPORT_HEIGHT * ASPECT_RATIO);		
 		
 	}
 	

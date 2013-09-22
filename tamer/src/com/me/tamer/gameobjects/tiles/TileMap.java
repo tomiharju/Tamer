@@ -1,6 +1,12 @@
 package com.me.tamer.gameobjects.tiles;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.me.tamer.gameobjects.Renderer;
 import com.me.tamer.gameobjects.StaticObject;
+import com.me.tamer.utils.RendererFactory;
 
 /**
  * @author tomi
@@ -11,19 +17,52 @@ import com.me.tamer.gameobjects.StaticObject;
  */
 public class TileMap extends StaticObject{
 	
-	private int tile_height = 0;
-	private int tile_width = 0;
-	private int width = 0;
-	private int height = 0;
-	public TileMap(){
+	private int tile_height 	= 0;
+	private int tile_width 		= 0;
+	private int rows 			= 0;
+	private int columns			= 0;
+	
+	private Renderer tilerenderer = null;
+	private ArrayList<GroundTile> terrain;
+	
+	
+	@Override
+	public void draw(SpriteBatch batch){
+		for(GroundTile tile : terrain){
+			tilerenderer.setPosition(tile.getPosition());
+			tilerenderer.draw(batch);
+		}
+			
+	}
+	
+	public void setMapSize(String size){
+		
+		String[] values = size.split(":");
+		int r = Integer.parseInt(values[0]);
+		int c = Integer.parseInt(values[1]);
+		this.rows = r;
+		this.columns = c;
+		terrain = new ArrayList<GroundTile>();
+		
+		for(int i = 0 ; i < this.rows ; i ++ )
+			for(int k = 0 ; k < this.columns ; k ++){
+				GroundTile tile = new GroundTile();
+				//C stands for coluns, which is same as cartesian x, row for y and cartesian y
+				tile.setPosition((i - rows/2) +":"+ (k-columns/2));
+				terrain.add(tile);
+			}
 		
 		
 	}
-	
-	
-	public void setMapSize(int width,int height){
-		this.width = width;
-		this.height = height;
+	@Override
+	public void setRender(String rendertype){
+		Renderer renderer = RendererFactory.createRenderer(rendertype);
+		this.tilerenderer = renderer;
+		
+	}
+	@Override
+	public void setGraphics(String graphics) {
+		tilerenderer.loadGraphics(graphics);
 		
 	}
 	@Override
@@ -31,10 +70,17 @@ public class TileMap extends StaticObject{
 		String[] values = size.split(":");
 		int w = Integer.parseInt(values[0]);
 		int h = Integer.parseInt(values[1]);
-		
-		renderer.setSize(w, h);
+		tilerenderer.setSize(w, h);
 		
 	}
+
+	
+	
+	
+	
+	
+	
+	
 	
 
 	public int getTile_width() {
@@ -45,21 +91,7 @@ public class TileMap extends StaticObject{
 		this.tile_width = tile_width;
 	}
 
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
+	
 
 	public int getTile_height() {
 		return tile_height;

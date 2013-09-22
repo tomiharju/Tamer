@@ -59,6 +59,11 @@ public class DynamicObject implements GameObject{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public Vector2 getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

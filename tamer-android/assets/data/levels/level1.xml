@@ -2,35 +2,22 @@
 <root>
    
     
-    <GameObject type ="com.me.tamer.gameobjects.tiles.GroundTile">
-        <data type="Action">NO-ACTION</data>
-      	<data type="Render">static</data>
-        <data type="Graphics">mytile.png</data>
-        <data type="GraphicSize">1:1</data>
-      	<data type="Position">0:0</data>
+    <GameObject type ="com.me.tamer.gameobjects.tiles.TileMap">
+    	<data type="MapSize">10:10</data>
+    	<data type="Render">static</data>
+    	<data type="Graphics">dirt</data>
+    	<data type="GraphicSize">1:1</data>
     </GameObject>
-    <GameObject type ="com.me.tamer.gameobjects.tiles.GroundTile">
-        <data type="Action">NO-ACTION</data>
-      	<data type="Render">static</data>
-        <data type="Graphics">mytile.png</data>
-        <data type="GraphicSize">1:1</data>
-      	<data type="Position">1:0</data>
-    </GameObject> 
-    <GameObject type ="com.me.tamer.gameobjects.tiles.GroundTile">
-        <data type="Action">NO-ACTION</data>
-      	<data type="Render">static</data>
-        <data type="Graphics">mytile.png</data>
-        <data type="GraphicSize">1:1</data>
-      	<data type="Position">0:1</data>
-    </GameObject> 
-     <GameObject type ="com.me.tamer.gameobjects.tiles.GroundTile">
-        <data type="Action">NO-ACTION</data>
-      	<data type="Render">static</data>
-        <data type="Graphics">mytile.png</data>
-        <data type="GraphicSize">1:1</data>
-      	<data type="Position">1:1</data>
+    
+
+    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
+    	<data type="Render">static</data>
+    	<data type="Graphics">grass</data>
+    	<data type="GraphicSize">1:1</data>
+    	<data type="Position">0:0</data>
     </GameObject>
-   
+    
+    
     
     
 </root>

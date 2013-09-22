@@ -1,6 +1,7 @@
 package com.me.tamer.gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 
 /**
@@ -50,5 +51,6 @@ public interface GameObject {
 	 */
 	public void setGraphicSize(String size);
 	public void setPosition(String pos);
+	public Vector2 getPosition();
 }
 

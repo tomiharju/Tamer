@@ -27,7 +27,7 @@ public class StaticRenderer implements Renderer {
 	
 	@Override
 	public void loadGraphics(String graphicsName) {
-		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName)));
+		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
 	}
 	@Override
 	public void setSize(int w, int h) {

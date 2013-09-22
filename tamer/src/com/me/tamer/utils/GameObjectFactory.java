@@ -35,7 +35,7 @@ public class GameObjectFactory {
 			  }catch(NoSuchMethodException e){
 				  System.err.println("Trying to set invalid object property ["+entry.getKey()+"]");
 			  }catch(InvocationTargetException i){
-				  System.err.println("set" + entry.getKey() +" Failed to run succesfully\n" + i.getTargetException());
+				  System.err.println("set" + entry.getKey() +" Failed to run succesfully\n" + i.getMessage());
 			  }
 			 
 			}
