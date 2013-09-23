@@ -25,8 +25,8 @@ public class IsoHelper{
 	 */
 	public static Vector2 twoDToIso(Vector2 point){
 			Vector2 tempPt = new Vector2(0,0);
-			tempPt.x = point.x - point.y;
-			tempPt.y = (point.x + point.y ) / 2;
+			tempPt.x = (point.x - point.y);
+			tempPt.y = (point.x + point.y ) * 0.5f;
 			return tempPt;
 	}
 

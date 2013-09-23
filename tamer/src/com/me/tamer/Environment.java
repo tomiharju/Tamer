@@ -24,8 +24,8 @@ public class Environment {
 	private SpriteBatch batch 		= null;
 	
 	//Define viewport size
-	private final float VIEWPORT_WIDTH = 20;
-	private final float VIEWPORT_HEIGHT = 20;
+	private final float VIEWPORT_WIDTH = 12;
+	private final float VIEWPORT_HEIGHT = 24;
 
 	//Refrence to active level
 	Level level = null;
