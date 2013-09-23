@@ -25,6 +25,6 @@ public interface Renderer {
 	 * @param h	 height
 	 * Sets the width and height of this sprite
 	 */
-	public void setSize(int w, int h);
+	public void setSize(float w, float h);
 	public void setPosition(Vector2 pos);
 }

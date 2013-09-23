@@ -44,7 +44,7 @@ public class AnimatedRenderer implements Renderer {
 	}
 
 	@Override
-	public void setSize(int w, int h) {
+	public void setSize(float w, float h) {
 		// TODO Auto-generated method stub
 		
 	}

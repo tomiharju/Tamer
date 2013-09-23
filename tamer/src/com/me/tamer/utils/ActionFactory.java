@@ -1,7 +1,6 @@
 package com.me.tamer.utils;
 
 import com.me.tamer.actions.Action;
-import com.me.tamer.actions.Action.ActionType;
 import com.me.tamer.actions.EndingPointAction;
 import com.me.tamer.actions.QuickSandAction;
 import com.me.tamer.actions.StartingPointAction;
