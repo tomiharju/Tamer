@@ -6,6 +6,6 @@ import com.me.tamer.gameobjects.GameObject;
 public interface Tile {
 
 	public void setAction(String action);
-	public boolean isInsideTile(GameObject obj);
+	public boolean resolveTile(GameObject obj);
 	public void executeAction();
 }

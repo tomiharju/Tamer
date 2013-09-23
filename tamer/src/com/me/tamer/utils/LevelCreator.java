@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.me.tamer.Environment;
 import com.me.tamer.gameobjects.GameObject;
+import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.Renderer.RenderType;
 import com.me.tamer.gameobjects.SpawnPoint;
 
@@ -26,7 +27,7 @@ import com.me.tamer.gameobjects.SpawnPoint;
  * Is responsible for creating gameobjects via GameObjectFactory
  * Reads level data from level[x].properties
  */
-public class EnvironmentCreator {
+public class LevelCreator {
 	
 	
 	
@@ -38,7 +39,9 @@ public class EnvironmentCreator {
 	 * Creates a hashtable to hold configurations for each object read from xml file
 	 * Calls GameObjectFactory.createGameObject with desired object type, and read configuration map.
 	 */
-	public static void create(int level_number,Environment env){
+	public static Level create(int level_number){
+		
+		Level level = new Level();
 		
 		XmlReader reader = new XmlReader();
 		try {
@@ -58,19 +61,22 @@ public class EnvironmentCreator {
 					config.put(data.getAttribute("type"),data.getText());
 				}
 		
-				env.addGameObject(GameObjectFactory.createGameObject(objectType,config));
+				level.addObject(GameObjectFactory.createGameObject(objectType,config));
 			
 				
 			
 			}
 			
-			  
-		  
+			//Once xml file is completely read, and all objects are added, return new fresh level.
+			//Setup objects adds all obstacles to specific obstacle list, used later for sandpit resolution etc.
+			level.setupObjects();
+			return level;
 		  
 		  
 		  
 		} catch (Exception e) {
 		 e.printStackTrace();
+		 return null;
 		
 		}
 		

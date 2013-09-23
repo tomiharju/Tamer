@@ -6,52 +6,43 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.gameobjects.GameObject;
-import com.me.tamer.gameobjects.Renderer.RenderType;
-import com.me.tamer.utils.EnvironmentCreator;
-import com.me.tamer.utils.GameObjectFactory;
+import com.me.tamer.gameobjects.Level;
+import com.me.tamer.utils.LevelCreator;
 
 /**
  * @author Kesyttäjät
- * Physical world which holds all the gameobjects.
- * Is used to pass input to objects.
+ * Controller object
+ * Is responsible for creating levels and handling camera movement
+ *  
  */
 
 
-public class Environment implements InputProcessor{
+public class Environment {
 
 	private OrthographicCamera cam 	= null;
 	private SpriteBatch batch 		= null;
 	
 	//Define viewport size
-	private final float VIEWPORT_WIDTH = 6;
-	private final float VIEWPORT_HEIGHT = 12;
-	//Gameobject data
-	private ArrayList<GameObject> gameobjects = null;
-	private ArrayList<GameObject> carbages	= null;
-	private ArrayList<GameObject> newobjects = null;
-	
+	private final float VIEWPORT_WIDTH = 20;
+	private final float VIEWPORT_HEIGHT = 20;
+
+	//Refrence to active level
+	Level level = null;
 	
 	
 	public Environment(){
-		//Inputprocessor handles all the user interaction
-		Gdx.input.setInputProcessor(this);
 		//Spritebatch is used for drawing sprites
 		batch 			= new SpriteBatch();
-		gameobjects 	= new ArrayList<GameObject>();
-		carbages 		= new ArrayList<GameObject>();
-		newobjects 		= new ArrayList<GameObject>();
-		setupCamera(true);
+		setupCamera();
 		createLevel(1);
 	}
-	public void setupCamera(boolean isometric){
+	public void setupCamera(){
 		System.err.println("Viewport size "+ Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
 		float ASPECT_RATIO = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
-		cam	= new OrthographicCamera( VIEWPORT_WIDTH , VIEWPORT_HEIGHT * ASPECT_RATIO);		
-		
+		cam	= new OrthographicCamera();		
+		cam.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);
+		cam.translate(-VIEWPORT_WIDTH/2,-VIEWPORT_HEIGHT/2,0);
 	}
 	
 	/**
@@ -60,11 +51,9 @@ public class Environment implements InputProcessor{
 	 * Give this as parameter, so that EnvironmentFactory can properly add objects to gameobjects
 	 */
 	public void createLevel(int current_level){
-		EnvironmentCreator.create(current_level,this);
+		level = LevelCreator.create(current_level);
 	}
-	public void addGameObject(GameObject obj){
-		newobjects.add(obj);
-	}
+	
 	
 	
 	public void draw(){
@@ -73,91 +62,18 @@ public class Environment implements InputProcessor{
 		//Start uploading sprites
 		batch.begin();
 		//Set projection matrix to batch
-		
-		
 		batch.setProjectionMatrix(cam.combined); 
-		for(GameObject o : gameobjects)
-			o.draw(batch);
+		level.draw(batch);
 		batch.end();
 		
 	}
 	public void update(float dt){
-		runCarbageCollection();
-		addNewObjects();
-		for(GameObject o : gameobjects)
-			o.update(dt);
+		level.update(dt);
 	}
-	public void runCarbageCollection(){
-		for(GameObject o : gameobjects)
-			if(o.isCarbage())
-				carbages.add(o);
-		if(carbages.size() > 0){
-			gameobjects.removeAll(carbages);
-			carbages.clear();
-		}
-	}
-	public void addNewObjects(){
-		if(newobjects.size() > 0){
-			gameobjects.addAll(newobjects);
-			newobjects.clear();
-		}
-		
-	}
-	
-	
 	
 	public void cleanUp(){
 		batch.dispose();
 	}
 	
 
-	@Override
-	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
 	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	
-}

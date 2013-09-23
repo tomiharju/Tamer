@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Renderer;
 import com.me.tamer.gameobjects.StaticObject;
 import com.me.tamer.utils.RendererFactory;
@@ -17,14 +18,18 @@ import com.me.tamer.utils.RendererFactory;
  */
 public class TileMap extends StaticObject{
 	
-	private int tile_height 	= 0;
+	private int tile_height 		= 0;
 	private int tile_width 		= 0;
-	private int rows 			= 0;
+	private int rows 				= 0;
 	private int columns			= 0;
 	
 	private Renderer tilerenderer = null;
 	private ArrayList<GroundTile> terrain;
 	
+	@Override
+	public void update(float dt){
+		
+	}
 	
 	@Override
 	public void draw(SpriteBatch batch){
@@ -47,8 +52,8 @@ public class TileMap extends StaticObject{
 		for(int i = 0 ; i < this.rows ; i ++ )
 			for(int k = 0 ; k < this.columns ; k ++){
 				GroundTile tile = new GroundTile();
-				//C stands for coluns, which is same as cartesian x, row for y and cartesian y
-				tile.setPosition((i - rows/2) +":"+ (k-columns/2));
+				//C stands for columns, which is same as cartesian x, row for y and cartesian y
+				tile.setPosition( i +":"+ k);
 				terrain.add(tile);
 			}
 		
@@ -68,8 +73,8 @@ public class TileMap extends StaticObject{
 	@Override
 	public void setGraphicSize(String size) {
 		String[] values = size.split(":");
-		int w = Integer.parseInt(values[0]);
-		int h = Integer.parseInt(values[1]);
+		float w = Float.parseFloat(values[0]);
+		float h = Float.parseFloat(values[1]);
 		tilerenderer.setSize(w, h);
 		
 	}

@@ -1,12 +1,11 @@
 package com.me.tamer.actions;
 
+import com.me.tamer.gameobjects.GameObject;
+
 public interface Action {
-	public enum ActionType{
-		QUICKSAND,STARTINGPOINT,ENDINGPOINT,DEFAULTACTION
-	}
 	
 	/**
 	 * Executes this action, action can be falling into a pit, pull from quicksand etc.
 	 */
-	public void execute();
+	public void execute(GameObject obj);
 }

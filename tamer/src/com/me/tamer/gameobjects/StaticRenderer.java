@@ -30,13 +30,13 @@ public class StaticRenderer implements Renderer {
 		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
 	}
 	@Override
-	public void setSize(int w, int h) {
+	public void setSize(float w, float h) {
 		sprite.setSize(w, h);
 		
 	}
 	@Override
 	public void setPosition(Vector2 pos) {
-		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight()/2);
+		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - 0.5f );
 		
 	}
 
