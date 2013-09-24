@@ -53,7 +53,7 @@ public class TileMap extends StaticObject{
 			for(int k = 0 ; k < this.columns ; k ++){
 				GroundTile tile = new GroundTile();
 				//C stands for columns, which is same as cartesian x, row for y and cartesian y
-				tile.setPosition( i +":"+ k);
+				tile.setPosition( (i - rows/2) +":"+ (k - columns/2));
 				terrain.add(tile);
 			}
 		

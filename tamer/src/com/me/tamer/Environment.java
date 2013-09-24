@@ -24,8 +24,8 @@ public class Environment {
 	private SpriteBatch batch 		= null;
 	
 	//Define viewport size
-	private final float VIEWPORT_WIDTH = 20;
-	private final float VIEWPORT_HEIGHT = 20;
+	private final float VIEWPORT_WIDTH = 12;
+	private final float VIEWPORT_HEIGHT = 24;
 
 	//Refrence to active level
 	Level level = null;
@@ -40,9 +40,8 @@ public class Environment {
 	public void setupCamera(){
 		System.err.println("Viewport size "+ Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
 		float ASPECT_RATIO = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
-		cam	= new OrthographicCamera();		
-		cam.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);
-		cam.translate(-VIEWPORT_WIDTH/2,-VIEWPORT_HEIGHT/2,0);
+		cam	= new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);		
+	
 	}
 	
 	/**
