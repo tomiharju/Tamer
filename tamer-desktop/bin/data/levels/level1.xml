@@ -6,7 +6,7 @@
     	<data type="MapSize">15:15</data>
     	<data type="Render">static</data>
     	<data type="Graphics">dirt</data>
-    	<data type="GraphicSize">1:1</data>
+    	<data type="GraphicSize">1.5:1</data>
     </GameObject>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
