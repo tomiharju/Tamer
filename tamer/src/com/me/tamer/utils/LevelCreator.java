@@ -15,10 +15,10 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
-import com.me.tamer.Environment;
-import com.me.tamer.gameobjects.GameObject;
+import com.me.tamer.core.Environment;
 import com.me.tamer.gameobjects.Level;
-import com.me.tamer.gameobjects.Renderer.RenderType;
+import com.me.tamer.gameobjects.renders.Renderer.RenderType;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.SpawnPoint;
 
 /**

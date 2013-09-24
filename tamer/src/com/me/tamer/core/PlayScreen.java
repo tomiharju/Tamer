@@ -1,4 +1,4 @@
-package com.me.tamer;
+package com.me.tamer.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

@@ -3,8 +3,12 @@ package com.me.tamer.physics;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public class RigidBodyBox implements RigidBody{
+	
+	private DynamicObject owner = null;
 	
 	private Vector2 position = null;
 	private Vector2 velocity = null;
@@ -18,6 +22,10 @@ public class RigidBodyBox implements RigidBody{
 		this.position = p;
 		this.velocity = v;
 		this.mass = mass;
+		if(this.mass == 0)
+			this.invMass = 0;
+		else
+			this.invMass = 1 / this.mass;
 		this.width = width;
 		this.height = height;
 		vertices = new ArrayList<Vector2>(4);
@@ -109,7 +117,7 @@ public class RigidBodyBox implements RigidBody{
 
 	@Override
 	public ArrayList<Vector2> getAxes() {
-		ArrayList<Vector2> axes = null;
+		ArrayList<Vector2> axes = new ArrayList<Vector2>();
 		for(int i = 0 ; i < this.vertices.size() ; i++){
 			Vector2 p1 = this.vertices.get(i);
 			Vector2 p2 = this.vertices.get(i + 1 == this.vertices.size() ? 0 : i + 1);
@@ -175,5 +183,16 @@ public class RigidBodyBox implements RigidBody{
 	@Override
 	public float getInvMass(){
 		return invMass;
+	}
+
+	@Override
+	public void setOwner(DynamicObject obj) {
+		this.owner = obj;
+		
+	}
+
+	@Override
+	public DynamicObject getOwner() {
+		return owner;
 	}
 }

@@ -1,6 +1,6 @@
 package com.me.tamer.actions;
 
-import com.me.tamer.gameobjects.GameObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public interface Action {
 	

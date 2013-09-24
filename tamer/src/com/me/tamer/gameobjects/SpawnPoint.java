@@ -1,8 +1,11 @@
 package com.me.tamer.gameobjects;
 
+import java.util.LinkedHashMap;
+
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.Environment;
-import com.me.tamer.gameobjects.Renderer.RenderType;
+import com.me.tamer.core.Environment;
+import com.me.tamer.gameobjects.renders.Renderer.RenderType;
+import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.utils.GameObjectFactory;
 
 /**
@@ -11,13 +14,14 @@ import com.me.tamer.utils.GameObjectFactory;
  * Knows how many worms to spawn, and the time interval to spawn them
  */
 public class SpawnPoint extends StaticObject{
-	private Environment env;
-	private String spawn_type;
-	private int initial_sleep;
+	private Level level;
+	private String spawnType;
+	private String spawnVelocity;
+	private int initialSleep;
 	private int interval;
-	private int worm_count;
-	private int num_created = 0;
-	private Vector2 position;
+	private int spawnCount;
+	private int numCreated = 0;
+	
 
 	/**
 	 * @param init_sleep how long till the first spawn
@@ -26,26 +30,26 @@ public class SpawnPoint extends StaticObject{
 	 * @param position grid number, which is turned into screen coordinate
 	 * @param spawn_type is the object type to spawn. Currently worm or ant
 	 */
-	public SpawnPoint(){
-		
-	}
 	
-	public void addToEnvironment(Environment env){
-		this.env = env;
-	}
-	public void startSpawning(){
+	public void startSpawning(final Level level){
+		this.level = level;
+		final SpawnPoint spawn = this;
+		System.out.println("Started to spawn");
 		new Thread(new Runnable(){
 			@Override
 			public void run() {
 				try {
-					while(num_created < worm_count){
-						num_created++;
+					while(numCreated < spawnCount){
+						numCreated++;
 						//Wait for first spawn
-						Thread.sleep(initial_sleep);
+						Thread.sleep(initialSleep);
 						//Set initial sleep to 0 to prevent further delay
-						initial_sleep = 0;
+						initialSleep = 0;
 						//Add newly created worm to main gameobject list
-						//env.addGameObject(GameObjectFactory.createGameObject("com.me.tamer.gameobjects."+spawn_type, RenderType.ANIMATED));
+						if(spawnType.equalsIgnoreCase("worm"))
+							level.addNewObject(new Worm(spawn));
+						else if(spawnType.equalsIgnoreCase("ant"))
+							level.addNewObject(new Worm(spawn));
 						//Sleep for the actual spawn interval
 						Thread.sleep(interval);
 					}
@@ -58,7 +62,36 @@ public class SpawnPoint extends StaticObject{
 				
 			}
 			
-		});
+		}).start();
 	}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
+	public void setSpawnType(String spawnType) {
+		this.spawnType = spawnType;
+	}
+
+	public void setInitialSleep(String initialSleep) {
+		this.initialSleep = Integer.parseInt(initialSleep)*1000;
+	}
+
+	public void setInterval(String interval) {
+		this.interval =Integer.parseInt(interval)*1000;
+	}
+
+	public void setSpawnCount(String spawncount) {
+		this.spawnCount = Integer.parseInt(spawncount);
+	}
+	
+	public void setSpawnVelocity(String vel){
+		this.spawnVelocity = vel;
+	}
+	public String getSpawnVelocity(){
+		return spawnVelocity;
+	}
+
+
 
 }

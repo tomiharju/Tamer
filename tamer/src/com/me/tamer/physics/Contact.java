@@ -1,7 +1,7 @@
 package com.me.tamer.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.GameObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public class Contact {
 	

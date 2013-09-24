@@ -1,7 +1,8 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.physics.RigidBody;
 import com.me.tamer.physics.RigidBodyBox;
 import com.me.tamer.physics.RigidBodyCircle;
@@ -33,6 +34,7 @@ public class StaticObject implements GameObject{
 	public void setRender(String rendertype) {
 		Renderer renderer = RendererFactory.createRenderer(rendertype);
 		this.renderer = renderer;
+		this.renderer.setTarget(this);
 	}
 	
 
@@ -69,9 +71,7 @@ public class StaticObject implements GameObject{
 		String[] values = pos.split(":");
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
-		Vector2 position = IsoHelper.twoDToIso(new Vector2(x,y));
-		this.position = position;
-		renderer.setPosition(position);
+		this.position = new Vector2(x,y);
 		
 	}
 
@@ -98,6 +98,13 @@ public class StaticObject implements GameObject{
 	public RigidBody getRigidBody() {
 		return body;
 	}
+
+	@Override
+	public void setup() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

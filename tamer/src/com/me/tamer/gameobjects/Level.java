@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.tiles.ObstacleTile;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.RigidBody;
@@ -15,7 +17,7 @@ public class Level {
 	private ArrayList<GameObject> gameobjects = null;
 	private ArrayList<GameObject> carbages	= null;
 	private ArrayList<GameObject> newobjects = null;
-	private GameObject 	tamer = null;
+	private DynamicObject 	tamer = null;
 	private ArrayList<ObstacleTile> obstacles = null;
 	private ArrayList<Worm> worms		= null;
 	
@@ -84,7 +86,6 @@ public class Level {
 		}
 		
 		if(contacts.size() > 0){
-			
 			for(Contact c : contacts){
 				Vector2 normal = c.getN();
 				RigidBody b = c.getObjB();
@@ -106,6 +107,17 @@ public class Level {
 				
 				a.getVelocity().add(addA);
 				b.getVelocity().sub(addB);
+				if(c.getDist()<0.1){
+					Vector2 leftNor = normal.cpy().rotate(90);
+					Vector2 rightNor = normal.cpy().rotate(-90);
+					float dotleft = b.getVelocity().dot(leftNor);
+					float dotRight = b.getVelocity().dot(rightNor);
+					if(dotleft > 0)
+						b.getOwner().setHeading(leftNor);
+					else if(dotRight > 0)
+						b.getOwner().setHeading(rightNor);
+				}
+				
 			}
 			
 			
@@ -131,6 +143,11 @@ public class Level {
 	}
 	public void addNewObjects(){
 		if(newobjects.size() > 0){
+			for(GameObject go : newobjects){
+				go.setup();
+				if(go.getRigidBody() !=null )
+					rigidbodies.add(go.getRigidBody());
+			}
 			gameobjects.addAll(newobjects);
 			newobjects.clear();
 		}
@@ -145,15 +162,15 @@ public class Level {
 	 */
 	public void setupObjects(){
 		for(GameObject go : gameobjects){
-			if(go instanceof ObstacleTile){
+			if(go instanceof ObstacleTile)
 				obstacles.add((ObstacleTile) go);
-			}
-			else if(go instanceof Worm)
-				worms.add((Worm) go);
+			if(go instanceof SpawnPoint)
+				((SpawnPoint) go).startSpawning(this);
 			if(go.getRigidBody() != null)
 				rigidbodies.add(go.getRigidBody());
 		}
-		
+		//Create and set tamer into level
+		setTamerPos("0:0");
 		
 	}
 	
@@ -164,16 +181,27 @@ public class Level {
 	public void addObject(GameObject obj){
 		gameobjects.add(obj);
 	}
+	public void addNewObject(GameObject obj){
+		newobjects.add(obj);
+	}
 	
 	/**
-	 * 
+	 * Creates tamer and sets starting position
 	 */
-	public void setTamerPos(){
+	public void setTamerPos(String pos){
 		tamer = new Tamer();
-		tamer.setRender("dynamic");
+		tamer.setRender("static");
 		tamer.setGraphics("tamer");
 		tamer.setGraphicSize("1:1");
-		
+		tamer.setPosition(pos);
+		tamer.setVelocity("0:0");
+		tamer.setForce("0:0");
+		tamer.setMass("10");
+		tamer.setRigidBody("circle");
+		gameobjects.add(tamer);
+	}
+	public Tamer getTamer(){
+		return (Tamer) tamer;
 	}
 	public void dispose(){
 		gameobjects.clear();

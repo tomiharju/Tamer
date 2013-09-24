@@ -1,10 +1,10 @@
-package com.me.tamer;
+package com.me.tamer.core;
 
 
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.me.tamer.gameobjects.GameObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.utils.GameObjectFactory;
 
 

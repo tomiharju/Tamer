@@ -3,9 +3,12 @@ package com.me.tamer.physics;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public class RigidBodyCircle implements RigidBody {
 
+	private DynamicObject owner = null;
 	
 	private Vector2 position = null;
 	private Vector2 velocity = null;
@@ -18,8 +21,13 @@ public class RigidBodyCircle implements RigidBody {
 	public RigidBodyCircle(Vector2 p, Vector2 v, float mass, float radii){
 		this.position = p;
 		this.velocity = v;
-		this.mass = mass;
+		this.mass = mass ;
+		if(this.mass == 0)
+			this.invMass = 0;
+		else
+			this.invMass = 1 / this.mass;
 		this.radii = radii;
+		vertices = new ArrayList<Vector2>(1);
 		vertices.add(this.position);
 	}
 	@Override
@@ -32,7 +40,7 @@ public class RigidBodyCircle implements RigidBody {
 		if(body instanceof RigidBodyCircle){
 			float overlap = -100000;
 			Vector2 normal = null;
-			Vector2 axis = body.getPosition().cpy().sub(this.position);
+			Vector2 axis = body.getPosition().cpy().sub(position);
 			axis.nor();
 			Vector2 projection1 = this.project(axis);
 			Vector2 projection2 = body.project(axis);
@@ -88,8 +96,8 @@ public class RigidBodyCircle implements RigidBody {
 			float overlap = -10000;
 			Vector2 normal = null;
 			
-			Vector2 closest = body.getClosestVertice(this.position);
-			Vector2 circleToClosest = closest.cpy().sub(this.position);
+			Vector2 closest = body.getClosestVertice(position);
+			Vector2 circleToClosest = closest.cpy().sub(position);
 			circleToClosest.nor();
 			
 			ArrayList<Vector2> lineaxes = body.getAxes();
@@ -134,17 +142,10 @@ public class RigidBodyCircle implements RigidBody {
 
 	@Override
 	public Vector2 project(Vector2 axis) {
-		float min = axis.dot(this.vertices.get(0));
-		float max = min;
-		
-		for(int i = 0 ; i < this.vertices.size() ; i++){
-			float p = axis.dot(this.vertices.get(i));
-			if( p < min)
-				min = p;
-			else if( p > max )
-				max = p;
-		}
-		return new Vector2(min,max);
+		float center = axis.dot(position);
+	    float min = center - radii;
+	    float max = center + radii;
+	    return new Vector2(min, max);
 	}
 
 	@Override
@@ -175,6 +176,15 @@ public class RigidBodyCircle implements RigidBody {
 	@Override
 	public float getInvMass(){
 		return invMass;
+	}
+	@Override
+	public void setOwner(DynamicObject obj) {
+		this.owner = obj;
+		
+	}
+	@Override
+	public DynamicObject getOwner() {
+		return owner;
 	}
 
 }

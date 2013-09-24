@@ -3,6 +3,8 @@ package com.me.tamer.physics;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public interface RigidBody {
 	public boolean isDynamic();
@@ -15,6 +17,8 @@ public interface RigidBody {
 	public Vector2 getVelocity();
 	public float getInvMass();
 	public Vector2 getClosestVertice(Vector2 point);
+	public void setOwner(DynamicObject obj);
+	public DynamicObject getOwner();
 	
 
 

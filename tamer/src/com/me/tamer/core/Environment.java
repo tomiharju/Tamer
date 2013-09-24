@@ -1,13 +1,16 @@
-package com.me.tamer;
+package com.me.tamer.core;
 
 import java.util.ArrayList;
+
+import ui.InputController;
+import ui.UIElement;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.me.tamer.gameobjects.GameObject;
 import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.utils.LevelCreator;
 
 /**
@@ -29,19 +32,26 @@ public class Environment {
 
 	//Refrence to active level
 	Level level = null;
+	InputController inputcontroller;
+	ArrayList<UIElement> uiElements ;
 	
 	
 	public Environment(){
 		//Spritebatch is used for drawing sprites
 		batch 			= new SpriteBatch();
+	
 		setupCamera();
 		createLevel(1);
+		inputcontroller = new InputController(this,level);
 	}
 	public void setupCamera(){
 		System.err.println("Viewport size "+ Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
 		float ASPECT_RATIO = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
 		cam	= new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);		
 	
+	}
+	public OrthographicCamera getCamera(){
+		return cam;
 	}
 	
 	/**
@@ -62,12 +72,15 @@ public class Environment {
 		batch.begin();
 		//Set projection matrix to batch
 		batch.setProjectionMatrix(cam.combined); 
+		inputcontroller.draw(batch);
 		level.draw(batch);
 		batch.end();
 		
 	}
 	public void update(float dt){
+		inputcontroller.update(dt);
 		level.update(dt);
+		
 	}
 	
 	public void cleanUp(){

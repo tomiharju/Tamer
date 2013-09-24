@@ -3,9 +3,13 @@ package com.me.tamer.physics;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public class RigidBodyLine implements RigidBody {
 
+	private DynamicObject owner = null;
+	
 	private Vector2 position = null;
 	private Vector2 velocity = null;
 	private float mass;
@@ -61,6 +65,17 @@ public class RigidBodyLine implements RigidBody {
 	@Override
 	public float getInvMass(){
 		return invMass;
+	}
+
+	@Override
+	public void setOwner(DynamicObject obj) {
+		this.owner = obj;
+		
+	}
+
+	@Override
+	public DynamicObject getOwner() {
+		return owner;
 	}
 
 }

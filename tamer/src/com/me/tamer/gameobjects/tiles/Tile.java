@@ -1,7 +1,7 @@
 package com.me.tamer.gameobjects.tiles;
 
 import com.me.tamer.actions.Action;
-import com.me.tamer.gameobjects.GameObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public interface Tile {
 

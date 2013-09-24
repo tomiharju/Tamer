@@ -6,7 +6,8 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
-import com.me.tamer.gameobjects.GameObject;
+
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 
 

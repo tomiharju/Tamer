@@ -1,4 +1,4 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -55,5 +55,10 @@ public interface GameObject {
 	public Vector2 getPosition();
 	public Vector2 getSize();
 	public RigidBody getRigidBody();
+	/**
+	 * Required for objects that are created in runtime with threads.
+	 */
+	public void setup();
+	
 }
 

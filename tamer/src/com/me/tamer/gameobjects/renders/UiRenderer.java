@@ -1,24 +1,18 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.renders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
-/**
- * @author Kesyttäjät
- * This class is the superclass for statically drawn objects
- * This class only has a static Sprite object with attached texture on it.
- *
- */
-public class StaticRenderer implements Renderer {
+public class UiRenderer implements Renderer {
 
+	//Whose renderer this is
+	private GameObject target;
+	
 	private Sprite sprite;
-	
-	public StaticRenderer(){
-	
-	}
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
@@ -36,8 +30,15 @@ public class StaticRenderer implements Renderer {
 	}
 	@Override
 	public void setPosition(Vector2 pos) {
-		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - 0.5f );
+		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight() / 2 );
 		
 	}
+
+	@Override
+	public void setTarget(GameObject obj) {
+		this.target = obj;
+		
+	}
+	
 
 }

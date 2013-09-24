@@ -1,7 +1,8 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.renders;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public interface Renderer {
 	/**
@@ -27,4 +28,5 @@ public interface Renderer {
 	 */
 	public void setSize(float w, float h);
 	public void setPosition(Vector2 pos);
+	public void setTarget(GameObject obj);
 }

@@ -1,4 +1,4 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.renders;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 
 /**
  * @author Kesyttäjät
@@ -15,6 +16,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class AnimatedRenderer implements Renderer {
 
+	//Whose renderer this is
+	private GameObject target = null;
+	
 	private Animation animation;
 	private Texture spriteSheet;
 	private TextureRegion[] frames;
@@ -52,6 +56,12 @@ public class AnimatedRenderer implements Renderer {
 	@Override
 	public void setPosition(Vector2 pos) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setTarget(GameObject obj) {
+		this.target = obj;
 		
 	}
 }

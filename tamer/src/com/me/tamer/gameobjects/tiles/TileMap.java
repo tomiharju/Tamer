@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Renderer;
-import com.me.tamer.gameobjects.StaticObject;
+import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.utils.RendererFactory;
 
 /**
@@ -34,7 +34,7 @@ public class TileMap extends StaticObject{
 	@Override
 	public void draw(SpriteBatch batch){
 		for(GroundTile tile : terrain){
-			tilerenderer.setPosition(tile.getPosition());
+			tilerenderer.setTarget(tile);
 			tilerenderer.draw(batch);
 		}
 			
@@ -54,7 +54,6 @@ public class TileMap extends StaticObject{
 				GroundTile tile = new GroundTile();
 				//C stands for columns, which is same as cartesian x, row for y and cartesian y
 				tile.setPosition( (i - rows/2) +":"+ (k - columns/2));
-
 				terrain.add(tile);
 			}
 		
