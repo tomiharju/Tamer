@@ -2,6 +2,7 @@ package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.physics.RigidBody;
 import com.me.tamer.physics.RigidBodyBox;
@@ -13,7 +14,7 @@ public class StaticObject implements GameObject{
 	protected RigidBody body = null;
 	protected Vector2 position;
 	protected Vector2 size;
-	protected Renderer renderer;
+	protected String renderType = null;
 	private boolean isCarbage = false;
 	
 	@Override
@@ -25,16 +26,20 @@ public class StaticObject implements GameObject{
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		Renderer renderer = RenderPool.getRenderer(renderType);
+		renderer.setSize(size.x,size.y);
+		renderer.setPosition(IsoHelper.twoDToIso(position));
+		renderer.setOrientation(0);
 		renderer.draw(batch);
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setRender(String rendertype) {
-		Renderer renderer = RendererFactory.createRenderer(rendertype);
-		this.renderer = renderer;
-		this.renderer.setTarget(this);
+	public void setRenderer(String renderinfo) {
+		String[] info = renderinfo.split(":");
+		RenderPool.addRendererToPool(info[0],info[1]);
+		this.renderType = info[1];
 	}
 	
 
@@ -50,21 +55,14 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void setGraphicSize(String size) {
+	public void setSize(String size) {
 		String[] values = size.split(":");
 		float w = Float.parseFloat(values[0]);
 		float h = Float.parseFloat(values[1]);
-		renderer.setSize(w, h);
 		this.size = new Vector2(w,h);
 		
 	}
-	
 
-	@Override
-	public void setGraphics(String graphics) {
-		renderer.loadGraphics(graphics);
-		
-	}
 
 	@Override
 	public void setPosition(String pos) {

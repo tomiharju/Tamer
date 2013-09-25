@@ -19,6 +19,8 @@ public interface RigidBody {
 	public Vector2 getClosestVertice(Vector2 point);
 	public void setOwner(DynamicObject obj);
 	public DynamicObject getOwner();
+	public void setInvMass(float ivm);
+
 	
 
 

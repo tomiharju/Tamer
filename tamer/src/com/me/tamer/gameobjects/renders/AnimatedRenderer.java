@@ -16,9 +16,6 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
  */
 public class AnimatedRenderer implements Renderer {
 
-	//Whose renderer this is
-	private GameObject target = null;
-	
 	private Animation animation;
 	private Texture spriteSheet;
 	private TextureRegion[] frames;
@@ -59,9 +56,16 @@ public class AnimatedRenderer implements Renderer {
 		
 	}
 
+
 	@Override
-	public void setTarget(GameObject obj) {
-		this.target = obj;
+	public void setRenderType(String type) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setOrientation(float angle) {
+		// TODO Auto-generated method stub
 		
 	}
 }

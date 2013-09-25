@@ -1,12 +1,12 @@
-package ui;
+package com.me.tamer.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-public class ActionButton implements UIElement{
+public class SlidingButton implements UIElement {
 
-	public ActionButton(InputController inputController) {
+	public SlidingButton(InputController inputController) {
 		// TODO Auto-generated constructor stub
 	}
 

@@ -112,10 +112,14 @@ public class Level {
 					Vector2 rightNor = normal.cpy().rotate(-90);
 					float dotleft = b.getVelocity().dot(leftNor);
 					float dotRight = b.getVelocity().dot(rightNor);
-					if(dotleft > 0)
+					if(dotleft > 0){
 						b.getOwner().setHeading(leftNor);
-					else if(dotRight > 0)
+						a.getOwner().setHeading(rightNor);
+					}
+					else if(dotRight > 0){
 						b.getOwner().setHeading(rightNor);
+						a.getOwner().setHeading(leftNor);
+					}
 				}
 				
 			}
@@ -190,9 +194,8 @@ public class Level {
 	 */
 	public void setTamerPos(String pos){
 		tamer = new Tamer();
-		tamer.setRender("static");
-		tamer.setGraphics("tamer");
-		tamer.setGraphicSize("1:1");
+		tamer.setRenderer("static:tamer");
+		tamer.setSize("1:1");
 		tamer.setPosition(pos);
 		tamer.setVelocity("0:0");
 		tamer.setForce("0:0");
