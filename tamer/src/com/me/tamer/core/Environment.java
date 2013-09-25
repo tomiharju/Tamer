@@ -9,14 +9,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.superclasses.GameObject;
+import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.LevelCreator;
 
 /**
  * @author Kesyttäjät
  * Controller object
- * Is responsible for creating levels and handling camera movement
+ * Is (ir)responsible for creating levels and handling camera movement
  *  
  */
 
@@ -25,6 +28,9 @@ public class Environment {
 
 	private OrthographicCamera cam 	= null;
 	private SpriteBatch batch 		= null;
+	
+	//Ui camera
+	private OrthographicCamera uiCam = null;
 	
 	//Define viewport size
 	private final float VIEWPORT_WIDTH = 12;
@@ -36,6 +42,7 @@ public class Environment {
 	ArrayList<UIElement> uiElements ;
 	
 	
+	
 	public Environment(){
 		//Spritebatch is used for drawing sprites
 		batch 			= new SpriteBatch();
@@ -44,14 +51,49 @@ public class Environment {
 		createLevel(1);
 		inputcontroller = new InputController(this,level);
 	}
+	
 	public void setupCamera(){
 		System.err.println("Viewport size "+ Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
 		float ASPECT_RATIO = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
-		cam	= new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);		
+		cam	= new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);
+		
+		uiCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);
 	
 	}
+	
 	public OrthographicCamera getCamera(){
+		
 		return cam;
+	}
+	
+	public void moveCamera(){
+		Vector3 camPos = new Vector3();
+		Vector2 tamerPos = IsoHelper.twoDToIso(level.getTamer().getPosition());
+		Vector2 camBounds = IsoHelper.getTileCoordinates(level.getCamBounds(),1);
+		
+		
+		//X
+		if (tamerPos.x + VIEWPORT_WIDTH / 2 > camBounds.x){
+			camPos.x = camBounds.x - VIEWPORT_WIDTH / 2;
+		}else if(tamerPos.x - VIEWPORT_WIDTH / 2 < -camBounds.x){
+			camPos.x = -camBounds.x + VIEWPORT_WIDTH / 2;
+		}else{
+			camPos.x = tamerPos.x;
+		}
+		
+		//Y
+		if(tamerPos.y + VIEWPORT_HEIGHT / 2 > camBounds.y){
+			camPos.y = camBounds.y - VIEWPORT_HEIGHT / 2;
+		}else if(tamerPos.y - VIEWPORT_HEIGHT / 2 < -camBounds.y){
+			camPos.y = -camBounds.y + VIEWPORT_HEIGHT / 2;
+		}else{	
+			camPos.y = tamerPos.y;	
+		}
+		
+		//Z
+		camPos.z = 0;
+		
+		cam.position.set(camPos);
 	}
 	
 	/**
@@ -61,6 +103,7 @@ public class Environment {
 	 */
 	public void createLevel(int current_level){
 		level = LevelCreator.create(current_level);
+		System.out.println("kamera rajat: " +level.getCamBounds());
 	}
 	
 	
@@ -71,15 +114,19 @@ public class Environment {
 		//Start uploading sprites
 		batch.begin();
 		//Set projection matrix to batch
-		batch.setProjectionMatrix(cam.combined); 
+		batch.setProjectionMatrix(uiCam.combined); 
 		inputcontroller.draw(batch);
+		
+		batch.setProjectionMatrix(cam.combined); 
 		level.draw(batch);
+		
 		batch.end();
 		
 	}
 	public void update(float dt){
 		inputcontroller.update(dt);
 		level.update(dt);
+		moveCamera();
 		
 	}
 	
