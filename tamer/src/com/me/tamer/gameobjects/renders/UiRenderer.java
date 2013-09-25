@@ -9,8 +9,7 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public class UiRenderer implements Renderer {
 
-	//Whose renderer this is
-	private GameObject target;
+	private String type ;
 	
 	private Sprite sprite;
 	@Override
@@ -35,10 +34,16 @@ public class UiRenderer implements Renderer {
 	}
 
 	@Override
-	public void setTarget(GameObject obj) {
-		this.target = obj;
+	public void setOrientation(float angle) {
+		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setRenderType(String type) {
+		this.type = type;
+	}
+
 	
 
 }

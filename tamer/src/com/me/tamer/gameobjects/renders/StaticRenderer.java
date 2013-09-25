@@ -15,19 +15,14 @@ import com.me.tamer.utils.IsoHelper;
  *
  */
 public class StaticRenderer implements Renderer {
-	//Whose renderer this is
-	private GameObject target = null;
 	
 	private Sprite sprite;
-	
+	private String type;
 	public StaticRenderer(){
 	
 	}
 	@Override
 	public void draw(SpriteBatch batch) {
-		//Translate "mathematical position" to on-screen position ( isometric )
-		Vector2 position = IsoHelper.twoDToIso(target.getPosition());
-		setPosition(position);
 		sprite.draw(batch);
 		
 	}
@@ -46,9 +41,15 @@ public class StaticRenderer implements Renderer {
 		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - 0.5f );
 		
 	}
+	
 	@Override
-	public void setTarget(GameObject obj) {
-		this.target = obj;
+	public void setOrientation(float angle) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setRenderType(String type) {
+		this.type = type;
 		
 	}
 	

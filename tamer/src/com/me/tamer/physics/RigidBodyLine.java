@@ -77,5 +77,10 @@ public class RigidBodyLine implements RigidBody {
 	public DynamicObject getOwner() {
 		return owner;
 	}
+	@Override
+	public void setInvMass(float ivm) {
+		invMass=ivm;
+		
+	}
 
 }

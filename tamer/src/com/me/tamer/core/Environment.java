@@ -2,8 +2,6 @@ package com.me.tamer.core;
 
 import java.util.ArrayList;
 
-import ui.InputController;
-import ui.UIElement;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -14,6 +12,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.ui.InputController;
+import com.me.tamer.ui.UIElement;
 import com.me.tamer.utils.LevelCreator;
 
 /**

@@ -2,6 +2,7 @@ package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.physics.RigidBody;
 import com.me.tamer.physics.RigidBodyBox;
@@ -18,26 +19,29 @@ public class DynamicObject implements GameObject{
 	private float mass;			
 	private float invMass;			// Precalculated invmass, used in physics calculations
 	protected Vector2 size;
-	private Renderer renderer;
+	private String renderType;
 	private boolean isCarbage = false;
 	protected RigidBody body = null;
 	
 	
 	@Override
 	public void update(float dt) {
-		position.add(velocity.mul(dt));
+		position.add(getVelocity().mul(dt));
 	}
 	@Override
 	public void draw(SpriteBatch batch) {
+		Renderer renderer = RenderPool.getRenderer(renderType);
+		renderer.setSize(size.x,size.y);
+		renderer.setPosition(position);
+		renderer.setOrientation(0);
 		renderer.draw(batch);
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	public void setRender(String rendertype) {
-		Renderer renderer = RendererFactory.createRenderer(rendertype);
-		this.renderer = renderer;
-		this.renderer.setTarget(this);
+	public void setRenderer(String renderinfo) {
+		String[] info = renderinfo.split(":");
+		RenderPool.addRendererToPool(info[0],info[1]);
+		this.renderType = info[1];
 	}
 	@Override
 	public void markAsCarbage() {
@@ -49,19 +53,14 @@ public class DynamicObject implements GameObject{
 		return isCarbage;
 	}
 	@Override
-	public void setGraphicSize(String size) {
+	public void setSize(String size) {
 		String[] values = size.split(":");
 		int w = Integer.parseInt(values[0]);
 		int h = Integer.parseInt(values[1]);
-		this.renderer.setSize(w, h);
 		this.size = new Vector2(w,h);
 		
 	}
-	@Override
-	public void setGraphics(String graphics) {
-		this.renderer.loadGraphics(graphics);
-		
-	}
+	
 	@Override
 	public void setPosition(String pos) {
 		String[] values = pos.split(":");
@@ -86,7 +85,7 @@ public class DynamicObject implements GameObject{
 		if(bodytype.equalsIgnoreCase("box"))
 			body = new RigidBodyBox(position,new Vector2(0,0),0,size.x,size.y); //Position, speed, mass, width,height ( speed and mass are 0 cause its static object )
 		else if(bodytype.equalsIgnoreCase("circle"))
-			body = new RigidBodyCircle(position,velocity,mass,size.x/2);//Position, velocity, mass, radii
+			body = new RigidBodyCircle(position,getVelocity(),mass,size.x/2);//Position, velocity, mass, radii
 		else if(bodytype.equalsIgnoreCase("no-body"))
 			body = null;
 		if(body != null)
@@ -116,6 +115,12 @@ public class DynamicObject implements GameObject{
 	}
 	public void setHeading(Vector2 heading){
 		this.heading.set(heading);
+	}
+	public Vector2 getVelocity() {
+		return velocity;
+	}
+	public void setVelocity(Vector2 velocity) {
+		this.velocity = velocity;
 	}
 	
 

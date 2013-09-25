@@ -9,9 +9,9 @@ public class Tamer extends DynamicObject{
 	
 	@Override
 	public void update(float dt){
-		velocity.mul(0.99f);
-		velocity.add(force);
-		position.add(velocity.mul(dt));
+		getVelocity().mul(0.99f);
+		getVelocity().add(force);
+		position.add(getVelocity().mul(dt));
 	
 		
 		
