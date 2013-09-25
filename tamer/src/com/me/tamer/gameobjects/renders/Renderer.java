@@ -28,5 +28,6 @@ public interface Renderer {
 	 */
 	public void setSize(float w, float h);
 	public void setPosition(Vector2 pos);
-	public void setTarget(GameObject obj);
+	public void setOrientation(float angle);
+	public void setRenderType(String type);
 }

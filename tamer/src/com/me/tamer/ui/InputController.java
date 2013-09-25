@@ -1,4 +1,4 @@
-package ui;
+package com.me.tamer.ui;
 
 import java.util.ArrayList;
 

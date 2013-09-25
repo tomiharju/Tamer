@@ -9,9 +9,7 @@ import com.me.tamer.utils.IsoHelper;
 
 public class GroundTile extends StaticObject implements Tile {
 	
-	public GroundTile(){
-		position = new Vector2();
-	}
+	
 	@Override
 	public boolean resolveTile(GameObject obj) {
 		// TODO Auto-generated method stub
@@ -25,15 +23,7 @@ public class GroundTile extends StaticObject implements Tile {
 		//this.action = ActionFactory.createAction(action);
 		
 	}
-	@Override
-	public void setPosition(String pos) {
-		// TODO ask grid object for real raw screen coordinate
-		String[] values = pos.split(":");
-		float x = Float.parseFloat(values[0]);
-		float y = Float.parseFloat(values[1]);
-		position.set(x,y);
-	}
-	
+
 	
 	
 

@@ -187,4 +187,9 @@ public class RigidBodyCircle implements RigidBody {
 		return owner;
 	}
 
+	@Override
+	public void setInvMass(float ivm) {
+		invMass=ivm;
+		
+	}
 }

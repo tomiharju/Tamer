@@ -28,14 +28,9 @@ public interface GameObject {
 	
 	/**
 	 *	 * @param renderer
-	 *	 Set renderer for object ( Static or Dynamic )
+	 *	 Set the tile type for this object. Can be "Tree5" "WormHead" "Hut2" etc...
 	 */
-	public void setRender(String renderer);
-	/**
-	 * @param graphics filepath for graphics files
-	 * Sets what graphics to draw.
-	 */
-	public void setGraphics(String graphics);
+	public void setRenderer(String renderinfo);
 	/**
 	 * Sets the value isCarbage = true
 	 * Causes the carbage collection cycle to remove this object
@@ -50,7 +45,7 @@ public interface GameObject {
 	 * @param h
 	 * Calls this.renderer.setSize(w,h);
 	 */
-	public void setGraphicSize(String size);
+	public void setSize(String size);
 	public void setPosition(String pos);
 	public Vector2 getPosition();
 	public Vector2 getSize();

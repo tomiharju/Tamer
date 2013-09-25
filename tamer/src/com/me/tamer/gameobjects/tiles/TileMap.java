@@ -25,17 +25,14 @@ public class TileMap extends StaticObject{
 	
 	private Renderer tilerenderer = null;
 	private ArrayList<GroundTile> terrain;
+	private Vector2 bounds;
 	
-	@Override
-	public void update(float dt){
-		
-	}
+	
 	
 	@Override
 	public void draw(SpriteBatch batch){
 		for(GroundTile tile : terrain){
-			tilerenderer.setTarget(tile);
-			tilerenderer.draw(batch);
+			tile.draw(batch);
 		}
 			
 	}
@@ -54,28 +51,20 @@ public class TileMap extends StaticObject{
 				GroundTile tile = new GroundTile();
 				//C stands for columns, which is same as cartesian x, row for y and cartesian y
 				tile.setPosition( (i - rows/2) +":"+ (k - columns/2));
+				tile.setRenderer("static:"+renderType);
+				tile.setSize(this.size.x+":"+this.size.y);
 				terrain.add(tile);
 			}
 		
-		
+		bounds = new Vector2(r,c);
 	}
-	@Override
-	public void setRender(String rendertype){
-		Renderer renderer = RendererFactory.createRenderer(rendertype);
-		this.tilerenderer = renderer;
-		
-	}
-	@Override
-	public void setGraphics(String graphics) {
-		tilerenderer.loadGraphics(graphics);
-		
-	}
-	@Override
-	public void setGraphicSize(String size) {
+	
+
+	public void setTileSize(String size) {
 		String[] values = size.split(":");
 		float w = Float.parseFloat(values[0]);
 		float h = Float.parseFloat(values[1]);
-		tilerenderer.setSize(w, h);
+		this.size = new Vector2(w,h);
 		
 	}
 
