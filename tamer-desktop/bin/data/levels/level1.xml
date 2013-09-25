@@ -1,0 +1,49 @@
+
+<root>
+   
+    <Settings>
+        <data type="CameraBounds">8:8:0:0</data>
+    </Settings>
+    
+    <GameObject type ="com.me.tamer.gameobjects.tiles.TileMap">
+    	<data type="MapSize">30:30</data>
+    	<data type="Render">static</data>
+    	<data type="Graphics">dirt</data>
+    	<data type="GraphicSize">1.5:1</data>
+    </GameObject>
+    
+    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
+    	<data type="Render">static</data>
+    	<data type="Graphics">tree</data>
+    	<data type="GraphicSize">1:2</data>
+    	<data type="Position">-5:0</data>
+    	<data type="RigidBody">box</data><!--box/circle/no-body-->
+    </GameObject>
+
+     <GameObject type ="com.me.tamer.gameobjects.SpawnPoint">
+    	<data type="Render">static</data>
+    	<data type="Graphics">spawn</data>
+    	<data type="GraphicSize">1:2</data>
+    	<data type="Position">0:0</data>
+    	
+    	<!--Spawnpoint specific data  -->
+    	<data type="SpawnType">worm</data>
+    	<data type="InitialSleep">5</data>
+    	<data type="Interval">10</data>
+    	<data type="SpawnCount">5</data>
+    	<data type="SpawnVelocity">1:0</data>
+    
+    </GameObject>
+    
+       <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
+    	<data type="Render">static</data>
+    	<data type="Graphics">tree</data>
+    	<data type="GraphicSize">1:2</data>
+    	<data type="Position">5:0</data>
+    	<data type="RigidBody">box</data><!--box/circle/no-body-->
+    </GameObject>
+ 
+    
+     
+    
+</root>
