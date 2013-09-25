@@ -1,0 +1,88 @@
+package ui;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.me.tamer.gameobjects.Tamer;
+import com.me.tamer.gameobjects.renders.StaticRenderer;
+import com.me.tamer.gameobjects.renders.UiRenderer;
+
+public class Joystick implements UIElement{
+
+	private InputController inputcontroller = null;
+	private UiRenderer renderer = null;
+	private Tamer tamer = null ;
+	//Joystick variables
+	Vector2 restingpoint 	= null;
+	Vector2 delta			= null;
+	Vector2 pointer			= null;
+	float size				= 0;
+	float pointersize		= 1f;
+	boolean isPressed		= false;
+	
+	
+	public Joystick(InputController inputController) {
+		this.inputcontroller = inputController;
+		restingpoint	= new Vector2(-3,-16);
+		delta			= new Vector2(0,0);
+		pointer			= new Vector2(restingpoint.x,restingpoint.y);
+		size			= 6;
+		renderer 		= new UiRenderer();
+		tamer 			= 	inputcontroller.getLevel().getTamer();
+		renderer.loadGraphics("joystick");
+		renderer.setSize(size,size);
+		renderer.setPosition(restingpoint);
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		renderer.setSize(size, size);
+		renderer.setPosition(restingpoint);
+		renderer.draw(batch);
+		renderer.setSize(pointersize,pointersize);
+		renderer.setPosition(pointer);
+		renderer.draw(batch);
+		
+	}
+
+	@Override
+	public void update(float dt) {
+		if(!isPressed){
+			Vector2 delta = restingpoint.cpy().sub(pointer);
+			pointer.add(delta);
+			delta.set(0,0);
+			tamer.manouver(delta);
+		}
+		else{
+			delta.set(pointer.cpy().sub(restingpoint));
+			if(delta.len() > size / 2){
+				delta.nor().mul(size/2);
+				pointer.set(restingpoint.cpy().add(delta));
+			}
+			tamer.manouver(delta);
+		}
+	
+	}
+
+	@Override
+	public void relocate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean handleInput(Vector3 input) {
+		isPressed = true;
+		pointer.set(input.x,input.y);
+		
+		return true;
+		
+	}
+
+	@Override
+	public void touchUp() {
+		isPressed = false;
+		
+	}
+
+}
