@@ -65,13 +65,15 @@ public class Environment {
 		
 		return cam;
 	}
+	public OrthographicCamera getUiCamera(){
+		return uiCam;
+	}
 	
 	public void moveCamera(){
 		Vector3 camPos = new Vector3();
 		Vector2 tamerPos = IsoHelper.twoDToIso(level.getTamer().getPosition());
 		Vector2 camBounds = IsoHelper.getTileCoordinates(level.getCamBounds(),1);
 		
-		System.out.println("tamer: " +tamerPos.y +"upper bounds"+(camBounds.y - VIEWPORT_HEIGHT / 2));
 		
 		
 		//X

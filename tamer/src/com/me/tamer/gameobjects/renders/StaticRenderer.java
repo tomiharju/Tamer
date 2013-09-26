@@ -24,7 +24,6 @@ public class StaticRenderer implements Renderer {
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
-		
 	}
 	
 	@Override

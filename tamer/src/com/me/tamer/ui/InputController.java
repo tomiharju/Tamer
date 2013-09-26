@@ -19,7 +19,7 @@ public class InputController implements InputProcessor{
 	private Level level;
 	public InputController(Environment env, Level lvl){
 		this.environment = env;
-		cam = environment.getCamera();
+		cam = environment.getUiCamera();
 		this.level = lvl;
 		buttons = new ArrayList<UIElement>();
 		buttons.add(new ActionButton(this));

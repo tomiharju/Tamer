@@ -155,9 +155,7 @@ public class Level {
 	public void addNewObjects(){
 		if(newobjects.size() > 0){
 			for(GameObject go : newobjects){
-				go.setup();
-				if(go.getRigidBody() !=null )
-					rigidbodies.add(go.getRigidBody());
+				go.wakeUp(this);
 			}
 			gameobjects.addAll(newobjects);
 			newobjects.clear();

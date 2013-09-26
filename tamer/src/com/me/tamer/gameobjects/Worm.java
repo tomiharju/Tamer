@@ -8,18 +8,17 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 
 public class Worm extends DynamicObject{
 	private SpawnPoint spawn;
-	private Level level;
+
 	int ordinal = 1;
 	private ArrayList<WormPart> parts;
 	private WormPart head = null;
 	
 	
 	
-	public Worm(SpawnPoint spawn,Level level){
+	public Worm(SpawnPoint spawn){
 		this.spawn = spawn;
 		heading = new Vector2();
 		parts = new ArrayList<WormPart>();
-		this.level = level;
 	}
 	
 	
@@ -30,12 +29,13 @@ public class Worm extends DynamicObject{
 		addPart("head",0,position,velocity);
 		for(int i = 0 ; i < 5 ; i++)
 			addPart("joint",i+1,position,velocity);
-
+		connectPieces();
+	}
+	public void wakeUp(Level level){
 		for(WormPart part : parts){
 			level.addObject(part);
 			level.addRigidBody(part.getRigidBody());
 		}
-		connectPieces();
 	}
 
 
@@ -70,7 +70,7 @@ public class Worm extends DynamicObject{
 		head.getVelocity().mul(0.99f);
 	}
 	public void draw(SpriteBatch batch){
-		//override to avoid action.
+	//No action
 	}
 	
 	
