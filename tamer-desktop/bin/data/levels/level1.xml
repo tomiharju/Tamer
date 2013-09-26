@@ -1,12 +1,14 @@
 
 <root>
    
+    <Settings>
+        <data type="CameraBounds">8:20:0:0</data>
+    </Settings>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.TileMap">
     	<data type="Renderer">static:dirt</data>
     	<data type="TileSize">1.5:1</data>
     	<data type="MapSize">15:15</data>
-    
     
     </GameObject>
     

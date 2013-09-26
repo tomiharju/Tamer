@@ -12,7 +12,10 @@ import com.me.tamer.physics.RigidBody;
 
 public class Level {
 
-
+	//Settings
+	private Vector2 camBounds = null;
+	private Vector2 camBoundsOffset = null;
+	
 	//Gameobject data
 	private ArrayList<GameObject> gameobjects = null;
 	private ArrayList<GameObject> carbages	= null;
@@ -197,6 +200,27 @@ public class Level {
 	}
 	
 	/**
+	 * LevelCreator calls this to set Camera borders, could be expanded later if more settings needed
+	 */
+	public void setCameraBounds(String value){
+		
+		String[] values =value.split(":");
+		
+		camBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
+		
+		System.out.println("Cambounds: " +camBounds.x +", " +camBounds.y);
+	}
+	
+	public Vector2 getCamBounds(){
+		return camBounds;
+	}
+	
+	public Vector2 getCamBoundsOffset(){
+		return camBoundsOffset;
+	}
+	
+	/**
 	 * Creates tamer and sets starting position
 	 */
 	public void setTamerPos(String pos){
@@ -220,4 +244,6 @@ public class Level {
 		rigidbodies.clear();
 		tamer = null;
 	}
+	
+	
 }
