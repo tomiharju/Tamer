@@ -71,6 +71,9 @@ public class Level {
 	 */
 	public void resolveCollisions(float dt){
 		contacts.clear();
+		for(GameObject go : gameobjects)
+			go.resolveForces(dt);
+		
 		
 		for(RigidBody body : rigidbodies){
 			if(!body.isDynamic())
@@ -107,6 +110,7 @@ public class Level {
 				
 				a.getVelocity().add(addA);
 				b.getVelocity().sub(addB);
+			/*
 				if(c.getDist()<0.1){
 					Vector2 leftNor = normal.cpy().rotate(90);
 					Vector2 rightNor = normal.cpy().rotate(-90);
@@ -120,7 +124,7 @@ public class Level {
 						b.getOwner().setHeading(rightNor);
 						a.getOwner().setHeading(leftNor);
 					}
-				}
+				}*/
 				
 			}
 			
@@ -142,7 +146,7 @@ public class Level {
 				carbages.add(o);
 		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
-			carbages.clear();
+			//carbages.clear();
 		}
 	}
 	public void addNewObjects(){
@@ -187,6 +191,9 @@ public class Level {
 	}
 	public void addNewObject(GameObject obj){
 		newobjects.add(obj);
+	}
+	public void addRigidBody(RigidBody body){
+		rigidbodies.add(body);
 	}
 	
 	/**

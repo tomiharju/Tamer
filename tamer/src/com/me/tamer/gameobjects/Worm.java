@@ -2,51 +2,52 @@ package com.me.tamer.gameobjects;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 
 public class Worm extends DynamicObject{
 	private SpawnPoint spawn;
-	
+	private Level level;
 	int ordinal = 1;
 	private ArrayList<WormPart> parts;
 	private WormPart head = null;
 	
 	
 	
-	public Worm(SpawnPoint spawn){
+	public Worm(SpawnPoint spawn,Level level){
 		this.spawn = spawn;
 		heading = new Vector2();
 		parts = new ArrayList<WormPart>();
+		this.level = level;
 	}
 	
 	
 	public void setup(){
-		setRenderer("static:tamer");
-	
-		setSize("1:1");
 		String pos = (int)spawn.getPosition().x + ":" + (int)spawn.getPosition().y;
 		setPosition(pos);
 		setVelocity(spawn.getSpawnVelocity());
-		setForce("0:0");
-		setMass("10");
-		setRigidBody("circle");
-		heading.set(getVelocity());
-		addPart("head",0);
+		addPart("head",0,position,velocity);
 		for(int i = 0 ; i < 5 ; i++)
-			addPart("joint",i+1);
+			addPart("joint",i+1,position,velocity);
+
+		for(WormPart part : parts){
+			level.addObject(part);
+			level.addRigidBody(part.getRigidBody());
+		}
+		connectPieces();
 	}
 
 
-	public void addPart(String type, int ordinal){
+	public void addPart(String type, int ordinal,Vector2 pos, Vector2 vel){
 		WormPart part = null;
 		if(type.equalsIgnoreCase("head")){
 			part = new WormPart();
-			part.createHead();
+			part.createHead(pos,vel);
 			head = part;
 		}else if(type.equalsIgnoreCase("joint")){
 			part = new WormPart();
-			part.createBodyPart();
+			part.createBodyPart(ordinal,pos,vel);
 		}else throw new IllegalArgumentException("Wrong partname");
 		
 		parts.add(part);
@@ -61,12 +62,15 @@ public class Worm extends DynamicObject{
 			}
 		}
 	}
-	public void solveForces(float dt){
+	public void resolveForces(float dt){
 		head.solveForces(dt);
 	}
 	public void update(float dt){
-	//	head.update(dt);
-	//	head.getVelocity().mul(0.99f);
+		head.updateChild(dt);
+		head.getVelocity().mul(0.99f);
+	}
+	public void draw(SpriteBatch batch){
+		//override to avoid action.
 	}
 	
 	

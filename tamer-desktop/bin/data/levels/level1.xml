@@ -21,15 +21,26 @@
     	<data type="Renderer">static:spawn</data>
     	<data type="Size">1:2</data>
     	<data type="Position">0:0</data>
-    	
     	<!--Spawnpoint specific data  -->
     	<data type="SpawnType">worm</data>
     	<data type="InitialSleep">5</data>
     	<data type="Interval">10</data>
     	<data type="SpawnCount">5</data>
-    	<data type="SpawnVelocity">-2:1</data>
-    
-    </GameObject>
+    	<data type="SpawnVelocity">1:1</data>
+     </GameObject>
+ 
+     
+     <GameObject type ="com.me.tamer.gameobjects.SpawnPoint">
+    	<data type="Renderer">static:spawn</data>
+    	<data type="Size">1:2</data>
+    	<data type="Position">5:5</data>
+    	<!--Spawnpoint specific data  -->
+    	<data type="SpawnType">worm</data>
+    	<data type="InitialSleep">5</data>
+    	<data type="Interval">10</data>
+    	<data type="SpawnCount">5</data>
+    	<data type="SpawnVelocity">-1:-1</data>
+     </GameObject>
  
     
      

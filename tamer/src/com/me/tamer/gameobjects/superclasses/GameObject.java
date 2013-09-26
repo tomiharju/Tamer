@@ -54,6 +54,7 @@ public interface GameObject {
 	 * Required for objects that are created in runtime with threads.
 	 */
 	public void setup();
+	public void resolveForces(float dt);
 	
 }
 

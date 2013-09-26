@@ -103,6 +103,12 @@ public class StaticObject implements GameObject{
 		
 	}
 
+	@Override
+	public void resolveForces(float dt) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }
