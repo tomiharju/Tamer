@@ -2,22 +2,14 @@
 <root>
    
     <Settings>
-        <data type="CameraBounds">8:8:0:0</data>
+        <data type="CameraBounds">8:20:0:0</data>
     </Settings>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.TileMap">
-<<<<<<< HEAD
-    	<data type="MapSize">30:30</data>
-    	<data type="Render">static</data>
-    	<data type="Graphics">dirt</data>
-    	<data type="GraphicSize">1.5:1</data>
-=======
     	<data type="Renderer">static:dirt</data>
     	<data type="TileSize">1.5:1</data>
     	<data type="MapSize">15:15</data>
     
-    
->>>>>>> 51a45be043f203855def80e3fbf010af4fdd99d4
     </GameObject>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">

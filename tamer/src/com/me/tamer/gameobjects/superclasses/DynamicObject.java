@@ -32,7 +32,7 @@ public class DynamicObject implements GameObject{
 	public void draw(SpriteBatch batch) {
 		Renderer renderer = RenderPool.getRenderer(renderType);
 		renderer.setSize(size.x,size.y);
-		renderer.setPosition(position);
+		renderer.setPosition(IsoHelper.twoDToIso(position));
 		renderer.setOrientation(0);
 		renderer.draw(batch);
 		

@@ -71,24 +71,28 @@ public class Environment {
 		Vector2 tamerPos = IsoHelper.twoDToIso(level.getTamer().getPosition());
 		Vector2 camBounds = IsoHelper.getTileCoordinates(level.getCamBounds(),1);
 		
+		System.out.println("tamer: " +tamerPos.y +"upper bounds"+(camBounds.y - VIEWPORT_HEIGHT / 2));
+		
 		
 		//X
-		if (tamerPos.x + VIEWPORT_WIDTH / 2 > camBounds.x){
+		if (tamerPos.x  > camBounds.x - VIEWPORT_WIDTH / 2){
 			camPos.x = camBounds.x - VIEWPORT_WIDTH / 2;
-		}else if(tamerPos.x - VIEWPORT_WIDTH / 2 < -camBounds.x){
+		}else if(tamerPos.x < -camBounds.x + VIEWPORT_WIDTH / 2){
 			camPos.x = -camBounds.x + VIEWPORT_WIDTH / 2;
 		}else{
 			camPos.x = tamerPos.x;
 		}
 		
+		
 		//Y
-		if(tamerPos.y + VIEWPORT_HEIGHT / 2 > camBounds.y){
+		if(tamerPos.y  > camBounds.y - VIEWPORT_HEIGHT / 2){
 			camPos.y = camBounds.y - VIEWPORT_HEIGHT / 2;
-		}else if(tamerPos.y - VIEWPORT_HEIGHT / 2 < -camBounds.y){
+		}else if(tamerPos.y < -camBounds.y + VIEWPORT_HEIGHT / 2){
 			camPos.y = -camBounds.y + VIEWPORT_HEIGHT / 2;
 		}else{	
 			camPos.y = tamerPos.y;	
 		}
+		 
 		
 		//Z
 		camPos.z = 0;
@@ -103,7 +107,6 @@ public class Environment {
 	 */
 	public void createLevel(int current_level){
 		level = LevelCreator.create(current_level);
-		System.out.println("kamera rajat: " +level.getCamBounds());
 	}
 	
 	
@@ -113,12 +116,14 @@ public class Environment {
 		cam.update();
 		//Start uploading sprites
 		batch.begin();
+		
 		//Set projection matrix to batch
 		batch.setProjectionMatrix(uiCam.combined); 
 		inputcontroller.draw(batch);
 		
 		batch.setProjectionMatrix(cam.combined); 
 		level.draw(batch);
+		
 		
 		batch.end();
 		
