@@ -24,6 +24,7 @@ public class Tamer extends DynamicObject{
 	 * @param direction
 	 */
 	public void manouver(Vector2 direction){
+		force.rotate(-45);
 		force.set(direction.mul(SPEED));
 	}
 
