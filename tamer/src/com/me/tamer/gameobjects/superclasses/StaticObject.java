@@ -32,7 +32,6 @@ public class StaticObject implements GameObject{
 		renderer.setPosition(IsoHelper.twoDToIso(position));
 		renderer.setOrientation(0);
 		renderer.draw(batch);
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -71,7 +70,6 @@ public class StaticObject implements GameObject{
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
 		this.position = new Vector2(x,y);
-		
 	}
 
 	@Override

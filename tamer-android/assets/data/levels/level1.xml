@@ -6,9 +6,9 @@
     </Settings>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.TileMap">
-    	<data type="Renderer">static:dirt</data>
-    	<data type="TileSize">1.5:1</data>
-    	<data type="MapSize">15:15</data>
+    	<data type="Renderer">static:tomi</data>
+    	<data type="TileSize">1:1</data>
+    	<data type="MapSize">20:20</data>
     
     </GameObject>
     
@@ -27,7 +27,7 @@
     	<data type="SpawnType">worm</data>
     	<data type="InitialSleep">5</data>
     	<data type="Interval">10</data>
-    	<data type="SpawnVelocity">-1:0</data>
+    	<data type="SpawnVelocity">-0.1:0</data>
     	<data type="SpawnCount">5</data>
      </GameObject>
  

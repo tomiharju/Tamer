@@ -33,8 +33,8 @@ public class Environment {
 	private OrthographicCamera uiCam = null;
 	
 	//Define viewport size
-	private final float VIEWPORT_WIDTH = 12;
-	private final float VIEWPORT_HEIGHT = 24;
+	private final float VIEWPORT_WIDTH = 6;
+	private final float VIEWPORT_HEIGHT = 10;
 
 	//Refrence to active level
 	Level level = null;
@@ -55,9 +55,10 @@ public class Environment {
 	public void setupCamera(){
 		System.err.println("Viewport size "+ Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
 		float ASPECT_RATIO = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
-		cam	= new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);
+		cam	= new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * 2);
 		
-		uiCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);
+		uiCam = new OrthographicCamera();
+		uiCam.setToOrtho(false);
 	
 	}
 	
@@ -119,13 +120,13 @@ public class Environment {
 		//Start uploading sprites
 		batch.begin();
 		
-		//Set projection matrix to batch
-		batch.setProjectionMatrix(uiCam.combined); 
-		inputcontroller.draw(batch);
 		
 		batch.setProjectionMatrix(cam.combined); 
 		level.draw(batch);
-		
+
+		//Set projection matrix to batch
+		batch.setProjectionMatrix(uiCam.combined); 
+		inputcontroller.draw(batch);
 		
 		batch.end();
 		

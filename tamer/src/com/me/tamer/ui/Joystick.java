@@ -17,16 +17,16 @@ public class Joystick implements UIElement{
 	Vector2 delta			= null;
 	Vector2 pointer			= null;
 	float size				= 0;
-	float pointersize		= 1f;
+	float pointersize		= 30f;
 	boolean isPressed		= false;
 	
 	
 	public Joystick(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingpoint	= new Vector2(-3,-16);
+		restingpoint	= new Vector2(100,100);
 		delta			= new Vector2(0,0);
 		pointer			= new Vector2(restingpoint.x,restingpoint.y);
-		size			= 6;
+		size			= 100;
 		renderer 		= new UiRenderer();
 		tamer 			= 	inputcontroller.getLevel().getTamer();
 		renderer.loadGraphics("joystick");
@@ -71,7 +71,7 @@ public class Joystick implements UIElement{
 	}
 
 	@Override
-	public boolean handleInput(Vector3 input) {
+	public boolean handleInput(Vector2 input) {
 		isPressed = true;
 		pointer.set(input.x,input.y);
 		
@@ -83,6 +83,19 @@ public class Joystick implements UIElement{
 	public void touchUp() {
 		isPressed = false;
 		
+	}
+
+	@Override
+	public void touchDown() {
+		isPressed = true;
+		
+	}
+
+	@Override
+	public boolean isTouched(Vector2 input) {
+		if(input.dst(restingpoint) < size + 10)
+			return true;
+		return false;
 	}
 
 }
