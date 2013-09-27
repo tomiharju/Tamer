@@ -1,7 +1,9 @@
 package com.me.tamer.utils;
 
+import java.io.Console;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -20,6 +22,7 @@ import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.Renderer.RenderType;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.SpawnPoint;
+
 
 /**
  * @author tharju
@@ -48,15 +51,29 @@ public class LevelCreator {
 			FileHandle file = Gdx.files.internal("data/levels/level"+level_number+".xml");
 			Element root = reader.parse(file);
 			
+			String objectType;
+			Array<Element> datavalues;
+			
+			//Settings
+			Element settings = root.getChildByName("Settings");
+			datavalues = settings.getChildrenByName("data");
+			
+			for(Element data : datavalues){
+				//Get the setter method, "set + type in xml"
+				Method method = level.getClass().getMethod("set" +data.getAttribute("type"), String.class);
+				method.invoke(level, (Object)data.getText());	
+			}
+			
+			//Gameobjects
 			Array<Element> objects = root.getChildrenByName("GameObject");
 			
 			for(Element gameobject : objects){
 				//First child is always GameObject
 				//Create new LinkedHashMap ( it keeps input order ) to hold all values for this gameobject
-				String objectType = gameobject.getAttribute("type");
+				objectType = gameobject.getAttribute("type");
 				
 				LinkedHashMap<String,String> config = new LinkedHashMap<String,String>();
-				Array<Element> datavalues = gameobject.getChildrenByName("data");
+				datavalues = gameobject.getChildrenByName("data");
 				for(Element data : datavalues){
 					config.put(data.getAttribute("type"),data.getText());
 				}

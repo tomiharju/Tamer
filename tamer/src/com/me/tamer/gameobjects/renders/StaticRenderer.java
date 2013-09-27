@@ -24,12 +24,13 @@ public class StaticRenderer implements Renderer {
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
-		
 	}
 	
 	@Override
 	public void loadGraphics(String graphicsName) {
 		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
+		if(sprite == null)
+			throw new IllegalArgumentException("Could not load sprite!");
 	}
 	@Override
 	public void setSize(float w, float h) {

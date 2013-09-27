@@ -5,7 +5,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED = 1;
+	private final float SPEED = 0.1f;
 	
 	@Override
 	public void update(float dt){
