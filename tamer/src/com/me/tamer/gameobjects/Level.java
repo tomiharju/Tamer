@@ -206,8 +206,6 @@ public class Level {
 		
 		camBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
 		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
-		
-		System.out.println("Cambounds: " +camBounds.x +", " +camBounds.y);
 	}
 	
 	public Vector2 getCamBounds(){
@@ -224,7 +222,7 @@ public class Level {
 	public void setTamerPos(String pos){
 		tamer = new Tamer();
 		tamer.setRenderer("static:tamer");
-		tamer.setSize("1:1");
+		tamer.setSize("2:2");
 		tamer.setPosition(pos);
 		tamer.setVelocity("0:0");
 		tamer.setForce("0:0");

@@ -25,13 +25,11 @@ public class IsoHelper{
 	 */
 	public static Vector2 twoDToIso(Vector2 point){
 			Vector2 temp = new Vector2(0,0);
-			temp.x = ( point.y / 0.5f ) + point.x;
-			temp.y = point.x - ( point.y / 0.5f);
-			/*tempPt.x = (point.x - point.y);
-			tempPt.y = (point.x + point.y ) * 0.5f;*/
+			temp.x = (point.x - point.y);
+			temp.y = (point.x + point.y ) * 0.5f;
 			return temp;
 	}
-	public static Vector2 twoDtoTileIso(Vector2 point){
+	public static Vector2 twoDToTileIso(Vector2 point){
 		Vector2 tempPt = new Vector2(0,0);
 		tempPt.x = (point.x - point.y) * 0.5f;
 		tempPt.y = (point.x + point.y ) * 0.5f;

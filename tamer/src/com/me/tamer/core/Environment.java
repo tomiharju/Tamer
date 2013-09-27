@@ -33,8 +33,8 @@ public class Environment {
 	private OrthographicCamera uiCam = null;
 	
 	//Define viewport size
-	private final float VIEWPORT_WIDTH = 6;
-	private final float VIEWPORT_HEIGHT = 10;
+	private final float VIEWPORT_WIDTH = 12;
+	private final float VIEWPORT_HEIGHT = 20;
 
 	//Refrence to active level
 	Level level = null;
@@ -46,7 +46,6 @@ public class Environment {
 	public Environment(){
 		//Spritebatch is used for drawing sprites
 		batch 			= new SpriteBatch();
-	
 		setupCamera();
 		createLevel(1);
 		inputcontroller = new InputController(this,level);
@@ -134,7 +133,6 @@ public class Environment {
 	public void update(float dt){
 		inputcontroller.update(dt);
 		level.update(dt);
-		moveCamera();
 		
 	}
 	
