@@ -74,6 +74,9 @@ public class Level {
 	 */
 	public void resolveCollisions(float dt){
 		contacts.clear();
+		for(GameObject go : gameobjects)
+			go.resolveForces(dt);
+		
 		
 		for(RigidBody body : rigidbodies){
 			if(!body.isDynamic())
@@ -110,6 +113,7 @@ public class Level {
 				
 				a.getVelocity().add(addA);
 				b.getVelocity().sub(addB);
+			/*
 				if(c.getDist()<0.1){
 					Vector2 leftNor = normal.cpy().rotate(90);
 					Vector2 rightNor = normal.cpy().rotate(-90);
@@ -123,7 +127,7 @@ public class Level {
 						b.getOwner().setHeading(rightNor);
 						a.getOwner().setHeading(leftNor);
 					}
-				}
+				}*/
 				
 			}
 			
@@ -145,15 +149,13 @@ public class Level {
 				carbages.add(o);
 		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
-			carbages.clear();
+			//carbages.clear();
 		}
 	}
 	public void addNewObjects(){
 		if(newobjects.size() > 0){
 			for(GameObject go : newobjects){
-				go.setup();
-				if(go.getRigidBody() !=null )
-					rigidbodies.add(go.getRigidBody());
+				go.wakeUp(this);
 			}
 			gameobjects.addAll(newobjects);
 			newobjects.clear();
@@ -191,6 +193,9 @@ public class Level {
 	public void addNewObject(GameObject obj){
 		newobjects.add(obj);
 	}
+	public void addRigidBody(RigidBody body){
+		rigidbodies.add(body);
+	}
 	
 	/**
 	 * LevelCreator calls this to set Camera borders, could be expanded later if more settings needed
@@ -201,8 +206,6 @@ public class Level {
 		
 		camBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
 		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
-		
-		System.out.println("Cambounds: " +camBounds.x +", " +camBounds.y);
 	}
 	
 	public Vector2 getCamBounds(){
@@ -219,7 +222,7 @@ public class Level {
 	public void setTamerPos(String pos){
 		tamer = new Tamer();
 		tamer.setRenderer("static:tamer");
-		tamer.setSize("1:1");
+		tamer.setSize("2:2");
 		tamer.setPosition(pos);
 		tamer.setVelocity("0:0");
 		tamer.setForce("0:0");

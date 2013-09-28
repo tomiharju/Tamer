@@ -5,8 +5,10 @@ import java.util.LinkedHashMap;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.Environment;
 import com.me.tamer.gameobjects.renders.Renderer.RenderType;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.utils.GameObjectFactory;
+import com.me.tamer.utils.RuntimeObjectFactory;
 
 /**
  * @author tharju
@@ -46,10 +48,10 @@ public class SpawnPoint extends StaticObject{
 						//Set initial sleep to 0 to prevent further delay
 						initialSleep = 0;
 						//Add newly created worm to main gameobject list
-						if(spawnType.equalsIgnoreCase("worm"))
-							level.addNewObject(new Worm(spawn));
-						else if(spawnType.equalsIgnoreCase("ant"))
-							level.addNewObject(new Worm(spawn));
+						if(spawnType.equalsIgnoreCase("worm")){
+							level.addNewObject(RuntimeObjectFactory.getObjectFromPool("worm"));
+						}else if(spawnType.equalsIgnoreCase("ant"))
+							level.addNewObject(RuntimeObjectFactory.getObjectFromPool("worm"));
 						//Sleep for the actual spawn interval
 						Thread.sleep(interval);
 					}
@@ -64,6 +66,8 @@ public class SpawnPoint extends StaticObject{
 			
 		}).start();
 	}
+	
+
 
 	public void setLevel(Level level) {
 		this.level = level;
@@ -83,6 +87,9 @@ public class SpawnPoint extends StaticObject{
 
 	public void setSpawnCount(String spawncount) {
 		this.spawnCount = Integer.parseInt(spawncount);
+		if(spawnType.equalsIgnoreCase("worm"))
+			for( int i = 0 ; i < this.spawnCount ; i++)
+				RuntimeObjectFactory.addToObjectPool("worm",new Worm(this));
 	}
 	
 	public void setSpawnVelocity(String vel){

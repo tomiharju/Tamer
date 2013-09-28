@@ -23,6 +23,7 @@ public class GroundTile extends StaticObject implements Tile {
 		//this.action = ActionFactory.createAction(action);
 		
 	}
+	
 
 	
 	

@@ -6,7 +6,7 @@ import com.me.tamer.physics.RigidBodyCircle;
 
 public class WormPart extends DynamicObject {
 	
-	private int restLength = 15;
+	private float restLength = 0.5f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
 	private float speed = 0;
@@ -19,17 +19,28 @@ public class WormPart extends DynamicObject {
 	private String partName = null;
 	
 	
-	public void createHead(){
+	public void createHead(Vector2 pos, Vector2 vel){
+		setRenderer("static:wormhead");
 		partName = "Head";
-		radii = 0.5f;
+		radii = .5f;
 		mass = 20;
-		body = new RigidBodyCircle(position,getVelocity(),mass,radii);
+		position = new Vector2(pos);
+		velocity = new Vector2(vel);
+		force = new Vector2(vel);
+		size = new Vector2(radii,radii);
+		body = new RigidBodyCircle(position,velocity,mass,radii);
 	}
-	public void createBodyPart(){
+	public void createBodyPart(int ordinal,Vector2 pos, Vector2 vel){
+		setRenderer("static:wormpart");
 		partName = "Joint";
-		radii = 0.5f;
+		radii = .5f;
 		mass = 10;
-		body = new RigidBodyCircle(position,getVelocity(),mass,radii);
+		position = new Vector2(pos);
+		position.add(vel.cpy().nor().mul(-ordinal*restLength));
+		velocity = new Vector2(vel);
+		force = new Vector2();
+		size = new Vector2(radii,radii);
+		body = new RigidBodyCircle(position,velocity,mass,radii);
 	}
 	
 	public void bind(){
@@ -56,14 +67,17 @@ public class WormPart extends DynamicObject {
 		}
 	}
 	public void update(float dt){
-	/*	if(child != null && child.partName.equalsIgnoreCase("Join"))
-			child.update(dt);
+		//Overidde this to do nothing.
+	}
+	public void updateChild(float dt){
+		if(child != null && child.partName.equalsIgnoreCase("Joint"))
+			child.updateChild(dt);
 		
 		position.add(velocity.cpy().mul(dt));
 		velocity.mul(0.9f);
 		if(partName.equalsIgnoreCase("Head"))
 			velocity.add(force);
-	*/}
+	}
 	
 	public void solveJoint(float dt){
 		Vector2 axis = child.position.cpy().sub(position);

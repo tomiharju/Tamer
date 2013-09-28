@@ -3,32 +3,39 @@ package com.me.tamer.ui;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.me.tamer.core.Environment;
+import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.renders.StaticRenderer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.utils.IsoHelper;
 
 public class Joystick implements UIElement{
 
 	private InputController inputcontroller = null;
 	private UiRenderer renderer = null;
 	private Tamer tamer = null ;
+	private Level level = null;
+	private Environment env = null;
 	//Joystick variables
 	Vector2 restingpoint 	= null;
 	Vector2 delta			= null;
 	Vector2 pointer			= null;
 	float size				= 0;
-	float pointersize		= 1f;
+	float pointersize		= 30f;
 	boolean isPressed		= false;
 	
 	
 	public Joystick(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingpoint	= new Vector2(-3,-16);
+		restingpoint	= new Vector2(100,100);
 		delta			= new Vector2(0,0);
 		pointer			= new Vector2(restingpoint.x,restingpoint.y);
-		size			= 6;
+		size			= 100;
 		renderer 		= new UiRenderer();
-		tamer 			= 	inputcontroller.getLevel().getTamer();
+		tamer 			= inputcontroller.getLevel().getTamer();
+		level			= inputcontroller.getLevel();
+		env 			= inputcontroller.getEnvironment();
 		renderer.loadGraphics("joystick");
 		renderer.setSize(size,size);
 		renderer.setPosition(restingpoint);
@@ -59,9 +66,30 @@ public class Joystick implements UIElement{
 				delta.nor().mul(size/2);
 				pointer.set(restingpoint.cpy().add(delta));
 			}
-			tamer.manouver(delta);
+			checkBounds(delta.cpy().mul(dt));
+			env.moveCamera();
 		}
 	
+	}
+	
+	public void checkBounds(Vector2 movement){
+		Vector3 camPos = new Vector3();
+		Vector2 camBounds = IsoHelper.getTileCoordinates(level.getCamBounds(),1);
+		Vector2 position = tamer.getPosition().cpy().add(movement);
+		boolean legalmove = true;
+		
+		//Check wether position + delta is still inside camera bounds
+		if(position.x > camBounds.x || position.x < -camBounds.x){
+			legalmove = false;
+		}
+		if(position.y > camBounds.y || position.y < -camBounds.y){
+			legalmove = false;
+		}
+	
+		if(legalmove){
+			System.out.println("Manouvering!");
+			tamer.manouver(delta);
+		}
 	}
 
 	@Override
@@ -71,7 +99,7 @@ public class Joystick implements UIElement{
 	}
 
 	@Override
-	public boolean handleInput(Vector3 input) {
+	public boolean handleInput(Vector2 input) {
 		isPressed = true;
 		pointer.set(input.x,input.y);
 		
@@ -83,6 +111,19 @@ public class Joystick implements UIElement{
 	public void touchUp() {
 		isPressed = false;
 		
+	}
+
+	@Override
+	public void touchDown() {
+		isPressed = true;
+		
+	}
+
+	@Override
+	public boolean isTouched(Vector2 input) {
+		if(input.dst(restingpoint) < size + 10)
+			return true;
+		return false;
 	}
 
 }

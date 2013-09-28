@@ -2,6 +2,7 @@ package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Level;
 import com.me.tamer.physics.RigidBody;
 
 
@@ -53,7 +54,17 @@ public interface GameObject {
 	/**
 	 * Required for objects that are created in runtime with threads.
 	 */
+	/**
+	 * Called at level loading, used to load all graphics and other assets
+	 */
 	public void setup();
+	/**
+	 * @param Gets level as parameter, needed to be able to add rigidbodies to world etc.
+	 * Used when object is fetched from objectpool and put into gameworld.
+	 * 
+	 */
+	public void wakeUp(Level level);
+	public void resolveForces(float dt);
 	
 }
 

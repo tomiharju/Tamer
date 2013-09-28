@@ -2,6 +2,7 @@ package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.physics.RigidBody;
@@ -17,7 +18,7 @@ public class DynamicObject implements GameObject{
 	protected Vector2 heading;
 	protected Vector2 force;			// Magnitude and direction of per loop position iteration
 	private float mass;			
-	private float invMass;			// Precalculated invmass, used in physics calculations
+	private float invMass;				// Precalculated invmass, used in physics calculations
 	protected Vector2 size;
 	private String renderType;
 	private boolean isCarbage = false;
@@ -70,8 +71,8 @@ public class DynamicObject implements GameObject{
 	}
 	public void setVelocity(String vel){
 		String[] values = vel.split(":");
-		int x = Integer.parseInt(values[0]);
-		int y = Integer.parseInt(values[1]);
+		float x = Float.parseFloat(values[0]);
+		float y = Float.parseFloat(values[1]);
 		this.velocity = new Vector2(x,y);
 		
 	}
@@ -85,7 +86,7 @@ public class DynamicObject implements GameObject{
 		if(bodytype.equalsIgnoreCase("box"))
 			body = new RigidBodyBox(position,new Vector2(0,0),0,size.x,size.y); //Position, speed, mass, width,height ( speed and mass are 0 cause its static object )
 		else if(bodytype.equalsIgnoreCase("circle"))
-			body = new RigidBodyCircle(position,getVelocity(),mass,size.x/2);//Position, velocity, mass, radii
+			body = new RigidBodyCircle(position,velocity,mass,size.x/2);//Position, velocity, mass, radii
 		else if(bodytype.equalsIgnoreCase("no-body"))
 			body = null;
 		if(body != null)
@@ -122,6 +123,17 @@ public class DynamicObject implements GameObject{
 	public void setVelocity(Vector2 velocity) {
 		this.velocity = velocity;
 	}
+	@Override
+	public void resolveForces(float dt) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void wakeUp(Level level) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }
