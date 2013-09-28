@@ -70,8 +70,10 @@ public class Environment {
 		Vector3 camPos = new Vector3();
 		Vector2 tamerPos = IsoHelper.twoDToIso(level.getTamer().getPosition());
 		Vector2 camBounds = IsoHelper.getTileCoordinates(level.getCamBounds(),1);
+		Vector2 camOffset = IsoHelper.getTileCoordinates(level.getCamBoundsOffset(), 1);
+		camBounds.x += camOffset.x;
+		camBounds.y += camOffset.y;
 		
-		System.out.println("tamer: " +tamerPos.y +"upper bounds"+(camBounds.y - VIEWPORT_HEIGHT / 2));
 		
 		
 		//X
