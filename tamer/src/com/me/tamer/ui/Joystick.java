@@ -66,29 +66,33 @@ public class Joystick implements UIElement{
 				delta.nor().mul(size/2);
 				pointer.set(restingpoint.cpy().add(delta));
 			}
+			delta.div(10);
+			env.moveCamera(delta.cpy().mul(dt));
 			checkBounds(delta.cpy().mul(dt));
-			env.moveCamera();
+			
 		}
 	
 	}
 	
 	public void checkBounds(Vector2 movement){
-		Vector3 camPos = new Vector3();
-		Vector2 camBounds = IsoHelper.getTileCoordinates(level.getCamBounds(),1);
-		Vector2 position = tamer.getPosition().cpy().add(movement);
-		boolean legalmove = true;
+		Vector2 camBounds = level.getCamBounds();
+		Vector2 position = new Vector2();
+		position.set(tamer.getPosition());
+		position.add(movement);
+		
+		
 		
 		//Check wether position + delta is still inside camera bounds
 		if(position.x > camBounds.x || position.x < -camBounds.x){
-			legalmove = false;
+			movement.set(0,movement.y);
 		}
 		if(position.y > camBounds.y || position.y < -camBounds.y){
-			legalmove = false;
+			movement.set(movement.x,0);
+		
 		}
 	
-		if(legalmove){
-			tamer.manouver(delta);
-		}
+		tamer.manouver(movement);
+		
 	}
 
 	@Override

@@ -18,10 +18,10 @@ public class RuntimeObjectFactory {
 		}
 		
 	}
-	public static GameObject getObjectFromPool(String type){
+	public static synchronized GameObject getObjectFromPool(String type){
+	
 		LinkedList<GameObject> pool = objectPool.get(type);
 		if( pool != null && !pool.isEmpty()){
-			System.out.println("Items in pool "+pool.size());
 			return pool.pop();
 			
 		}

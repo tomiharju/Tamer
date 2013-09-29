@@ -32,9 +32,11 @@ public class Worm extends DynamicObject{
 		connectPieces();
 	}
 	public void wakeUp(Level level){
+			level.addObject(this);
 		for(WormPart part : parts){
 			level.addObject(part);
 			level.addRigidBody(part.getRigidBody());
+			
 		}
 	}
 

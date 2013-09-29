@@ -2,7 +2,6 @@ package com.me.tamer.core;
 
 import java.util.ArrayList;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -69,37 +68,14 @@ public class Environment {
 		return uiCam;
 	}
 	
-	public void moveCamera(){
-		Vector3 camPos = new Vector3();
-		Vector2 tamerPos = IsoHelper.twoDToIso(level.getTamer().getPosition());
-		Vector2 camBounds = IsoHelper.getTileCoordinates(level.getCamBounds(),1);
+	public void moveCamera(Vector2 delta){
+		Vector2 tamerPos = level.getTamer().getPosition();
+		Vector2 newPos = IsoHelper.twoDToIso(tamerPos);
+		cam.position.set(newPos.x,newPos.y,0);
 		
+			
+	
 		
-		
-		//X
-		if (tamerPos.x  > camBounds.x - VIEWPORT_WIDTH / 2){
-			camPos.x = camBounds.x - VIEWPORT_WIDTH / 2;
-		}else if(tamerPos.x < -camBounds.x + VIEWPORT_WIDTH / 2){
-			camPos.x = -camBounds.x + VIEWPORT_WIDTH / 2;
-		}else{
-			camPos.x = tamerPos.x;
-		}
-		
-		
-		//Y
-		if(tamerPos.y  > camBounds.y - VIEWPORT_HEIGHT / 2){
-			camPos.y = camBounds.y - VIEWPORT_HEIGHT / 2;
-		}else if(tamerPos.y < -camBounds.y + VIEWPORT_HEIGHT / 2){
-			camPos.y = -camBounds.y + VIEWPORT_HEIGHT / 2;
-		}else{	
-			camPos.y = tamerPos.y;	
-		}
-		 
-		
-		//Z
-		camPos.z = 0;
-		
-		cam.position.set(camPos);
 	}
 	
 	/**

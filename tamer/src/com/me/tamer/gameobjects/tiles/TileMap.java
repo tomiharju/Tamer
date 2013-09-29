@@ -5,8 +5,10 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
+import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RendererFactory;
 
 /**
@@ -22,17 +24,20 @@ public class TileMap extends StaticObject{
 	private int tile_width 		= 0;
 	private int rows 				= 0;
 	private int columns			= 0;
-	
+	private int numTiles	=0;
 	private Renderer tilerenderer = null;
-	private ArrayList<GroundTile> terrain;
+	private ArrayList<Vector2> terrain;
 	private Vector2 bounds;
 	
 	
 	
 	@Override
 	public void draw(SpriteBatch batch){
-		for(GroundTile tile : terrain){
-			tile.draw(batch);
+		Renderer renderer = RenderPool.getRenderer(renderType);
+		renderer.setSize(size.x,size.y);
+		for(int i = 0 ; i < numTiles ; i++){
+			renderer.setPosition(IsoHelper.twoDToTileIso(terrain.get(i)));
+			renderer.draw(batch);
 		}
 			
 	}
@@ -44,37 +49,20 @@ public class TileMap extends StaticObject{
 		int c = Integer.parseInt(values[1]);
 		this.rows = r;
 		this.columns = c;
-		terrain = new ArrayList<GroundTile>();
-		
+		numTiles = r * c;
+		terrain = new ArrayList<Vector2>();
+		setRenderer("static:"+renderType);
+		setSize("1:1");
 		for(int i = 0 ; i < this.rows ; i ++ )
 			for(int k = 0 ; k < this.columns ; k ++){
-				GroundTile tile = new GroundTile();
+				Vector2 tile = new Vector2();
 				//C stands for columns, which is same as cartesian x, row for y and cartesian y
-				tile.setPosition( (i - rows/2) +":"+ (k - columns/2));
-				tile.setRenderer("static:"+renderType);
-				tile.setSize(this.size.x+":"+this.size.y);
+				tile.set(i - rows/2 ,k - columns/2);
 				terrain.add(tile);
 			}
 		
 		bounds = new Vector2(r,c);
 	}
-	
-
-	public void setTileSize(String size) {
-		String[] values = size.split(":");
-		float w = Float.parseFloat(values[0]);
-		float h = Float.parseFloat(values[1]);
-		this.size = new Vector2(w,h);
-		
-	}
-
-	
-	
-	
-	
-	
-	
-	
 	
 
 	public int getTile_width() {
