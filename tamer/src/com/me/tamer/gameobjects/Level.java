@@ -9,6 +9,7 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.tiles.ObstacleTile;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.RigidBody;
+import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Level {
 
@@ -41,6 +42,8 @@ public class Level {
 		worms			= new ArrayList<Worm>();
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
+		
+		RuntimeObjectFactory.createLinkToLevel(this);
 	}
 	
 	/**
@@ -138,9 +141,10 @@ public class Level {
 				b.getVelocity().sub(addB);
 				*/
 			/*
+				if(a.getOwner().)
 				if(c.getDist()<0.1){
-					Vector2 leftNor = normal.cpy().rotate(90);
-					Vector2 rightNor = normal.cpy().rotate(-90);
+					Vector2 leftNor = normal.rotate(90);
+					Vector2 rightNor = normal.rotate(-180);
 					float dotleft = b.getVelocity().dot(leftNor);
 					float dotRight = b.getVelocity().dot(rightNor);
 					if(dotleft > 0){
@@ -180,11 +184,10 @@ public class Level {
 	}
 	public synchronized void addNewObjects(){
 		if(newobjects.size() > 0){
-			System.out.println("Thread adding new object, size " + newobjects.size());
 			for(GameObject go : newobjects){
 				go.wakeUp(this);
+				gameobjects.add(go);
 			}
-		
 			newobjects.clear();
 		}
 		

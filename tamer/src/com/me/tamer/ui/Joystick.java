@@ -55,10 +55,7 @@ public class Joystick implements UIElement{
 	@Override
 	public void update(float dt) {
 		if(!isPressed){
-			Vector2 delta = restingpoint.cpy().sub(pointer);
-			pointer.add(delta);
-			delta.set(0,0);
-			tamer.manouver(delta);
+			pointer.set(restingpoint);
 		}
 		else{
 			delta.set(pointer.cpy().sub(restingpoint));
@@ -124,7 +121,7 @@ public class Joystick implements UIElement{
 
 	@Override
 	public boolean isTouched(Vector2 input) {
-		if(input.dst(restingpoint) < size + 10)
+		if(input.dst(restingpoint) < size / 2)
 			return true;
 		return false;
 	}

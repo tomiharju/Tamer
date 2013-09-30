@@ -15,17 +15,19 @@ public class InputController implements InputProcessor{
 
 	ArrayList<UIElement> buttons ;
 	private Environment environment;
+	OrthographicCamera uiCam = null;
 	OrthographicCamera cam = null;
 	private Level level;
 	private UIElement selectedButton = null;
 	public InputController(Environment env, Level lvl){
 		this.environment = env;
-		cam = environment.getUiCamera();
+		uiCam = environment.getUiCamera();
+		cam = environment.getCamera();
 		this.level = lvl;
 		buttons = new ArrayList<UIElement>();
 		buttons.add(new ActionButton(this));
 		buttons.add(new Joystick(this));
-		buttons.add(new SlidingButton(this));
+		buttons.add(new SpearButton(this));
 		
 		Gdx.input.setInputProcessor(this);
 	}
@@ -52,6 +54,13 @@ public class InputController implements InputProcessor{
 	public Level getLevel() {
 		return level;
 	}
+	public OrthographicCamera getCam(){
+		return cam;
+	}
+	public OrthographicCamera getUiCam(){
+		return uiCam;
+	}
+
 
 
 	@Override
@@ -74,8 +83,7 @@ public class InputController implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Vector2 input = new Vector2(screenX,cam.viewportHeight - screenY);
-		System.out.println(input.toString());
+		Vector2 input = new Vector2(screenX,uiCam.viewportHeight - screenY);
 		for(UIElement e : buttons)
 			if(e.isTouched(input)){
 					e.handleInput(input);
@@ -96,7 +104,7 @@ public class InputController implements InputProcessor{
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		Vector2 input = new Vector2(screenX,cam.viewportHeight - screenY );
+		Vector2 input = new Vector2(screenX,uiCam.viewportHeight - screenY );
 		
 		if(selectedButton != null)
 			selectedButton.handleInput(input);

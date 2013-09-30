@@ -52,9 +52,9 @@ public class SpawnPoint extends StaticObject{
 						initialSleep = 0;
 						//Add newly created worm to main gameobject list
 						if(spawnType.equalsIgnoreCase("worm")){
-							level.addNewObject(RuntimeObjectFactory.getObjectFromPool("worm"+spawnNumber));
+							RuntimeObjectFactory.getObjectFromPool("worm"+spawnNumber);
 						}else if(spawnType.equalsIgnoreCase("ant"))
-							level.addNewObject(RuntimeObjectFactory.getObjectFromPool("worm"+spawnNumber));
+							RuntimeObjectFactory.getObjectFromPool("worm"+spawnNumber);
 						//Sleep for the actual spawn interval
 						Thread.sleep(interval);
 					}

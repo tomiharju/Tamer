@@ -32,7 +32,10 @@ public class UiRenderer implements Renderer {
 		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight() / 2 );
 		
 	}
+	public void setPosition2(Vector2 pos){
+		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - 0.5f );
 
+	}
 	@Override
 	public void setOrientation(float angle) {
 		// TODO Auto-generated method stub
