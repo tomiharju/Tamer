@@ -27,6 +27,11 @@ public class Level {
 	//Physical contact list
 	private ArrayList<Contact> contacts;
 	private ArrayList<RigidBody> rigidbodies;
+	//Physics optimization variables
+	Vector2 impulseA = new Vector2();
+	Vector2 impulseB = new Vector2();
+	Vector2 bVelocity = new Vector2();
+	Vector2 normal = new Vector2();
 	
 	public Level(){
 		gameobjects 	= new ArrayList<GameObject>();
@@ -47,23 +52,26 @@ public class Level {
 		addNewObjects();
 		resolveObstacles();
 		resolveCollisions(dt);
-		for(GameObject o : gameobjects)
-			o.update(dt);
+		int numObjects = gameobjects.size();
+		for(int k = 0 ; k < numObjects ; k++)
+			gameobjects.get(k).update(dt);
 	}
 	/**
 	 * @param batch
 	 * General drawing loop
 	 */
 	public void draw(SpriteBatch batch){
-		for(GameObject o : gameobjects)
-			o.draw(batch);
+		int numObjects = gameobjects.size();
+		for(int k = 0 ; k < numObjects ; k++)
+			gameobjects.get(k).draw(batch);
 	}
 	
 	public void resolveObstacles(){
-		for(ObstacleTile ot : obstacles)
-			for(Worm w : worms)
-				ot.resolveTile(w);
-				
+		int numObstacles = obstacles.size();
+		int numWorms = worms.size();
+		for(int i = 0 ; i < numObstacles ; i++)
+			for(int k = 0 ; k < numWorms ; k++)
+				obstacles.get(i).resolveTile(worms.get(k));			
 	}
 	
 	/**
@@ -74,17 +82,19 @@ public class Level {
 	 */
 	public void resolveCollisions(float dt){
 		contacts.clear();
-		for(GameObject go : gameobjects)
-			go.resolveForces(dt);
+		int numObjects = gameobjects.size();
+		int numBodies = rigidbodies.size();
+		for(int k = 0 ; k < numObjects ; k++)
+			gameobjects.get(k).resolveForces(dt);
 		
-		
-		for(RigidBody body : rigidbodies){
-			if(!body.isDynamic())
+		for(int i = 0 ; i < numBodies ; i ++){
+			if(!rigidbodies.get(i).isDynamic())
 				continue;
-			RigidBody firstbody = body;
-			for(RigidBody anotherbody : rigidbodies){
-				if(anotherbody != firstbody){
-					Contact c = firstbody.generateContact(anotherbody);
+			RigidBody firstbody = rigidbodies.get(i);
+			for(int j = 0 ; j < numBodies ; j++){
+				RigidBody secondBody = rigidbodies.get(j);
+				if(secondBody != firstbody){
+					Contact c = firstbody.generateContact(secondBody);
 					if(c != null)
 						contacts.add(c);
 				}
@@ -92,19 +102,32 @@ public class Level {
 		}
 		
 		if(contacts.size() > 0){
-			for(Contact c : contacts){
-				Vector2 normal = c.getN();
+			int numContacts = contacts.size();
+			for(int i = 0 ; i < numContacts ; i++){
+				Contact c = contacts.get(i);
+				normal.set(c.getN());
 				RigidBody b = c.getObjB();
 				RigidBody a = c.getObjA();
+				float dist = c.getDist();
 				//Relative velocity ( vector )
-				Vector2 rv = b.getVelocity().cpy().sub(a.getVelocity());
+				bVelocity.set(b.getVelocity());
+				Vector2 rv = bVelocity.sub(a.getVelocity());
 				//Relative normal velocity ( scalar )
 				float relNv = rv.dot(normal);
-				
-				float remove = relNv + c.getDist() / dt;
-				
+			
+				float remove = relNv + dist / dt;
 				float imp = remove / ( b.getInvMass() + a.getInvMass() );
-				float newImp = Math.min(imp, 0);
+				imp = Math.min(imp, 0);
+				Vector2 impulse = normal.mul(imp);
+			
+				impulseA.set(impulse);
+				impulseB.set(impulse);
+				impulseA.mul(a.getInvMass());
+				impulseB.mul(b.getInvMass());
+	
+				a.getVelocity().add(impulseA);
+				b.getVelocity().sub(impulseB);
+			/*
 				Vector2 addA = normal.cpy().mul(newImp);
 				Vector2 addB = normal.cpy().mul(newImp);
 				
@@ -113,6 +136,7 @@ public class Level {
 				
 				a.getVelocity().add(addA);
 				b.getVelocity().sub(addB);
+				*/
 			/*
 				if(c.getDist()<0.1){
 					Vector2 leftNor = normal.cpy().rotate(90);
@@ -144,20 +168,23 @@ public class Level {
 	
 	
 	public void runCarbageCollection(){
-		for(GameObject o : gameobjects)
-			if(o.isCarbage())
-				carbages.add(o);
+		int size = gameobjects.size();
+		for( int i = 0 ; i < size ; i ++)
+			if(gameobjects.get(i).isCarbage())
+				carbages.add(gameobjects.get(i));
+		
 		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
 			//carbages.clear();
 		}
 	}
-	public void addNewObjects(){
+	public synchronized void addNewObjects(){
 		if(newobjects.size() > 0){
+			System.out.println("Thread adding new object, size " + newobjects.size());
 			for(GameObject go : newobjects){
 				go.wakeUp(this);
 			}
-			gameobjects.addAll(newobjects);
+		
 			newobjects.clear();
 		}
 		
@@ -206,8 +233,6 @@ public class Level {
 		
 		camBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
 		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
-		
-		System.out.println("Cambounds: " +camBounds.x +", " +camBounds.y);
 	}
 	
 	public Vector2 getCamBounds(){
@@ -224,7 +249,7 @@ public class Level {
 	public void setTamerPos(String pos){
 		tamer = new Tamer();
 		tamer.setRenderer("static:tamer");
-		tamer.setSize("1:1");
+		tamer.setSize("2:2");
 		tamer.setPosition(pos);
 		tamer.setVelocity("0:0");
 		tamer.setForce("0:0");

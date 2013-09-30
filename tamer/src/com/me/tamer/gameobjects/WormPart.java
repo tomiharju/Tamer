@@ -17,6 +17,10 @@ public class WormPart extends DynamicObject {
 	private WormPart child 		= null;
 	private boolean isAttached = false;
 	private String partName = null;
+	//Physics optimization variables;
+	Vector2 impulseA = new Vector2();
+	Vector2 impulseB = new Vector2();
+	Vector2 tempVector = new Vector2();
 	
 	
 	public void createHead(Vector2 pos, Vector2 vel){
@@ -37,8 +41,8 @@ public class WormPart extends DynamicObject {
 		mass = 10;
 		position = new Vector2(pos);
 		position.add(vel.cpy().nor().mul(-ordinal*restLength));
-		velocity = new Vector2(vel);
-		force = new Vector2();
+		velocity = new Vector2(0,0);
+		force = new Vector2(0,0);
 		size = new Vector2(radii,radii);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 	}
@@ -73,17 +77,20 @@ public class WormPart extends DynamicObject {
 		if(child != null && child.partName.equalsIgnoreCase("Joint"))
 			child.updateChild(dt);
 		
-		position.add(velocity.cpy().mul(dt));
-		velocity.mul(0.9f);
+		tempVector.set(velocity);
+		position.add(tempVector.mul(dt));
+		velocity.mul(0);
 		if(partName.equalsIgnoreCase("Head"))
 			velocity.add(force);
 	}
 	
 	public void solveJoint(float dt){
-		Vector2 axis = child.position.cpy().sub(position);
+		tempVector.set(child.position);
+		Vector2 axis = tempVector.sub(position);
 		float currentDistance = axis.len();
 		Vector2 unitAxis = axis.nor();
-		Vector2 relativeVelocity = child.getVelocity().cpy().sub(getVelocity());
+		tempVector.set(child.getVelocity());
+		Vector2 relativeVelocity = tempVector.sub(velocity);
 		float relVelMagnitude = relativeVelocity.dot(unitAxis);
 		float relativeDistance = (currentDistance - restLength);
 		if( relativeDistance > 0){
@@ -103,10 +110,12 @@ public class WormPart extends DynamicObject {
 	}
 	
 	public void applyImpulse(Vector2 impulse){
-		Vector2 addA = impulse.cpy().mul(child.getRigidBody().getInvMass());
-		Vector2 addB = impulse.cpy().mul(body.getInvMass());
+		tempVector.set(impulse);
+		Vector2 addA = tempVector.mul(child.getRigidBody().getInvMass());
+		tempVector.set(impulse);
+		Vector2 addB = tempVector.mul(body.getInvMass());
 		child.getVelocity().sub(addA);
-		getVelocity().add(addB);
+		velocity.add(addB);
 	}
 	
 	

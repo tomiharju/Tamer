@@ -5,16 +5,11 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED = 1;
+	private final float SPEED = 1f;
 	
 	@Override
 	public void update(float dt){
-		getVelocity().mul(0.99f);
-		getVelocity().add(force);
-		position.add(getVelocity().mul(dt));
-	
-		
-		
+		position.add(force);
 	}
 	
 	
@@ -24,7 +19,6 @@ public class Tamer extends DynamicObject{
 	 * @param direction
 	 */
 	public void manouver(Vector2 direction){
-		direction.rotate(-45);
 		force.set(direction.mul(SPEED));
 	}
 

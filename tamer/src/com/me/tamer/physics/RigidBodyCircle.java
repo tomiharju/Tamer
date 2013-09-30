@@ -14,8 +14,23 @@ public class RigidBodyCircle implements RigidBody {
 	private Vector2 velocity = null;
 	private float mass = 0;
 	private float invMass = 0;
-	private ArrayList<Vector2> vertices = null;
+	private Vector2 vertice = null;
 	private float radii = 0;
+	
+
+	//Preloaded variables for calculations
+	ArrayList<Vector2> axes1 ;
+	ArrayList<Vector2> axes2 ;
+	Vector2 normal;
+	Vector2 axis;
+	Vector2 closest ;
+	Vector2 circleToClosest ;
+	Vector2 projection1 ;
+	Vector2 projection2 ;
+	Vector2 bodyPosition;
+	//Helper function variables
+	ArrayList<Vector2> axes ;
+	Vector2 projectResult ;
 	
 	
 	public RigidBodyCircle(Vector2 p, Vector2 v, float mass, float radii){
@@ -27,8 +42,11 @@ public class RigidBodyCircle implements RigidBody {
 		else
 			this.invMass = 1 / this.mass;
 		this.radii = radii;
-		vertices = new ArrayList<Vector2>(1);
-		vertices.add(this.position);
+		vertice = new Vector2(p);
+		
+		//Precalculate values for optimization
+		preCalculateValues();
+
 	}
 	@Override
 	public boolean isDynamic() {
@@ -38,48 +56,53 @@ public class RigidBodyCircle implements RigidBody {
 	@Override
 	public Contact generateContact(RigidBody body) {
 		if(body instanceof RigidBodyCircle){
-			float overlap = -100000;
-			Vector2 normal = null;
-			Vector2 axis = body.getPosition().cpy().sub(position);
-			axis.nor();
-			Vector2 projection1 = this.project(axis);
-			Vector2 projection2 = body.project(axis);
+			if(position.dst(body.getPosition() ) > radii + body.getRadii() + 0.5f)
+				return null;
 			
-			float o = this.getOverlap(projection1,projection2);
+			float overlap = -100000f;
+			bodyPosition.set(body.getPosition());
+			axis.set(bodyPosition.sub(position));
+		
+			axis.nor();
+			projection1.set(project(axis));
+			projection2.set(body.project(axis));
+		
+			float o = getOverlap(projection1,projection2);
+			
 			if( o > overlap ){
 				overlap = o;
-				normal = axis;
+				normal.set(axis);
 			}
 			
 			return new Contact(normal,overlap,this,body);
+			
 		}
 		
 		if(body instanceof RigidBodyBox){
-			float overlap = -10000;
-			Vector2 normal = null;
-			ArrayList<Vector2> axes2 = body.getAxes();
+			float overlap = -10000f;
+			axes2 = body.getAxes();
 			
-			Vector2 closest = body.getClosestVertice(this.position);
-			Vector2 axis1 = closest.cpy().sub(this.position);
-			axis1.nor();
+			closest.set(body.getClosestVertice(position));
+			axis.set(closest.cpy().sub(position));
+			axis.nor();
 			
-			Vector2 projection1 = this.project(axis1);
-			Vector2 projection2 = body.project(axis1);
+			projection1.set(this.project(axis));
+			projection2.set(body.project(axis));
 			
-			float o = this.getOverlap(projection1, projection2);
+			float o = getOverlap(projection1, projection2);
 			if( o > overlap){
 				overlap = o;
-				normal = axis1;
+				normal.set(axis);
 			}
 			for( int i = 0 ; i < axes2.size() ; i ++){
-				Vector2 axis = axes2.get(i);
-				projection1 = this.project(axis);
-				projection2 = body.project(axis);
+				axis.set(axes2.get(i));
+				projection1.set(project(axis));
+				projection2.set(body.project(axis));
 				
-				o = this.getOverlap(projection1, projection2);
+				o = getOverlap(projection1, projection2);
 				if( o > overlap){
 					overlap = o ;
-					normal = axis;
+					normal.set(axis);
 				
 				}
 				
@@ -93,19 +116,17 @@ public class RigidBodyCircle implements RigidBody {
 		
 		if(body instanceof RigidBodyLine){
 			
-			float overlap = -10000;
-			Vector2 normal = null;
-			
-			Vector2 closest = body.getClosestVertice(position);
-			Vector2 circleToClosest = closest.cpy().sub(position);
+			float overlap = -10000;		
+			closest = body.getClosestVertice(position);
+			circleToClosest = closest.cpy().sub(position);
 			circleToClosest.nor();
 			
 			ArrayList<Vector2> lineaxes = body.getAxes();
 
-			Vector2 projection1 = this.project(circleToClosest);
-			Vector2 projection2 = body.project(circleToClosest);
+			projection1 = this.project(circleToClosest);
+			projection2 = body.project(circleToClosest);
 			
-			float o = this.getOverlap(projection1, projection2);
+			float o = getOverlap(projection1, projection2);
 			
 			if(o > overlap){
 				overlap = o;
@@ -114,11 +135,11 @@ public class RigidBodyCircle implements RigidBody {
 			
 			
 			for(int i = 0 ; i < lineaxes.size() ; i ++){
-				Vector2 axis = lineaxes.get(i);
+				axis = lineaxes.get(i);
 				projection1 = this.project(axis);
 				projection2 = body.project(axis);
 				
-				o = this.getOverlap(projection1, projection2);
+				o = getOverlap(projection1, projection2);
 				if( o > overlap){
 					overlap = o;
 					normal = axis;
@@ -136,7 +157,7 @@ public class RigidBodyCircle implements RigidBody {
 
 	@Override
 	public ArrayList<Vector2> getAxes() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -145,7 +166,9 @@ public class RigidBodyCircle implements RigidBody {
 		float center = axis.dot(position);
 	    float min = center - radii;
 	    float max = center + radii;
-	    return new Vector2(min, max);
+	    projectResult.set(min,max);
+	    return projectResult;
+	  
 	}
 
 	@Override
@@ -177,6 +200,9 @@ public class RigidBodyCircle implements RigidBody {
 	public float getInvMass(){
 		return invMass;
 	}
+	public float getRadii(){
+		return radii;
+	}
 	@Override
 	public void setOwner(DynamicObject obj) {
 		this.owner = obj;
@@ -190,6 +216,22 @@ public class RigidBodyCircle implements RigidBody {
 	@Override
 	public void setInvMass(float ivm) {
 		invMass=ivm;
+		
+	}
+	@Override
+	public void preCalculateValues() {
+		axes1 = new ArrayList<Vector2>();
+		axes2 = new ArrayList<Vector2>();
+		normal = new Vector2();
+		axis = new Vector2();
+		closest = new Vector2();
+		circleToClosest = new Vector2();
+		projection1 = new Vector2();
+		projection2 = new Vector2();
+		bodyPosition = new Vector2();
+		//Helper function variables
+		axes = new ArrayList<Vector2>();
+		projectResult = new Vector2();
 		
 	}
 }

@@ -17,6 +17,7 @@ public class InputController implements InputProcessor{
 	private Environment environment;
 	OrthographicCamera cam = null;
 	private Level level;
+	private UIElement selectedButton = null;
 	public InputController(Environment env, Level lvl){
 		this.environment = env;
 		cam = environment.getUiCamera();
@@ -73,12 +74,13 @@ public class InputController implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		
-		
-		Vector3 input = new Vector3(screenX,screenY,0);
-		cam.unproject(input);
+		Vector2 input = new Vector2(screenX,cam.viewportHeight - screenY);
+		System.out.println(input.toString());
 		for(UIElement e : buttons)
-			e.handleInput(input);
+			if(e.isTouched(input)){
+					e.handleInput(input);
+					selectedButton = e;
+			}
 				
 	
 		return false;
@@ -86,18 +88,18 @@ public class InputController implements InputProcessor{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		for(UIElement e : buttons)
-			e.touchUp();
+		if(selectedButton != null)
+			selectedButton.touchUp();
+		selectedButton = null;
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-
-		Vector3 input = new Vector3(screenX,screenY,0);
-		cam.unproject(input);
-		for(UIElement e : buttons)
-			e.handleInput(input);
+		Vector2 input = new Vector2(screenX,cam.viewportHeight - screenY );
+		
+		if(selectedButton != null)
+			selectedButton.handleInput(input);
 		
 		return false;
 	}

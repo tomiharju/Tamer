@@ -36,7 +36,7 @@ public class GameObjectFactory {
 			  }
 			 
 			}
-			System.out.println("Object added: " + object.getClass().getSimpleName());
+			System.out.println("Object added: " + object.getClass().getSimpleName() + " In memory as "+object.toString());
 			return object;
 			
 			

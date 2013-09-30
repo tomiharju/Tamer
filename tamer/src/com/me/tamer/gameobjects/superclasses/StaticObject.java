@@ -29,10 +29,9 @@ public class StaticObject implements GameObject{
 	public void draw(SpriteBatch batch) {
 		Renderer renderer = RenderPool.getRenderer(renderType);
 		renderer.setSize(size.x,size.y);
-		renderer.setPosition(IsoHelper.twoDToIso(position));
+		renderer.setPosition(IsoHelper.twoDToTileIso(position));
 		renderer.setOrientation(0);
 		renderer.draw(batch);
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -42,7 +41,7 @@ public class StaticObject implements GameObject{
 		RenderPool.addRendererToPool(info[0],info[1]);
 		this.renderType = info[1];
 	}
-	
+
 
 	@Override
 	public void markAsCarbage() {
@@ -71,7 +70,6 @@ public class StaticObject implements GameObject{
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
 		this.position = new Vector2(x,y);
-		
 	}
 
 	@Override

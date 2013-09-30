@@ -29,7 +29,7 @@ public class SlidingButton implements UIElement {
 	}
 
 	@Override
-	public boolean handleInput(Vector3 input) {
+	public boolean handleInput(Vector2 input) {
 		return true;
 		
 	}
@@ -38,6 +38,18 @@ public class SlidingButton implements UIElement {
 	public void touchUp() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void touchDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isTouched(Vector2 input) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

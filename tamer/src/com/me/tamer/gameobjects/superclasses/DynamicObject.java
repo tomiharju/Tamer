@@ -27,7 +27,7 @@ public class DynamicObject implements GameObject{
 	
 	@Override
 	public void update(float dt) {
-		position.add(getVelocity().mul(dt));
+		position.add(velocity.mul(dt));
 	}
 	@Override
 	public void draw(SpriteBatch batch) {

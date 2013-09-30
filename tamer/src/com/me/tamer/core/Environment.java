@@ -2,7 +2,6 @@ package com.me.tamer.core;
 
 import java.util.ArrayList;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -34,7 +33,7 @@ public class Environment {
 	
 	//Define viewport size
 	private final float VIEWPORT_WIDTH = 12;
-	private final float VIEWPORT_HEIGHT = 24;
+	private final float VIEWPORT_HEIGHT = 20;
 
 	//Refrence to active level
 	Level level = null;
@@ -46,7 +45,6 @@ public class Environment {
 	public Environment(){
 		//Spritebatch is used for drawing sprites
 		batch 			= new SpriteBatch();
-	
 		setupCamera();
 		createLevel(1);
 		inputcontroller = new InputController(this,level);
@@ -55,9 +53,10 @@ public class Environment {
 	public void setupCamera(){
 		System.err.println("Viewport size "+ Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
 		float ASPECT_RATIO = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
-		cam	= new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);
+		cam	= new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * 2);
 		
-		uiCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * ASPECT_RATIO);
+		uiCam = new OrthographicCamera();
+		uiCam.setToOrtho(false);
 	
 	}
 	
@@ -69,37 +68,14 @@ public class Environment {
 		return uiCam;
 	}
 	
-	public void moveCamera(){
-		Vector3 camPos = new Vector3();
-		Vector2 tamerPos = IsoHelper.twoDToIso(level.getTamer().getPosition());
-		Vector2 camBounds = IsoHelper.getTileCoordinates(level.getCamBounds(),1);
+	public void moveCamera(Vector2 delta){
+		Vector2 tamerPos = level.getTamer().getPosition();
+		Vector2 newPos = IsoHelper.twoDToIso(tamerPos);
+		cam.position.set(newPos.x,newPos.y,0);
 		
+			
+	
 		
-		
-		//X
-		if (tamerPos.x  > camBounds.x - VIEWPORT_WIDTH / 2){
-			camPos.x = camBounds.x - VIEWPORT_WIDTH / 2;
-		}else if(tamerPos.x < -camBounds.x + VIEWPORT_WIDTH / 2){
-			camPos.x = -camBounds.x + VIEWPORT_WIDTH / 2;
-		}else{
-			camPos.x = tamerPos.x;
-		}
-		
-		
-		//Y
-		if(tamerPos.y  > camBounds.y - VIEWPORT_HEIGHT / 2){
-			camPos.y = camBounds.y - VIEWPORT_HEIGHT / 2;
-		}else if(tamerPos.y < -camBounds.y + VIEWPORT_HEIGHT / 2){
-			camPos.y = -camBounds.y + VIEWPORT_HEIGHT / 2;
-		}else{	
-			camPos.y = tamerPos.y;	
-		}
-		 
-		
-		//Z
-		camPos.z = 0;
-		
-		cam.position.set(camPos);
 	}
 	
 	/**
@@ -119,13 +95,13 @@ public class Environment {
 		//Start uploading sprites
 		batch.begin();
 		
-		//Set projection matrix to batch
-		batch.setProjectionMatrix(uiCam.combined); 
-		inputcontroller.draw(batch);
 		
 		batch.setProjectionMatrix(cam.combined); 
 		level.draw(batch);
-		
+
+		//Set projection matrix to batch
+		batch.setProjectionMatrix(uiCam.combined); 
+		inputcontroller.draw(batch);
 		
 		batch.end();
 		
@@ -133,7 +109,6 @@ public class Environment {
 	public void update(float dt){
 		inputcontroller.update(dt);
 		level.update(dt);
-		moveCamera();
 		
 	}
 	
