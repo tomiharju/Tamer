@@ -13,16 +13,16 @@ import com.me.tamer.physics.RigidBody;
 public class Level {
 
 	//Settings
-	private Vector2 camBounds = null;
-	private Vector2 camBoundsOffset = null;
+	private Vector2 camBounds 					= null;
+	private Vector2 camBoundsOffset 			= null;
 	
 	//Gameobject data
-	private ArrayList<GameObject> gameobjects = null;
-	private ArrayList<GameObject> carbages	= null;
-	private ArrayList<GameObject> newobjects = null;
-	private DynamicObject 	tamer = null;
-	private ArrayList<ObstacleTile> obstacles = null;
-	private ArrayList<Worm> worms		= null;
+	private ArrayList<GameObject> gameobjects 	= null;
+	private ArrayList<GameObject> carbages		= null;
+	private ArrayList<GameObject> newobjects 	= null;
+	private DynamicObject 	tamer 				= null;
+	private ArrayList<ObstacleTile> obstacles 	= null;
+	private ArrayList<Worm> worms				= null;
 	
 	//Physical contact list
 	private ArrayList<Contact> contacts;
@@ -36,6 +36,8 @@ public class Level {
 		worms			= new ArrayList<Worm>();
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
+		
+		
 	}
 	
 	/**
@@ -45,7 +47,7 @@ public class Level {
 	public void update(float dt){
 		runCarbageCollection();
 		addNewObjects();
-		resolveObstacles();
+		//resolveObstacles();
 		resolveCollisions(dt);
 		for(GameObject o : gameobjects)
 			o.update(dt);
@@ -59,13 +61,29 @@ public class Level {
 			o.draw(batch);
 	}
 	
+	
+	/*
+	 * Hard-coded debug requests 
+	 */
+	public void setDebugs(){
+		((Tamer)tamer).getScream().setDebug(true);
+	}
+	
+	public void debugDraw(){
+		for(GameObject o : gameobjects)
+			if(o.getDebug()){
+				o.debugDraw();
+			}
+	}
+	
+	/*
 	public void resolveObstacles(){
 		for(ObstacleTile ot : obstacles)
 			for(Worm w : worms)
 				ot.resolveTile(w);
 				
 	}
-	
+	*/
 	/**
 	 * @param dt
 	 * Uses rigidbodies to generate Contact objects
@@ -152,6 +170,7 @@ public class Level {
 			//carbages.clear();
 		}
 	}
+
 	public void addNewObjects(){
 		if(newobjects.size() > 0){
 			for(GameObject go : newobjects){
@@ -190,11 +209,17 @@ public class Level {
 	public void addObject(GameObject obj){
 		gameobjects.add(obj);
 	}
+	
 	public void addNewObject(GameObject obj){
 		newobjects.add(obj);
 	}
+	
 	public void addRigidBody(RigidBody body){
 		rigidbodies.add(body);
+	}
+	
+	public void addWorm(Worm w){
+		worms.add(w);
 	}
 	
 	/**
@@ -208,13 +233,6 @@ public class Level {
 		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
 	}
 	
-	public Vector2 getCamBounds(){
-		return camBounds;
-	}
-	
-	public Vector2 getCamBoundsOffset(){
-		return camBoundsOffset;
-	}
 	
 	/**
 	 * Creates tamer and sets starting position
@@ -228,11 +246,12 @@ public class Level {
 		tamer.setForce("0:0");
 		tamer.setMass("10");
 		tamer.setRigidBody("circle");
-		gameobjects.add(tamer);
+		gameobjects.add(tamer);	
+		gameobjects.add(((Tamer)tamer).getScream());
+		
 	}
-	public Tamer getTamer(){
-		return (Tamer) tamer;
-	}
+	
+	
 	public void dispose(){
 		gameobjects.clear();
 		carbages.clear();
@@ -240,6 +259,20 @@ public class Level {
 		rigidbodies.clear();
 		tamer = null;
 	}
+
+	public Vector2 getCamBounds(){
+		return camBounds;
+	}
 	
+	public Vector2 getCamBoundsOffset(){
+		return camBoundsOffset;
+	}
 	
+	public Tamer getTamer(){
+		return (Tamer) tamer;
+	}
+	
+	public ArrayList<Worm> getWorms(){
+		return worms;
+	}
 }

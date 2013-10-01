@@ -75,14 +75,13 @@ public class InputController implements InputProcessor{
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector2 input = new Vector2(screenX,cam.viewportHeight - screenY);
-		System.out.println(input.toString());
+		//System.out.println(input.toString());
 		for(UIElement e : buttons)
 			if(e.isTouched(input)){
 					e.handleInput(input);
 					selectedButton = e;
 			}
 				
-	
 		return false;
 	}
 

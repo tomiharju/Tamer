@@ -50,9 +50,7 @@ public class WormPart extends DynamicObject {
 	public void unBind(){
 		body.setInvMass( 1 / body.getInvMass());
 	}
-	public void setHeading(Vector2 heading){
-		this.heading.set(heading);
-	}
+	
 	public void attachToParent(WormPart parent){
 		this.parent = parent;
 		parent.attachToChild(this);
@@ -110,7 +108,17 @@ public class WormPart extends DynamicObject {
 	}
 	
 	
+	public void setHeading(Vector2 heading){
+		this.heading.set(heading);
+	}
 	
+	public String getPartName(){
+		return partName;
+	}
+	
+	public Vector2 getPosition(){
+		return position;
+	}
 	
 
 }

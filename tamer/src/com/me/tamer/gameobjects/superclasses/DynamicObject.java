@@ -23,12 +23,14 @@ public class DynamicObject implements GameObject{
 	private String renderType;
 	private boolean isCarbage = false;
 	protected RigidBody body = null;
+	private boolean debug = false;
 	
 	
 	@Override
 	public void update(float dt) {
 		position.add(getVelocity().mul(dt));
 	}
+	
 	@Override
 	public void draw(SpriteBatch batch) {
 		Renderer renderer = RenderPool.getRenderer(renderType);
@@ -38,21 +40,26 @@ public class DynamicObject implements GameObject{
 		renderer.draw(batch);
 		
 	}
+	
+	
 	@Override
 	public void setRenderer(String renderinfo) {
 		String[] info = renderinfo.split(":");
 		RenderPool.addRendererToPool(info[0],info[1]);
 		this.renderType = info[1];
 	}
+	
 	@Override
 	public void markAsCarbage() {
 		isCarbage = true;
 		
 	}
+	
 	@Override
 	public boolean isCarbage() {
 		return isCarbage;
 	}
+	
 	@Override
 	public void setSize(String size) {
 		String[] values = size.split(":");
@@ -69,6 +76,7 @@ public class DynamicObject implements GameObject{
 		int y = Integer.parseInt(values[1]);
 		this.position = new Vector2(x,y);
 	}
+	
 	public void setVelocity(String vel){
 		String[] values = vel.split(":");
 		float x = Float.parseFloat(values[0]);
@@ -76,12 +84,14 @@ public class DynamicObject implements GameObject{
 		this.velocity = new Vector2(x,y);
 		
 	}
+	
 	public void setForce(String force){
 		String[] values = force.split(":");
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
 		this.force = new Vector2(x,y);
 	}
+	
 	public void setRigidBody(String bodytype){
 		if(bodytype.equalsIgnoreCase("box"))
 			body = new RigidBodyBox(position,new Vector2(0,0),0,size.x,size.y); //Position, speed, mass, width,height ( speed and mass are 0 cause its static object )
@@ -92,47 +102,80 @@ public class DynamicObject implements GameObject{
 		if(body != null)
 			body.setOwner(this);
 	}
+	
 	public void setMass(String mass){
 		this.mass = Integer.parseInt(mass);
 		if(this.mass == 0 ) throw new ArithmeticException("Mass cannot be 0");
 	}
+	
 	@Override
 	public Vector2 getPosition() {
 		return position;
 	}
+	
 	@Override
 	public Vector2 getSize() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Vector2 getHeading(){
+		return heading;
+	}
+	
 	@Override
 	public RigidBody getRigidBody() {
 		return body;
 	}
+	
+	@Override
+	public void debugDraw() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void setup() {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	public void setHeading(Vector2 heading){
 		this.heading.set(heading);
 	}
+	
 	public Vector2 getVelocity() {
 		return velocity;
 	}
+	
 	public void setVelocity(Vector2 velocity) {
 		this.velocity = velocity;
 	}
+	
 	@Override
 	public void resolveForces(float dt) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void wakeUp(Level level) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setDebug(boolean b) {
+		debug = b;	
+	}
+	
+	@Override
+	public boolean getDebug(){
+		return debug;
+	}
+	
+
+	
 
 	
 

@@ -17,6 +17,7 @@ public class StaticObject implements GameObject{
 	protected Vector2 size;
 	protected String renderType = null;
 	private boolean isCarbage = false;
+	private boolean debug = false;
 	
 	@Override
 	public void update(float dt) {
@@ -113,6 +114,23 @@ public class StaticObject implements GameObject{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void debugDraw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDebug(boolean b) {
+		debug = b;	
+	}
+	
+	@Override
+	public boolean getDebug(){
+		return debug;
+	}
+
 
 	
 

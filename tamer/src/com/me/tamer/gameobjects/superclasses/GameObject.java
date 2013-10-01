@@ -26,6 +26,7 @@ public interface GameObject {
 	 * Draw method delegates the drawing for renderer specified for the object.
 	 */
 	public void draw(SpriteBatch batch);
+	public void debugDraw();
 	
 	/**
 	 *	 * @param renderer
@@ -48,6 +49,8 @@ public interface GameObject {
 	 */
 	public void setSize(String size);
 	public void setPosition(String pos);
+	public void setDebug(boolean b);
+	public boolean getDebug();
 	public Vector2 getPosition();
 	public Vector2 getSize();
 	public RigidBody getRigidBody();

@@ -87,7 +87,7 @@ public class Joystick implements UIElement{
 		}
 	
 		if(legalmove){
-			System.out.println("Manouvering!");
+			//System.out.println("Manouvering!");
 			tamer.manouver(delta);
 		}
 	}
