@@ -36,9 +36,7 @@ public class SpawnPoint extends StaticObject{
 	 * @param spawn_type is the object type to spawn. Currently worm or ant
 	 */
 	
-	public void startSpawning(final Level level){
-		this.level = level;
-		final SpawnPoint spawn = this;
+	public void startSpawning(){
 		System.out.println("Started to spawn");
 		new Thread(new Runnable(){
 			@Override

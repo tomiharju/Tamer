@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-public class ActionButton implements UIElement{
+public class ActionButton implements UiElement{
 
 	public ActionButton(InputController inputController) {
 		// TODO Auto-generated constructor stub

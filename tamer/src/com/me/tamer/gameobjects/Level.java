@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
+import com.me.tamer.gameobjects.superclasses.Interactable;
 import com.me.tamer.gameobjects.tiles.ObstacleTile;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.RigidBody;
@@ -23,7 +24,7 @@ public class Level {
 	private ArrayList<GameObject> newobjects = null;
 	private DynamicObject 	tamer = null;
 	private ArrayList<ObstacleTile> obstacles = null;
-	private ArrayList<Worm> worms		= null;
+	private ArrayList<Interactable> creatures	= null;
 	
 	//Physical contact list
 	private ArrayList<Contact> contacts;
@@ -39,7 +40,7 @@ public class Level {
 		carbages 		= new ArrayList<GameObject>();
 		newobjects 		= new ArrayList<GameObject>();
 		obstacles 		= new ArrayList<ObstacleTile>();
-		worms			= new ArrayList<Worm>();
+		creatures		= new ArrayList<Interactable>();
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
 		
@@ -71,10 +72,10 @@ public class Level {
 	
 	public void resolveObstacles(){
 		int numObstacles = obstacles.size();
-		int numWorms = worms.size();
+		int numWorms = creatures.size();
 		for(int i = 0 ; i < numObstacles ; i++)
 			for(int k = 0 ; k < numWorms ; k++)
-				obstacles.get(i).resolveTile(worms.get(k));			
+				obstacles.get(i).resolveTile(creatures.get(k));			
 	}
 	
 	/**
@@ -179,7 +180,7 @@ public class Level {
 		
 		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
-			//carbages.clear();
+			carbages.clear();
 		}
 	}
 	public synchronized void addNewObjects(){
@@ -204,7 +205,7 @@ public class Level {
 			if(go instanceof ObstacleTile)
 				obstacles.add((ObstacleTile) go);
 			if(go instanceof SpawnPoint)
-				((SpawnPoint) go).startSpawning(this);
+				((SpawnPoint) go).startSpawning();
 			if(go.getRigidBody() != null)
 				rigidbodies.add(go.getRigidBody());
 		}
@@ -244,6 +245,9 @@ public class Level {
 	
 	public Vector2 getCamBoundsOffset(){
 		return camBoundsOffset;
+	}
+	public ArrayList<Interactable> getCreatures(){
+		return creatures;
 	}
 	
 	/**

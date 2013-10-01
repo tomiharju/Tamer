@@ -12,7 +12,7 @@ import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.ui.InputController;
-import com.me.tamer.ui.UIElement;
+import com.me.tamer.ui.UiElement;
 import com.me.tamer.utils.LevelCreator;
 
 /**
@@ -25,11 +25,12 @@ import com.me.tamer.utils.LevelCreator;
 
 public class Environment {
 
-	private OrthographicCamera cam 	= null;
+	//Main drawing batch
 	private SpriteBatch batch 		= null;
 	
-	//Ui camera
+	//Cameras
 	private OrthographicCamera uiCam = null;
+	private OrthographicCamera cam 	= null;
 	
 	//Define viewport size
 	private final float VIEWPORT_WIDTH = 12;
@@ -38,7 +39,7 @@ public class Environment {
 	//Refrence to active level
 	Level level = null;
 	InputController inputcontroller;
-	ArrayList<UIElement> uiElements ;
+
 	
 	
 	

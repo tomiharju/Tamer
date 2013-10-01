@@ -114,6 +114,11 @@ public class StaticObject implements GameObject{
 		
 	}
 
+	@Override
+	public void markAsActive() {
+		isCarbage = false;
+	}
+
 	
 
 }
