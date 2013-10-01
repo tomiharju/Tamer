@@ -24,7 +24,6 @@ public class Tamer extends DynamicObject{
 	public void update(float dt){
 		position.add(force);
 		force.mul(0.9f);
-		
 		for(int i = 0 ; i < spears.size() ; i ++){
 			if(position.dst(spears.get(i).getPosition()) < 0.5 ){
 				if(spears.get(i).isAttached()){

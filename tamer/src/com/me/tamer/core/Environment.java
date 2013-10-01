@@ -72,6 +72,7 @@ public class Environment {
 	public void moveCamera(Vector2 delta){
 		Vector2 tamerPos = level.getTamer().getPosition();
 		Vector2 newPos = IsoHelper.twoDToIso(tamerPos);
+		
 		cam.position.set(newPos.x,newPos.y,0);
 		
 			
