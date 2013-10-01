@@ -36,7 +36,7 @@
     	<data type="SpawnNumber">1</data>	<!-- IMPORTANT, USED TO DISTINGUISH SPAWNS FROM EACH OTHER!!! -->
     	<data type="InitialSleep">4</data>
     	<data type="Interval">9</data>
-    	<data type="SpawnVelocity">-1:-1</data>
+    	<data type="SpawnVelocity">-3:-1</data>
     	<data type="SpawnCount">5</data>
      </GameObject>
      
@@ -52,7 +52,7 @@
     	<data type="SpawnNumber">2</data>
     	<data type="InitialSleep">4</data>
     	<data type="Interval">9</data>
-    	<data type="SpawnVelocity">1:1</data>
+    	<data type="SpawnVelocity">3:1</data>
     	<data type="SpawnCount">5</data>
      </GameObject>
    

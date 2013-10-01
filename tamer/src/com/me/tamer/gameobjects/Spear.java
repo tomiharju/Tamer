@@ -1,7 +1,10 @@
 package com.me.tamer.gameobjects;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.superclasses.Interactable;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Spear extends DynamicObject{
@@ -26,13 +29,26 @@ public class Spear extends DynamicObject{
 	public void update(float dt){
 		if(!isAttached)
 			position.add(force.tmp().mul(dt));
-		if(position.dst(target) < 0.1)
+		//When the spear has reached its destination, check if there is some creature
+		//If there is, call that creatures spearHit method to resolve damage.
+		if(!isAttached && position.dst(target) < 0.1){
+		
+			ArrayList<Interactable> creatures = level.getCreatures();
+			int size = creatures.size();
+			System.out.println("Searching for potential hit amont "+size+" creatures.");
+			for(int i = 0 ; i < size ; i ++)
+				if(position.dst(((DynamicObject) creatures.get(i)).getPosition()) < 0.5){
+					creatures.get(i).spearHit(this);
+				}
 			isAttached = true;
+		}
 		
 	}
 	
 	public void wakeUp(Level level){
 		this.level = level;
+		isAttached = false;
+		markAsActive();
 	}
 	public void throwAt(Vector2 point){
 		target.set(point);
@@ -50,6 +66,9 @@ public class Spear extends DynamicObject{
 	}
 	public void setPosition(Vector2 pos){
 		position.set(pos);
+	}
+	public boolean isAttached(){
+		return isAttached;
 	}
 
 }

@@ -13,7 +13,7 @@ import com.me.tamer.gameobjects.renders.UiRenderer;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
-public class SpearButton implements UIElement {
+public class SpearButton implements UiElement {
 
 	InputController inputcontroller = null;
 	OrthographicCamera cam = null;
@@ -32,7 +32,7 @@ public class SpearButton implements UIElement {
 	UiRenderer pointRender = null;
 	public SpearButton(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingPoint	=new Vector2(300,100);
+		restingPoint	=new Vector2(350,100);
 		deltaPoint = new Vector2(restingPoint);
 		buttonRender = new UiRenderer();
 		pointRender = new UiRenderer();

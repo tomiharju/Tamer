@@ -40,6 +40,10 @@ public interface GameObject {
 	 */
 	public void markAsCarbage();
 	/**
+	 * Sets isCarbage to false
+	 */
+	public void markAsActive();
+	/**
 	 * Returns whether this object is marked as carbage
 	 */
 	public boolean isCarbage();
@@ -54,6 +58,7 @@ public interface GameObject {
 	public boolean getDebug();
 	public Vector2 getPosition();
 	public Vector2 getSize();
+	public void setRigidBody(String bodytype);
 	public RigidBody getRigidBody();
 	/**
 	 * Required for objects that are created in runtime with threads.

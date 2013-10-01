@@ -33,9 +33,11 @@ public class Tamer extends DynamicObject{
 		
 		for(int i = 0 ; i < spears.size() ; i ++){
 			if(position.dst(spears.get(i).getPosition()) < 0.5 ){
-				spears.get(i).pickUp();
-				spears.remove(i);
-				break;
+				if(spears.get(i).isAttached()){
+					spears.get(i).pickUp();
+					spears.remove(i);
+				}
+			
 			
 			}
 		}
@@ -46,7 +48,6 @@ public class Tamer extends DynamicObject{
 	 * @param direction
 	 */
 	public void manouver(Vector2 direction){
-		direction.rotate(-45);
 		force.set(direction.mul(SPEED));
 		heading.set(force);
 		heading.nor();
@@ -54,7 +55,7 @@ public class Tamer extends DynamicObject{
 	
 	public void throwSpear(Spear spear,Vector2 point){
 		spears.add(spear);
-		spear.setPosition(position.tmp().add(heading.mul(1)));
+		spear.setPosition(position.tmp().add(heading.mul(1.5f)));
 		spear.throwAt(point);
 	}
 	

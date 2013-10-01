@@ -12,7 +12,7 @@ import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.Worm;
 import com.me.tamer.gameobjects.renders.UiRenderer;
 
-public class ActionButton implements UIElement{
+public class ActionButton implements UiElement{
 	
 	private InputController inputcontroller 	= null;
 	private UiRenderer renderer 				= null;
@@ -30,7 +30,8 @@ public class ActionButton implements UIElement{
 	//Temporary colors for button
 	Color pressedCol		= null;
 	Color notPressedCol		= null;
-	
+
+
 	public ActionButton(InputController inputController) {
 		this.inputcontroller = inputController;
 		restingpoint	= new Vector2(250,100);
@@ -38,7 +39,6 @@ public class ActionButton implements UIElement{
 		size			= 75;
 		level			= inputcontroller.getLevel();
 		tamer 			= level.getTamer();
-		worms			= level.getWorms();
 		env 			= inputcontroller.getEnvironment();
 		renderer 		= new UiRenderer();
 		renderer.loadGraphics("joystick");
@@ -47,7 +47,7 @@ public class ActionButton implements UIElement{
 		pressedCol = new Color(1.0f, 0.0f, 0.0f, 0.0f);
 		notPressedCol = new Color(0.0f, 0.0f, 1.0f, 1.0f);
 	}
-
+	
 	@Override
 	public void draw(SpriteBatch batch) {
 		if(isPressed)renderer.setColor(pressedCol);
@@ -58,13 +58,13 @@ public class ActionButton implements UIElement{
 		renderer.draw(batch);
 		
 	}
-
+	
 	@Override
 	public void update(float dt) {
 		if (isPressed){
 			
 			tamer.getPosition();
-			worms = level.getWorms();
+			//worms = level.getWorms();
 				
 			for (int i = 0; i < worms.size(); i++){
 				//System.out.println("T:" +tamer.getPosition());

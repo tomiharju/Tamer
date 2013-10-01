@@ -25,7 +25,6 @@ public class TileMap extends StaticObject{
 	private int rows 				= 0;
 	private int columns			= 0;
 	private int numTiles	=0;
-	private Renderer tilerenderer = null;
 	private ArrayList<Vector2> terrain;
 	private Vector2 bounds;
 	

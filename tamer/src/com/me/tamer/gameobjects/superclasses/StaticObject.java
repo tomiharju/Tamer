@@ -132,6 +132,9 @@ public class StaticObject implements GameObject{
 		return debug;
 	}
 
+	public void markAsActive() {
+		isCarbage = false;
+	}
 
 	
 

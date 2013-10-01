@@ -10,7 +10,7 @@ import com.me.tamer.gameobjects.renders.StaticRenderer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
 import com.me.tamer.utils.IsoHelper;
 
-public class Joystick implements UIElement{
+public class Joystick implements UiElement{
 
 	private InputController inputcontroller = null;
 	private UiRenderer renderer = null;
@@ -31,7 +31,7 @@ public class Joystick implements UIElement{
 		restingpoint	= new Vector2(100,100);
 		delta			= new Vector2(0,0);
 		pointer			= new Vector2(restingpoint.x,restingpoint.y);
-		size			= 100;
+		size			= 200;
 		renderer 		= new UiRenderer();
 		tamer 			= inputcontroller.getLevel().getTamer();
 		level			= inputcontroller.getLevel();
@@ -58,14 +58,15 @@ public class Joystick implements UIElement{
 			pointer.set(restingpoint);
 		}
 		else{
-			delta.set(pointer.cpy().sub(restingpoint));
+			delta.set(pointer.tmp().sub(restingpoint));
 			if(delta.len() > size / 2){
 				delta.nor().mul(size/2);
-				pointer.set(restingpoint.cpy().add(delta));
+				pointer.set(restingpoint.tmp().add(delta));
 			}
 			delta.div(10);
-			env.moveCamera(delta.cpy().mul(dt));
-			checkBounds(delta.cpy().mul(dt));
+			delta.rotate(-45);
+			env.moveCamera(delta.tmp().mul(dt));
+			checkBounds(delta.tmp().mul(dt));
 			
 		}
 	
@@ -121,7 +122,7 @@ public class Joystick implements UIElement{
 
 	@Override
 	public boolean isTouched(Vector2 input) {
-		if(input.dst(restingpoint) < size / 2)
+		if(input.dst(restingpoint) < size / 2 + 1)
 			return true;
 		return false;
 	}

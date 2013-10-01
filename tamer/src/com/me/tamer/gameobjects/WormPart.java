@@ -2,9 +2,10 @@ package com.me.tamer.gameobjects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.superclasses.Interactable;
 import com.me.tamer.physics.RigidBodyCircle;
 
-public class WormPart extends DynamicObject {
+public class WormPart extends DynamicObject implements Interactable {
 	
 	private float restLength = 1.5f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
@@ -114,6 +115,17 @@ public class WormPart extends DynamicObject {
 		Vector2 addB = tempVector.mul(body.getInvMass());
 		child.getVelocity().sub(addA);
 		velocity.add(addB);
+	}
+	@Override
+	public void spearHit(Spear spear) {
+		System.err.println("SPEAR HIT!");
+		body.setInvMass(0);
+		
+	}
+	@Override
+	public void lassoHit(String lasso) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
