@@ -17,6 +17,17 @@ public class RigidBodyBox implements RigidBody{
 	private ArrayList<Vector2> vertices = null;
 	private float width = 0;
 	private float height = 0;
+	
+	
+	//Preloaded variables for calculations
+	ArrayList<Vector2> axes1 = new ArrayList<Vector2>();
+	ArrayList<Vector2> axes2 = new ArrayList<Vector2>();
+	Vector2 normal = new Vector2();
+	Vector2 axis = new Vector2();
+	Vector2 projection1 = new Vector2();
+	Vector2 projection2 = new Vector2();
+	//Helper function variables
+	ArrayList<Vector2> axes = new ArrayList<Vector2>();
 
 	public RigidBodyBox(Vector2 p, Vector2 v,float mass,float width, float height){
 		this.position = p;
@@ -37,6 +48,9 @@ public class RigidBodyBox implements RigidBody{
 	        vertices.add(v2);
 	        vertices.add(v3);
 	        vertices.add(v4);
+	        
+	        //PRECALCULATE VALUES FOR OPTIMIZATION
+	        preCalculateValues();
 	}
 
 	@Override
@@ -48,14 +62,13 @@ public class RigidBodyBox implements RigidBody{
 	public Contact generateContact(RigidBody body) {
 		if(body instanceof RigidBodyBox){
 			float overlap = -10000;
-			Vector2 normal = null;
-			ArrayList<Vector2> axes1 = this.getAxes();
-			ArrayList<Vector2> axes2 = body.getAxes();
+			axes1 = this.getAxes();
+			axes2 = body.getAxes();
 			
 			for(int i = 0 ; i < axes1.size() ; i++){
-				Vector2 axis = axes1.get(i);
-				Vector2 projection1 = this.project(axis);
-				Vector2 projection2 = body.project(axis);
+				axis = axes1.get(i);
+				projection1 = this.project(axis);
+				projection2 = body.project(axis);
 				
 				float o = this.getOverlap(projection1,projection2);
 				if( o > overlap ){
@@ -65,9 +78,9 @@ public class RigidBodyBox implements RigidBody{
 			}
 			
 			for(int i = 0 ; i < axes2.size() ; i++){
-				Vector2 axis = axes2.get(i);
-				Vector2 projection1 = this.project(axis);
-				Vector2 projection2 = body.project(axis);
+				axis = axes2.get(i);
+				projection1 = this.project(axis);
+				projection2 = body.project(axis);
 				
 				float o = this.getOverlap(projection1,projection2);
 				if( o > overlap ){
@@ -81,14 +94,13 @@ public class RigidBodyBox implements RigidBody{
 		if(body instanceof RigidBodyLine){
 			
 			float overlap = -10000;
-			Vector2 normal = null;
-			ArrayList<Vector2> axes1 = this.getAxes();
-			ArrayList<Vector2> axes2 = body.getAxes();
+			axes1 = this.getAxes();
+			axes2 = body.getAxes();
 			
 			for(int i = 0 ; i < axes1.size() ; i++){
-				Vector2 axis = axes1.get(i);
-				Vector2 projection1 = this.project(axis);
-				Vector2 projection2 = body.project(axis);
+				axis = axes1.get(i);
+				projection1 = this.project(axis);
+				projection2 = body.project(axis);
 				
 				float o = this.getOverlap(projection1,projection2);
 				if( o > overlap ){
@@ -98,9 +110,9 @@ public class RigidBodyBox implements RigidBody{
 			}
 			
 			for(int i = 0 ; i < axes2.size() ; i++){
-				Vector2 axis = axes2.get(i);
-				Vector2 projection1 = this.project(axis);
-				Vector2 projection2 = body.project(axis);
+				axis = axes2.get(i);
+				projection1 = this.project(axis);
+				projection2 = body.project(axis);
 				
 				float o = this.getOverlap(projection1,projection2);
 				if( o > overlap ){
@@ -117,15 +129,6 @@ public class RigidBodyBox implements RigidBody{
 
 	@Override
 	public ArrayList<Vector2> getAxes() {
-		ArrayList<Vector2> axes = new ArrayList<Vector2>();
-		for(int i = 0 ; i < this.vertices.size() ; i++){
-			Vector2 p1 = this.vertices.get(i);
-			Vector2 p2 = this.vertices.get(i + 1 == this.vertices.size() ? 0 : i + 1);
-			Vector2 edge = p1.cpy().sub(p2);
-			Vector2 normal = edge.rotate(-90);
-			normal.nor();
-			axes.add(normal);
-		}
 		return axes;
 	}
 
@@ -200,5 +203,25 @@ public class RigidBodyBox implements RigidBody{
 	public void setInvMass(float ivm) {
 		invMass=ivm;
 		
+	}
+
+	@Override
+	public void preCalculateValues() {
+		//Calculate shape normals
+		for(int i = 0 ; i < this.vertices.size() ; i++){
+			Vector2 p1 = this.vertices.get(i);
+			Vector2 p2 = this.vertices.get(i + 1 == this.vertices.size() ? 0 : i + 1);
+			Vector2 edge = p1.cpy().sub(p2);
+			Vector2 normal = edge.rotate(-90);
+			normal.nor();
+			axes.add(normal);
+		}
+		
+	}
+
+	@Override
+	public float getRadii() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

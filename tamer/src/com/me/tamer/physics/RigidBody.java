@@ -20,6 +20,8 @@ public interface RigidBody {
 	public void setOwner(DynamicObject obj);
 	public DynamicObject getOwner();
 	public void setInvMass(float ivm);
+	public void preCalculateValues();
+	public float getRadii();
 
 	
 

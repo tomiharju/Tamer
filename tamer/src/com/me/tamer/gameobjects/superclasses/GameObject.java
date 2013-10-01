@@ -1,6 +1,7 @@
 package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Level;
 import com.me.tamer.physics.RigidBody;
@@ -26,7 +27,7 @@ public interface GameObject {
 	 * Draw method delegates the drawing for renderer specified for the object.
 	 */
 	public void draw(SpriteBatch batch);
-	public void debugDraw();
+	public void debugDraw(ShapeRenderer shapeRndr);
 	
 	/**
 	 *	 * @param renderer

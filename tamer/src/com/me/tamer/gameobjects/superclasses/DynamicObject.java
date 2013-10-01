@@ -1,6 +1,7 @@
 package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -28,7 +29,7 @@ public class DynamicObject implements GameObject{
 	
 	@Override
 	public void update(float dt) {
-		position.add(getVelocity().mul(dt));
+		position.add(velocity.mul(dt));
 	}
 	
 	@Override
@@ -129,7 +130,7 @@ public class DynamicObject implements GameObject{
 	}
 	
 	@Override
-	public void debugDraw() {
+	public void debugDraw(ShapeRenderer shapeRndr) {
 		// TODO Auto-generated method stub
 		
 	}
