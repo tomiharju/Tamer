@@ -10,12 +10,14 @@ import com.me.tamer.gameobjects.superclasses.Interactable;
 import com.me.tamer.gameobjects.tiles.ObstacleTile;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.RigidBody;
+import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Level {
 
 	//Settings
-	private Vector2 camBounds = null;
+	private Vector2 mapBounds = null;
+	private Vector2 cameraBounds = null;
 	private Vector2 camBoundsOffset = null;
 	
 	//Gameobject data
@@ -231,18 +233,24 @@ public class Level {
 	/**
 	 * LevelCreator calls this to set Camera borders, could be expanded later if more settings needed
 	 */
-	public void setCameraBounds(String value){
+	public void setMapBounds(String value){
 		
 		String[] values =value.split(":");
 		
-		camBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+		mapBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+		
+		
+		cameraBounds = new Vector2(mapBounds.x  , mapBounds.y);
+	
 		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
 	}
 	
 	public Vector2 getCamBounds(){
-		return camBounds;
+		return cameraBounds;
 	}
-	
+	public Vector2 getMapBounds(){
+		return mapBounds;
+	}
 	public Vector2 getCamBoundsOffset(){
 		return camBoundsOffset;
 	}

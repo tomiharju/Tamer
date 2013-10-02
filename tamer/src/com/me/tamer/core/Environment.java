@@ -69,10 +69,13 @@ public class Environment {
 		return uiCam;
 	}
 	
-	public void moveCamera(Vector2 delta){
-		Vector2 tamerPos = level.getTamer().getPosition();
-		Vector2 newPos = IsoHelper.twoDToIso(tamerPos);
+	public void moveCamera(Vector2 tamerPos){
+	
+		Vector2 camBounds = level.getCamBounds();
+		float y = Math.min(camBounds.y , Math.max(tamerPos.y,-camBounds.y ));
+		float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
 		
+		Vector2 newPos = IsoHelper.twoDToIso(tamerPos.tmp().set(x,y));
 		cam.position.set(newPos.x,newPos.y,0);
 		
 			

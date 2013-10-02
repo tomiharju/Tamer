@@ -35,7 +35,7 @@ public class TileMap extends StaticObject{
 		Renderer renderer = RenderPool.getRenderer(renderType);
 		renderer.setSize(size.x,size.y);
 		for(int i = 0 ; i < numTiles ; i++){
-			renderer.setPosition(IsoHelper.twoDToTileIso(terrain.get(i)));
+			renderer.setPosition(IsoHelper.twoDToIso(terrain.get(i)));
 			renderer.draw(batch);
 		}
 			

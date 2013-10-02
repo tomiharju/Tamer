@@ -65,15 +65,17 @@ public class Joystick implements UiElement{
 			}
 			delta.div(10);
 			delta.rotate(-45);
-			env.moveCamera(delta.tmp().mul(dt));
+			
 			checkBounds(delta.tmp().mul(dt));
 			
 		}
+		
+		env.moveCamera(tamer.getPosition());
 	
 	}
 	
 	public void checkBounds(Vector2 movement){
-		Vector2 camBounds = level.getCamBounds();
+		Vector2 mapBounds = level.getMapBounds();
 		Vector2 position = new Vector2();
 		position.set(tamer.getPosition());
 		position.add(movement);
@@ -81,14 +83,14 @@ public class Joystick implements UiElement{
 		
 		
 		//Check wether position + delta is still inside camera bounds
-		if(position.x > camBounds.x || position.x < -camBounds.x){
+		if(position.x > mapBounds.x || position.x < -mapBounds.x){
 			movement.set(0,movement.y);
 		}
-		if(position.y > camBounds.y || position.y < -camBounds.y){
+		if(position.y > mapBounds.y || position.y < -mapBounds.y){
 			movement.set(movement.x,0);
 		
 		}
-	
+		
 		tamer.manouver(movement);
 		
 	}
