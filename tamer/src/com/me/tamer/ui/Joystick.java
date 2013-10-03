@@ -64,7 +64,7 @@ public class Joystick implements UiElement{
 				pointer.set(restingpoint.tmp().add(delta));
 			}
 			delta.div(10);
-			delta.rotate(-45);
+		
 			
 			checkBounds(delta.tmp().mul(dt));
 			

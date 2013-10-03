@@ -69,6 +69,8 @@ public class SpearButton implements UiElement {
 		if(!isPressed){
 			deltaPoint.set(restingPoint);
 			distancePoint.set(tamer.getPosition());
+			tamerHeading.set(tamer.getHeading());
+			distancePoint.add(tamerHeading.mul(2));
 		}else{
 			power.set(deltaPoint.tmp().sub(restingPoint));
 			float magnitude = (power.len() / 100) * maxPower;
