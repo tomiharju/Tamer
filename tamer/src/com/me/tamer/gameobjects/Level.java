@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
@@ -36,6 +37,8 @@ public class Level {
 	Vector2 impulseB = new Vector2();
 	Vector2 bVelocity = new Vector2();
 	Vector2 normal = new Vector2();
+	
+	Matrix3 mat = new Matrix3();
 	
 	public Level(){
 		gameobjects 	= new ArrayList<GameObject>();
