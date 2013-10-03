@@ -29,7 +29,7 @@ public class StaticObject implements GameObject{
 	public void draw(SpriteBatch batch) {
 		Renderer renderer = RenderPool.getRenderer(renderType);
 		renderer.setSize(size.x,size.y);
-		renderer.setPosition(IsoHelper.twoDToIso(position));
+		renderer.setPosition(IsoHelper.twoDToTileIso(position));
 		renderer.setOrientation(0);
 		renderer.draw(batch);
 		
@@ -59,6 +59,7 @@ public class StaticObject implements GameObject{
 		String[] values = size.split(":");
 		float w = Float.parseFloat(values[0]);
 		float h = Float.parseFloat(values[1]);
+		
 		this.size = new Vector2(w,h);
 		
 	}

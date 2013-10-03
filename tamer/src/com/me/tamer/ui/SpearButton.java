@@ -25,14 +25,14 @@ public class SpearButton implements UiElement {
 	Vector2 tamerPos = null;
 	Vector2 tamerHeading = null;
 	Vector2 power = null;
-	float buttonSize = 100;
-	float maxPower = 20;
+	float buttonSize = 80;
+	float maxPower = 10;
 	boolean isPressed = false;
 	UiRenderer buttonRender = null;
 	UiRenderer pointRender = null;
 	public SpearButton(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingPoint	=new Vector2(350,100);
+		restingPoint	=new Vector2(250,100);
 		deltaPoint = new Vector2(restingPoint);
 		buttonRender = new UiRenderer();
 		pointRender = new UiRenderer();
@@ -91,7 +91,7 @@ public class SpearButton implements UiElement {
 	@Override
 	public boolean handleInput(Vector2 input) {
 		isPressed = true;
-		float y = Math.min(restingPoint.y, Math.max(input.y,restingPoint.y - buttonSize));
+		float y = Math.min(restingPoint.y, Math.max(input.y,restingPoint.y - 100));
 		deltaPoint.set(deltaPoint.x,y);
 		return true;
 		
@@ -120,7 +120,7 @@ public class SpearButton implements UiElement {
 
 	@Override
 	public boolean isTouched(Vector2 input) {
-		if(input.dst(restingPoint) < buttonSize / 2 )
+		if(input.dst(deltaPoint) < buttonSize / 2 )
 			return true;
 		return false;
 	}
