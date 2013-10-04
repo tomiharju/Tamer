@@ -30,14 +30,29 @@ public class IsoHelper{
 			temp.mul(isomatrix);
 			return temp;
 	}
+	
+	public static Vector2 getScreenCoordinatesFromGrid(Vector2 square)
+	{
+	    //Takes one square from the grid as parameter for now
+	   
+
+	    //Transform into screen coordinates
+	    Vector2 screenCoordinates = new Vector2();
+	      
+	    screenCoordinates.x = (float) (((square.x - square.y)) * Math.sqrt(2.0f));
+	    screenCoordinates.y = (float) ((square.x + square.y) * (Math.sqrt(2) /  2));
+	    
+	    
+	    return screenCoordinates;
+
+	}
+
 	public static Vector2 twoDToTileIso(Vector2 point){
 		temp.set(point);
 		temp.mul(isomatrix);
 		return temp;
-}
+	}
 
-
-	
 	/**
 	 * @param point
 	 * @param tileHeight
