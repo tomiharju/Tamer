@@ -8,7 +8,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED = 1f;
+	private final float SPEED = 0.1f;
 	private Vector2 heading = new Vector2(0,0);
 	private int numSpears = 3;
 	private ArrayList<Spear> spears = null;
@@ -47,6 +47,7 @@ public class Tamer extends DynamicObject{
 		force.set(direction.mul(SPEED));
 		heading.set(force);
 		heading.nor();
+	
 	}
 	
 	public void throwSpear(Spear spear,Vector2 point){

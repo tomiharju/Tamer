@@ -1,6 +1,7 @@
 package com.me.tamer.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.core.Environment;
@@ -17,6 +18,9 @@ public class Joystick implements UiElement{
 	private Tamer tamer = null ;
 	private Level level = null;
 	private Environment env = null;
+	private Vector2 origo = null;
+	
+	private Matrix3 translate = new Matrix3().rotate(45);
 	//Joystick variables
 	Vector2 restingpoint 	= null;
 	Vector2 delta			= null;
@@ -30,6 +34,7 @@ public class Joystick implements UiElement{
 		this.inputcontroller = inputController;
 		restingpoint	= new Vector2(100,100);
 		delta			= new Vector2(0,0);
+		origo			= new Vector2(0,0);
 		pointer			= new Vector2(restingpoint.x,restingpoint.y);
 		size			= 200;
 		renderer 		= new UiRenderer();
@@ -63,10 +68,9 @@ public class Joystick implements UiElement{
 				delta.nor().mul(size/2);
 				pointer.set(restingpoint.tmp().add(delta));
 			}
-			delta.div(10);
-		
-			
+			delta.mul(translate);
 			checkBounds(delta.tmp().mul(dt));
+			
 			
 		}
 		
@@ -79,18 +83,9 @@ public class Joystick implements UiElement{
 		Vector2 position = new Vector2();
 		position.set(tamer.getPosition());
 		position.add(movement);
-		
-		
-		
-		//Check wether position + delta is still inside camera bounds
-		if(position.x > mapBounds.x || position.x < -mapBounds.x){
-			movement.set(0,movement.y);
-		}
-		if(position.y > mapBounds.y || position.y < -mapBounds.y){
-			movement.set(movement.x,0);
-		
-		}
-		
+		if(position.dst(origo) > mapBounds.x)
+			position.nor().mul(mapBounds.x);
+
 		tamer.manouver(movement);
 		
 	}

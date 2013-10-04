@@ -99,11 +99,11 @@ public class Environment {
 	
 	public void moveCamera(Vector2 tamerPos){
 	
-		Vector2 camBounds = level.getCamBounds();
-		float y = Math.min(camBounds.y , Math.max(tamerPos.y,-camBounds.y ));
-		float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
+		//Vector2 camBounds = level.getCamBounds();
+		//float y = Math.min(camBounds.y , Math.max(tamerPos.y,-camBounds.y ));
+		//float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
 		
-		Vector2 newPos = IsoHelper.twoDToIso(tamerPos.tmp().set(x,y));
+		Vector2 newPos = IsoHelper.twoDToIso(tamerPos);
 		cam.position.set(newPos.x,newPos.y,0);
 		
 	

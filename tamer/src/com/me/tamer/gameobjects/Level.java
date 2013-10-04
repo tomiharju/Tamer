@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix3;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
@@ -242,9 +243,10 @@ public class Level {
 		
 		mapBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
 		
-		
 		cameraBounds = new Vector2(mapBounds.x  , mapBounds.y);
-	
+		
+		
+		System.err.println(mapBounds.toString());
 		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
 	}
 	
@@ -266,8 +268,8 @@ public class Level {
 	 */
 	public void setTamerPos(String pos){
 		tamer = new Tamer();
-		tamer.setRenderer("static:tamer");
-		tamer.setSize("2:2");
+		tamer.setRenderer("static:tamer1");
+		tamer.setSize("2:2.72");
 		tamer.setPosition(pos);
 		tamer.setVelocity("0:0");
 		tamer.setForce("0:0");

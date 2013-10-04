@@ -7,7 +7,7 @@ import com.me.tamer.physics.RigidBodyCircle;
 
 public class WormPart extends DynamicObject implements Interactable {
 	
-	private float restLength = 1.5f;
+	private float restLength = 0.3f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
 	private float speed = 0;
@@ -27,25 +27,27 @@ public class WormPart extends DynamicObject implements Interactable {
 	public void createHead(Vector2 pos, Vector2 vel){
 		setRenderer("static:wormhead");
 		partName = "Head";
-		radii = .5f;
+		radii = .25f;
 		mass = 20;
 		position = new Vector2(pos);
 		velocity = new Vector2(vel);
 		force = new Vector2(vel);
-		size = new Vector2(radii,radii);
+		size = new Vector2(radii*2,radii*2);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 	}
 	public void createBodyPart(int ordinal,Vector2 pos, Vector2 vel){
 		setRenderer("static:wormpart");
 		partName = "Joint";
-		radii = .5f;
+		radii = .25f;
 		mass = 10;
 		position = new Vector2(pos);
 		position.add(vel.cpy().nor().mul(-ordinal*restLength));
 		velocity = new Vector2(0,0);
 		force = new Vector2(0,0);
-		size = new Vector2(radii,radii);
+		size = new Vector2(radii*2,radii*2);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
+		
+		System.out.println("Worm at "+position.toString());
 	}
 	
 	public void bind(){
