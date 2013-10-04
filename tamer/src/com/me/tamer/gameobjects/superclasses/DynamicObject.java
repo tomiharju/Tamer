@@ -133,6 +133,11 @@ public class DynamicObject implements GameObject{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void markAsActive() {
+		isCarbage = false;
+		
+	}
 
 	
 

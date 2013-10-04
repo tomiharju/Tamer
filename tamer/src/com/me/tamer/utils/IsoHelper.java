@@ -1,10 +1,12 @@
 package com.me.tamer.utils;
 
 
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 
 public class IsoHelper{
 		
+	private static Matrix3 isomatrix = new Matrix3().setToRotation(45).scale(1, 0.5f);
 	private static Vector2 temp = new Vector2(0,0);
 	
 	/**
@@ -24,13 +26,19 @@ public class IsoHelper{
 	 * Convert cartesian coordinate to isometric cordinate.
 	 */
 	public static Vector2 twoDToIso(Vector2 point){
-			temp.x = (point.x - point.y);
-			temp.y = (point.x + point.y ) * 0.5f;
+			temp.set(point);
+			temp.mul(isomatrix);
+		
+		//	temp.x = (point.x - point.y);
+		//	temp.y = (point.x + point.y ) * 0.5f;
 			return temp;
 	}
 	public static Vector2 twoDToTileIso(Vector2 point){
-		temp.x = (point.x - point.y) * 0.5f;
-		temp.y = (point.x + point.y ) * 0.5f;
+		temp.set(point);
+		temp.mul(isomatrix);
+		
+		//temp.x = (point.x - point.y) * 0.5f;
+		//temp.y = (point.x + point.y ) * 0.5f;
 		return temp;
 }
 

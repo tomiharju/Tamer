@@ -59,6 +59,7 @@ public class StaticObject implements GameObject{
 		String[] values = size.split(":");
 		float w = Float.parseFloat(values[0]);
 		float h = Float.parseFloat(values[1]);
+		
 		this.size = new Vector2(w,h);
 		
 	}
@@ -112,6 +113,11 @@ public class StaticObject implements GameObject{
 	public void wakeUp(Level level) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void markAsActive() {
+		isCarbage = false;
 	}
 
 	

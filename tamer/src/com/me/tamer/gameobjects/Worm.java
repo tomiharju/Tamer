@@ -34,6 +34,7 @@ public class Worm extends DynamicObject{
 	public void wakeUp(Level level){
 		for(WormPart part : parts){
 			level.addObject(part);
+			level.getCreatures().add(part);
 			level.addRigidBody(part.getRigidBody());
 			
 		}

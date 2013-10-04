@@ -10,7 +10,7 @@ import com.me.tamer.gameobjects.renders.StaticRenderer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
 import com.me.tamer.utils.IsoHelper;
 
-public class Joystick implements UIElement{
+public class Joystick implements UiElement{
 
 	private InputController inputcontroller = null;
 	private UiRenderer renderer = null;
@@ -31,7 +31,7 @@ public class Joystick implements UIElement{
 		restingpoint	= new Vector2(100,100);
 		delta			= new Vector2(0,0);
 		pointer			= new Vector2(restingpoint.x,restingpoint.y);
-		size			= 100;
+		size			= 200;
 		renderer 		= new UiRenderer();
 		tamer 			= inputcontroller.getLevel().getTamer();
 		level			= inputcontroller.getLevel();
@@ -58,21 +58,24 @@ public class Joystick implements UIElement{
 			pointer.set(restingpoint);
 		}
 		else{
-			delta.set(pointer.cpy().sub(restingpoint));
+			delta.set(pointer.tmp().sub(restingpoint));
 			if(delta.len() > size / 2){
 				delta.nor().mul(size/2);
-				pointer.set(restingpoint.cpy().add(delta));
+				pointer.set(restingpoint.tmp().add(delta));
 			}
 			delta.div(10);
-			env.moveCamera(delta.cpy().mul(dt));
-			checkBounds(delta.cpy().mul(dt));
+		
+			
+			checkBounds(delta.tmp().mul(dt));
 			
 		}
+		
+		env.moveCamera(tamer.getPosition());
 	
 	}
 	
 	public void checkBounds(Vector2 movement){
-		Vector2 camBounds = level.getCamBounds();
+		Vector2 mapBounds = level.getMapBounds();
 		Vector2 position = new Vector2();
 		position.set(tamer.getPosition());
 		position.add(movement);
@@ -80,14 +83,14 @@ public class Joystick implements UIElement{
 		
 		
 		//Check wether position + delta is still inside camera bounds
-		if(position.x > camBounds.x || position.x < -camBounds.x){
+		if(position.x > mapBounds.x || position.x < -mapBounds.x){
 			movement.set(0,movement.y);
 		}
-		if(position.y > camBounds.y || position.y < -camBounds.y){
+		if(position.y > mapBounds.y || position.y < -mapBounds.y){
 			movement.set(movement.x,0);
 		
 		}
-	
+		
 		tamer.manouver(movement);
 		
 	}
@@ -121,7 +124,7 @@ public class Joystick implements UIElement{
 
 	@Override
 	public boolean isTouched(Vector2 input) {
-		if(input.dst(restingpoint) < size / 2)
+		if(input.dst(restingpoint) < size / 2 + 1)
 			return true;
 		return false;
 	}
