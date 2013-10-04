@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-public class ActionButton implements UIElement{
+public class ActionButton implements UiElement{
 
 	public ActionButton(InputController inputController) {
 		// TODO Auto-generated constructor stub
@@ -29,7 +29,7 @@ public class ActionButton implements UIElement{
 	}
 
 	@Override
-	public boolean handleInput(Vector3 input) {
+	public boolean handleInput(Vector2 input) {
 		return true;
 		
 	}
@@ -38,6 +38,18 @@ public class ActionButton implements UIElement{
 	public void touchUp() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void touchDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isTouched(Vector2 input) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

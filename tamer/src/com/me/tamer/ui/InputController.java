@@ -1,6 +1,9 @@
 package com.me.tamer.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -13,32 +16,37 @@ import com.me.tamer.gameobjects.Level;
 
 public class InputController implements InputProcessor{
 
-	ArrayList<UIElement> buttons ;
+	ArrayList<UiElement> buttons ;
 	private Environment environment;
+	OrthographicCamera uiCam = null;
 	OrthographicCamera cam = null;
+	private Vector2 input = new Vector2();
 	private Level level;
+	private HashMap<Integer,UiElement> selectedButtons = null;
+	Vector2 testVector = new Vector2();
 	public InputController(Environment env, Level lvl){
 		this.environment = env;
-		cam = environment.getUiCamera();
+		uiCam = environment.getUiCamera();
+		cam = environment.getCamera();
 		this.level = lvl;
-		buttons = new ArrayList<UIElement>();
+		buttons = new ArrayList<UiElement>();
 		buttons.add(new ActionButton(this));
 		buttons.add(new Joystick(this));
-		buttons.add(new SlidingButton(this));
-		
+		buttons.add(new SpearButton(this));
+		selectedButtons = new HashMap<Integer,UiElement>();
 		Gdx.input.setInputProcessor(this);
 	}
 	
 	public void draw(SpriteBatch batch){
-		for(UIElement u : buttons)
+		for(UiElement u : buttons)
 			u.draw(batch);
 	}
 	public void update(float dt){
-		for(UIElement u : buttons)
+		for(UiElement u : buttons)
 			u.update(dt);
 	}
 	
-	public ArrayList<UIElement> getButtons() {
+	public ArrayList<UiElement> getButtons() {
 		return buttons;
 	}
 
@@ -51,6 +59,13 @@ public class InputController implements InputProcessor{
 	public Level getLevel() {
 		return level;
 	}
+	public OrthographicCamera getCam(){
+		return cam;
+	}
+	public OrthographicCamera getUiCam(){
+		return uiCam;
+	}
+
 
 
 	@Override
@@ -73,32 +88,35 @@ public class InputController implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		
-		
-		Vector3 input = new Vector3(screenX,screenY,0);
-		cam.unproject(input);
-		for(UIElement e : buttons)
-			e.handleInput(input);
-				
+		System.out.println("Pointer added "+pointer);
+		input.set(screenX,uiCam.viewportHeight - screenY);
+		for(UiElement e : buttons)
+			if(e.isTouched(input)){
+					e.handleInput(input);
+					selectedButtons.put(pointer, e);
+			}
 	
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		for(UIElement e : buttons)
-			e.touchUp();
+		UiElement element = selectedButtons.get(pointer);
+		if(element != null){
+			element.touchUp();
+			selectedButtons.remove(pointer);
+		}
+		
+	
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-
-		Vector3 input = new Vector3(screenX,screenY,0);
-		cam.unproject(input);
-		for(UIElement e : buttons)
-			e.handleInput(input);
-		
+		input.set(screenX,uiCam.viewportHeight - screenY );
+		for(UiElement button : selectedButtons.values())
+			if(button.isTouched(input))
+				button.handleInput(input);
 		return false;
 	}
 

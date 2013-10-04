@@ -83,4 +83,16 @@ public class RigidBodyLine implements RigidBody {
 		
 	}
 
+	@Override
+	public void preCalculateValues() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public float getRadii() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -1,10 +1,13 @@
 package com.me.tamer.utils;
 
 
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 
 public class IsoHelper{
 		
+	private static Matrix3 isomatrix = new Matrix3().setToRotation(45).scale(1, 0.5f);
+	private static Vector2 temp = new Vector2(0,0);
 	
 	/**
 	 * @param point
@@ -12,10 +15,9 @@ public class IsoHelper{
 	 * Convert isometric point to cartesian coordinate.
 	 */
 	public static Vector2 isoTo2D(Vector2 point){
-			Vector2  tempPt = new Vector2(0,0);
-			tempPt.x = (2 * point.y + point.x ) / 2;
-			tempPt.y = (2 * point.y - point.x ) / 2;
-			return tempPt;
+			temp.x = (2 * point.y + point.x ) / 2;
+			temp.y = (2 * point.y - point.x ) / 2;
+			return temp;
 	}
 	
 	/**
@@ -24,10 +26,12 @@ public class IsoHelper{
 	 * Convert cartesian coordinate to isometric cordinate.
 	 */
 	public static Vector2 twoDToIso(Vector2 point){
-			Vector2 tempPt = new Vector2(0,0);
-			tempPt.x = (point.x - point.y);
-			tempPt.y = (point.x + point.y ) * 0.5f;
-			return tempPt;
+			temp.set(point);
+			temp.mul(isomatrix);
+		
+		//	temp.x = (point.x - point.y);
+		//	temp.y = (point.x + point.y ) * 0.5f;
+			return temp;
 	}
 	
 	public static Vector2 getScreenCoordinatesFromGrid(Vector2 square)
@@ -44,9 +48,17 @@ public class IsoHelper{
 	    
 	    return screenCoordinates;
 
-	};
+	}
 
-	
+	public static Vector2 twoDToTileIso(Vector2 point){
+		temp.set(point);
+		temp.mul(isomatrix);
+		
+		//temp.x = (point.x - point.y) * 0.5f;
+		//temp.y = (point.x + point.y ) * 0.5f;
+		return temp;
+	}
+
 	/**
 	 * @param point
 	 * @param tileHeight
@@ -56,7 +68,7 @@ public class IsoHelper{
 	public static Vector2 getTileCoordinates(Vector2 point, int tileHeight){
 			Vector2 tempPt = new Vector2(0,0);
 			tempPt.x = (float) Math.floor( point.x / tileHeight);
-			tempPt.y = (float) Math.floor(point.y / tileHeight);
+			tempPt.y = (float) Math.floor( point.y / tileHeight);
 			return tempPt;
 	}
 	

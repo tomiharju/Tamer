@@ -27,14 +27,16 @@ public class Worm extends DynamicObject{
 		setPosition(pos);
 		setVelocity(spawn.getSpawnVelocity());
 		addPart("head",0,position,velocity);
-		for(int i = 0 ; i < 5 ; i++)
+		for(int i = 0 ; i < 3 ; i++)
 			addPart("joint",i+1,position,velocity);
 		connectPieces();
 	}
 	public void wakeUp(Level level){
 		for(WormPart part : parts){
 			level.addObject(part);
+			level.getCreatures().add(part);
 			level.addRigidBody(part.getRigidBody());
+			
 		}
 	}
 
@@ -70,7 +72,7 @@ public class Worm extends DynamicObject{
 		head.getVelocity().mul(0.99f);
 	}
 	public void draw(SpriteBatch batch){
-	//No action
+		//No action
 	}
 	
 	

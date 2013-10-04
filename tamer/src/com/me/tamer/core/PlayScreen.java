@@ -13,6 +13,11 @@ public class PlayScreen implements Screen{
 	private TamerGame main;
 	private Environment environment;
 	
+	//FPS limiting
+	int FPS = 30;
+	long lastFrame = 0;
+	long curFrame = System.currentTimeMillis();
+	
 	public PlayScreen(TamerGame core){
 		this.main = main;
 	
@@ -21,16 +26,19 @@ public class PlayScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.529f, .808f, 1f, 1);
+		
+		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		environment.update(delta);
 		environment.draw();
+
 		
+	
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+			environment.resize(width, height);
 		
 	}
 

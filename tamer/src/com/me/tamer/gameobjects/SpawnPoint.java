@@ -24,6 +24,9 @@ public class SpawnPoint extends StaticObject{
 	private int spawnCount;
 	private int numCreated = 0;
 	
+	//IMPORTANT: spawn number is used to distinguish spawns from each other.
+	private int spawnNumber = 0;
+	
 
 	/**
 	 * @param init_sleep how long till the first spawn
@@ -33,9 +36,7 @@ public class SpawnPoint extends StaticObject{
 	 * @param spawn_type is the object type to spawn. Currently worm or ant
 	 */
 	
-	public void startSpawning(final Level level){
-		this.level = level;
-		final SpawnPoint spawn = this;
+	public void startSpawning(){
 		System.out.println("Started to spawn");
 		new Thread(new Runnable(){
 			@Override
@@ -49,9 +50,9 @@ public class SpawnPoint extends StaticObject{
 						initialSleep = 0;
 						//Add newly created worm to main gameobject list
 						if(spawnType.equalsIgnoreCase("worm")){
-							level.addNewObject(RuntimeObjectFactory.getObjectFromPool("worm"));
+							RuntimeObjectFactory.getObjectFromPool("worm"+spawnNumber);
 						}else if(spawnType.equalsIgnoreCase("ant"))
-							level.addNewObject(RuntimeObjectFactory.getObjectFromPool("worm"));
+							RuntimeObjectFactory.getObjectFromPool("worm"+spawnNumber);
 						//Sleep for the actual spawn interval
 						Thread.sleep(interval);
 					}
@@ -76,6 +77,9 @@ public class SpawnPoint extends StaticObject{
 	public void setSpawnType(String spawnType) {
 		this.spawnType = spawnType;
 	}
+	public void setSpawnNumber(String number){
+		this.spawnNumber = Integer.parseInt(number);
+	}
 
 	public void setInitialSleep(String initialSleep) {
 		this.initialSleep = Integer.parseInt(initialSleep)*1000;
@@ -89,7 +93,7 @@ public class SpawnPoint extends StaticObject{
 		this.spawnCount = Integer.parseInt(spawncount);
 		if(spawnType.equalsIgnoreCase("worm"))
 			for( int i = 0 ; i < this.spawnCount ; i++)
-				RuntimeObjectFactory.addToObjectPool("worm",new Worm(this));
+				RuntimeObjectFactory.addToObjectPool("worm"+spawnNumber,new Worm(this));
 	}
 	
 	public void setSpawnVelocity(String vel){
