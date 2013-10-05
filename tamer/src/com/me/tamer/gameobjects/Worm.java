@@ -45,11 +45,11 @@ public class Worm extends DynamicObject{
 		WormPart part = null;
 		if(type.equalsIgnoreCase("head")){
 			part = new WormPart();
-			part.createHead(pos,vel);
+			part.createHead(pos,vel,this);
 			head = part;
 		}else if(type.equalsIgnoreCase("joint")){
 			part = new WormPart();
-			part.createBodyPart(ordinal,pos,vel);
+			part.createBodyPart(ordinal,pos,vel,this);
 		}else throw new IllegalArgumentException("Wrong partname");
 		
 		parts.add(part);
@@ -73,6 +73,9 @@ public class Worm extends DynamicObject{
 	}
 	public void draw(SpriteBatch batch){
 		//No action
+	}
+	public ArrayList<WormPart> getParts(){
+		return parts;
 	}
 	
 	

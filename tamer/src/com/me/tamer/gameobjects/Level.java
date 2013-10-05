@@ -181,12 +181,17 @@ public class Level {
 	public void runCarbageCollection(){
 		int size = gameobjects.size();
 		for( int i = 0 ; i < size ; i ++)
-			if(gameobjects.get(i).isCarbage())
+			if(gameobjects.get(i).isCarbage()){
+				gameobjects.get(i).dispose(this);
 				carbages.add(gameobjects.get(i));
+			}
 		
 		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
 			carbages.clear();
+			System.out.println("Gameobjects "+gameobjects.size());
+			System.out.println("Creatures "+creatures.size());
+			System.out.println("RigidBodies "+rigidbodies.size());
 		}
 	}
 	public synchronized void addNewObjects(){
@@ -218,7 +223,9 @@ public class Level {
 		}
 		//Create and set tamer into level
 		setTamerPos("0:0");
-		System.out.println("Initial gameobject size:" +gameobjects.size());
+		System.out.println("Gameobjects "+gameobjects.size());
+		System.out.println("Creatures "+creatures.size());
+		System.out.println("RigidBodies "+rigidbodies.size());
 	}
 	
 	/**
@@ -262,6 +269,9 @@ public class Level {
 	}
 	public ArrayList<Interactable> getCreatures(){
 		return creatures;
+	}
+	public ArrayList<RigidBody> getRigidBodies(){
+		return rigidbodies;
 	}
 	
 	/**

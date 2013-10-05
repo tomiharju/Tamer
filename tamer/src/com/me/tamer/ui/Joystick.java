@@ -16,7 +16,8 @@ public class Joystick implements UiElement{
 
 	private InputController inputcontroller = null;
 	private UiRenderer renderer = null;
-	private Tamer tamer = null ;
+	private Tamer tamer = null;
+	private Vector2 tamerPosition = null;
 	private Level level = null;
 	private Environment env = null;
 	private Vector2 origo = null;
@@ -37,6 +38,7 @@ public class Joystick implements UiElement{
 		delta			= new Vector2(0,0);
 		origo			= new Vector2(0,0);
 		pointer			= new Vector2(restingpoint.x,restingpoint.y);
+		tamerPosition	= new Vector2();
 		size			= 200;
 		renderer 		= new UiRenderer();
 		tamer 			= inputcontroller.getLevel().getTamer();
@@ -70,7 +72,7 @@ public class Joystick implements UiElement{
 				pointer.set(restingpoint.tmp().add(delta));
 			}
 			delta.mul(translate);
-			checkBounds(delta.tmp().mul(dt));
+			checkBounds(delta.mul(dt));
 			
 			
 		}
@@ -81,10 +83,10 @@ public class Joystick implements UiElement{
 	
 	public void checkBounds(Vector2 movement){
 		Vector2 mapBounds = level.getMapBounds();
-		Vector2 position = tamer.getPosition().cpy();
-		position.add(movement);
-		if(position.dst(origo) >= mapBounds.x)
-			movement.sub(VectorHelper.projection(movement,position));
+		tamerPosition.set(tamer.getPosition().tmp().add(movement));
+		if(tamerPosition.dst(origo) >= mapBounds.x){
+			movement.sub(VectorHelper.projection(movement,tamerPosition));
+		}
 		
 		tamer.manouver(movement);
 		

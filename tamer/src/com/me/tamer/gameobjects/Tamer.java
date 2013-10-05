@@ -25,7 +25,7 @@ public class Tamer extends DynamicObject{
 		position.add(force);
 		force.mul(0.9f);
 		for(int i = 0 ; i < spears.size() ; i ++){
-			if(position.dst(spears.get(i).getPosition()) < 0.5 ){
+			if(position.dst(spears.get(i).getPosition()) < 1 ){
 				if(spears.get(i).isAttached()){
 					spears.get(i).pickUp();
 					spears.remove(i);

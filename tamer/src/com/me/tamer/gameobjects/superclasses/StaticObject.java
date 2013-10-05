@@ -120,6 +120,12 @@ public class StaticObject implements GameObject{
 		isCarbage = false;
 	}
 
+	@Override
+	public void dispose(Level level) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

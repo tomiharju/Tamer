@@ -69,8 +69,18 @@ public interface GameObject {
 	 * Used when object is fetched from objectpool and put into gameworld.
 	 * 
 	 */
+	/**
+	 * Wakeup is called when object is put into play. For example when worm is fetched from object pool, wakeup method adds that worm and its parts to active gameobjects
+	 *
+	 * @param level
+	 */
 	public void wakeUp(Level level);
 	public void resolveForces(float dt);
+	
+	/**
+	 * Actions that needs to be taken when this object this object is removed from game.
+	 */
+	public void dispose(Level level);
 	
 }
 
