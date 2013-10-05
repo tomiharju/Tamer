@@ -224,4 +224,10 @@ public class RigidBodyBox implements RigidBody{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public float getMass() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

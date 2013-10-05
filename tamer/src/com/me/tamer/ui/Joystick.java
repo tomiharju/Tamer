@@ -10,6 +10,7 @@ import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.renders.StaticRenderer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
 import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.VectorHelper;
 
 public class Joystick implements UiElement{
 
@@ -80,12 +81,11 @@ public class Joystick implements UiElement{
 	
 	public void checkBounds(Vector2 movement){
 		Vector2 mapBounds = level.getMapBounds();
-		Vector2 position = new Vector2();
-		position.set(tamer.getPosition());
+		Vector2 position = tamer.getPosition().cpy();
 		position.add(movement);
-		if(position.dst(origo) > mapBounds.x)
-			position.nor().mul(mapBounds.x);
-
+		if(position.dst(origo) >= mapBounds.x)
+			movement.sub(VectorHelper.projection(movement,position));
+		
 		tamer.manouver(movement);
 		
 	}

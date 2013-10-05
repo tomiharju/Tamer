@@ -7,7 +7,7 @@ import com.me.tamer.physics.RigidBodyCircle;
 
 public class WormPart extends DynamicObject implements Interactable {
 	
-	private float restLength = 0.3f;
+	private float restLength = 1.3f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
 	private float speed = 0;
@@ -16,7 +16,7 @@ public class WormPart extends DynamicObject implements Interactable {
 	//Chain related stuff
 	private WormPart parent 	= null;
 	private WormPart child 		= null;
-	private boolean isAttached = false;
+
 	private String partName = null;
 	//Physics optimization variables;
 	Vector2 impulseA = new Vector2();
@@ -31,9 +31,10 @@ public class WormPart extends DynamicObject implements Interactable {
 		mass = 20;
 		position = new Vector2(pos);
 		velocity = new Vector2(vel);
-		force = new Vector2(vel);
+		force = new Vector2(vel).mul(5);
 		size = new Vector2(radii*2,radii*2);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
+		this.ordinal = 0;
 	}
 	public void createBodyPart(int ordinal,Vector2 pos, Vector2 vel){
 		setRenderer("static:wormpart");
@@ -41,22 +42,15 @@ public class WormPart extends DynamicObject implements Interactable {
 		radii = .25f;
 		mass = 10;
 		position = new Vector2(pos);
-		position.add(vel.cpy().nor().mul(-ordinal*restLength));
+		position.add(vel.tmp().nor().mul(-ordinal*restLength));
 		velocity = new Vector2(0,0);
 		force = new Vector2(0,0);
 		size = new Vector2(radii*2,radii*2);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
-		
-		System.out.println("Worm at "+position.toString());
+		this.ordinal = ordinal;
 	}
 	
-	public void bind(){
-		body.setInvMass(0);
-		isAttached = true;
-	}
-	public void unBind(){
-		body.setInvMass( 1 / body.getInvMass());
-	}
+	
 	public void setHeading(Vector2 heading){
 		this.heading.set(heading);
 	}
@@ -69,33 +63,37 @@ public class WormPart extends DynamicObject implements Interactable {
 	}
 	public void solveForces(float dt){
 		if(child != null){
+	//		System.out.println("Part {"+getOrdinal() + " : " + partName+ "} calling child {"+child.getOrdinal()+" : "+child.getPartName() + "}");
 			solveJoint(dt);
 			child.solveForces(dt);
-		}
+		}//else
+		//	System.out.println("Hi, im the tail");
 	}
 	public void update(float dt){
 		//Overidde this to do nothing.
 	}
 	public void updateChild(float dt){
+		
 		if(child != null && child.partName.equalsIgnoreCase("Joint"))
 			child.updateChild(dt);
 		
-		tempVector.set(velocity);
-		position.add(tempVector.mul(dt));
-		velocity.mul(0);
+		position.add(velocity.tmp().mul(dt));
+		velocity.mul(.9f);
+	
 		if(partName.equalsIgnoreCase("Head"))
-			velocity.add(force);
+			velocity.add(force.tmp().mul(dt));
 	}
 	
 	public void solveJoint(float dt){
-		tempVector.set(child.position);
-		Vector2 axis = tempVector.sub(position);
+		
+		Vector2 axis = new Vector2(child.position.tmp().sub(position));
 		float currentDistance = axis.len();
 		Vector2 unitAxis = axis.nor();
-		tempVector.set(child.getVelocity());
-		Vector2 relativeVelocity = tempVector.sub(velocity);
+
+		Vector2 relativeVelocity = child.velocity.tmp().sub(velocity);
 		float relVelMagnitude = relativeVelocity.dot(unitAxis);
 		float relativeDistance = (currentDistance - restLength);
+		
 		if( relativeDistance > 0){
 			float impulse = 0;
 			float remove = relVelMagnitude + relativeDistance / dt;
@@ -113,16 +111,13 @@ public class WormPart extends DynamicObject implements Interactable {
 	}
 	
 	public void applyImpulse(Vector2 impulse){
-		tempVector.set(impulse);
-		Vector2 addA = tempVector.mul(child.getRigidBody().getInvMass());
-		tempVector.set(impulse);
-		Vector2 addB = tempVector.mul(body.getInvMass());
-		child.getVelocity().sub(addA);
+		Vector2 addA = impulse.cpy().mul(child.body.getInvMass());
+		Vector2 addB = impulse.cpy().mul(body.getInvMass());
+		child.velocity.sub(addA);
 		velocity.add(addB);
 	}
 	@Override
 	public void spearHit(Spear spear) {
-		System.err.println("SPEAR HIT!");
 		body.setInvMass(0);
 		
 	}
@@ -130,6 +125,17 @@ public class WormPart extends DynamicObject implements Interactable {
 	public void lassoHit(String lasso) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public int getOrdinal(){
+		return ordinal;
+	}
+	public String getPartName(){
+		return partName;
+	}
+	@Override
+	public void unBind() {
+		body.setInvMass( 1 / body.getMass());
 	}
 	
 	

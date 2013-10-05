@@ -120,8 +120,8 @@ public class Level {
 				RigidBody a = c.getObjA();
 				float dist = c.getDist();
 				//Relative velocity ( vector )
-				bVelocity.set(b.getVelocity());
-				Vector2 rv = bVelocity.sub(a.getVelocity());
+			
+				Vector2 rv = b.getVelocity().tmp().sub(a.getVelocity());
 				//Relative normal velocity ( scalar )
 				float relNv = rv.dot(normal);
 			
@@ -162,8 +162,8 @@ public class Level {
 						b.getOwner().setHeading(rightNor);
 						a.getOwner().setHeading(leftNor);
 					}
-				}*/
-				
+				}
+				*/
 			}
 			
 			
@@ -196,6 +196,7 @@ public class Level {
 				gameobjects.add(go);
 			}
 			newobjects.clear();
+			System.out.println(gameobjects.size());
 		}
 		
 	}
@@ -217,7 +218,7 @@ public class Level {
 		}
 		//Create and set tamer into level
 		setTamerPos("0:0");
-		
+		System.out.println("Initial gameobject size:" +gameobjects.size());
 	}
 	
 	/**

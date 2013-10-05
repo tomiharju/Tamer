@@ -11,6 +11,7 @@ public class Spear extends DynamicObject{
 	
 	private Level level;
 	private Vector2 target = null ;
+	private Interactable targetCreature = null;
 	private float SPEED = 10;
 	private boolean isAttached = false;
 	
@@ -37,8 +38,10 @@ public class Spear extends DynamicObject{
 			int size = creatures.size();
 			System.out.println("Searching for potential hit amont "+size+" creatures.");
 			for(int i = 0 ; i < size ; i ++)
-				if(position.dst(((DynamicObject) creatures.get(i)).getPosition()) < 0.5){
-					creatures.get(i).spearHit(this);
+				if(position.dst(((DynamicObject) creatures.get(i)).getPosition()) < 1.5){
+					targetCreature = creatures.get(i);
+					targetCreature.spearHit(this);
+					break;
 				}
 			isAttached = true;
 		}
@@ -61,6 +64,10 @@ public class Spear extends DynamicObject{
 	 * Remove from active gameobjects
 	 */
 	public void pickUp(){
+		if(targetCreature != null){
+			targetCreature.unBind();
+			targetCreature = null;
+		}
 		RuntimeObjectFactory.addToObjectPool("spear",this);
 		markAsCarbage();
 	}

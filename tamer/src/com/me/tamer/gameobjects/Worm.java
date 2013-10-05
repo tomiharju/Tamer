@@ -69,7 +69,7 @@ public class Worm extends DynamicObject{
 	}
 	public void update(float dt){
 		head.updateChild(dt);
-		head.getVelocity().mul(0.99f);
+	
 	}
 	public void draw(SpriteBatch batch){
 		//No action
