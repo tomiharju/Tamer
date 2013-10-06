@@ -39,9 +39,7 @@ public class Level {
 	Vector2 impulseB = new Vector2();
 	Vector2 bVelocity = new Vector2();
 	Vector2 normal = new Vector2();
-	
-	Matrix3 mat = new Matrix3();
-	
+		
 	public Level(){
 		gameobjects 	= new ArrayList<GameObject>();
 		carbages 		= new ArrayList<GameObject>();
@@ -192,9 +190,6 @@ public class Level {
 		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
 			carbages.clear();
-			System.out.println("Gameobjects "+gameobjects.size());
-			System.out.println("Creatures "+creatures.size());
-			System.out.println("RigidBodies "+rigidbodies.size());
 		}
 	}
 	public synchronized void addNewObjects(){
@@ -204,8 +199,7 @@ public class Level {
 				gameobjects.add(go);
 			}
 			newobjects.clear();
-			System.out.println(gameobjects.size());
-		}
+			}
 		
 	}
 	

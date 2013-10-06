@@ -25,7 +25,7 @@ public class SpearButton implements UiElement {
 	Vector2 tamerPos = null;
 	Vector2 tamerHeading = null;
 	Vector2 power = null;
-	float buttonSize = 80;
+	float buttonSize = 100;
 	float maxPower = 10;
 	boolean isPressed = false;
 	UiRenderer buttonRender = null;

@@ -8,5 +8,4 @@ public interface Tile {
 
 	public void setAction(String action);
 	public boolean resolveTile(Interactable obj);
-	public void executeAction();
 }

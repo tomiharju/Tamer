@@ -13,13 +13,13 @@ public class WormPart extends DynamicObject implements Interactable {
 	private float restLength = 1.3f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
-	private float speed = 0;
+	private float speed = 5;
 	private float radii = 0;
 	private float mass = 0;
 	//Chain related stuff
 	private WormPart parent 	= null;
 	private WormPart child 		= null;
-
+	private boolean isTail		= false;
 	private String partName = null;
 	//Physics optimization variables;
 	Vector2 impulseA = new Vector2();
@@ -35,7 +35,7 @@ public class WormPart extends DynamicObject implements Interactable {
 		mass = 20;
 		position = new Vector2(pos);
 		velocity = new Vector2(vel);
-		force = new Vector2(vel).mul(5);
+		force = new Vector2(vel).mul(speed);
 		size = new Vector2(radii*2,radii*2);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = 0;
@@ -119,6 +119,15 @@ public class WormPart extends DynamicObject implements Interactable {
 		Vector2 addB = impulse.tmp().mul(body.getInvMass());
 		velocity.add(addB);
 	}
+	
+	public void setAsTail(){
+		isTail = true;
+	}
+	public boolean isTail(){
+		return isTail;
+	}
+	
+	
 	@Override
 	public void spearHit(Spear spear) {
 	if(partName.equalsIgnoreCase("head"))

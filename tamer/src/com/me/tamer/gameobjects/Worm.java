@@ -61,7 +61,9 @@ public class Worm extends DynamicObject{
 			if( (i + 1) < parts.size()){
 				parts.get( i + 1 ).attachToParent(parts.get(i));
 				//TODO: Create a rigidbodyline between parts
-			}
+			}else if( (i + 1 ) == parts.size() )
+				parts.get(i).setAsTail();
+			
 		}
 	}
 	public void resolveForces(float dt){
