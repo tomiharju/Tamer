@@ -32,7 +32,7 @@
     	<data type="InitialSleep">4</data>
     	<data type="Interval">2</data>
     	<data type="SpawnVelocity">-3:-3</data>
-    	<data type="SpawnCount">2</data>
+    	<data type="SpawnCount">10</data>
      </GameObject>
      
     

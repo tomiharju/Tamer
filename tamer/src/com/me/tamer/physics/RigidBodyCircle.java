@@ -56,7 +56,7 @@ public class RigidBodyCircle implements RigidBody {
 	@Override
 	public Contact generateContact(RigidBody body) {
 		if(body instanceof RigidBodyCircle){
-			if(position.dst(body.getPosition() ) > radii + body.getRadii() + 2f)
+			if(position.dst(body.getPosition() ) > radii + body.getRadii() + 0.1f)
 				return null;
 			
 			float overlap = -100000f;
@@ -73,7 +73,12 @@ public class RigidBodyCircle implements RigidBody {
 				normal.set(axis);
 			}
 			
-			return new Contact(normal,overlap,this,body);
+			Contact c = ContactPool.obtain();
+			c.setN(normal);
+			c.setDist(overlap);
+			c.setObjA(this);
+			c.setObjB(body);
+			return c;
 			
 		}
 		
@@ -109,7 +114,12 @@ public class RigidBodyCircle implements RigidBody {
 			}
 			
 			
-			return new Contact(normal,overlap,this,body);
+			Contact c = ContactPool.obtain();
+			c.setN(normal);
+			c.setDist(overlap);
+			c.setObjA(this);
+			c.setObjB(body);
+			return c;
 			
 		}
 		
@@ -146,7 +156,12 @@ public class RigidBodyCircle implements RigidBody {
 				
 				
 			}
-			return new Contact(normal, overlap, this, body);
+			Contact c = ContactPool.obtain();
+			c.setN(normal);
+			c.setDist(overlap);
+			c.setObjA(this);
+			c.setObjB(body);
+			return c;
 		}
 		
 		

@@ -18,7 +18,7 @@ public class Contact implements Poolable{
 	}
 
 	public void setN(Vector2 n) {
-		N = n;
+		N.set(n);
 	}
 
 	public float getDist() {
@@ -62,10 +62,17 @@ public class Contact implements Poolable{
 		this.objB = b;
 	}
 
+	public Contact(){
+		N = new Vector2();
+		dist = 0;
+		objA = null;
+		objB = null;
+	}
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
-		
+		dist = 0;
+		objA = null;
+		objB = null;
 	}
 
 }

@@ -11,6 +11,7 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.Interactable;
 import com.me.tamer.gameobjects.tiles.ObstacleTile;
 import com.me.tamer.physics.Contact;
+import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
@@ -164,6 +165,8 @@ public class Level {
 					}
 				}
 				*/
+				//!!!PUT CONTACT BACK INTO POOL!!!
+				ContactPool.restore(c);
 			}
 			
 			
@@ -223,9 +226,8 @@ public class Level {
 		}
 		//Create and set tamer into level
 		setTamerPos("0:0");
-		System.out.println("Gameobjects "+gameobjects.size());
-		System.out.println("Creatures "+creatures.size());
-		System.out.println("RigidBodies "+rigidbodies.size());
+		//Create new contact pool
+		ContactPool.createPool(100);
 	}
 	
 	/**
