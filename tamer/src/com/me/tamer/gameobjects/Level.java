@@ -275,7 +275,7 @@ public class Level {
 	 */
 	public void setTamerPos(String pos){
 		tamer = new Tamer();
-		tamer.setRenderer("static:tamer1");
+		tamer.setRenderer("animated:tamer1");
 		tamer.setSize("2:2.72");
 		tamer.setPosition(pos);
 		tamer.setVelocity("0:0");

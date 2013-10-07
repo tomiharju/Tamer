@@ -19,7 +19,7 @@
     </GameObject>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-    	<data type="Renderer">static:debugtile3</data>
+    	<data type="Renderer">animated:tile_sand</data>
     	<data type="Size">5:5</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
     	<data type="Position">0:0</data>
     	<data type="Action">quicksand</data>
@@ -38,9 +38,9 @@
     	<data type="SpawnType">worm</data>
     	<data type="SpawnNumber">1</data>	<!-- IMPORTANT, USED TO DISTINGUISH SPAWNS FROM EACH OTHER!!! -->
     	<data type="InitialSleep">4</data>
-    	<data type="Interval">2</data>
+    	<data type="Interval">10</data>
     	<data type="SpawnVelocity">-3:-3</data>
-    	<data type="SpawnCount">1</data>
+    	<data type="SpawnCount">5</data>
      </GameObject>
      
     

@@ -24,11 +24,12 @@ public class WormPart extends DynamicObject implements Interactable {
 	//Physics optimization variables;
 	Vector2 impulseA = new Vector2();
 	Vector2 impulseB = new Vector2();
-	Vector2 tempVector = new Vector2();
+	Vector2 axis = new Vector2();
+	Vector2 relativeVelocity = new Vector2();
 	
 	
 	public void createHead(Vector2 pos, Vector2 vel,Worm worm){
-		setRenderer("static:wormhead");
+		setRenderer("animated:wormhead");
 		this.worm = worm;
 		partName = "Head";
 		radii = .25f;
@@ -42,7 +43,7 @@ public class WormPart extends DynamicObject implements Interactable {
 	}
 	public void createBodyPart(int ordinal,Vector2 pos, Vector2 vel,Worm worm){
 		this.worm = worm;
-		setRenderer("static:wormpart");
+		setRenderer("animated:wormpart");
 		partName = "Joint";
 		radii = .25f;
 		mass = 10;
@@ -89,11 +90,11 @@ public class WormPart extends DynamicObject implements Interactable {
 	
 	public void solveJoint(float dt){
 		
-		Vector2 axis = new Vector2(child.position.tmp().sub(position));
+		axis.set(child.position.tmp().sub(position));
 		float currentDistance = axis.len();
 		Vector2 unitAxis = axis.nor();
 
-		Vector2 relativeVelocity = new Vector2(child.velocity.tmp().sub(velocity));
+		relativeVelocity.set(child.velocity.tmp().sub(velocity));
 		float relVelMagnitude = relativeVelocity.dot(unitAxis);
 		float relativeDistance = (currentDistance - restLength);
 		
@@ -153,11 +154,27 @@ public class WormPart extends DynamicObject implements Interactable {
 		body.setInvMass( 1 / body.getMass());
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)
+	 */
 	public void dispose(Level level){
 		//TODO: play some death animations before actually disposing?
 		level.getCreatures().remove(this);
 		level.getRigidBodies().remove(this.body);
 		worm.getParts().remove(this);
+	}
+	/* 
+	 * This method is called by quicksandAction after timer fires. 
+	 * Its used to kill the current tail part, and set the next part in chain as tail.
+	 * 
+	 */
+	@Override
+	public void kill() {
+		if(parent != null){
+			parent.child = null;
+			parent.setAsTail();
+		}
+		markAsCarbage();
 	}
 	
 	
