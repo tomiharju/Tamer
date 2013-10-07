@@ -22,5 +22,6 @@ public interface Interactable {
 	 * What needs to be done when specific creature is killed
 	 */
 	public void kill();
+	public void moveToFinish();
 	
 }

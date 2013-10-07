@@ -2,6 +2,7 @@ package com.me.tamer.actions;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.WormPart;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
@@ -10,10 +11,9 @@ import com.me.tamer.utils.tTimer;
 
 public class QuickSandAction implements Action{
 
-	private float power = 0.1f;
+	private float power = 4.1f;
 	private boolean isEntered = false;
 	private boolean isActivated = false;
-	private boolean killParts = false;
 	private Vector2 activationTreshold = null;
 	private Vector2 pullDirection = null;
 	private Vector2 centerOfPull = null;
@@ -54,7 +54,7 @@ public class QuickSandAction implements Action{
 				pullDirection.nor();
 				pullDirection.mul((float) Math.sqrt(distance));
 				pullDirection.mul(power);
-				((DynamicObject) obj).getVelocity().add(pullDirection);
+				((DynamicObject) obj).getVelocity().add(pullDirection.mul(Gdx.graphics.getDeltaTime()));
 				
 				
 					
@@ -70,7 +70,6 @@ public class QuickSandAction implements Action{
 		this.size.set(size);
 	}
 	public void killPart(){
-			System.out.println("Worms in pit "+affectedParts.size());
 			if(affectedParts.size() == 0){
 				isActivated = false;
 				isEntered = false;
@@ -81,7 +80,6 @@ public class QuickSandAction implements Action{
 					i.kill();
 				
 				affectedParts.clear();
-				killParts = false;
 	}
 	}
 

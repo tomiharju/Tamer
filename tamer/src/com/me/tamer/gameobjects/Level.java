@@ -190,6 +190,7 @@ public class Level {
 		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
 			carbages.clear();
+			System.out.println("Gameobjects after carbage collection "+gameobjects.size());
 		}
 	}
 	public synchronized void addNewObjects(){

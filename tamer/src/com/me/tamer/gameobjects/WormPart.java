@@ -50,7 +50,7 @@ public class WormPart extends DynamicObject implements Interactable {
 		position = new Vector2(pos);
 		position.add(vel.tmp().nor().mul(-ordinal*restLength));
 		velocity = new Vector2(0,0);
-		force = new Vector2(0,0);
+		force = new Vector2(vel).mul(speed);
 		size = new Vector2(radii*2,radii*2);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = ordinal;
@@ -176,6 +176,19 @@ public class WormPart extends DynamicObject implements Interactable {
 		}
 		markAsCarbage();
 	}
+	@Override
+	public void moveToFinish() {
+		if(child  != null){
+			child.force.set(force);
+			worm.setHead(child);
+			child.partName = "head";
+		}else
+			worm.markAsCarbage();
+		
+		markAsCarbage();
+		
+	}
+	
 	
 	
 	
