@@ -23,27 +23,47 @@ public class GryphonScream extends DynamicObject {
 	}
 	
 	@Override
-	public void draw(SpriteBatch batch){
-		float x = 0;
-		float y = 0;
-		float width = 10.0f;
-		float height = 10.0f;
-		float radius = 5.0f;
-		
+	public void draw(SpriteBatch batch){	
 	}
 	
 	@Override 
 	public void debugDraw(ShapeRenderer shapeRndr){
 		
-		Vector2 pos = IsoHelper.twoDToIso(tamer.getPosition());
-		System.out.println("tamerpos:"+pos.x+","+pos.y);
+		Vector2 pos = tamer.getPosition();
+		Vector2 head = IsoHelper.twoDToIso(tamer.getHeading());
+		
+		System.out.println(pos.x+","+pos.y);
 		shapeRndr.begin(ShapeType.Line);
 		
 		shapeRndr.setColor(1, 1, 1, 1);
-		shapeRndr.line(pos.x, pos.y, 300, 300);
+		shapeRndr.line(pos.x, pos.y, head.x * 10, head.y * 10);
 		
 		shapeRndr.end();
 		
+		/*
+		shapeRndr.begin(ShapeType.Circle);
+		Vector2 cPos = new Vector2();
+		cPos.x = 0;
+		cPos.y = 5;
+		
+		shapeRndr.circle(cPos.x, cPos.y, 1);
+		shapeRndr.end();
+		*/
+		
+		shapeRndr.begin(ShapeType.Circle);
+		Vector2 cPos2 =  IsoHelper.twoDToIso(new Vector2(5,0));
+		shapeRndr.circle(cPos2.x , cPos2.y, 0.1f);
+		shapeRndr.end();
+		
+		shapeRndr.begin(ShapeType.Circle);
+		Vector2 cPos3 =  IsoHelper.twoDToIso(new Vector2(0,0));
+		shapeRndr.circle(cPos3.x , cPos3.y, 0.1f);
+		shapeRndr.end();
+		
+		shapeRndr.begin(ShapeType.Circle);
+		Vector2 cPos4 =  IsoHelper.twoDToIso(new Vector2(-5,0 ));
+		shapeRndr.circle(cPos4.x, cPos4.y , 0.1f);
+		shapeRndr.end();
 	}
 	
 	
