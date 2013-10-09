@@ -108,7 +108,7 @@ public class Joystick implements UiElement{
 	}
 
 	@Override
-	public void touchUp() {
+	public void touchUp(Vector2 input) {
 		isPressed = false;
 		
 	}

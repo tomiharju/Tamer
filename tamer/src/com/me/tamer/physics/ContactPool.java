@@ -11,8 +11,7 @@ public class ContactPool {
 	public static void createPool(int size){
 		for(int i = 0 ; i < size ; i++)
 			contactPool.push(new Contact());
-		
-		System.out.println("Contactpool created, size "+contactPool.size());
+	
 	}
 	public static Contact obtain(){
 		if(contactPool.size() < 5){

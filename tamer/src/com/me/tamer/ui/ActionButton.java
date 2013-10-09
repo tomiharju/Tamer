@@ -92,7 +92,7 @@ public class ActionButton implements UiElement{
 	}
 	
 	@Override
-	public void touchUp() {
+	public void touchUp(Vector2 input) {
 		if (isPressed){
 			GryphonScream scream = (GryphonScream) RuntimeObjectFactory.getObjectFromPool("scream");
 			
@@ -101,6 +101,7 @@ public class ActionButton implements UiElement{
 			else
 				System.out.println("Scream is cooling down");
 		}
+
 		
 		// TODO Auto-generated method stub
 	}

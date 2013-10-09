@@ -28,7 +28,7 @@ public class Tamer extends DynamicObject{
 	@Override
 	public void update(float dt){
 		position.add(force);
-		force.mul(0.9f);
+		force.mul(0f);
 		for(int i = 0 ; i < spears.size() ; i ++){
 			if(position.dst(spears.get(i).getPosition()) < 1 ){
 				if(spears.get(i).isAttached()){
@@ -43,9 +43,10 @@ public class Tamer extends DynamicObject{
 	 * @param direction
 	 */
 	public void manouver(Vector2 direction){
-		force.set(direction.mul(SPEED));
-		heading.set(force);
-		heading.nor();
+		heading.lerp(direction,0.025f);
+		force.set(heading);
+		force.mul(SPEED);
+		
 	
 	}
 	
