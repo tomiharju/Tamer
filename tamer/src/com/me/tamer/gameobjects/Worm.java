@@ -23,9 +23,17 @@ public class Worm extends DynamicObject{
 	
 	
 	public void setup(){
+	
 		String pos = (int)spawn.getPosition().x + ":" + (int)spawn.getPosition().y;
 		setPosition(pos);
 		setVelocity(spawn.getSpawnVelocity());
+		//Check if spawn is more wide than tall
+		System.out.println("Worm position "+spawn.getSize().toString());
+		if(spawn.getSize().x > spawn.getSize().y)
+			position.set((float) (position.x + (-spawn.getSize().x + Math.random() * spawn.getSize().x)),position.y);
+		if(spawn.getSize().y > spawn.getSize().x)
+			position.set(position.x,(float) (position.y + (-spawn.getSize().y + Math.random() * spawn.getSize().y)));
+		
 		addPart("head",0,position,velocity);
 		for(int i = 0 ; i < 3 ; i++)
 			addPart("joint",i+1,position,velocity);
@@ -61,7 +69,9 @@ public class Worm extends DynamicObject{
 			if( (i + 1) < parts.size()){
 				parts.get( i + 1 ).attachToParent(parts.get(i));
 				//TODO: Create a rigidbodyline between parts
-			}
+			}else if( (i + 1 ) == parts.size() )
+				parts.get(i).setAsTail();
+			
 		}
 	}
 	public void resolveForces(float dt){
@@ -76,6 +86,13 @@ public class Worm extends DynamicObject{
 	}
 	public ArrayList<WormPart> getParts(){
 		return parts;
+	}
+	public void setHead(WormPart part){
+		head = part;
+	}
+	public void dispose(){
+		parts = null;
+		head = null;
 	}
 	
 	

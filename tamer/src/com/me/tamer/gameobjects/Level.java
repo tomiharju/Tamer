@@ -39,9 +39,7 @@ public class Level {
 	Vector2 impulseB = new Vector2();
 	Vector2 bVelocity = new Vector2();
 	Vector2 normal = new Vector2();
-	
-	Matrix3 mat = new Matrix3();
-	
+		
 	public Level(){
 		gameobjects 	= new ArrayList<GameObject>();
 		carbages 		= new ArrayList<GameObject>();
@@ -192,9 +190,7 @@ public class Level {
 		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
 			carbages.clear();
-			System.out.println("Gameobjects "+gameobjects.size());
-			System.out.println("Creatures "+creatures.size());
-			System.out.println("RigidBodies "+rigidbodies.size());
+			System.out.println("Gameobjects after carbage collection "+gameobjects.size());
 		}
 	}
 	public synchronized void addNewObjects(){
@@ -204,8 +200,7 @@ public class Level {
 				gameobjects.add(go);
 			}
 			newobjects.clear();
-			System.out.println(gameobjects.size());
-		}
+			}
 		
 	}
 	
@@ -281,7 +276,7 @@ public class Level {
 	 */
 	public void setTamerPos(String pos){
 		tamer = new Tamer();
-		tamer.setRenderer("static:tamer1");
+		tamer.setRenderer("animated:tamer1");
 		tamer.setSize("2:2.72");
 		tamer.setPosition(pos);
 		tamer.setVelocity("0:0");

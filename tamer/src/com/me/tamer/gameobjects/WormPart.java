@@ -13,43 +13,44 @@ public class WormPart extends DynamicObject implements Interactable {
 	private float restLength = 1.3f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
-	private float speed = 0;
+	private float speed = 5;
 	private float radii = 0;
 	private float mass = 0;
 	//Chain related stuff
 	private WormPart parent 	= null;
 	private WormPart child 		= null;
-
+	private boolean isTail		= false;
 	private String partName = null;
 	//Physics optimization variables;
 	Vector2 impulseA = new Vector2();
 	Vector2 impulseB = new Vector2();
-	Vector2 tempVector = new Vector2();
+	Vector2 axis = new Vector2();
+	Vector2 relativeVelocity = new Vector2();
 	
 	
 	public void createHead(Vector2 pos, Vector2 vel,Worm worm){
-		setRenderer("static:wormhead");
+		setRenderer("animated:wormhead");
 		this.worm = worm;
 		partName = "Head";
 		radii = .25f;
 		mass = 20;
 		position = new Vector2(pos);
 		velocity = new Vector2(vel);
-		force = new Vector2(vel).mul(5);
+		force = new Vector2(vel).mul(speed);
 		size = new Vector2(radii*2,radii*2);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = 0;
 	}
 	public void createBodyPart(int ordinal,Vector2 pos, Vector2 vel,Worm worm){
 		this.worm = worm;
-		setRenderer("static:wormpart");
+		setRenderer("animated:wormpart");
 		partName = "Joint";
 		radii = .25f;
 		mass = 10;
 		position = new Vector2(pos);
 		position.add(vel.tmp().nor().mul(-ordinal*restLength));
 		velocity = new Vector2(0,0);
-		force = new Vector2(0,0);
+		force = new Vector2(vel).mul(speed);
 		size = new Vector2(radii*2,radii*2);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = ordinal;
@@ -89,11 +90,11 @@ public class WormPart extends DynamicObject implements Interactable {
 	
 	public void solveJoint(float dt){
 		
-		Vector2 axis = new Vector2(child.position.tmp().sub(position));
+		axis.set(child.position.tmp().sub(position));
 		float currentDistance = axis.len();
 		Vector2 unitAxis = axis.nor();
 
-		Vector2 relativeVelocity = new Vector2(child.velocity.tmp().sub(velocity));
+		relativeVelocity.set(child.velocity.tmp().sub(velocity));
 		float relVelMagnitude = relativeVelocity.dot(unitAxis);
 		float relativeDistance = (currentDistance - restLength);
 		
@@ -119,6 +120,15 @@ public class WormPart extends DynamicObject implements Interactable {
 		Vector2 addB = impulse.tmp().mul(body.getInvMass());
 		velocity.add(addB);
 	}
+	
+	public void setAsTail(){
+		isTail = true;
+	}
+	public boolean isTail(){
+		return isTail;
+	}
+	
+	
 	@Override
 	public void spearHit(Spear spear) {
 	if(partName.equalsIgnoreCase("head"))
@@ -144,12 +154,41 @@ public class WormPart extends DynamicObject implements Interactable {
 		body.setInvMass( 1 / body.getMass());
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)
+	 */
 	public void dispose(Level level){
 		//TODO: play some death animations before actually disposing?
 		level.getCreatures().remove(this);
 		level.getRigidBodies().remove(this.body);
 		worm.getParts().remove(this);
 	}
+	/* 
+	 * This method is called by quicksandAction after timer fires. 
+	 * Its used to kill the current tail part, and set the next part in chain as tail.
+	 * 
+	 */
+	@Override
+	public void kill() {
+		if(parent != null){
+			parent.child = null;
+			parent.setAsTail();
+		}
+		markAsCarbage();
+	}
+	@Override
+	public void moveToFinish() {
+		if(child  != null){
+			child.force.set(force);
+			worm.setHead(child);
+			child.partName = "head";
+		}else
+			worm.markAsCarbage();
+		
+		markAsCarbage();
+		
+	}
+	
 	
 	
 	
