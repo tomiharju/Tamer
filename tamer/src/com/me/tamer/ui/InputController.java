@@ -1,6 +1,9 @@
 package com.me.tamer.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -17,8 +20,9 @@ public class InputController implements InputProcessor{
 	private Environment environment;
 	OrthographicCamera uiCam = null;
 	OrthographicCamera cam = null;
+	private Vector2 input = new Vector2();
 	private Level level;
-	private ArrayList<UiElement> selectedButtons = null;
+	private HashMap<Integer,UiElement> selectedButtons = null;
 	Vector2 testVector = new Vector2();
 	public InputController(Environment env, Level lvl){
 		this.environment = env;
@@ -29,7 +33,7 @@ public class InputController implements InputProcessor{
 		buttons.add(new ActionButton(this));
 		buttons.add(new Joystick(this));
 		buttons.add(new SpearButton(this));
-		selectedButtons = new ArrayList<UiElement>();
+		selectedButtons = new HashMap<Integer,UiElement>();
 		Gdx.input.setInputProcessor(this);
 	}
 	
@@ -84,47 +88,34 @@ public class InputController implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Vector2 input = new Vector2(screenX,uiCam.viewportHeight - screenY);
+		System.out.println("Pointer added "+pointer);
+		input.set(screenX,uiCam.viewportHeight - screenY);
 		for(UiElement e : buttons)
 			if(e.isTouched(input)){
 					e.handleInput(input);
-					selectedButtons.add(e);
+					selectedButtons.put(pointer, e);
 			}
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		System.out.println("Pointer " +pointer);
-		if(selectedButtons.size() == 0)
-			return true;
-		if(pointer == 0){
-			selectedButtons.get(0).touchUp();
-			selectedButtons.remove(0);
-		}else if(pointer == 1)
-			if(selectedButtons.size() > 0){
-				selectedButtons.get(1).touchUp();
-				selectedButtons.remove(1);
-			}
-			else{
-				selectedButtons.get(0).touchUp();
-				selectedButtons.remove(0);
-			}
-		
+		UiElement element = selectedButtons.get(pointer);
+		if(element != null){
+			element.touchUp();
+			selectedButtons.remove(pointer);
+		}
 		
 	
-		
-		System.out.println(selectedButtons.size());
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		Vector2 input = new Vector2(screenX,uiCam.viewportHeight - screenY );
-		for(UiElement e : selectedButtons){
-			if(e.isTouched(input))
-				e.handleInput(input);
-		}
+		input.set(screenX,uiCam.viewportHeight - screenY );
+		for(UiElement button : selectedButtons.values())
+			if(button.isTouched(input))
+				button.handleInput(input);
 		return false;
 	}
 

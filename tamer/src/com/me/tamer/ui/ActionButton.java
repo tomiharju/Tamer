@@ -7,16 +7,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.core.Environment;
+import com.me.tamer.gameobjects.GryphonScream;
 import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Spear;
 import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.Worm;
 import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class ActionButton implements UiElement{
 	
 	private InputController inputcontroller 	= null;
 	private UiRenderer renderer 				= null;
 	private Tamer tamer 						= null;
+	private GryphonScream scream				= null;
 	private ArrayList<Worm> worms 				= null;
 	private Level level 						= null;
 	private Environment env 					= null;
@@ -34,7 +38,7 @@ public class ActionButton implements UiElement{
 
 	public ActionButton(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingpoint	= new Vector2(250,100);
+		restingpoint	= new Vector2(400,150);
 		delta			= new Vector2(0,0);
 		size			= 75;
 		level			= inputcontroller.getLevel();
@@ -50,8 +54,10 @@ public class ActionButton implements UiElement{
 	
 	@Override
 	public void draw(SpriteBatch batch) {
-		if(isPressed)renderer.setColor(pressedCol);
-		else renderer.setColor(notPressedCol);
+		//if(isPressed)renderer.setColor(pressedCol);
+		//else renderer.setColor(notPressedCol);
+		
+		renderer.setColor(notPressedCol);
 		
 		renderer.setSize(size, size);
 		renderer.setPosition(restingpoint);
@@ -61,17 +67,6 @@ public class ActionButton implements UiElement{
 	
 	@Override
 	public void update(float dt) {
-		if (isPressed){
-			
-			tamer.getPosition();
-			//worms = level.getWorms();
-				
-			for (int i = 0; i < worms.size(); i++){
-				//System.out.println("T:" +tamer.getPosition());
-			}
-			
-			isPressed = false;
-		}
 		
 	}
 
@@ -80,8 +75,8 @@ public class ActionButton implements UiElement{
 		if(input.dst(restingpoint) < size && !isPressed){
 			isPressed = true;
 			return true;
-		}
-			
+		}	
+		isPressed = false;
 		return false;
 	}
 	
@@ -98,6 +93,15 @@ public class ActionButton implements UiElement{
 	
 	@Override
 	public void touchUp() {
+		if (isPressed){
+			GryphonScream scream = (GryphonScream) RuntimeObjectFactory.getObjectFromPool("scream");
+			
+			if(scream != null)
+				tamer.useScream(scream);
+			else
+				System.out.println("Scream is cooling down");
+		}
+		
 		// TODO Auto-generated method stub
 	}
 

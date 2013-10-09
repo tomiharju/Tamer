@@ -24,9 +24,17 @@ public class Worm extends DynamicObject{
 	
 	
 	public void setup(){
+	
 		String pos = (int)spawn.getPosition().x + ":" + (int)spawn.getPosition().y;
 		setPosition(pos);
 		setVelocity(spawn.getSpawnVelocity());
+		//Check if spawn is more wide than tall
+		System.out.println("Worm position "+spawn.getSize().toString());
+		if(spawn.getSize().x > spawn.getSize().y)
+			position.set((float) (position.x + (-spawn.getSize().x + Math.random() * spawn.getSize().x)),position.y);
+		if(spawn.getSize().y > spawn.getSize().x)
+			position.set(position.x,(float) (position.y + (-spawn.getSize().y + Math.random() * spawn.getSize().y)));
+		
 		addPart("head",0,position,velocity);
 		for(int i = 0 ; i < 3 ; i++)
 			addPart("joint",i+1,position,velocity);
@@ -48,11 +56,11 @@ public class Worm extends DynamicObject{
 		WormPart part = null;
 		if(type.equalsIgnoreCase("head")){
 			part = new WormPart();
-			part.createHead(pos,vel);
+			part.createHead(pos,vel,this);
 			head = part;
 		}else if(type.equalsIgnoreCase("joint")){
 			part = new WormPart();
-			part.createBodyPart(ordinal,pos,vel);
+			part.createBodyPart(ordinal,pos,vel,this);
 		}else throw new IllegalArgumentException("Wrong partname");
 		
 		parts.add(part);
@@ -64,7 +72,9 @@ public class Worm extends DynamicObject{
 			if( (i + 1) < parts.size()){
 				parts.get( i + 1 ).attachToParent(parts.get(i));
 				//TODO: Create a rigidbodyline between parts
-			}
+			}else if( (i + 1 ) == parts.size() )
+				parts.get(i).setAsTail();
+			
 		}
 	}
 	public void resolveForces(float dt){
@@ -73,11 +83,19 @@ public class Worm extends DynamicObject{
 	
 	public void update(float dt){
 		head.updateChild(dt);
-		head.getVelocity().mul(0.99f);
+	
 	}
 	
 	public void draw(SpriteBatch batch){
 		//No action
+	}
+
+	public void setHead(WormPart part){
+		head = part;
+	}
+	public void dispose(){
+		parts = null;
+		head = null;
 	}
 	
 	public WormPart getBottom(){

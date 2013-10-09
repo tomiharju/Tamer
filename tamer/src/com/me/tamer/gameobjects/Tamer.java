@@ -9,8 +9,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED = 1.0f;
-	private GryphonScream scream 			= null;
+	private final float SPEED = 0.1f;
 	private Vector2 heading = new Vector2(0,0);
 	private int numSpears = 3;
 	private ArrayList<Spear> spears = null;
@@ -23,25 +22,21 @@ public class Tamer extends DynamicObject{
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
 		}
 		
-		scream = new GryphonScream(this);
+		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
 	}
 	
 	@Override
 	public void update(float dt){
 		position.add(force);
 		force.mul(0.9f);
-		
 		for(int i = 0 ; i < spears.size() ; i ++){
-			if(position.dst(spears.get(i).getPosition()) < 0.5 ){
+			if(position.dst(spears.get(i).getPosition()) < 1 ){
 				if(spears.get(i).isAttached()){
 					spears.get(i).pickUp();
 					spears.remove(i);
 				}
-			
-			
 			}
 		}
-		
 	}
 	
 	/**
@@ -51,6 +46,7 @@ public class Tamer extends DynamicObject{
 		force.set(direction.mul(SPEED));
 		heading.set(force);
 		heading.nor();
+	
 	}
 	
 	public void throwSpear(Spear spear,Vector2 point){
@@ -59,8 +55,8 @@ public class Tamer extends DynamicObject{
 		spear.throwAt(point);
 	}
 	
-	public GryphonScream getScream(){
-		return scream;
+	public void useScream(GryphonScream scream){
+		scream.activate();
 	}
 
 	public Vector2 getHeading(){

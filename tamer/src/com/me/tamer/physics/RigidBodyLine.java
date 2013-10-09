@@ -95,4 +95,10 @@ public class RigidBodyLine implements RigidBody {
 		return 0;
 	}
 
+	@Override
+	public float getMass() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

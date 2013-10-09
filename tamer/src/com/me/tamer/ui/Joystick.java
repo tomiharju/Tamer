@@ -1,6 +1,7 @@
 package com.me.tamer.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.core.Environment;
@@ -9,14 +10,19 @@ import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.renders.StaticRenderer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
 import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.VectorHelper;
 
 public class Joystick implements UiElement{
 
 	private InputController inputcontroller = null;
 	private UiRenderer renderer = null;
-	private Tamer tamer = null ;
+	private Tamer tamer = null;
+	private Vector2 tamerPosition = null;
 	private Level level = null;
 	private Environment env = null;
+	private Vector2 origo = null;
+	
+	private Matrix3 translate = new Matrix3().rotate(45);
 	//Joystick variables
 	Vector2 restingpoint 	= null;
 	Vector2 delta			= null;
@@ -30,7 +36,9 @@ public class Joystick implements UiElement{
 		this.inputcontroller = inputController;
 		restingpoint	= new Vector2(100,100);
 		delta			= new Vector2(0,0);
+		origo			= new Vector2(0,0);
 		pointer			= new Vector2(restingpoint.x,restingpoint.y);
+		tamerPosition	= new Vector2();
 		size			= 200;
 		renderer 		= new UiRenderer();
 		tamer 			= inputcontroller.getLevel().getTamer();
@@ -63,32 +71,23 @@ public class Joystick implements UiElement{
 				delta.nor().mul(size/2);
 				pointer.set(restingpoint.tmp().add(delta));
 			}
-			delta.div(10);
-			delta.rotate(-45);
-			env.moveCamera(delta.tmp().mul(dt));
-			checkBounds(delta.tmp().mul(dt));
+			delta.mul(translate);
+			checkBounds(delta.mul(dt));
+			
 			
 		}
+		
+		env.moveCamera(tamer.getPosition());
 	
 	}
 	
 	public void checkBounds(Vector2 movement){
-		Vector2 camBounds = level.getCamBounds();
-		Vector2 position = new Vector2();
-		position.set(tamer.getPosition());
-		position.add(movement);
-		
-		
-		
-		//Check wether position + delta is still inside camera bounds
-		if(position.x > camBounds.x || position.x < -camBounds.x){
-			movement.set(0,movement.y);
+		Vector2 mapBounds = level.getMapBounds();
+		tamerPosition.set(tamer.getPosition().tmp().add(movement));
+		if(tamerPosition.dst(origo) >= mapBounds.x){
+			movement.sub(VectorHelper.projection(movement,tamerPosition));
 		}
-		if(position.y > camBounds.y || position.y < -camBounds.y){
-			movement.set(movement.x,0);
 		
-		}
-	
 		tamer.manouver(movement);
 		
 	}

@@ -1,10 +1,12 @@
 package com.me.tamer.utils;
 
 
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 
 public class IsoHelper{
 		
+	private static Matrix3 isomatrix = new Matrix3().scale(1,0.5f).rotate(-45);
 	private static Vector2 temp = new Vector2(0,0);
 	
 	/**
@@ -24,18 +26,33 @@ public class IsoHelper{
 	 * Convert cartesian coordinate to isometric cordinate.
 	 */
 	public static Vector2 twoDToIso(Vector2 point){
-			temp.x = (point.x - point.y);
-			temp.y = (point.x + point.y ) * 0.5f;
+			temp.set(point);
+			temp.mul(isomatrix);
 			return temp;
 	}
-	public static Vector2 twoDToTileIso(Vector2 point){
-		temp.x = (point.x - point.y) * 0.5f;
-		temp.y = (point.x + point.y ) * 0.5f;
-		return temp;
-}
-
-
 	
+	public static Vector2 getScreenCoordinatesFromGrid(Vector2 square)
+	{
+	    //Takes one square from the grid as parameter for now
+	   
+
+	    //Transform into screen coordinates
+	    Vector2 screenCoordinates = new Vector2();
+	      
+	    screenCoordinates.x = (float) (((square.x - square.y)) * Math.sqrt(2.0f));
+	    screenCoordinates.y = (float) ((square.x + square.y) * (Math.sqrt(2) /  2));
+	    
+	    
+	    return screenCoordinates;
+
+	}
+
+	public static Vector2 twoDToTileIso(Vector2 point){
+		temp.set(point);
+		temp.mul(isomatrix);
+		return temp;
+	}
+
 	/**
 	 * @param point
 	 * @param tileHeight

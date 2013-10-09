@@ -61,6 +61,7 @@ public class StaticObject implements GameObject{
 		String[] values = size.split(":");
 		float w = Float.parseFloat(values[0]);
 		float h = Float.parseFloat(values[1]);
+		
 		this.size = new Vector2(w,h);
 		
 	}
@@ -87,7 +88,7 @@ public class StaticObject implements GameObject{
 		if(bodytype.equalsIgnoreCase("box"))
 			body = new RigidBodyBox(position,new Vector2(0,0),0,size.x,size.y); //Position, speed, mass, width,height ( speed and mass are 0 cause its static object )
 		else if(bodytype.equalsIgnoreCase("circle"))
-			body = new RigidBodyCircle(position,new Vector2(0,0),0,size.x);//Position, velocity, mass, radii
+			body = new RigidBodyCircle(position,new Vector2(0,0),0,size.x/2);//Position, velocity, mass, radii
 		else if(bodytype.equalsIgnoreCase("no-body"))
 			body = null;
 		
@@ -134,6 +135,12 @@ public class StaticObject implements GameObject{
 
 	public void markAsActive() {
 		isCarbage = false;
+	}
+
+	@Override
+	public void dispose(Level level) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

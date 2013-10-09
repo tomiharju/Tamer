@@ -64,8 +64,8 @@ public class DynamicObject implements GameObject{
 	@Override
 	public void setSize(String size) {
 		String[] values = size.split(":");
-		int w = Integer.parseInt(values[0]);
-		int h = Integer.parseInt(values[1]);
+		float w = Float.parseFloat(values[0]);
+		float h = Float.parseFloat(values[1]);
 		this.size = new Vector2(w,h);
 		
 	}
@@ -167,6 +167,11 @@ public class DynamicObject implements GameObject{
 	@Override
 	public void markAsActive() {
 		isCarbage = false;
+		
+	}
+	@Override
+	public void dispose(Level level) {
+		// TODO Auto-generated method stub
 		
 	}
 

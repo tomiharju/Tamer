@@ -35,7 +35,7 @@ public class TileMap extends StaticObject{
 		Renderer renderer = RenderPool.getRenderer(renderType);
 		renderer.setSize(size.x,size.y);
 		for(int i = 0 ; i < numTiles ; i++){
-			renderer.setPosition(IsoHelper.twoDToTileIso(terrain.get(i)));
+			renderer.setPosition((terrain.get(i)));
 			renderer.draw(batch);
 		}
 			
@@ -52,11 +52,12 @@ public class TileMap extends StaticObject{
 		terrain = new ArrayList<Vector2>();
 		setRenderer("static:"+renderType);
 		setSize("1:1");
-		for(int i = 0 ; i < this.rows ; i ++ )
-			for(int k = 0 ; k < this.columns ; k ++){
+		for(int y = 0 ; y < this.rows ; y ++ )
+			for(int x = 0 ; x < this.columns ; x ++){
 				Vector2 tile = new Vector2();
-				//C stands for columns, which is same as cartesian x, row for y and cartesian y
-				tile.set(i - rows/2 ,k - columns/2);
+				float tile_x = ( x - y ) * 0.5f;
+				float tile_y = ((x + y ) * 0.5f ) - columns / 2; 
+				tile.set(tile_x,tile_y);
 				terrain.add(tile);
 			}
 		

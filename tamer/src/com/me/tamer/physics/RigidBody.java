@@ -22,6 +22,7 @@ public interface RigidBody {
 	public void setInvMass(float ivm);
 	public void preCalculateValues();
 	public float getRadii();
+	public float getMass();
 
 	
 

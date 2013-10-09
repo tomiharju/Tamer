@@ -2,59 +2,59 @@
 <root>
    
     <Settings>
-        <data type="CameraBounds">20:20:0:0</data>
+        <data type="MapBounds">15:15:0:0</data>
     </Settings>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.TileMap">
-    	<data type="Renderer">static:tomi</data>
-    	<data type="MapSize">80:80</data>
+    	<data type="Renderer">static:tile_dirt</data>
+    	<data type="MapSize">40:40</data>
     </GameObject>
     
+
     <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-    	<data type="Renderer">static:tree1</data>
-    	<data type="Size">4:11.2</data>
-    	<data type="Position">-15:15</data>
+    	<data type="Renderer">static:debugtile3</data>
+    	<data type="Size">1:1</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
+    	<data type="Position">-6:-7</data>
     	<data type="RigidBody">circle</data><!--box/circle/no-body-->
     </GameObject>
     
+    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
+    	<data type="Renderer">animated:tile_sand</data>
+    	<data type="Size">5:5</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
+    	<data type="Position">-10:8</data>
+    	<data type="Action">quicksand</data>
+    	<data type="RigidBody">no-body</data><!--box/circle/no-body-->
+    </GameObject>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-    	<data type="Renderer">static:tree1</data>
-    	<data type="Size">6:16.8</data>
-    	<data type="Position">20:20</data>
-    	<data type="RigidBody">circle</data><!--box/circle/no-body-->
+    	<data type="Renderer">animated:ending_point</data>
+    	<data type="Size">1:1</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
+    	<data type="Position">-6:-6</data>
+    	<data type="Action">endingpoint</data>
+    	<data type="RigidBody">no-body</data><!--box/circle/no-body-->
     </GameObject>
+       
+         
+       
     
    
 
      <GameObject type ="com.me.tamer.gameobjects.SpawnPoint">
-    	<data type="Renderer">static:spawn</data>
-    	<data type="Size">1:1</data>
-    	<data type="Position">12:12</data>
+    	<data type="Renderer">static:debugtile3</data>
+    	<data type="Size">1:6</data>
+    	<data type="Position">6:6</data>
     	<!--Spawnpoint specific data  -->
     	<data type="SpawnType">worm</data>
     	<data type="SpawnNumber">1</data>	<!-- IMPORTANT, USED TO DISTINGUISH SPAWNS FROM EACH OTHER!!! -->
     	<data type="InitialSleep">4</data>
-    	<data type="Interval">9</data>
-    	<data type="SpawnVelocity">-3:-1</data>
-    	<data type="SpawnCount">5</data>
+    	<data type="Interval">2</data>
+    	<data type="SpawnVelocity">-3:-3</data>
+    	<data type="SpawnCount">1</data>
      </GameObject>
      
     
      
    
-     <GameObject type ="com.me.tamer.gameobjects.SpawnPoint">
-    	<data type="Renderer">static:spawn</data>
-    	<data type="Size">1:1</data>
-    	<data type="Position">0:0</data>
-    	<!--Spawnpoint specific data  -->
-    	<data type="SpawnType">worm</data>
-    	<data type="SpawnNumber">2</data>
-    	<data type="InitialSleep">4</data>
-    	<data type="Interval">9</data>
-    	<data type="SpawnVelocity">3:1</data>
-    	<data type="SpawnCount">5</data>
-     </GameObject>
    
     
      
