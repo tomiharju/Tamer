@@ -101,9 +101,10 @@ public class InputController implements InputProcessor{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		input.set(screenX,uiCam.viewportHeight - screenY);
 		UiElement element = selectedButtons.get(pointer);
 		if(element != null){
-			element.touchUp();
+			element.touchUp(input);
 			selectedButtons.remove(pointer);
 		}
 		

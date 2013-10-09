@@ -44,9 +44,10 @@ public class Tamer extends DynamicObject{
 	 * @param direction
 	 */
 	public void manouver(Vector2 direction){
-		force.set(direction.mul(SPEED));
-		heading.set(force);
-		heading.nor();
+		heading.lerp(direction,0.025f);
+		force.set(heading);
+		force.mul(SPEED);
+		
 	
 	}
 	

@@ -35,7 +35,7 @@ public class ActionButton implements UiElement{
 	}
 
 	@Override
-	public void touchUp() {
+	public void touchUp(Vector2 input) {
 		// TODO Auto-generated method stub
 		
 	}

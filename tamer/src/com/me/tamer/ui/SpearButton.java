@@ -15,46 +15,51 @@ public class SpearButton implements UiElement {
 	OrthographicCamera cam = null;
 	OrthographicCamera uiCam = null;
 	Tamer tamer = null;
-	Vector2 distancePoint = null; //this is used now..
 	Vector2 restingPoint = null;
-	Vector2 deltaPoint = null;
+	Vector2 targetPoint = null;
 	Vector2 tamerPos = null;
 	Vector2 tamerHeading = null;
-	Vector2 power = null;
-	float buttonSize = 100;
-	float maxPower = 10;
+	
+	final float BUTTON_SIZE = 100;
+	final float MIN_POWER = 2;
+	final float MAX_POWER = 10;
+	final float SPEED = 5;
+	
+	float power = 1; 
 	boolean isPressed = false;
 	UiRenderer buttonRender = null;
 	UiRenderer pointRender = null;
+	
+	
+	
 	public SpearButton(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingPoint	=new Vector2(250,100);
-		deltaPoint = new Vector2(restingPoint);
+		restingPoint	= new Vector2(250,100);
+		targetPoint		= new Vector2(0,0);
 		buttonRender = new UiRenderer();
 		pointRender = new UiRenderer();
 		buttonRender.loadGraphics("joystick");
-		buttonRender.setSize(buttonSize,buttonSize);
+		buttonRender.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		buttonRender.setPosition(restingPoint);
 		
 		pointRender.loadGraphics("joystick");
 		pointRender.setSize(0.5f,0.5f);
 		pointRender.setPosition(new Vector2(0,0));
 		tamer = inputController.getLevel().getTamer();
-		distancePoint = new Vector2(0,0);
-		tamerPos = new Vector2(0,0);
-		tamerHeading = new Vector2(0,0);
-		power = new Vector2(0,0);
+		
+		tamerPos = new Vector2(tamer.getPosition());
+		tamerHeading = new Vector2(tamer.getHeading());
+	
 		cam = inputController.getCam();
 		uiCam = inputController.getUiCam();
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		buttonRender.setPosition(deltaPoint);
 		buttonRender.draw(batch);
 
 		batch.setProjectionMatrix(cam.combined);
-		pointRender.setPosition(IsoHelper.twoDToIso(distancePoint));
+		pointRender.setPosition(IsoHelper.twoDToIso(targetPoint));
 		pointRender.draw(batch);
 		batch.setProjectionMatrix(uiCam.combined);
 		
@@ -62,22 +67,14 @@ public class SpearButton implements UiElement {
 
 	@Override
 	public void update(float dt) {
-		if(!isPressed){
-			deltaPoint.set(restingPoint);
-			distancePoint.set(tamer.getPosition());
-			tamerHeading.set(tamer.getHeading());
-			distancePoint.add(tamerHeading.mul(2));
-		}else{
-			power.set(deltaPoint.tmp().sub(restingPoint));
-			float magnitude = (power.len() / 100) * maxPower;
-			tamerPos.set(tamer.getPosition());
-			tamerHeading.set(tamer.getHeading());
+		if(isPressed)
+			if(power <= MAX_POWER )
+				power += SPEED*dt;
 		
-			distancePoint.set(tamerPos);
-			distancePoint.add(tamerHeading.mul(magnitude));
-		}
-			
-		
+		tamerHeading.set(tamer.getHeading());
+		tamerHeading.nor().mul(power);
+		tamerPos.set(tamer.getPosition());
+		targetPoint.set(tamerPos.add(tamerHeading));
 	}
 
 	@Override
@@ -88,25 +85,22 @@ public class SpearButton implements UiElement {
 
 	@Override
 	public boolean handleInput(Vector2 input) {
-		isPressed = true;
-		float y = Math.min(restingPoint.y, Math.max(input.y,restingPoint.y - 100));
-		deltaPoint.set(deltaPoint.x,y);
 		return true;
 		
 	}
 
 	@Override
-	public void touchUp() {
-		power.set(deltaPoint.tmp().sub(restingPoint));
-		if(power.len() > 10){
+	public void touchUp(Vector2 input) {
+		if( power > MIN_POWER && restingPoint.dst(input) < BUTTON_SIZE / 2 ){
 			Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
 			if(spear != null)
-				tamer.throwSpear(spear,distancePoint);
+				tamer.throwSpear(spear, targetPoint);
 			else
-				System.err.println("No more spears remaining");
+				System.err.println("No spears remaining");
 		}
+			power = 1;
+			isPressed = false;
 			
-		isPressed = false;
 		
 	}
 
@@ -118,8 +112,11 @@ public class SpearButton implements UiElement {
 
 	@Override
 	public boolean isTouched(Vector2 input) {
-		if(input.dst(deltaPoint) < buttonSize / 2 )
+		if(input.dst(restingPoint) < BUTTON_SIZE / 2 ){
+			isPressed = true;
 			return true;
+		}
+			
 		return false;
 	}
 
