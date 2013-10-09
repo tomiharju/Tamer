@@ -1,12 +1,8 @@
 package com.me.tamer.ui;
 
-import java.util.LinkedList;
-
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.gameobjects.Spear;
 import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
