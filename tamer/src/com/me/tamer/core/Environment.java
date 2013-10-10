@@ -147,7 +147,7 @@ public class Environment {
 		
 		batch.end();
 		
-		ShapeRenderer shapeRndr = new ShapeRenderer();
+		//ShapeRenderer shapeRndr = new ShapeRenderer();
 		shapeRndr.setProjectionMatrix(cam.combined);
 		level.debugDraw(shapeRndr);
 		
