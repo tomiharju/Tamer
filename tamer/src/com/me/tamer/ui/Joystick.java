@@ -30,6 +30,7 @@ public class Joystick implements UiElement{
 	float size				= 250;
 	float pointersize		= 30f;
 	boolean isPressed		= false;
+	boolean movementDisabled = false;
 	
 	
 	public Joystick(InputController inputController) {
@@ -69,7 +70,7 @@ public class Joystick implements UiElement{
 				delta.nor().mul(size/2);
 				pointer.set(restingpoint.tmp().add(delta));
 			}
-			if(delta.len() < size / 4)
+			if(movementDisabled)
 				tamer.turn(delta);
 			else{
 				delta.mul(translate);
@@ -112,6 +113,12 @@ public class Joystick implements UiElement{
 	
 		
 		
+	}
+	public void disableMovement(){
+		movementDisabled = true;
+	}
+	public void enableMovement(){
+		movementDisabled = false;
 	}
 
 	@Override

@@ -105,7 +105,7 @@ public class SpearButton implements UiElement {
 			power = 1;
 			isPressed = false;
 			pointRender.resetColor();
-			
+			((Joystick) inputcontroller.getButtons().get(1)).enableMovement();
 		
 	}
 
@@ -119,6 +119,7 @@ public class SpearButton implements UiElement {
 	public boolean isTouched(Vector2 input) {
 		if(input.dst(restingPoint) < BUTTON_SIZE / 2 ){
 			isPressed = true;
+			((Joystick) inputcontroller.getButtons().get(1)).disableMovement();
 			return true;
 		}
 			

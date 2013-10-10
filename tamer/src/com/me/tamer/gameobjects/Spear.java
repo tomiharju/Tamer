@@ -37,7 +37,7 @@ public class Spear extends DynamicObject{
 			int size = creatures.size();
 			System.out.println("Searching for potential hit amont "+size+" creatures.");
 			for(int i = 0 ; i < size ; i ++)
-				if(position.dst(((DynamicObject) creatures.get(i)).getPosition()) < 1.5){
+				if(position.dst(((DynamicObject) creatures.get(i)).getPosition()) < 0.5){
 					targetCreature = creatures.get(i);
 					targetCreature.spearHit(this);
 					break;
