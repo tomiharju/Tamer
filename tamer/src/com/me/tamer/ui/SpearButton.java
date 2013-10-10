@@ -15,12 +15,13 @@ public class SpearButton implements UiElement {
 	OrthographicCamera cam = null;
 	OrthographicCamera uiCam = null;
 	Tamer tamer = null;
-	Vector2 restingPoint = null;
+	
 	Vector2 targetPoint = null;
 	Vector2 tamerPos = null;
 	Vector2 tamerHeading = null;
 	
-	final float BUTTON_SIZE = 100;
+	final Vector2 restingPoint = new Vector2(350,100);
+	final float BUTTON_SIZE = 150;
 	final float MIN_POWER = 2;
 	final float MAX_POWER = 10;
 	final float SPEED = 5;
@@ -34,7 +35,7 @@ public class SpearButton implements UiElement {
 	
 	public SpearButton(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingPoint	= new Vector2(250,100);
+	
 		targetPoint		= new Vector2(0,0);
 		buttonRender = new UiRenderer();
 		pointRender = new UiRenderer();
@@ -68,8 +69,11 @@ public class SpearButton implements UiElement {
 	@Override
 	public void update(float dt) {
 		if(isPressed)
-			if(power <= MAX_POWER )
+			if(power <= MAX_POWER ){
 				power += SPEED*dt;
+				float powerIndicator = Math.min(1,power / MAX_POWER);
+				pointRender.setColor(powerIndicator,0,0,powerIndicator);
+			}
 		
 		tamerHeading.set(tamer.getHeading());
 		tamerHeading.nor().mul(power);
@@ -94,12 +98,13 @@ public class SpearButton implements UiElement {
 		if( power > MIN_POWER && restingPoint.dst(input) < BUTTON_SIZE / 2 ){
 			Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
 			if(spear != null)
-				tamer.throwSpear(spear, targetPoint);
+				tamer.throwSpear(spear, targetPoint,power * 2);
 			else
 				System.err.println("No spears remaining");
 		}
 			power = 1;
 			isPressed = false;
+			pointRender.resetColor();
 			
 		
 	}

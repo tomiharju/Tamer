@@ -20,26 +20,24 @@ public class Joystick implements UiElement{
 	private Vector2 tamerPosition = null;
 	private Level level = null;
 	private Environment env = null;
-	private Vector2 origo = null;
+	private Vector2 movementAxis = null;
 	
 	private Matrix3 translate = new Matrix3().rotate(45);
 	//Joystick variables
-	Vector2 restingpoint 	= null;
+	Vector2 restingpoint 	= new Vector2(150,100);
 	Vector2 delta			= null;
 	Vector2 pointer			= null;
-	float size				= 0;
+	float size				= 250;
 	float pointersize		= 30f;
 	boolean isPressed		= false;
 	
 	
 	public Joystick(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingpoint	= new Vector2(100,100);
 		delta			= new Vector2(0,0);
-		origo			= new Vector2(0,0);
+		movementAxis	= new Vector2(0,0);
 		pointer			= new Vector2(restingpoint.x,restingpoint.y);
 		tamerPosition	= new Vector2();
-		size			= 200;
 		renderer 		= new UiRenderer();
 		tamer 			= inputcontroller.getLevel().getTamer();
 		level			= inputcontroller.getLevel();
@@ -71,9 +69,12 @@ public class Joystick implements UiElement{
 				delta.nor().mul(size/2);
 				pointer.set(restingpoint.tmp().add(delta));
 			}
-			delta.mul(translate);
-			checkBounds(delta.mul(dt));
-			
+			if(delta.len() < size / 4)
+				tamer.turn(delta);
+			else{
+				delta.mul(translate);
+				checkBounds(delta.mul(dt));
+			}
 			
 		}
 		
@@ -83,12 +84,33 @@ public class Joystick implements UiElement{
 	
 	public void checkBounds(Vector2 movement){
 		Vector2 mapBounds = level.getMapBounds();
-		tamerPosition.set(tamer.getPosition().tmp().add(movement));
-		if(tamerPosition.dst(origo) >= mapBounds.x){
-			movement.sub(VectorHelper.projection(movement,tamerPosition));
+		tamerPosition.set(tamer.getPosition());
+	
+		movement.set(IsoHelper.twoDToIso(movement));
+		tamerPosition.set(IsoHelper.twoDToIso(tamerPosition));
+		tamerPosition.add(movement);
+		if(tamerPosition.x > mapBounds.x || tamerPosition.x < -mapBounds.x){
+			Vector2 remove = VectorHelper.projection((mapBounds.tmp().set(1,0)),movement);
+			System.out.println(remove.toString());
+			movementAxis.set(1,0);
+			movement.sub(VectorHelper.projection(movement,movementAxis));
+			
+			
+		}
+		if(tamerPosition.y > mapBounds.y || tamerPosition.y < -mapBounds.y){
+			Vector2 remove = VectorHelper.projection((mapBounds.tmp().set(1,0)),movement);
+			System.out.println(remove.toString());
+			movementAxis.set(0,1);
+			movement.sub(VectorHelper.projection(movement,movementAxis));
+			
+		
+
+			
 		}
 		
-		tamer.manouver(movement);
+			tamer.manouver(movement);
+	
+		
 		
 	}
 
@@ -121,7 +143,7 @@ public class Joystick implements UiElement{
 
 	@Override
 	public boolean isTouched(Vector2 input) {
-		if(input.dst(restingpoint) < size / 2 + 1)
+		if(input.dst(restingpoint) < size / 2 + 4)
 			return true;
 		return false;
 	}

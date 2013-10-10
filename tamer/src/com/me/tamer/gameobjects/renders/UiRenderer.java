@@ -21,6 +21,7 @@ public class UiRenderer implements Renderer {
 	@Override
 	public void loadGraphics(String graphicsName) {
 		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
+		sprite.setColor(0,0,0,0.3f);
 	}
 	@Override
 	public void setSize(float w, float h) {
@@ -46,6 +47,13 @@ public class UiRenderer implements Renderer {
 	public void setRenderType(String type) {
 		this.type = type;
 	}
+	public void setColor(float r, float g, float b,float a){
+		sprite.setColor(r, g, b,a);
+	}
+	public void resetColor(){
+		sprite.setColor(0,0,0,0.1f);
+	}
+	
 
 	
 

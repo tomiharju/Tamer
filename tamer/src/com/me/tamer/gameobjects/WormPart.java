@@ -10,7 +10,7 @@ public class WormPart extends DynamicObject implements Interactable {
 	//Container worm
 	private Worm worm = null;
 	
-	private float restLength = 1.3f;
+	private float restLength = 0.6f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
 	private float speed = 5;
@@ -37,7 +37,7 @@ public class WormPart extends DynamicObject implements Interactable {
 		position = new Vector2(pos);
 		velocity = new Vector2(vel);
 		force = new Vector2(vel).mul(speed);
-		size = new Vector2(radii*2,radii*2);
+		size = new Vector2(radii * 2 + 0.1f,radii * 2 + 0.1f );
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = 0;
 	}
@@ -51,7 +51,8 @@ public class WormPart extends DynamicObject implements Interactable {
 		position.add(vel.tmp().nor().mul(-ordinal*restLength));
 		velocity = new Vector2(0,0);
 		force = new Vector2(vel).mul(speed);
-		size = new Vector2(radii*2,radii*2);
+		//Set worm graphic size, add a little extra to avoid excess collision due to parts being in contact all the time
+		size = new Vector2(radii * 2 + 0.1f,radii * 2 + 0.1f);
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = ordinal;
 	}
@@ -131,8 +132,10 @@ public class WormPart extends DynamicObject implements Interactable {
 	
 	@Override
 	public void spearHit(Spear spear) {
-	if(partName.equalsIgnoreCase("head"))
+	if(partName.equalsIgnoreCase("head")){
+		killPart();
 		markAsCarbage();
+	}
 	else
 		body.setInvMass(0);
 		
@@ -163,11 +166,21 @@ public class WormPart extends DynamicObject implements Interactable {
 		level.getRigidBodies().remove(this.body);
 		worm.getParts().remove(this);
 	}
+	
+	/**
+	 * When a spear hits the worm in the head, use this recursive function to remove all the body parts.
+	 */
+	public void killPart(){
+		if(child != null)
+			child.killPart();
+		markAsCarbage();
+	}
 	/* 
 	 * This method is called by quicksandAction after timer fires. 
 	 * Its used to kill the current tail part, and set the next part in chain as tail.
 	 * 
 	 */
+	
 	@Override
 	public void kill() {
 		if(parent != null){
