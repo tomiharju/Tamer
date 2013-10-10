@@ -223,12 +223,10 @@ public class Level {
 		String[] values =value.split(":");
 		
 		mapBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
-		
-		cameraBounds = new Vector2(mapBounds.x  , mapBounds.y);
-		
-		
-		System.err.println(mapBounds.toString());
-		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
+//		mapBounds.rotate(45);
+//		cameraBounds = new Vector2(mapBounds.x  , mapBounds.y);
+//		System.err.println(mapBounds.toString());
+//		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
 	}
 	
 	/**

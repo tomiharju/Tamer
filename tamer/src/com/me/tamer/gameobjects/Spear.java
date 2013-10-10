@@ -12,7 +12,6 @@ public class Spear extends DynamicObject{
 	private Level level;
 	private Vector2 target = null ;
 	private Interactable targetCreature = null;
-	private float SPEED = 10;
 	private boolean isAttached = false;
 	
 	public Spear(){
@@ -53,10 +52,10 @@ public class Spear extends DynamicObject{
 		isAttached = false;
 		markAsActive();
 	}
-	public void throwAt(Vector2 point){
+	public void throwAt(Vector2 point,float power){
 		target.set(point);
 		Vector2 dir = point.sub(position);
-		force.set(dir.tmp().nor().mul(SPEED));
+		force.set(dir.tmp().nor().mul(power));
 	}
 	
 	/**

@@ -2,7 +2,7 @@
 <root>
    
     <Settings>
-        <data type="MapBounds">15:15:0:0</data>
+        <data type="MapBounds">10:10:0:0</data>
     </Settings>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.TileMap">
@@ -48,7 +48,7 @@
     	<data type="SpawnNumber">1</data>	<!-- IMPORTANT, USED TO DISTINGUISH SPAWNS FROM EACH OTHER!!! -->
     	<data type="InitialSleep">4</data>
     	<data type="Interval">2</data>
-    	<data type="SpawnVelocity">-3:-3</data>
+    	<data type="SpawnVelocity">-1:-1</data>
     	<data type="SpawnCount">1</data>
      </GameObject>
      

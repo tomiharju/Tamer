@@ -51,6 +51,7 @@ public class Environment {
 	public Environment(){
 		//Spritebatch is used for drawing sprites
 		batch 			= new SpriteBatch();
+		
 		setupCamera();
 		createLevel(1);
 		inputcontroller = new InputController(this,level);

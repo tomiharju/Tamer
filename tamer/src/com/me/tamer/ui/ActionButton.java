@@ -38,7 +38,7 @@ public class ActionButton implements UiElement{
 
 	public ActionButton(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingpoint	= new Vector2(400,150);
+		restingpoint	= new Vector2(430,230);
 		delta			= new Vector2(0,0);
 		size			= 75;
 		level			= inputcontroller.getLevel();
@@ -48,8 +48,8 @@ public class ActionButton implements UiElement{
 		renderer.loadGraphics("joystick");
 		renderer.setSize(size,size);
 		renderer.setPosition(restingpoint);
-		pressedCol = new Color(1.0f, 0.0f, 0.0f, 0.0f);
-		notPressedCol = new Color(0.0f, 0.0f, 1.0f, 1.0f);
+		//pressedCol = new Color(1.0f, 0.0f, 0.0f, 0.0f);
+		//notPressedCol = new Color(0.0f, 0.0f, 1.0f, 1.0f);
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class ActionButton implements UiElement{
 		//if(isPressed)renderer.setColor(pressedCol);
 		//else renderer.setColor(notPressedCol);
 		
-		renderer.setColor(notPressedCol);
+		renderer.setColor(0.0f, 0.0f, 1.0f, 1.0f);
 		
 		renderer.setSize(size, size);
 		renderer.setPosition(restingpoint);

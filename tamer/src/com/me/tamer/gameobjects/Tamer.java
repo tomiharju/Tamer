@@ -43,17 +43,29 @@ public class Tamer extends DynamicObject{
 	 * @param direction
 	 */
 	public void manouver(Vector2 direction){
-		heading.lerp(direction,0.025f);
+		//heading.lerp(direction,0.025f);
+		direction.rotate(45);
+		heading.set(direction);
+		heading.nor();
 		force.set(heading);
 		force.mul(SPEED);
-		
 	
 	}
+	/**
+	 * @param direction
+	 * Used only to turn tamer around his position
+	 */
+	public void turn(Vector2 direction){
+		heading.lerp(direction,0.03f);
 	
-	public void throwSpear(Spear spear,Vector2 point){
+		heading.nor();
+		
+	}
+	
+	public void throwSpear(Spear spear,Vector2 point,float power){
 		spears.add(spear);
 		spear.setPosition(position.tmp().add(heading.mul(1.5f)));
-		spear.throwAt(point);
+		spear.throwAt(point, power);
 	}
 	
 	public void useScream(GryphonScream scream){
