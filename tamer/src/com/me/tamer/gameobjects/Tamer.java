@@ -1,10 +1,11 @@
 package com.me.tamer.gameobjects;
 
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.utils.RuntimeObjectFactory;
+
 
 public class Tamer extends DynamicObject{
 	
@@ -12,12 +13,16 @@ public class Tamer extends DynamicObject{
 	private Vector2 heading = new Vector2(0,0);
 	private int numSpears = 3;
 	private ArrayList<Spear> spears = null;
+
+		
 	
 	public Tamer(){
 		spears = new ArrayList<Spear>();
 		for( int i = 0 ; i < numSpears ; i++){
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
 		}
+		
+		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
 	}
 	
 	@Override
@@ -30,15 +35,9 @@ public class Tamer extends DynamicObject{
 					spears.get(i).pickUp();
 					spears.remove(i);
 				}
-			
-			
+			}
 		}
-		}
-		
 	}
-	
-	
-	
 	
 	/**
 	 * @param direction
@@ -68,8 +67,13 @@ public class Tamer extends DynamicObject{
 		spear.setPosition(position.tmp().add(heading.mul(1.5f)));
 		spear.throwAt(point, power);
 	}
+	
+	public void useScream(GryphonScream scream){
+		scream.activate();
+	}
 
 	public Vector2 getHeading(){
 		return heading;
+
 	}
 }

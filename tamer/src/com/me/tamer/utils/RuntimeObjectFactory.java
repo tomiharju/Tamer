@@ -10,6 +10,7 @@ public class RuntimeObjectFactory {
 
 	public static HashMap<String,LinkedList<GameObject>> objectPool = new HashMap<String,LinkedList<GameObject>>();
 	public static Level level = null;
+	
 	public static void addToObjectPool(String type, GameObject obj){
 		obj.setup();
 		if(objectPool.containsKey(type))

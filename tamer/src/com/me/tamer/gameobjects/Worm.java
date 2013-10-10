@@ -19,6 +19,7 @@ public class Worm extends DynamicObject{
 		this.spawn = spawn;
 		heading = new Vector2();
 		parts = new ArrayList<WormPart>();
+		
 	}
 	
 	
@@ -39,6 +40,7 @@ public class Worm extends DynamicObject{
 			addPart("joint",i+1,position,velocity);
 		connectPieces();
 	}
+	
 	public void wakeUp(Level level){
 		for(WormPart part : parts){
 			level.addObject(part);
@@ -46,6 +48,7 @@ public class Worm extends DynamicObject{
 			level.addRigidBody(part.getRigidBody());
 			
 		}
+		
 	}
 
 
@@ -77,22 +80,34 @@ public class Worm extends DynamicObject{
 	public void resolveForces(float dt){
 		head.solveForces(dt);
 	}
+	
 	public void update(float dt){
 		head.updateChild(dt);
 	
 	}
+	
 	public void draw(SpriteBatch batch){
 		//No action
 	}
-	public ArrayList<WormPart> getParts(){
-		return parts;
-	}
+
 	public void setHead(WormPart part){
 		head = part;
 	}
 	public void dispose(){
 		parts = null;
 		head = null;
+	}
+	
+	public WormPart getBottom(){
+		return parts.get(parts.size()-1);
+	}
+	
+	public WormPart getHead(){
+		return head;
+	}
+	
+	public ArrayList<WormPart> getParts(){
+		return parts;
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.me.tamer.gameobjects.renders;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -47,6 +48,7 @@ public class UiRenderer implements Renderer {
 	public void setRenderType(String type) {
 		this.type = type;
 	}
+
 	public void setColor(float r, float g, float b,float a){
 		sprite.setColor(r, g, b,a);
 	}

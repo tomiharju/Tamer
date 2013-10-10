@@ -57,10 +57,16 @@ public class WormPart extends DynamicObject implements Interactable {
 		this.ordinal = ordinal;
 	}
 	
+	/*
+	public void bind(){
+		body.setInvMass(0);
+		isAttached = true;
+	}*/
 	
-	public void setHeading(Vector2 heading){
-		this.heading.set(heading);
+	public void unBind(){
+		body.setInvMass( 1 / body.getInvMass());
 	}
+
 	public void attachToParent(WormPart parent){
 		this.parent = parent;
 		parent.attachToChild(this);
@@ -109,9 +115,6 @@ public class WormPart extends DynamicObject implements Interactable {
 			impulse = impulse * k;
 			Vector2 impulseVector = unitAxis.mul(impulse);
 			applyImpulse(impulseVector);
-				
-			
-			
 		}
 	}
 	
@@ -120,6 +123,10 @@ public class WormPart extends DynamicObject implements Interactable {
 		child.velocity.sub(addA);
 		Vector2 addB = impulse.tmp().mul(body.getInvMass());
 		velocity.add(addB);
+	}
+	
+	public void setForce(Vector2 newHeading){
+		force.set(newHeading).mul(speed);
 	}
 	
 	public void setAsTail(){
@@ -149,14 +156,8 @@ public class WormPart extends DynamicObject implements Interactable {
 	public int getOrdinal(){
 		return ordinal;
 	}
-	public String getPartName(){
-		return partName;
-	}
-	@Override
-	public void unBind() {
-		body.setInvMass( 1 / body.getMass());
-	}
-	
+
+
 	/* (non-Javadoc)
 	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)
 	 */
@@ -202,9 +203,13 @@ public class WormPart extends DynamicObject implements Interactable {
 		
 	}
 	
+	public String getPartName(){
+		return partName;
+	}
 	
-	
-	
+	public Vector2 getPosition(){
+		return position;
+	}
 	
 
 }

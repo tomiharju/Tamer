@@ -99,7 +99,6 @@ public class InputController implements InputProcessor{
 					e.handleInput(input);
 					selectedButtons.put(pointer, e);
 			}
-	
 		return false;
 	}
 

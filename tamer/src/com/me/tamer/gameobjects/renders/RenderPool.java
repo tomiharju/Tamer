@@ -23,9 +23,11 @@ public class RenderPool {
 			renderpool.put(graphics,renderer);
 		}
 	}
+	
 	public static void removeRenderer(String renderer){
 		renderpool.remove(renderer);
 	}
+	
 	public static Renderer getRenderer(String type){
 		return renderpool.get(type);
 	}
