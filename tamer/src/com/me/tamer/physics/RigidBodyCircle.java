@@ -56,7 +56,7 @@ public class RigidBodyCircle implements RigidBody {
 	@Override
 	public Contact generateContact(RigidBody body) {
 		if(body instanceof RigidBodyCircle){
-			if(position.dst(body.getPosition() ) > radii + body.getRadii() + 0.1f)
+			if(position.dst(body.getPosition() ) > radii + body.getRadii() + 0.5f)
 				return null;
 			
 			float overlap = -100000f;

@@ -1,6 +1,7 @@
 package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -17,6 +18,7 @@ public class StaticObject implements GameObject{
 	protected Vector2 size;
 	protected String renderType = null;
 	private boolean isCarbage = false;
+	private boolean debug = false;
 	
 	@Override
 	public void update(float dt) {
@@ -116,6 +118,21 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDebug(boolean b) {
+		debug = b;	
+	}
+	
+	@Override
+	public boolean getDebug(){
+		return debug;
+	}
+
 	public void markAsActive() {
 		isCarbage = false;
 	}

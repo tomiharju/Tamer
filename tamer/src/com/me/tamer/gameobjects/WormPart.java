@@ -10,7 +10,7 @@ public class WormPart extends DynamicObject implements Interactable {
 	//Container worm
 	private Worm worm = null;
 	
-	private float restLength = 1.3f;
+	private float restLength = 0.52f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
 	private float speed = 5;
@@ -24,11 +24,12 @@ public class WormPart extends DynamicObject implements Interactable {
 	//Physics optimization variables;
 	Vector2 impulseA = new Vector2();
 	Vector2 impulseB = new Vector2();
-	Vector2 tempVector = new Vector2();
+	Vector2 axis = new Vector2();
+	Vector2 relativeVelocity = new Vector2();
 	
 	
 	public void createHead(Vector2 pos, Vector2 vel,Worm worm){
-		setRenderer("static:wormhead");
+		setRenderer("animated:wormhead");
 		this.worm = worm;
 		partName = "Head";
 		radii = .25f;
@@ -36,29 +37,36 @@ public class WormPart extends DynamicObject implements Interactable {
 		position = new Vector2(pos);
 		velocity = new Vector2(vel);
 		force = new Vector2(vel).mul(speed);
-		size = new Vector2(radii*2,radii*2);
+		size = new Vector2(radii * 2 ,radii * 2  );
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = 0;
 	}
 	public void createBodyPart(int ordinal,Vector2 pos, Vector2 vel,Worm worm){
 		this.worm = worm;
-		setRenderer("static:wormpart");
+		setRenderer("animated:wormpart");
 		partName = "Joint";
 		radii = .25f;
 		mass = 10;
 		position = new Vector2(pos);
 		position.add(vel.tmp().nor().mul(-ordinal*restLength));
 		velocity = new Vector2(0,0);
-		force = new Vector2(0,0);
-		size = new Vector2(radii*2,radii*2);
+		force = new Vector2(vel).mul(speed);
+		//Set worm graphic size, add a little extra to avoid excess collision due to parts being in contact all the time
+		size = new Vector2(radii * 2 ,radii * 2 );
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = ordinal;
 	}
 	
+	/*
+	public void bind(){
+		body.setInvMass(0);
+		isAttached = true;
+	}*/
 	
-	public void setHeading(Vector2 heading){
-		this.heading.set(heading);
+	public void unBind(){
+		body.setInvMass( 1 / body.getInvMass());
 	}
+
 	public void attachToParent(WormPart parent){
 		this.parent = parent;
 		parent.attachToChild(this);
@@ -89,11 +97,11 @@ public class WormPart extends DynamicObject implements Interactable {
 	
 	public void solveJoint(float dt){
 		
-		Vector2 axis = new Vector2(child.position.tmp().sub(position));
+		axis.set(child.position.tmp().sub(position));
 		float currentDistance = axis.len();
 		Vector2 unitAxis = axis.nor();
 
-		Vector2 relativeVelocity = new Vector2(child.velocity.tmp().sub(velocity));
+		relativeVelocity.set(child.velocity.tmp().sub(velocity));
 		float relVelMagnitude = relativeVelocity.dot(unitAxis);
 		float relativeDistance = (currentDistance - restLength);
 		
@@ -107,9 +115,6 @@ public class WormPart extends DynamicObject implements Interactable {
 			impulse = impulse * k;
 			Vector2 impulseVector = unitAxis.mul(impulse);
 			applyImpulse(impulseVector);
-				
-			
-			
 		}
 	}
 	
@@ -118,6 +123,10 @@ public class WormPart extends DynamicObject implements Interactable {
 		child.velocity.sub(addA);
 		Vector2 addB = impulse.tmp().mul(body.getInvMass());
 		velocity.add(addB);
+	}
+	
+	public void setForce(Vector2 newHeading){
+		force.set(newHeading).mul(speed);
 	}
 	
 	public void setAsTail(){
@@ -130,8 +139,10 @@ public class WormPart extends DynamicObject implements Interactable {
 	
 	@Override
 	public void spearHit(Spear spear) {
-	if(partName.equalsIgnoreCase("head"))
+	if(partName.equalsIgnoreCase("head")){
+		killPart();
 		markAsCarbage();
+	}
 	else
 		body.setInvMass(0);
 		
@@ -145,14 +156,11 @@ public class WormPart extends DynamicObject implements Interactable {
 	public int getOrdinal(){
 		return ordinal;
 	}
-	public String getPartName(){
-		return partName;
-	}
-	@Override
-	public void unBind() {
-		body.setInvMass( 1 / body.getMass());
-	}
-	
+
+
+	/* (non-Javadoc)
+	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)
+	 */
 	public void dispose(Level level){
 		//TODO: play some death animations before actually disposing?
 		level.getCreatures().remove(this);
@@ -160,8 +168,48 @@ public class WormPart extends DynamicObject implements Interactable {
 		worm.getParts().remove(this);
 	}
 	
+	/**
+	 * When a spear hits the worm in the head, use this recursive function to remove all the body parts.
+	 */
+	public void killPart(){
+		if(child != null)
+			child.killPart();
+		markAsCarbage();
+	}
+	/* 
+	 * This method is called by quicksandAction after timer fires. 
+	 * Its used to kill the current tail part, and set the next part in chain as tail.
+	 * 
+	 */
 	
+	@Override
+	public void kill() {
+		if(parent != null){
+			parent.child = null;
+			parent.setAsTail();
+		}
+		markAsCarbage();
+	}
+	@Override
+	public void moveToFinish() {
+		if(child  != null){
+			child.force.set(force);
+			worm.setHead(child);
+			child.partName = "head";
+		}else
+			worm.markAsCarbage();
+		
+		markAsCarbage();
+		
+	}
 	
+	public String getPartName(){
+		return partName;
+	}
+	
+	public Vector2 getPosition(){
+		return position;
+	}
 	
 
 }

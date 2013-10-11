@@ -9,8 +9,8 @@ public class EndingPointAction implements Action{
 
 	@Override
 	public void execute(Interactable obj) {
-		// TODO Auto-generated method stub
-		
+			obj.moveToFinish();
+		//TODO: ScoreManager.addWormRescueScore(sizeOfRescuedWorm);
 	}
 
 	@Override

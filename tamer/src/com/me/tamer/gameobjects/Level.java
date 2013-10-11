@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -19,11 +20,13 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 public class Level {
 
 	//Settings
+
 	private Vector2 mapBounds = null;
 	private Vector2 cameraBounds = null;
 	private Vector2 camBoundsOffset = null;
 	
 	//Gameobject data
+
 	private ArrayList<GameObject> gameobjects = null;
 	private ArrayList<GameObject> carbages	= null;
 	private ArrayList<GameObject> newobjects = null;
@@ -48,8 +51,9 @@ public class Level {
 		creatures		= new ArrayList<Interactable>();
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
-		
+
 		RuntimeObjectFactory.createLinkToLevel(this);
+
 	}
 	
 	/**
@@ -59,7 +63,6 @@ public class Level {
 	public void update(float dt){
 		runCarbageCollection();
 		addNewObjects();
-		resolveObstacles();
 		resolveCollisions(dt);
 		int numObjects = gameobjects.size();
 		for(int k = 0 ; k < numObjects ; k++)
@@ -75,12 +78,19 @@ public class Level {
 			gameobjects.get(k).draw(batch);
 	}
 	
-	public void resolveObstacles(){
-		int numObstacles = obstacles.size();
-		int numWorms = creatures.size();
-		for(int i = 0 ; i < numObstacles ; i++)
-			for(int k = 0 ; k < numWorms ; k++)
-				obstacles.get(i).resolveTile(creatures.get(k));			
+	
+	/*
+	 * Hard-coded debug requests 
+	 */
+	public void setDebugs(){
+
+	}
+	
+	public void debugDraw(ShapeRenderer sr){
+		for(GameObject o : gameobjects)
+			if(o.getDebug()){
+				o.debugDraw(sr);
+			}
 	}
 	
 	/**
@@ -136,48 +146,12 @@ public class Level {
 	
 				a.getVelocity().add(impulseA);
 				b.getVelocity().sub(impulseB);
-			/*
-				Vector2 addA = normal.cpy().mul(newImp);
-				Vector2 addB = normal.cpy().mul(newImp);
-				
-				addA.mul(a.getInvMass());
-				addB.mul(b.getInvMass());
-				
-				a.getVelocity().add(addA);
-				b.getVelocity().sub(addB);
-				*/
-			/*
-				if(a.getOwner().)
-				if(c.getDist()<0.1){
-					Vector2 leftNor = normal.rotate(90);
-					Vector2 rightNor = normal.rotate(-180);
-					float dotleft = b.getVelocity().dot(leftNor);
-					float dotRight = b.getVelocity().dot(rightNor);
-					if(dotleft > 0){
-						b.getOwner().setHeading(leftNor);
-						a.getOwner().setHeading(rightNor);
-					}
-					else if(dotRight > 0){
-						b.getOwner().setHeading(rightNor);
-						a.getOwner().setHeading(leftNor);
-					}
-				}
-				*/
+	
 				//!!!PUT CONTACT BACK INTO POOL!!!
 				ContactPool.restore(c);
-			}
-			
-			
-			
-			
-		}
-		
-		
-		
-		
+			}	
+		}		
 	}
-	
-	
 	
 	public void runCarbageCollection(){
 		int size = gameobjects.size();
@@ -190,8 +164,10 @@ public class Level {
 		if(carbages.size() > 0){
 			gameobjects.removeAll(carbages);
 			carbages.clear();
+			System.out.println("Gameobjects after carbage collection "+gameobjects.size());
 		}
 	}
+
 	public synchronized void addNewObjects(){
 		if(newobjects.size() > 0){
 			for(GameObject go : newobjects){
@@ -202,8 +178,6 @@ public class Level {
 			}
 		
 	}
-	
-	
 	
 	/**
 	 * Looks through all added gameobjects, and adds each obstacle to separate obstacle list
@@ -231,12 +205,15 @@ public class Level {
 	public void addObject(GameObject obj){
 		gameobjects.add(obj);
 	}
+	
 	public void addNewObject(GameObject obj){
 		newobjects.add(obj);
 	}
+	
 	public void addRigidBody(RigidBody body){
 		rigidbodies.add(body);
 	}
+	
 	
 	/**
 	 * LevelCreator calls this to set Camera borders, could be expanded later if more settings needed
@@ -246,28 +223,10 @@ public class Level {
 		String[] values =value.split(":");
 		
 		mapBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
-		
-		cameraBounds = new Vector2(mapBounds.x  , mapBounds.y);
-		
-		
-		System.err.println(mapBounds.toString());
-		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
-	}
-	
-	public Vector2 getCamBounds(){
-		return cameraBounds;
-	}
-	public Vector2 getMapBounds(){
-		return mapBounds;
-	}
-	public Vector2 getCamBoundsOffset(){
-		return camBoundsOffset;
-	}
-	public ArrayList<Interactable> getCreatures(){
-		return creatures;
-	}
-	public ArrayList<RigidBody> getRigidBodies(){
-		return rigidbodies;
+//		mapBounds.rotate(45);
+//		cameraBounds = new Vector2(mapBounds.x  , mapBounds.y);
+//		System.err.println(mapBounds.toString());
+//		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
 	}
 	
 	/**
@@ -275,18 +234,18 @@ public class Level {
 	 */
 	public void setTamerPos(String pos){
 		tamer = new Tamer();
-		tamer.setRenderer("static:tamer1");
+		tamer.setRenderer("animated:tamer1");
 		tamer.setSize("2:2.72");
 		tamer.setPosition(pos);
 		tamer.setVelocity("0:0");
 		tamer.setForce("0:0");
 		tamer.setMass("10");
 		tamer.setRigidBody("circle");
-		gameobjects.add(tamer);
+		gameobjects.add(tamer);	
+		
 	}
-	public Tamer getTamer(){
-		return (Tamer) tamer;
-	}
+	
+	
 	public void dispose(){
 		gameobjects.clear();
 		carbages.clear();
@@ -294,6 +253,29 @@ public class Level {
 		rigidbodies.clear();
 		tamer = null;
 	}
+
+	public Vector2 getMapBounds(){
+		return mapBounds;
+	}
+
+	public ArrayList<RigidBody> getRigidBodies(){
+		return rigidbodies;
+	}
 	
+	public Vector2 getCamBounds(){
+		return cameraBounds;
+	}
+	
+	public Vector2 getCamBoundsOffset(){
+		return camBoundsOffset;
+	}
+	
+	public ArrayList<Interactable> getCreatures(){
+		return creatures;
+	}
+	
+	public Tamer getTamer(){
+		return (Tamer) tamer;
+	}
 	
 }
