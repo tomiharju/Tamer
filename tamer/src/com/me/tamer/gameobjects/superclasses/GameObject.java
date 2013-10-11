@@ -1,6 +1,7 @@
 package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Level;
 import com.me.tamer.physics.RigidBody;
@@ -26,6 +27,7 @@ public interface GameObject {
 	 * Draw method delegates the drawing for renderer specified for the object.
 	 */
 	public void draw(SpriteBatch batch);
+	public void debugDraw(ShapeRenderer shapeRndr);
 	
 	/**
 	 *	 * @param renderer
@@ -52,7 +54,8 @@ public interface GameObject {
 	 */
 	public void setSize(String size);
 	public void setPosition(String pos);
-	
+	public void setDebug(boolean b);
+	public boolean getDebug();
 	public Vector2 getPosition();
 	public Vector2 getSize();
 	public void setRigidBody(String bodytype);
@@ -69,8 +72,18 @@ public interface GameObject {
 	 * Used when object is fetched from objectpool and put into gameworld.
 	 * 
 	 */
+	/**
+	 * Wakeup is called when object is put into play. For example when worm is fetched from object pool, wakeup method adds that worm and its parts to active gameobjects
+	 *
+	 * @param level
+	 */
 	public void wakeUp(Level level);
 	public void resolveForces(float dt);
+	
+	/**
+	 * Actions that needs to be taken when this object this object is removed from game.
+	 */
+	public void dispose(Level level);
 	
 }
 

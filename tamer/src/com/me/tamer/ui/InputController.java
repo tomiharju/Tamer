@@ -24,6 +24,11 @@ public class InputController implements InputProcessor{
 	private Level level;
 	private HashMap<Integer,UiElement> selectedButtons = null;
 	Vector2 testVector = new Vector2();
+	
+	
+	
+	
+	
 	public InputController(Environment env, Level lvl){
 		this.environment = env;
 		uiCam = environment.getUiCamera();
@@ -88,22 +93,21 @@ public class InputController implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		System.out.println("Pointer added "+pointer);
 		input.set(screenX,uiCam.viewportHeight - screenY);
 		for(UiElement e : buttons)
 			if(e.isTouched(input)){
 					e.handleInput(input);
 					selectedButtons.put(pointer, e);
 			}
-	
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		input.set(screenX,uiCam.viewportHeight - screenY);
 		UiElement element = selectedButtons.get(pointer);
 		if(element != null){
-			element.touchUp();
+			element.touchUp(input);
 			selectedButtons.remove(pointer);
 		}
 		

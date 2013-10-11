@@ -1,9 +1,10 @@
 package com.me.tamer.physics;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool.Poolable;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 
-public class Contact {
+public class Contact implements Poolable{
 	
 	private Vector2 N;
 	private float dist;
@@ -17,7 +18,7 @@ public class Contact {
 	}
 
 	public void setN(Vector2 n) {
-		N = n;
+		N.set(n);
 	}
 
 	public float getDist() {
@@ -59,6 +60,19 @@ public class Contact {
 		this.dist = dist;
 		this.objA = a;
 		this.objB = b;
+	}
+
+	public Contact(){
+		N = new Vector2();
+		dist = 0;
+		objA = null;
+		objB = null;
+	}
+	@Override
+	public void reset() {
+		dist = 0;
+		objA = null;
+		objB = null;
 	}
 
 }

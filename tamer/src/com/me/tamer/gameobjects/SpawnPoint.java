@@ -95,7 +95,9 @@ public class SpawnPoint extends StaticObject{
 			for( int i = 0 ; i < this.spawnCount ; i++)
 				RuntimeObjectFactory.addToObjectPool("worm"+spawnNumber,new Worm(this));
 	}
-	
+	public void setTamerSpawn(){
+		
+	}
 	public void setSpawnVelocity(String vel){
 		this.spawnVelocity = vel;
 	}

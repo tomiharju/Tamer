@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,11 +15,10 @@ import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.ui.InputController;
-import com.me.tamer.ui.UiElement;
 import com.me.tamer.utils.LevelCreator;
 
 /**
- * @author Kesyttäjät
+ * @author Kesyttajat
  * Controller object
  * Is (ir)responsible for creating levels and handling camera movement
  *  
@@ -44,14 +43,20 @@ public class Environment {
 	InputController inputcontroller;
 
 	
+	//debug
+	private ShapeRenderer shapeRndr;
+	
 	
 	
 	public Environment(){
 		//Spritebatch is used for drawing sprites
 		batch 			= new SpriteBatch();
+		
 		setupCamera();
 		createLevel(1);
 		inputcontroller = new InputController(this,level);
+		
+		shapeRndr = new ShapeRenderer();
 	}
 	
 	public void setupCamera(){
@@ -62,6 +67,7 @@ public class Environment {
 		uiCam.setToOrtho(false);
 	
 	}
+	
 	public void resize(float width, float height){
 		/*
 		 // calculate new viewport
@@ -90,23 +96,21 @@ public class Environment {
     	}
 	
 	public OrthographicCamera getCamera(){
-		
 		return cam;
 	}
+	
 	public OrthographicCamera getUiCamera(){
 		return uiCam;
 	}
 	
 	public void moveCamera(Vector2 tamerPos){
 	
-		Vector2 camBounds = level.getCamBounds();
-		float y = Math.min(camBounds.y , Math.max(tamerPos.y,-camBounds.y ));
-		float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
+		//Vector2 camBounds = level.getCamBounds();
+		//float y = Math.min(camBounds.y , Math.max(tamerPos.y,-camBounds.y ));
+		//float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
 		
-		Vector2 newPos = IsoHelper.twoDToIso(tamerPos.tmp().set(x,y));
+		Vector2 newPos = IsoHelper.twoDToIso(tamerPos);
 		cam.position.set(newPos.x,newPos.y,0);
-		
-	
 		
 	}
 	
@@ -117,6 +121,8 @@ public class Environment {
 	 */
 	public void createLevel(int current_level){
 		level = LevelCreator.create(current_level);
+		level.setDebugs();
+		
 	}
 	
 	
@@ -128,19 +134,26 @@ public class Environment {
 		//set Viewport
        
 		//Start uploading sprites
+		
 		batch.begin();
 		
 		
 		batch.setProjectionMatrix(cam.combined); 
 		level.draw(batch);
-
+		
 		//Set projection matrix to batch
 		batch.setProjectionMatrix(uiCam.combined); 
 		inputcontroller.draw(batch);
 		
 		batch.end();
 		
+		//ShapeRenderer shapeRndr = new ShapeRenderer();
+		shapeRndr.setProjectionMatrix(cam.combined);
+		level.debugDraw(shapeRndr);
+		
 	}
+	
+	
 	public void update(float dt){
 		inputcontroller.update(dt);
 		level.update(dt);

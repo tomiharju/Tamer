@@ -1,6 +1,7 @@
 package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -17,6 +18,7 @@ public class StaticObject implements GameObject{
 	protected Vector2 size;
 	protected String renderType = null;
 	private boolean isCarbage = false;
+	private boolean debug = false;
 	
 	@Override
 	public void update(float dt) {
@@ -86,7 +88,7 @@ public class StaticObject implements GameObject{
 		if(bodytype.equalsIgnoreCase("box"))
 			body = new RigidBodyBox(position,new Vector2(0,0),0,size.x,size.y); //Position, speed, mass, width,height ( speed and mass are 0 cause its static object )
 		else if(bodytype.equalsIgnoreCase("circle"))
-			body = new RigidBodyCircle(position,new Vector2(0,0),0,size.x);//Position, velocity, mass, radii
+			body = new RigidBodyCircle(position,new Vector2(0,0),0,size.x/2);//Position, velocity, mass, radii
 		else if(bodytype.equalsIgnoreCase("no-body"))
 			body = null;
 		
@@ -116,8 +118,29 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDebug(boolean b) {
+		debug = b;	
+	}
+	
+	@Override
+	public boolean getDebug(){
+		return debug;
+	}
+
 	public void markAsActive() {
 		isCarbage = false;
+	}
+
+	@Override
+	public void dispose(Level level) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

@@ -60,9 +60,8 @@ public class RigidBodyCircle implements RigidBody {
 				return null;
 			
 			float overlap = -100000f;
-			bodyPosition.set(body.getPosition());
-			axis.set(bodyPosition.sub(position));
 		
+			axis.set(body.getPosition().tmp().sub(position));
 			axis.nor();
 			projection1.set(project(axis));
 			projection2.set(body.project(axis));
@@ -74,7 +73,12 @@ public class RigidBodyCircle implements RigidBody {
 				normal.set(axis);
 			}
 			
-			return new Contact(normal,overlap,this,body);
+			Contact c = ContactPool.obtain();
+			c.setN(normal);
+			c.setDist(overlap);
+			c.setObjA(this);
+			c.setObjB(body);
+			return c;
 			
 		}
 		
@@ -110,7 +114,12 @@ public class RigidBodyCircle implements RigidBody {
 			}
 			
 			
-			return new Contact(normal,overlap,this,body);
+			Contact c = ContactPool.obtain();
+			c.setN(normal);
+			c.setDist(overlap);
+			c.setObjA(this);
+			c.setObjB(body);
+			return c;
 			
 		}
 		
@@ -147,7 +156,12 @@ public class RigidBodyCircle implements RigidBody {
 				
 				
 			}
-			return new Contact(normal, overlap, this, body);
+			Contact c = ContactPool.obtain();
+			c.setN(normal);
+			c.setDist(overlap);
+			c.setObjA(this);
+			c.setObjB(body);
+			return c;
 		}
 		
 		
@@ -228,10 +242,13 @@ public class RigidBodyCircle implements RigidBody {
 		circleToClosest = new Vector2();
 		projection1 = new Vector2();
 		projection2 = new Vector2();
-		bodyPosition = new Vector2();
 		//Helper function variables
 		axes = new ArrayList<Vector2>();
 		projectResult = new Vector2();
 		
+	}
+	@Override
+	public float getMass() {
+		return mass;
 	}
 }
