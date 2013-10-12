@@ -9,8 +9,7 @@
     	<data type="Renderer">static:tile_dirt</data>
     	<data type="MapSize">40:40</data>
     </GameObject>
-    
-
+   
     <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
     	<data type="Renderer">static:debugtile3</data>
     	<data type="Size">1:1</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
@@ -34,11 +33,6 @@
     	<data type="RigidBody">no-body</data><!--box/circle/no-body-->
     </GameObject>
        
-         
-       
-    
-   
-
      <GameObject type ="com.me.tamer.gameobjects.SpawnPoint">
     	<data type="Renderer">static:debugtile3</data>
     	<data type="Size">1:6</data>

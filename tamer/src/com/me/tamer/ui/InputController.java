@@ -66,8 +66,6 @@ public class InputController implements InputProcessor{
 		return uiCam;
 	}
 
-
-
 	@Override
 	public boolean keyDown(int keycode) {
 		
