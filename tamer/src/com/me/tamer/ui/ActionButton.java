@@ -48,8 +48,8 @@ public class ActionButton implements UiElement{
 		renderer.loadGraphics("joystick");
 		renderer.setSize(size,size);
 		renderer.setPosition(restingpoint);
-		//pressedCol = new Color(1.0f, 0.0f, 0.0f, 0.0f);
-		//notPressedCol = new Color(0.0f, 0.0f, 1.0f, 1.0f);
+		RuntimeObjectFactory.addToObjectPool("scream",new GryphonScream());
+		
 	}
 	
 	@Override
@@ -88,21 +88,16 @@ public class ActionButton implements UiElement{
 
 	@Override
 	public boolean handleInput(Vector2 input) {	
+		GryphonScream scream = (GryphonScream) RuntimeObjectFactory.getObjectFromPool("scream");
+		if(scream != null)
+			tamer.useScream(scream);
+		else
+			System.out.println("Scream is cooling down");
 		return true;
 	}
 	
 	@Override
 	public void touchUp(Vector2 input) {
-		if (isPressed){
-			GryphonScream scream = (GryphonScream) RuntimeObjectFactory.getObjectFromPool("scream");
-			
-			if(scream != null)
-				tamer.useScream(scream);
-			else
-				System.out.println("Scream is cooling down");
-		}
-
-		
 		// TODO Auto-generated method stub
 	}
 
