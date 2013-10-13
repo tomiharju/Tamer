@@ -31,8 +31,8 @@ public class Spear extends DynamicObject{
 			position.add(force.tmp().mul(dt));
 		//When the spear has reached its destination, check if there is some creature
 		//If there is, call that creatures spearHit method to resolve damage.
-		if(!isAttached && position.dst(target) < 0.1){
-		
+		if(!isAttached && position.dst(target) < 0.5){
+			position.set(target);
 			ArrayList<Interactable> creatures = level.getCreatures();
 			int size = creatures.size();
 			System.out.println("Searching for potential hit amont "+size+" creatures.");

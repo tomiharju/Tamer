@@ -58,7 +58,6 @@ public class Level {
 		creatures		= new ArrayList<Interactable>();
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
-
 		RuntimeObjectFactory.createLinkToLevel(this);
 
 	}
