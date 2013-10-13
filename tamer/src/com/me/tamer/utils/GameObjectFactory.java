@@ -15,16 +15,17 @@ public class GameObjectFactory {
 	
 	
 	
-	public static GameObject createGameObject(String className,LinkedHashMap<String,String> configuration){
+	public static GameObject createGameObject(String className, LinkedHashMap<String,String> propertyConfig){
 		try {
 			
 			Class<?> objectClass = Class.forName(className);
 			Constructor<?> constructor = objectClass.getConstructor();
 			GameObject object = (GameObject) constructor.newInstance(new Object[]{});
 			
-			Iterator<Entry<String, String>> it = configuration.entrySet().iterator();
-			while (it.hasNext()) {
-				Entry<String, String> entry = it.next();
+			//--SET PROPERTIES--//
+			Iterator<Entry<String, String>> propertyIt = propertyConfig.entrySet().iterator();
+			while (propertyIt.hasNext()) {
+				Entry<String, String> entry = propertyIt.next();
 			  try{
 				  Method setter = objectClass.getMethod("set"+entry.getKey(),String.class);
 				  System.out.println("Setting value... ["+entry.getKey()+"] -> " + entry.getValue());
@@ -36,7 +37,9 @@ public class GameObjectFactory {
 			  }
 			 
 			}
-			System.out.println("Object added: " + object.getClass().getSimpleName() + " In memory as "+object.toString());
+			System.out.println("Property added: " + object.getClass().getSimpleName() + " In memory as "+object.toString());
+			
+
 			return object;
 			
 			

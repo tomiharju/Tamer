@@ -25,6 +25,7 @@ public class DynamicObject implements GameObject{
 	private boolean isCarbage = false;
 	protected RigidBody body = null;
 	private boolean debug = false;
+	private int zIndex = 0;
 	
 	
 	@Override
@@ -184,6 +185,19 @@ public class DynamicObject implements GameObject{
 	public boolean getDebug(){
 		return debug;
 	}
+
+	@Override
+	public int getZIndex() {
+		return zIndex;
+	}
+
+	@Override
+	public void setZindex(int z) {
+		zIndex = z;
+		
+	}
+
+
 	
 
 	

@@ -24,7 +24,9 @@ public class AnimatedRenderer implements Renderer {
 	private TextureRegion currentFrame;
 	private boolean animate;
 	private float stateTime;
+	private float animSpeed = 0.025f;
 	private Vector2 animPos;
+	private Vector2 size;
 	private String type;
 	
 	public AnimatedRenderer(){
@@ -34,7 +36,12 @@ public class AnimatedRenderer implements Renderer {
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
-		
+		//TODO: ANIMATED DRAWING
+		/*
+		stateTime += Gdx.graphics.getDeltaTime();
+		currentFrame = animation.getKeyFrame(stateTime,true);
+		batch.draw(currentFrame,size.x,size.y);
+		*/
 	}
 
 
@@ -44,10 +51,24 @@ public class AnimatedRenderer implements Renderer {
 		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
 		if(sprite == null)
 			throw new IllegalArgumentException("Could not load sprite!");
-		
-		
 	}
-
+	public void loadAnimation(String animName,int FRAME_COLS,int FRAME_ROWS){
+		spriteSheet = new Texture(Gdx.files.internal("data/graphics/animations/"+animName+".png"));
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 
+				FRAME_COLS, spriteSheet.getHeight() / FRAME_ROWS);          
+		frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		int index = 0;
+		for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                    frames[index++] = tmp[i][j];
+            }
+		}
+		animation = new Animation(animSpeed,frames);
+		stateTime = 0f;
+	}
+	public void setAnimSpeed(float speed){
+		animSpeed = speed;
+	}
 	@Override
 	public void setSize(float w, float h) {
 		sprite.setSize(w, h);

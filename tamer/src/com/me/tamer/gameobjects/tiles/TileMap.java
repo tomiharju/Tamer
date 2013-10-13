@@ -28,6 +28,10 @@ public class TileMap extends StaticObject{
 	private ArrayList<Vector2> terrain;
 	private Vector2 bounds;
 	
+	public TileMap(){
+		
+		setZindex(1);
+	}
 	
 	
 	@Override

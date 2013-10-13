@@ -36,9 +36,6 @@ public class GryphonScream extends DynamicObject {
 	private Vector2 tamerHead			= null;
 	private Vector2 newHeading			= null;
 	
-	//Debug
-	private ShapeRenderer shapeRndr;
-	
 	public GryphonScream(){
 		screamVert1 = new Vector2();
 		screamVert2 = new Vector2();
@@ -74,10 +71,6 @@ public class GryphonScream extends DynamicObject {
 		
 		shapeRndr.begin(ShapeType.Line);
 		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
-		shapeRndr.end();
-		
-		shapeRndr.begin(ShapeType.Line);
-		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
 		shapeRndr.end();
 		
 		shapeRndr.begin(ShapeType.Line);
@@ -128,8 +121,7 @@ public class GryphonScream extends DynamicObject {
 						if( cross1 > 0 && cross2 > 0 && cross3 > 0){
 							newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
 							newHeading.nor();
-							wopa.setForce(newHeading);
-							
+							wopa.setForce(newHeading);		
 						}
 					}
 				}	

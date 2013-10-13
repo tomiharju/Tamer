@@ -14,7 +14,7 @@ import com.me.tamer.physics.RigidBody;
  *
  */
 
-public interface GameObject {
+public interface GameObject{
 	
 	
 	/**
@@ -84,6 +84,9 @@ public interface GameObject {
 	 * Actions that needs to be taken when this object this object is removed from game.
 	 */
 	public void dispose(Level level);
+	
+	public int getZIndex();
+	public void setZindex(int z);
 	
 }
 

@@ -1,6 +1,8 @@
 package com.me.tamer.gameobjects;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,6 +16,7 @@ import com.me.tamer.gameobjects.tiles.ObstacleTile;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
+import com.me.tamer.utils.DrawOrderComparator;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
@@ -42,6 +45,10 @@ public class Level {
 	Vector2 impulseB = new Vector2();
 	Vector2 bVelocity = new Vector2();
 	Vector2 normal = new Vector2();
+	
+	//Drawing-order
+	private int loopCount = 0;
+	private int sortRate = 6;
 		
 	public Level(){
 		gameobjects 	= new ArrayList<GameObject>();
@@ -74,23 +81,31 @@ public class Level {
 	 */
 	public void draw(SpriteBatch batch){
 		int numObjects = gameobjects.size();
+		sortDrawOrder(numObjects);
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).draw(batch);
 	}
 	
-	
-	/*
-	 * Hard-coded debug requests 
-	 */
-	public void setDebugs(){
-
-	}
 	
 	public void debugDraw(ShapeRenderer sr){
 		for(GameObject o : gameobjects)
 			if(o.getDebug()){
 				o.debugDraw(sr);
 			}
+	}
+	
+	public void sortDrawOrder(int numObjects){
+		if(loopCount % sortRate == 0){
+			if(numObjects > 1){
+				Collections.sort(gameobjects, new DrawOrderComparator());
+				/*for (GameObject g : gameobjects){
+					//if(g.getPosition() != null)
+					//System.out.println(g.getClass().getName() +"..." + g.getPosition().y);
+					System.out.println(g.getClass().getName() +"..." + g.getZIndex());
+				}
+				System.out.println("-------------------------------");*/
+			}
+		} loopCount++;
 	}
 	
 	/**

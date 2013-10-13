@@ -32,9 +32,6 @@ import com.me.tamer.gameobjects.SpawnPoint;
  */
 public class LevelCreator {
 	
-	
-	
-
 	/**
 	 * @param level_number self explanatory
 	 * @param env link to environment object, needed to be able to add objects to environments gameobject list
@@ -42,6 +39,9 @@ public class LevelCreator {
 	 * Creates a hashtable to hold configurations for each object read from xml file
 	 * Calls GameObjectFactory.createGameObject with desired object type, and read configuration map.
 	 */
+	
+	
+	
 	public static Level create(int level_number){
 		
 		Level level = new Level();
@@ -52,19 +52,22 @@ public class LevelCreator {
 			Element root = reader.parse(file);
 			
 			String objectType;
-			Array<Element> datavalues;
+			Array<Element> properties;
+			Array<Element> subObjects;
+			LinkedHashMap<String,String> propertyConfig = new LinkedHashMap<String,String>();
 			
 			//Settings
 			Element settings = root.getChildByName("Settings");
-			datavalues = settings.getChildrenByName("data");
+			properties = settings.getChildrenByName("property");
 			
-			for(Element data : datavalues){
+			for(Element property : properties){
 				//Get the setter method, "set + type in xml"
-				Method method = level.getClass().getMethod("set" +data.getAttribute("type"), String.class);
-				method.invoke(level, (Object)data.getText());	
+				Method method = level.getClass().getMethod("set" +property.getAttribute("type"), String.class);
+				method.invoke(level, (Object)property.getText());	
 			}
 			
-			//Gameobjects
+			//GameObjects
+		
 			Array<Element> objects = root.getChildrenByName("GameObject");
 			
 			for(Element gameobject : objects){
@@ -72,24 +75,33 @@ public class LevelCreator {
 				//Create new LinkedHashMap ( it keeps input order ) to hold all values for this gameobject
 				objectType = gameobject.getAttribute("type");
 				
-				LinkedHashMap<String,String> config = new LinkedHashMap<String,String>();
-				datavalues = gameobject.getChildrenByName("data");
-				for(Element data : datavalues){
-					config.put(data.getAttribute("type"),data.getText());
+				properties = gameobject.getChildrenByName("property");
+				for(Element property : properties){
+					propertyConfig.put(property.getAttribute("type"),property.getText());
 				}
-		
-				level.addObject(GameObjectFactory.createGameObject(objectType,config));
-			
 				
-			
+				
+				subObjects = gameobject.getChildrenByName("subobject");
+				/*
+				for(Element subObject : subObjects){
+					subObjectConfig.put(subObject.getAttribute("type"),subObject.getText());
+				}
+				*/
+				
+				GameObject objectToAdd = GameObjectFactory.createGameObject(objectType,propertyConfig);
+				level.addObject(objectToAdd);
+				
+				if(subObjects.size != 0){
+					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName());
+				}
+				
 			}
 			
 			//Once xml file is completely read, and all objects are added, return new fresh level.
 			//Setup objects adds all obstacles to specific obstacle list, used later for sandpit resolution etc.
 			level.setupObjects();
-			return level;
-		  
-		  
+			
+			return level;	  
 		  
 		} catch (Exception e) {
 		 e.printStackTrace();
@@ -99,5 +111,47 @@ public class LevelCreator {
 		
 	
 	}
-
+	
+	public static void addSubObjects(Element currentXmlLevel, GameObject owner, String ownerClassName){
+		String objectType;
+		Array<Element> objects;
+		Array<Element> subObjects;
+		Array<Element> properties;
+		LinkedHashMap<String,String> propertyConfig = new LinkedHashMap<String,String>();
+		
+		//SubObjects
+		try{
+			objects = currentXmlLevel.getChildrenByName("subobject");
+			if (objects != null){
+				for(Element object : objects){
+					
+					objectType = object.getAttribute("type");
+					
+					properties = object.getChildrenByName("property");
+					for(Element property : properties){
+						propertyConfig.put(property.getAttribute("type"),property.getText());
+					}
+					
+					GameObject objectToAdd = GameObjectFactory.createGameObject(objectType,propertyConfig);
+					
+					String objectClassName = object.getAttribute("type");
+					String[] objectClassNameSplitted = objectClassName.split("\\.");
+					String objectClassNameTrimmed = objectClassNameSplitted[(objectClassNameSplitted.length-1)];
+						
+					Class<?> ownerClass = Class.forName(ownerClassName);
+					
+					Method adder = ownerClass.getMethod("add"+objectClassNameTrimmed,objectToAdd.getClass());
+					
+					adder.invoke(owner, objectToAdd);
+					
+					subObjects = object.getChildrenByName("subobject");
+					if(subObjects != null){
+						addSubObjects(object, objectToAdd, objectToAdd.getClass().getName());
+					}
+				}
+			}
+		} catch (Exception e) {
+			 e.printStackTrace();
+		}
+	}
 }

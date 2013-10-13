@@ -6,10 +6,11 @@ import java.util.LinkedList;
 
 public class ContactPool {
 	static LinkedList<Contact> contactPool = new LinkedList<Contact>();
-
+	static int SIZE;
 	
 	public static void createPool(int size){
-		for(int i = 0 ; i < size ; i++)
+		SIZE = size;
+		for(int i = 0 ; i < SIZE ; i++)
 			contactPool.push(new Contact());
 	
 	}
@@ -19,7 +20,7 @@ public class ContactPool {
 				contactPool.push(new Contact());
 			System.err.println("Warning, running out of contacts");
 		}
-		if(contactPool.size() > 50 )
+		if(contactPool.size() > SIZE )
 			contactPool.pop();
 		
 		return contactPool.pop();

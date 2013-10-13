@@ -10,7 +10,7 @@ public class WormPart extends DynamicObject implements Interactable {
 	//Container worm
 	private Worm worm = null;
 	
-	private float restLength = 0.6f;
+	private float restLength = 0.52f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
 	private float speed = 5;
@@ -37,7 +37,7 @@ public class WormPart extends DynamicObject implements Interactable {
 		position = new Vector2(pos);
 		velocity = new Vector2(vel);
 		force = new Vector2(vel).mul(speed);
-		size = new Vector2(radii * 2 + 0.1f,radii * 2 + 0.1f );
+		size = new Vector2(radii * 2 ,radii * 2  );
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = 0;
 	}
@@ -52,7 +52,7 @@ public class WormPart extends DynamicObject implements Interactable {
 		velocity = new Vector2(0,0);
 		force = new Vector2(vel).mul(speed);
 		//Set worm graphic size, add a little extra to avoid excess collision due to parts being in contact all the time
-		size = new Vector2(radii * 2 + 0.1f,radii * 2 + 0.1f);
+		size = new Vector2(radii * 2 ,radii * 2 );
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = ordinal;
 	}

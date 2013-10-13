@@ -19,6 +19,7 @@ public class StaticObject implements GameObject{
 	protected String renderType = null;
 	private boolean isCarbage = false;
 	private boolean debug = false;
+	private int zIndex = 0;
 	
 	@Override
 	public void update(float dt) {
@@ -140,6 +141,17 @@ public class StaticObject implements GameObject{
 	@Override
 	public void dispose(Level level) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public int getZIndex() {
+		return zIndex;
+	}
+
+	@Override
+	public void setZindex(int z) {
+		zIndex = z;
 		
 	}
 

@@ -120,9 +120,7 @@ public class Environment {
 	 * Give this as parameter, so that EnvironmentFactory can properly add objects to gameobjects
 	 */
 	public void createLevel(int current_level){
-		level = LevelCreator.create(current_level);
-		level.setDebugs();
-		
+		level = LevelCreator.create(current_level);	
 	}
 	
 	
@@ -147,7 +145,7 @@ public class Environment {
 		
 		batch.end();
 		
-		ShapeRenderer shapeRndr = new ShapeRenderer();
+		//ShapeRenderer shapeRndr = new ShapeRenderer();
 		shapeRndr.setProjectionMatrix(cam.combined);
 		level.debugDraw(shapeRndr);
 		

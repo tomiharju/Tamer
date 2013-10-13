@@ -104,7 +104,7 @@ public class SpawnPoint extends StaticObject{
 	public String getSpawnVelocity(){
 		return spawnVelocity;
 	}
-
+	
 
 
 }
