@@ -18,19 +18,12 @@
     </GameObject>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-<<<<<<< HEAD
-    	<property type="Renderer">animated:tile_sand</property>
-    	<property type="Size">5:5</property><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
-    	<property type="Position">-10:8</property>
-    	<property type="Action">quicksand</property>
-    	<property type="RigidBody">no-body</property><!--box/circle/no-body-->
-=======
+
     	<data type="Renderer">animated:tile_sand</data>
     	<data type="Size">5:5</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
     	<data type="Position">0:0</data>
     	<data type="Action">quicksand</data>
     	<data type="RigidBody">no-body</data><!--box/circle/no-body-->
->>>>>>> e11178f3b3b1b8af407e7c3158c069d9ea514d15
     </GameObject>
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
@@ -40,9 +33,8 @@
     	<property type="Action">endingpoint</property>
     	<property type="RigidBody">no-body</property><!--box/circle/no-body-->
     </GameObject>
-<<<<<<< HEAD
-=======
-      <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
+
+    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
     	<data type="Renderer">static:tree1</data>
     	<data type="Size">2:4.78</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
     	<data type="Position">2:2</data>

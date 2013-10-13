@@ -87,48 +87,47 @@ public class GryphonScream extends DynamicObject {
 	@Override
 	public void update(float dt) {
 		if(isActive){
-		ArrayList<Interactable> creatures = level.getCreatures();
-		for (int i = 0; i < creatures.size(); i++){	
-			if(creatures.get(i).getClass() == WormPart.class){
-				WormPart wopa = ((WormPart)creatures.get(i));
-				if(wopa.getPartName() == "Head"){
-					
-					wormPos.set(wopa.getPosition());		
-					tamerPos.set(level.getTamer().getPosition());
-					tamerHead.set(level.getTamer().getHeading());
-					
-					//Scream area is a triangle
-					screamVert1.set(tamerPos);
-					
-					screamVert2.set(tamerPos);
-					screamVert2.x += tamerHead.x * SCREAM_AREA_LENGTH - tamerHead.y * SCREAM_AREA_WIDTH;
-					screamVert2.y += tamerHead.y * SCREAM_AREA_LENGTH + tamerHead.x * SCREAM_AREA_WIDTH;
-					
-					screamVert3.set(tamerPos);
-					screamVert3.x += tamerHead.x * SCREAM_AREA_LENGTH + tamerHead.y * SCREAM_AREA_WIDTH;
-					screamVert3.y += tamerHead.y * SCREAM_AREA_LENGTH - tamerHead.x * SCREAM_AREA_WIDTH;
-					
-					wormPos1.set(wormPos.x - screamVert1.x, wormPos.y - screamVert1.y);
-					wormPos2.set(wormPos.x - screamVert2.x, wormPos.y - screamVert2.y);
-					wormPos3.set(wormPos.x - screamVert3.x, wormPos.y - screamVert3.y);
-					
-					float cross1 = wormPos1.crs(screamVert2.x - screamVert1.x, screamVert2.y - screamVert1.y);
-					float cross2 = wormPos2.crs(screamVert3.x - screamVert2.x, screamVert3.y - screamVert2.y);
-					float cross3 = wormPos3.crs(screamVert1.x - screamVert3.x, screamVert1.y - screamVert3.y);
-					
-					//Check with cross-product if WormHead is inside scream-area;
-					if( cross1 > 0 && cross2 > 0 && cross3 > 0){
-						newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
-						newHeading.nor();
-						wopa.setForce(newHeading);
+			ArrayList<Interactable> creatures = level.getCreatures();
+			for (int i = 0; i < creatures.size(); i++){	
+				if(creatures.get(i).getClass() == WormPart.class){
+					WormPart wopa = ((WormPart)creatures.get(i));
+					if(wopa.getPartName() == "Head"){
 						
-
+						wormPos.set(wopa.getPosition());		
+						tamerPos.set(level.getTamer().getPosition());
+						tamerHead.set(level.getTamer().getHeading());
+						
+						//Scream area is a triangle
+						screamVert1.set(tamerPos);
+						
+						screamVert2.set(tamerPos);
+						screamVert2.x += tamerHead.x * SCREAM_AREA_LENGTH - tamerHead.y * SCREAM_AREA_WIDTH;
+						screamVert2.y += tamerHead.y * SCREAM_AREA_LENGTH + tamerHead.x * SCREAM_AREA_WIDTH;
+						
+						screamVert3.set(tamerPos);
+						screamVert3.x += tamerHead.x * SCREAM_AREA_LENGTH + tamerHead.y * SCREAM_AREA_WIDTH;
+						screamVert3.y += tamerHead.y * SCREAM_AREA_LENGTH - tamerHead.x * SCREAM_AREA_WIDTH;
+						
+						wormPos1.set(wormPos.x - screamVert1.x, wormPos.y - screamVert1.y);
+						wormPos2.set(wormPos.x - screamVert2.x, wormPos.y - screamVert2.y);
+						wormPos3.set(wormPos.x - screamVert3.x, wormPos.y - screamVert3.y);
+						
+						float cross1 = wormPos1.crs(screamVert2.x - screamVert1.x, screamVert2.y - screamVert1.y);
+						float cross2 = wormPos2.crs(screamVert3.x - screamVert2.x, screamVert3.y - screamVert2.y);
+						float cross3 = wormPos3.crs(screamVert1.x - screamVert3.x, screamVert1.y - screamVert3.y);
+						
+						//Check with cross-product if WormHead is inside scream-area;
+						if( cross1 > 0 && cross2 > 0 && cross3 > 0){
+							newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
+							newHeading.nor();
+							wopa.setForce(newHeading);
+							
+	
+						}
 					}
-				}
+				}	
 			}	
 		}	
-		}
-		
 	}
 
 	

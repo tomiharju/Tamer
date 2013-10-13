@@ -81,7 +81,7 @@ public class LevelCreator {
 				}
 				
 				
-				subObjects = gameobject.getChildrenByName("subobject");
+				subObjects = gameobject.getChildrenByName("SubObject");
 				/*
 				for(Element subObject : subObjects){
 					subObjectConfig.put(subObject.getAttribute("type"),subObject.getText());
@@ -121,7 +121,7 @@ public class LevelCreator {
 		
 		//SubObjects
 		try{
-			objects = currentXmlLevel.getChildrenByName("subobject");
+			objects = currentXmlLevel.getChildrenByName("SubObject");
 			if (objects != null){
 				for(Element object : objects){
 					
@@ -144,7 +144,7 @@ public class LevelCreator {
 					
 					adder.invoke(owner, objectToAdd);
 					
-					subObjects = object.getChildrenByName("subobject");
+					subObjects = object.getChildrenByName("SubObject");
 					if(subObjects != null){
 						addSubObjects(object, objectToAdd, objectToAdd.getClass().getName());
 					}

@@ -25,7 +25,7 @@ public class Tamer extends DynamicObject{
 		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
 		
 		//Z-index for drawing order
-		setZindex(-0);
+		setZindex(-1);
 	}
 	
 	@Override
