@@ -21,7 +21,7 @@ public class GameObjectFactory {
 			Class<?> objectClass = Class.forName(className);
 			Constructor<?> constructor = objectClass.getConstructor();
 			GameObject object = (GameObject) constructor.newInstance(new Object[]{});
-			
+			System.out.println("Starting to create new gameobject {"+object.getClass().getSimpleName()+"}");
 			//--SET PROPERTIES--//
 			Iterator<Entry<String, String>> propertyIt = propertyConfig.entrySet().iterator();
 			while (propertyIt.hasNext()) {
@@ -37,9 +37,8 @@ public class GameObjectFactory {
 			  }
 			 
 			}
-			System.out.println("Property added: " + object.getClass().getSimpleName() + " In memory as "+object.toString());
-			
-
+			System.out.println("GameObject created {" + object.getClass().getSimpleName() + "} In memory as "+object.toString()+" \n");
+		
 			return object;
 			
 			

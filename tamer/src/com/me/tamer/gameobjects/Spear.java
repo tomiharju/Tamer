@@ -3,27 +3,35 @@ package com.me.tamer.gameobjects;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.renders.RenderPool;
+import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.Interactable;
+import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Spear extends DynamicObject{
 	
 	private Level level;
 	private Vector2 target = null ;
-	private Interactable targetCreature = null;
+	private Creature targetCreature = null;
 	private boolean isAttached = false;
 	
 	public Spear(){
 		
 	}
 	public void setup(){
-		setRenderer("static:spear");
-		setSize("1:1");
+		setGraphics();
 		setPosition("0:0");
 		setVelocity("0:0");
 		setForce("0:0");
 		target = new Vector2();
+	}
+	
+	public void setGraphics(){
+		Renderer render = RenderPool.addRendererToPool("static","spear");
+		render.loadGraphics("spear");
+		setSize("1:1");
+		renderType = "spear";
 	}
 	
 	public void update(float dt){
@@ -33,7 +41,7 @@ public class Spear extends DynamicObject{
 		//If there is, call that creatures spearHit method to resolve damage.
 		if(!isAttached && position.dst(target) < 0.5){
 			position.set(target);
-			ArrayList<Interactable> creatures = level.getCreatures();
+			ArrayList<Creature> creatures = level.getCreatures();
 			int size = creatures.size();
 			System.out.println("Searching for potential hit amont "+size+" creatures.");
 			for(int i = 0 ; i < size ; i ++)

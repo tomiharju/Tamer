@@ -2,7 +2,7 @@ package com.me.tamer.gameobjects.tiles;
 
 import com.me.tamer.actions.Action;
 import com.me.tamer.gameobjects.superclasses.GameObject;
-import com.me.tamer.gameobjects.superclasses.Interactable;
+import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.physics.RigidBody;
 import com.me.tamer.utils.ActionFactory;
@@ -23,7 +23,7 @@ public class ObstacleTile extends StaticObject implements Tile{
 	}
 
 	@Override
-	public boolean resolveTile(Interactable interactable) {
+	public boolean resolveTile(Creature interactable) {
 	//TODO TODO TODO TODO TODO
 		if(action != null)
 		if(((GameObject) interactable).getPosition().dst(position) < this.size.x)

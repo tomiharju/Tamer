@@ -1,11 +1,13 @@
 package com.me.tamer.gameobjects;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.renders.RenderPool;
+import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.Interactable;
+import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.physics.RigidBodyCircle;
 
-public class WormPart extends DynamicObject implements Interactable {
+public class WormPart extends DynamicObject implements Creature {
 	
 	//Container worm
 	private Worm worm = null;
@@ -29,8 +31,8 @@ public class WormPart extends DynamicObject implements Interactable {
 	
 	
 	public void createHead(Vector2 pos, Vector2 vel,Worm worm){
-		setRenderer("animated:wormhead");
 		this.worm = worm;
+		setGraphics("wormhead");
 		partName = "Head";
 		radii = .25f;
 		mass = 20;
@@ -43,7 +45,7 @@ public class WormPart extends DynamicObject implements Interactable {
 	}
 	public void createBodyPart(int ordinal,Vector2 pos, Vector2 vel,Worm worm){
 		this.worm = worm;
-		setRenderer("animated:wormpart");
+		setGraphics("wormpart");
 		partName = "Joint";
 		radii = .25f;
 		mass = 10;
@@ -57,11 +59,13 @@ public class WormPart extends DynamicObject implements Interactable {
 		this.ordinal = ordinal;
 	}
 	
-	/*
-	public void bind(){
-		body.setInvMass(0);
-		isAttached = true;
-	}*/
+	public void setGraphics(String graphics){
+		Renderer render = RenderPool.addRendererToPool("animated",graphics);
+		render.loadGraphics(graphics);
+		setSize("0.5:0.5");
+		renderType = graphics;
+	}
+	
 	
 	public void unBind(){
 		body.setInvMass( 1 / body.getInvMass());
@@ -209,6 +213,11 @@ public class WormPart extends DynamicObject implements Interactable {
 	
 	public Vector2 getPosition(){
 		return position;
+	}
+	@Override
+	public void setPosition(Vector2 pos) {
+		this.position.set(pos);
+		
 	}
 	
 

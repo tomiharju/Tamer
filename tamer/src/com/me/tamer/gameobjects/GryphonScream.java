@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.Interactable;
+import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.tTimer;
@@ -87,7 +87,7 @@ public class GryphonScream extends DynamicObject {
 	@Override
 	public void update(float dt) {
 		if(isActive){
-			ArrayList<Interactable> creatures = level.getCreatures();
+			ArrayList<Creature> creatures = level.getCreatures();
 			for (int i = 0; i < creatures.size(); i++){	
 				if(creatures.get(i).getClass() == WormPart.class){
 					WormPart wopa = ((WormPart)creatures.get(i));

@@ -1,11 +1,21 @@
 package com.me.tamer.gameobjects.superclasses;
 
+import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Spear;
 
-public interface Interactable {
+public interface Creature {
 
 	
-	
+	/**
+	 * @param pos
+	 * Spawn points call this method to set correct spawning position
+	 */
+	public void setPosition(Vector2 pos);
+	/**
+	 * @param vel
+	 * Spawning points call this method to set correct spawning velocity
+	 */
+	public void setVelocity(Vector2 vel);
 	/**
 	 * What happens when this object is hit by a spear
 	 */

@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.WormPart;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.Interactable;
+import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.utils.tTimer;
 
 public class QuickSandAction implements Action{
@@ -18,16 +18,16 @@ public class QuickSandAction implements Action{
 	private Vector2 pullDirection = null;
 	private Vector2 centerOfPull = null;
 	private Vector2 size = null;
-	private ArrayList<Interactable> affectedParts = null;
+	private ArrayList<Creature> affectedParts = null;
 	public QuickSandAction(){
 		pullDirection = new Vector2();
 		centerOfPull = new Vector2();
 		activationTreshold = new Vector2();
 		size = new Vector2();
-		affectedParts = new ArrayList<Interactable>();
+		affectedParts = new ArrayList<Creature>();
 	}
 	@Override
-	public void execute(Interactable obj) {
+	public void execute(Creature obj) {
 		System.out.println("Worm is in sandpit radius");
 
 		if(((WormPart) obj).isTail()){
@@ -81,7 +81,7 @@ public class QuickSandAction implements Action{
 				System.out.println("Sandpit deactivating....");
 			}else{
 				new tTimer(this,"killPart",5).start();
-				for(Interactable i : affectedParts)
+				for(Creature i : affectedParts)
 					i.kill();
 				
 				affectedParts.clear();

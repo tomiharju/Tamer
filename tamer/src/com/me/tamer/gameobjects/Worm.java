@@ -13,28 +13,21 @@ public class Worm extends DynamicObject{
 	private ArrayList<WormPart> parts;
 	private WormPart head = null;
 	
-	
-	
-	public Worm(SpawnPoint spawn){
-		this.spawn = spawn;
-		heading = new Vector2();
+	public Worm(){
 		parts = new ArrayList<WormPart>();
-		
+	}
+	
+	public void setVelocity(Vector2 vel){
+		this.velocity = new Vector2(vel);
+	}
+	public void setPosition(Vector2 pos){
+		this.position = new Vector2(pos);
 	}
 	
 	
-	public void setup(){
 	
-		String pos = (int)spawn.getPosition().x + ":" + (int)spawn.getPosition().y;
-		setPosition(pos);
-		setVelocity(spawn.getSpawnVelocity());
+	public void setup(){
 		//Check if spawn is more wide than tall
-		System.out.println("Worm position "+spawn.getSize().toString());
-		if(spawn.getSize().x > spawn.getSize().y)
-			position.set((float) (position.x + (-spawn.getSize().x + Math.random() * spawn.getSize().x)),position.y);
-		if(spawn.getSize().y > spawn.getSize().x)
-			position.set(position.x,(float) (position.y + (-spawn.getSize().y + Math.random() * spawn.getSize().y)));
-		
 		addPart("head",0,position,velocity);
 		for(int i = 0 ; i < 3 ; i++)
 			addPart("joint",i+1,position,velocity);
