@@ -24,12 +24,9 @@ public class AnimatedRenderer implements Renderer {
 	//private Animation animation;
 	private Animation[] animations;
 	private int currentAnimation = 0;
-
 	
 	private Texture spriteSheet;
 	private TextureRegion[][] frames;
-
-	
 	
 	private TextureRegion currentFrame;
 	private boolean animate;
@@ -99,7 +96,6 @@ public class AnimatedRenderer implements Renderer {
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getHeight() /2  );
 		
 	}
-
 
 	@Override
 	public void setRenderType(String type) {

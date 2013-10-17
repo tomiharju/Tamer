@@ -53,7 +53,6 @@ public class Tamer extends DynamicObject{
 		heading.nor();
 		force.set(heading);
 		force.mul(SPEED);
-	
 	}
 	/**
 	 * @param direction
@@ -63,7 +62,6 @@ public class Tamer extends DynamicObject{
 		heading.lerp(direction,0.03f);
 	
 		heading.nor();
-		
 	}
 	
 	public void throwSpear(Spear spear,Vector2 point,float power){
@@ -80,6 +78,4 @@ public class Tamer extends DynamicObject{
 		return heading;
 
 	}
-	
-	
 }
