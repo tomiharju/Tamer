@@ -24,11 +24,6 @@ public class InputController implements InputProcessor{
 	private Level level;
 	private HashMap<Integer,UiElement> selectedButtons = null;
 	Vector2 testVector = new Vector2();
-	private boolean inputLock = false;
-	
-	
-	
-	
 	
 	public InputController(Environment env, Level lvl){
 		this.environment = env;
@@ -36,10 +31,6 @@ public class InputController implements InputProcessor{
 		cam = environment.getCamera();
 		this.level = lvl;
 		buttons = new ArrayList<UiElement>();
-		buttons.add(new ActionButton(this));
-		buttons.add(new Joystick(this));
-		buttons.add(new SpearButton(this));
-		selectedButtons = new HashMap<Integer,UiElement>();
 		Gdx.input.setInputProcessor(null);
 	}
 	
@@ -53,6 +44,18 @@ public class InputController implements InputProcessor{
 			u.update(dt);
 	}
 	
+	public void enableInput(){
+		buttons.clear();
+	
+		buttons.add(new ActionButton(this));
+		buttons.add(new Joystick(this));
+		buttons.add(new SpearButton(this));
+		selectedButtons = new HashMap<Integer,UiElement>();
+		Gdx.input.setInputProcessor(this);
+	}
+	public void disableInput(){
+		Gdx.input.setInputProcessor(null);
+	}
 	public ArrayList<UiElement> getButtons() {
 		return buttons;
 	}

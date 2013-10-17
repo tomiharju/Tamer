@@ -55,7 +55,7 @@ public class Environment {
 		setupCamera();
 		createLevel(1);
 		inputController = new InputController(this,level);
-		
+		level.linkToUi(inputController);
 		shapeRndr = new ShapeRenderer();
 	}
 	
@@ -63,6 +63,7 @@ public class Environment {
 		
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false,VIRTUAL_WIDTH,VIRTUAL_HEIGHT);// / ASPECT_RATIO);
+		cam.position.set(0f,0f,0f);
 		uiCam = new OrthographicCamera();
 		uiCam.setToOrtho(false);
 	
@@ -122,9 +123,7 @@ public class Environment {
 	public void createLevel(int current_level){
 		level = LevelCreator.create(current_level);	
 	}
-	
-	
-	
+		
 	public void draw(){
 		//update camera ( needed if its matrix is changed, its translated for example )
 		cam.update();

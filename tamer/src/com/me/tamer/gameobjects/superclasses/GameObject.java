@@ -63,8 +63,9 @@ public interface GameObject{
 	 */
 	/**
 	 * Called at level loading, used to load all graphics and other assets
+	 * @param level 
 	 */
-	public void setup();
+	public void setup(Level level);
 	/**
 	 * @param Gets level as parameter, needed to be able to add rigidbodies to world etc.
 	 * Used when object is fetched from objectpool and put into gameworld.

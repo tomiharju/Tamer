@@ -20,12 +20,16 @@ public class Tamer extends DynamicObject{
 		
 	
 	public void setup(){
+	
+	
+	}
+	public void wakeUp(Level level){
 		spears = new ArrayList<Spear>();
 		for( int i = 0 ; i < numSpears ; i++){
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
 		}
 		
-		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
+			RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
 		
 		//Z-index for drawing order
 		setZindex(-1);
@@ -33,9 +37,6 @@ public class Tamer extends DynamicObject{
 		setForce("0:0");
 		setMass("10");
 		setRigidBody("circle");
-	
-	}
-	public void wakeUp(Level level){
 		level.setTamer(this);
 	}
 	public void setGraphics(String graphics){

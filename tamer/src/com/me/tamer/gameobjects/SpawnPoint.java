@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.Environment;
+import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.renders.Renderer.RenderType;
 import com.me.tamer.gameobjects.superclasses.Creature;
@@ -35,14 +36,27 @@ public class SpawnPoint extends StaticObject{
 	public SpawnPoint(){
 		creatures = new ArrayList<Creature>();
 	}
+	public void setup(Level level){
+		level.addNewObject(this);
+		startSpawning();
+	}
+	
+	public void setGraphics(String graphics){
+		Renderer render = RenderPool.addRendererToPool("static",graphics);
+		render.loadGraphics(graphics);
+		setSize("1:1");
+		this.renderType = graphics;
+	}
 	public void setSpawnCount(String count){
 		this.spawnCount = Integer.parseInt(count);
 	}
-	public void setSpawnVelocity(String vel){
-		String[] values = vel.split(":");
-		float x = Float.parseFloat(values[0]);
-		float y = Float.parseFloat(values[1]);
-		this.spawnVelocity = new Vector2(x,y);
+	public void setSpawnDirection(String vel){
+		float angle = Float.parseFloat(vel);
+		angle += 45;
+		this.spawnVelocity = new Vector2(1,0);
+		this.spawnVelocity.setAngle(angle);
+		System.out.println("SPAWN ANGLE IS "+ spawnVelocity.toString());
+		
 	}
 	public void setSleepTime(String time){
 		this.sleepTime = Integer.parseInt(time)*1000;
@@ -51,13 +65,15 @@ public class SpawnPoint extends StaticObject{
 		this.initialSleep = Integer.parseInt(time)*1000;
 	}
 	
-	public void addWorm(Creature worm){
+	public void addWorm(Worm worm){
+		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		creatures.add(worm);
 		worm.setPosition(position);
 		worm.setVelocity(spawnVelocity);
 	}
-	public void addAnt(Creature ant){
+	public void addAnt(AntOrc ant){
+		spawnType = "ant";
 		RuntimeObjectFactory.addToObjectPool("ant"+spawnId,(GameObject)ant);
 		creatures.add(ant);
 		ant.setPosition(position);
@@ -83,15 +99,18 @@ public class SpawnPoint extends StaticObject{
 				try {
 					Thread.sleep(initialSleep);
 					RuntimeObjectFactory.getObjectFromPool("tamer");
+					System.out.println("TAMER HAS ENTERED THE FIELD!");
 					while(numCreated < spawnCount){
+						Thread.sleep(sleepTime);
 						numCreated++;
 						//Add newly created worm to main gameobject list
 						if(spawnType.equalsIgnoreCase("worm")){
+							System.out.println("ANOTHER WORM ENTERED");
 							RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
 						}else if(spawnType.equalsIgnoreCase("ant"))
 							RuntimeObjectFactory.getObjectFromPool("ant"+spawnId);
 						//Sleep for the actual spawn interval
-						Thread.sleep(sleepTime);
+					
 					}
 					
 					
@@ -111,9 +130,7 @@ public class SpawnPoint extends StaticObject{
 		//this.level = level;
 	}
 
-	public void setSpawnType(String spawnType) {
-		this.spawnType = spawnType;
-	}
+	
 	public void setSpawnId(String number){
 		this.spawnId = Integer.parseInt(number);
 	}
@@ -123,11 +140,14 @@ public class SpawnPoint extends StaticObject{
 	}
 
 	
-	public void setTamer(){
-		Tamer tamer = new Tamer();
-		tamer.setPosition(position);
-		tamer.setVelocity(spawnVelocity);
-		RuntimeObjectFactory.addToObjectPool("tamer",(GameObject)tamer);
+	public void setTamerSpawn(String flag){
+		int value = Integer.parseInt(flag);
+		if(value == 1){
+			Tamer tamer = new Tamer();
+			tamer.setPosition(position);
+			tamer.setVelocity(spawnVelocity);
+			RuntimeObjectFactory.addToObjectPool("tamer",(GameObject)tamer);
+		}
 	}
 	/*public void setSpawnVelocity(String vel){
 		this.spawnVelocity = vel;

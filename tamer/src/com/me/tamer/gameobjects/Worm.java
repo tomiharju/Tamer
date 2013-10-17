@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 
-public class Worm extends DynamicObject{
+public class Worm extends DynamicObject implements Creature{
 	private SpawnPoint spawn;
 
 	int ordinal = 1;
@@ -27,14 +28,15 @@ public class Worm extends DynamicObject{
 	
 	
 	public void setup(){
-		//Check if spawn is more wide than tall
+		//No action because this object is not ment to be on game right away
+	}
+	
+	public void wakeUp(Level level){
 		addPart("head",0,position,velocity);
 		for(int i = 0 ; i < 3 ; i++)
 			addPart("joint",i+1,position,velocity);
 		connectPieces();
-	}
-	
-	public void wakeUp(Level level){
+		
 		for(WormPart part : parts){
 			level.addObject(part);
 			level.getCreatures().add(part);
@@ -101,6 +103,36 @@ public class Worm extends DynamicObject{
 	
 	public ArrayList<WormPart> getParts(){
 		return parts;
+	}
+
+	@Override
+	public void spearHit(Spear spear) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void unBind() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lassoHit(String lasso) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void kill() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveToFinish() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
