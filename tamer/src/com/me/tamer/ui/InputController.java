@@ -24,6 +24,7 @@ public class InputController implements InputProcessor{
 	private Level level;
 	private HashMap<Integer,UiElement> selectedButtons = null;
 	Vector2 testVector = new Vector2();
+	private boolean inputLock = false;
 	
 	
 	
@@ -39,7 +40,7 @@ public class InputController implements InputProcessor{
 		buttons.add(new Joystick(this));
 		buttons.add(new SpearButton(this));
 		selectedButtons = new HashMap<Integer,UiElement>();
-		Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(null);
 	}
 	
 	public void draw(SpriteBatch batch){
@@ -47,6 +48,7 @@ public class InputController implements InputProcessor{
 			u.draw(batch);
 	}
 	public void update(float dt){
+			
 		for(UiElement u : buttons)
 			u.update(dt);
 	}

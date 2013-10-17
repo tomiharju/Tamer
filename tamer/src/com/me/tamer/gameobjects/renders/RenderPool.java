@@ -16,12 +16,13 @@ public class RenderPool {
 		return renderpool;
 	}
 	
-	public static void addRendererToPool(String rendertype, String graphics){
+	public static Renderer addRendererToPool(String rendertype, String graphics){
 		if(!renderpool.containsKey(graphics)){
 			Renderer renderer = RendererFactory.createRenderer(rendertype);
-			renderer.loadGraphics(graphics);
 			renderpool.put(graphics,renderer);
 		}
+
+		return renderpool.get(graphics);
 	}
 	
 	public static void removeRenderer(String renderer){

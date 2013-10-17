@@ -29,15 +29,13 @@ public interface GameObject{
 	public void draw(SpriteBatch batch);
 	public void debugDraw(ShapeRenderer shapeRndr);
 	
-	/**
-	 *	 * @param renderer
-	 *	 Set the tile type for this object. Can be "Tree5" "WormHead" "Hut2" etc...
-	 */
-	public void setRenderer(String renderinfo);
+
 	/**
 	 * Sets the value isCarbage = true
 	 * Causes the carbage collection cycle to remove this object
 	 */
+	public void setGraphics(String graphics);
+	
 	public void markAsCarbage();
 	/**
 	 * Sets isCarbage to false
