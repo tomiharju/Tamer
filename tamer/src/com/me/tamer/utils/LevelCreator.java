@@ -71,6 +71,7 @@ public class LevelCreator {
 			Array<Element> objects = root.getChildrenByName("GameObject");
 			
 			for(Element gameobject : objects){
+				propertyConfig.clear();
 				//First child is always GameObject
 				//Create new LinkedHashMap ( it keeps input order ) to hold all values for this gameobject
 				objectType = gameobject.getAttribute("type");
@@ -86,11 +87,11 @@ public class LevelCreator {
 				subObjects = gameobject.getChildrenByName("SubObject");
 				
 			
-				level.addObject(objectToAdd);
+				objectToAdd.setup(level);
 				
 				if(subObjects.size != 0){
 					System.out.println("Creating Sub-objects for {"+objectToAdd.getClass().getSimpleName()+"}");
-					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName());
+					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName(),level);
 				}
 				
 			}
@@ -110,7 +111,7 @@ public class LevelCreator {
 	
 	}
 	
-	public static void addSubObjects(Element currentXmlLevel, GameObject owner, String ownerClassName){
+	public static void addSubObjects(Element currentXmlLevel, GameObject owner, String ownerClassName,Level level){
 		String objectType;
 		Array<Element> objects;
 		Array<Element> subObjects;
@@ -141,10 +142,11 @@ public class LevelCreator {
 					Method adder = ownerClass.getMethod("add"+objectClassNameTrimmed,objectToAdd.getClass());
 					
 					adder.invoke(owner, objectToAdd);
+					objectToAdd.setup(level);
 					
 					subObjects = object.getChildrenByName("SubObject");
 					if(subObjects != null){
-						addSubObjects(object, objectToAdd, objectToAdd.getClass().getName());
+						addSubObjects(object, objectToAdd, objectToAdd.getClass().getName(),level);
 					}
 				}
 			}

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
@@ -20,8 +21,6 @@ import com.me.tamer.utils.RendererFactory;
  */
 public class TileMap extends StaticObject{
 	
-	private int rows 				= 0;
-	private int columns			= 0;
 	private int numTiles	=0;
 	private ArrayList<Vector2> terrain;
 	private Vector2 bounds;
@@ -30,6 +29,9 @@ public class TileMap extends StaticObject{
 		setZindex(1);
 	}
 	
+	public void setup(Level level){
+		level.addNewObject(this);
+	}
 	
 	@Override
 	public void draw(SpriteBatch batch){

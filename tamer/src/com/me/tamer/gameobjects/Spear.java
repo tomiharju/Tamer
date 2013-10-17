@@ -12,20 +12,18 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 public class Spear extends DynamicObject{
 	
 	private Level level;
-	private Vector2 target = null ;
+	private Vector2 target = new Vector2() ;
 	private Creature targetCreature = null;
 	private boolean isAttached = false;
 	
 	public Spear(){
+		setGraphics();
+	}
+	
+	public void setup(){
 		
 	}
-	public void setup(){
-		setGraphics();
-		setPosition("0:0");
-		setVelocity("0:0");
-		setForce("0:0");
-		target = new Vector2();
-	}
+	
 	
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("static","spear");
@@ -58,7 +56,10 @@ public class Spear extends DynamicObject{
 	public void wakeUp(Level level){
 		this.level = level;
 		isAttached = false;
-		markAsActive();
+		setPosition("0:0");
+		setVelocity("0:0");
+		setForce("0:0");
+		target.set(0,0);
 	}
 	public void throwAt(Vector2 point,float power){
 		target.set(point);

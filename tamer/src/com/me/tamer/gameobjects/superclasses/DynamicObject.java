@@ -136,7 +136,7 @@ public class DynamicObject implements GameObject{
 	}
 	
 	@Override
-	public void setup() {
+	public void setup(Level level) {
 		// TODO Auto-generated method stub
 		
 	}

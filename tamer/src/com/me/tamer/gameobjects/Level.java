@@ -9,19 +9,22 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.Environment;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.Creature;
-import com.me.tamer.gameobjects.tiles.ObstacleTile;
+import com.me.tamer.gameobjects.tiles.Obstacle;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
+import com.me.tamer.ui.InputController;
 import com.me.tamer.utils.DrawOrderComparator;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Level {
 
+	private InputController inputController = null;
 	//Settings
 
 	private Vector2 mapBounds = null;
@@ -34,7 +37,7 @@ public class Level {
 	private ArrayList<GameObject> carbages	= null;
 	private ArrayList<GameObject> newobjects = null;
 	private DynamicObject 	tamer = null;
-	private ArrayList<ObstacleTile> obstacles = null;
+	private ArrayList<GameObject> obstacles = null;
 	private ArrayList<Creature> creatures	= null;
 	
 	//Physical contact list
@@ -54,13 +57,17 @@ public class Level {
 		gameobjects 	= new ArrayList<GameObject>();
 		carbages 		= new ArrayList<GameObject>();
 		newobjects 		= new ArrayList<GameObject>();
-		obstacles 		= new ArrayList<ObstacleTile>();
+		obstacles 		= new ArrayList<GameObject>();
 		creatures		= new ArrayList<Creature>();
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
 		RuntimeObjectFactory.createLinkToLevel(this);
-		
 
+		ContactPool.createPool(100);
+
+	}
+	public void linkToUi(InputController inputController){
+		this.inputController = inputController;
 	}
 	
 	/**
@@ -201,7 +208,7 @@ public class Level {
 		//Call setup method which then adds that objects properties to level datastructures
 		//For example calling setup on worm, it creates all the parts.
 		for(GameObject go : gameobjects){
-				go.setup();
+				go.setup(this);
 		}
 		//Create dummytamer for UiElements to work
 		//tamer = new Tamer();
@@ -246,6 +253,7 @@ public class Level {
 	 */
 	public void setTamer(Tamer tamer){
 		this.tamer = tamer;
+		inputController.enableInput();
 		gameobjects.add(tamer);
 
 	}
@@ -277,6 +285,9 @@ public class Level {
 	
 	public ArrayList<Creature> getCreatures(){
 		return creatures;
+	}
+	public ArrayList<GameObject> getObstacles(){
+		return obstacles;
 	}
 	
 	public Tamer getTamer(){
