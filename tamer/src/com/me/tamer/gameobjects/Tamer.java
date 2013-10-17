@@ -30,6 +30,7 @@ public class Tamer extends DynamicObject{
 	
 	@Override
 	public void update(float dt){
+		solveOrientation();
 		position.add(force);
 		force.mul(0f);
 		for(int i = 0 ; i < spears.size() ; i ++){

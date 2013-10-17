@@ -53,6 +53,9 @@ public class GryphonScream extends DynamicObject {
 		tamerPos = new Vector2();
 		tamerHead = new Vector2();
 		newHeading = new Vector2();
+		
+		//Z-index for drawing order
+		setZindex(-1);
 	}
 	
 	@Override
@@ -64,23 +67,23 @@ public class GryphonScream extends DynamicObject {
 	public void debugDraw(ShapeRenderer shapeRndr){
 		
 		if(isActive){
-		drawVert1.set(IsoHelper.twoDToIso(screamVert1));
-		drawVert2.set(IsoHelper.twoDToIso(screamVert2));
-		drawVert3.set(IsoHelper.twoDToIso(screamVert3));
-		
-		shapeRndr.setColor(1, 1, 1, 1);
-		
-		shapeRndr.begin(ShapeType.Line);
-		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
-		shapeRndr.end();
-		
-		shapeRndr.begin(ShapeType.Line);
-		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
-		shapeRndr.end();
-		
-		shapeRndr.begin(ShapeType.Line);
-		shapeRndr.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
-		shapeRndr.end();
+			drawVert1.set(IsoHelper.twoDToIso(screamVert1));
+			drawVert2.set(IsoHelper.twoDToIso(screamVert2));
+			drawVert3.set(IsoHelper.twoDToIso(screamVert3));
+			
+			shapeRndr.setColor(1, 1, 1, 1);
+			
+			shapeRndr.begin(ShapeType.Line);
+			shapeRndr.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
+			shapeRndr.end();
+			
+			shapeRndr.begin(ShapeType.Line);
+			shapeRndr.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
+			shapeRndr.end();
+			
+			shapeRndr.begin(ShapeType.Line);
+			shapeRndr.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
+			shapeRndr.end();
 		}
 	}
 	
@@ -121,8 +124,6 @@ public class GryphonScream extends DynamicObject {
 							newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
 							newHeading.nor();
 							wopa.setForce(newHeading);
-							
-	
 						}
 					}
 				}	
@@ -130,7 +131,6 @@ public class GryphonScream extends DynamicObject {
 		}	
 	}
 
-	
 	public void wakeUp(Level level){
 		this.level = level;
 		markAsActive();

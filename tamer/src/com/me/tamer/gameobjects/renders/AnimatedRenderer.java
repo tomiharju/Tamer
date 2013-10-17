@@ -1,5 +1,7 @@
 package com.me.tamer.gameobjects.renders;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -15,12 +17,20 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
  * This class has all the attributes needed for animation
  *
  */
+
 public class AnimatedRenderer implements Renderer {
 
 	private Sprite sprite ;
-	private Animation animation;
+	//private Animation animation;
+	private Animation[] animations;
+	private int currentAnimation = 0;
+
+	
 	private Texture spriteSheet;
-	private TextureRegion[] frames;
+	private TextureRegion[][] frames;
+
+	
+	
 	private TextureRegion currentFrame;
 	private boolean animate;
 	private float stateTime;
@@ -37,11 +47,11 @@ public class AnimatedRenderer implements Renderer {
 	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
 		//TODO: ANIMATED DRAWING
-		/*
-		stateTime += Gdx.graphics.getDeltaTime();
-		currentFrame = animation.getKeyFrame(stateTime,true);
-		batch.draw(currentFrame,size.x,size.y);
-		*/
+		
+		//stateTime += Gdx.graphics.getDeltaTime();
+		//currentFrame = animations[currentAnimation].getKeyFrame(stateTime,true);
+		//batch.draw(currentFrame,size.x,size.y);
+		
 	}
 
 
@@ -54,16 +64,25 @@ public class AnimatedRenderer implements Renderer {
 	}
 	public void loadAnimation(String animName,int FRAME_COLS,int FRAME_ROWS){
 		spriteSheet = new Texture(Gdx.files.internal("data/graphics/animations/"+animName+".png"));
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 
+		frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 
 				FRAME_COLS, spriteSheet.getHeight() / FRAME_ROWS);          
+		
+		/*
 		frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		
 		int index = 0;
 		for (int i = 0; i < FRAME_ROWS; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
                     frames[index++] = tmp[i][j];
             }
 		}
-		animation = new Animation(animSpeed,frames);
+		 */
+		
+		animations = new Animation[FRAME_ROWS];
+		for (int i = 0; i < FRAME_ROWS; i++) {
+			animations[i] = new Animation(animSpeed,frames[i]);
+		}
+
 		stateTime = 0f;
 	}
 	public void setAnimSpeed(float speed){
@@ -89,8 +108,7 @@ public class AnimatedRenderer implements Renderer {
 	}
 
 	@Override
-	public void setOrientation(float angle) {
-		// TODO Auto-generated method stub
-		
+	public void setOrientation(int orientation) {
+		this.currentAnimation = 0; //orientation;
 	}
 }

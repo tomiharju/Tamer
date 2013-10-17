@@ -17,14 +17,7 @@
     	<property type="RigidBody">circle</property><!--box/circle/no-body-->
     </GameObject>
     
-    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-
-    	<data type="Renderer">animated:tile_sand</data>
-    	<data type="Size">5:5</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
-    	<data type="Position">0:0</data>
-    	<data type="Action">quicksand</data>
-    	<data type="RigidBody">no-body</data><!--box/circle/no-body-->
-    </GameObject>
+ 
     
     <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
     	<property type="Renderer">animated:ending_point</property>
@@ -33,51 +26,9 @@
     	<property type="Action">endingpoint</property>
     	<property type="RigidBody">no-body</property><!--box/circle/no-body-->
     </GameObject>
+    
 
-    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-    	<data type="Renderer">static:tree1</data>
-    	<data type="Size">2:4.78</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
-    	<data type="Position">2:2</data>
-    	<data type="Action">endingpoint</data>
-    	<data type="RigidBody">no-body</data><!--box/circle/no-body-->
-    </GameObject>
-          
-      
-       
-    
-   
-
-     <GameObject type ="com.me.tamer.gameobjects.SpawnPoint">
-    	<data type="Renderer">static:debugtile3</data>
-    	<data type="Size">1:6</data>
-    	<data type="Position">6:6</data>
-    	<!--Spawnpoint specific data  -->
-    	<data type="SpawnType">worm</data>
-    	<data type="SpawnNumber">1</data>	<!-- IMPORTANT, USED TO DISTINGUISH SPAWNS FROM EACH OTHER!!! -->
-    	<data type="InitialSleep">4</data>
-    	<data type="Interval">2</data>
-    	<data type="SpawnVelocity">-1:-1</data>
-    	<data type="SpawnCount">2</data>
-     </GameObject>
      
     
-     
-   
-   
-    
->>>>>>> e11178f3b3b1b8af407e7c3158c069d9ea514d15
-     
-	<GameObject type ="com.me.tamer.gameobjects.SpawnPoint">
-    	<property type="Renderer">static:debugtile3</property>
-    	<property type="Size">1:6</property>
-    	<property type="Position">6:6</property>
-    	<!--Spawnpoint specific property  -->
-    	<property type="SpawnType">worm</property>
-    	<property type="SpawnNumber">1</property>	<!-- IMPORTANT, USED TO DISTINGUISH SPAWNS FROM EACH OTHER!!! -->
-    	<property type="InitialSleep">4</property>
-    	<property type="Interval">2</property>
-    	<property type="SpawnVelocity">-1:-1</property>
-    	<property type="SpawnCount">1</property>
-     </GameObject>
     
 </root>

@@ -39,7 +39,7 @@ public class UiRenderer implements Renderer {
 
 	}
 	@Override
-	public void setOrientation(float angle) {
+	public void setOrientation(int orientation) {
 		// TODO Auto-generated method stub
 		
 	}
