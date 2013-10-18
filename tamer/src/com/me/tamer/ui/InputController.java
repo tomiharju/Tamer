@@ -50,6 +50,8 @@ public class InputController implements InputProcessor{
 		buttons.add(new ActionButton(this));
 		buttons.add(new Joystick(this));
 		buttons.add(new SpearButton(this));
+		buttons.add(new LassoButton(this));
+		
 		selectedButtons = new HashMap<Integer,UiElement>();
 		Gdx.input.setInputProcessor(this);
 	}

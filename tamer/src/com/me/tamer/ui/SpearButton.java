@@ -43,7 +43,7 @@ public class SpearButton implements UiElement {
 		buttonRender.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		buttonRender.setPosition(restingPoint);
 		
-		pointRender.loadGraphics("joystick");
+		pointRender.loadGraphics("icon_scream_v6");
 		pointRender.setSize(0.5f,0.5f);
 		pointRender.setPosition(new Vector2(0,0));
 		tamer = inputController.getLevel().getTamer();

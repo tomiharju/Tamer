@@ -129,6 +129,7 @@ public class Level {
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).resolveForces(dt);
 		
+		/*
 		for(int i = 0 ; i < numBodies ; i ++){
 			if(!rigidbodies.get(i).isDynamic())
 				continue;
@@ -173,7 +174,8 @@ public class Level {
 				//!!!PUT CONTACT BACK INTO POOL!!!
 				ContactPool.restore(c);
 			}	
-		}		
+		}	
+		*/	
 	}
 	
 	public void runCarbageCollection(){

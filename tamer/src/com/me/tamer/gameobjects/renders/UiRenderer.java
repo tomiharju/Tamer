@@ -22,7 +22,7 @@ public class UiRenderer implements Renderer {
 	@Override
 	public void loadGraphics(String graphicsName) {
 		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
-		sprite.setColor(0,0,0,0.3f);
+		//sprite.setColor(0,0,0,0.3f);
 	}
 	@Override
 	public void setSize(float w, float h) {

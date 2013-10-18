@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.renders.RenderPool;
+import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.utils.IsoHelper;
@@ -69,26 +71,30 @@ public class GryphonScream extends DynamicObject {
 	public void debugDraw(ShapeRenderer shapeRndr){
 		
 		if(isActive){
-
-			drawVert1.set(IsoHelper.twoDToIso(screamVert1));
-			drawVert2.set(IsoHelper.twoDToIso(screamVert2));
-			drawVert3.set(IsoHelper.twoDToIso(screamVert3));
-			
-			shapeRndr.setColor(1, 1, 1, 1);
-			
-			shapeRndr.begin(ShapeType.Line);
-			shapeRndr.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
-			shapeRndr.end();
-			
-			shapeRndr.begin(ShapeType.Line);
-			shapeRndr.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
-			shapeRndr.end();
-			
-			shapeRndr.begin(ShapeType.Line);
-			shapeRndr.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
-			shapeRndr.end();
-
+		drawVert1.set(IsoHelper.twoDToIso(screamVert1));
+		drawVert2.set(IsoHelper.twoDToIso(screamVert2));
+		drawVert3.set(IsoHelper.twoDToIso(screamVert3));
+		shapeRndr.setColor(1, 1, 1, 1);
+		
+		shapeRndr.begin(ShapeType.Line);
+		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
+		shapeRndr.end();
+		
+		shapeRndr.begin(ShapeType.Line);
+		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
+		shapeRndr.end();
+		
+		shapeRndr.begin(ShapeType.Line);
+		shapeRndr.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
+		shapeRndr.end();
 		}
+	}
+	
+	public void setGraphics(){
+		Renderer render = RenderPool.addRendererToPool("animated","spear");
+		render.loadGraphics("spear",1,8);
+		setSize("1:1");
+		renderType = "spear";
 	}
 	
 	@Override
@@ -145,7 +151,6 @@ public class GryphonScream extends DynamicObject {
 	
 	}
 
-	
 	public void deactivateScream(){
 		System.out.println("Timer completed");
 		isActive = false;

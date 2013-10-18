@@ -43,7 +43,7 @@ public class Joystick implements UiElement{
 		tamer 			= inputcontroller.getLevel().getTamer();
 		level			= inputcontroller.getLevel();
 		env 			= inputcontroller.getEnvironment();
-		renderer.loadGraphics("joystick");
+		renderer.loadGraphics("icon_scream_v6");
 		renderer.setSize(size,size);
 		renderer.setPosition(restingpoint);
 	}

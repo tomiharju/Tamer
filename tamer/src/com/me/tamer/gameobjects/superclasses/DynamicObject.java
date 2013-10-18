@@ -218,6 +218,10 @@ public class DynamicObject implements GameObject{
 	public int getzIndex() {
 		return zIndex;
 	}
+	
+	public Vector2 getForce(){
+		return force;
+	}
 
 	public void setzIndex(int zIndex) {
 		this.zIndex = zIndex;
