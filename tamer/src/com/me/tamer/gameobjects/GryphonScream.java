@@ -20,6 +20,8 @@ public class GryphonScream extends DynamicObject {
 	private final float SCREAM_AREA_LENGTH = 8.0f;
 	private Level level 				= null;
 	private boolean isActive			= false;
+	private Vector2 position			= new Vector2();
+	private Vector2 size				= new Vector2(10,10);
 	
 	private Vector2 screamVert1 		= null;
 	private Vector2 screamVert2 		= null;
@@ -58,18 +60,13 @@ public class GryphonScream extends DynamicObject {
 		
 		//Z-index for drawing order
 		setZindex(-1);
+		setGraphics();
 	}
 	
-	
-	
-	@Override
-	public void draw(SpriteBatch batch){
-		
-	}
 	
 	@Override 
 	public void debugDraw(ShapeRenderer shapeRndr){
-		
+		/*
 		if(isActive){
 		drawVert1.set(IsoHelper.twoDToIso(screamVert1));
 		drawVert2.set(IsoHelper.twoDToIso(screamVert2));
@@ -88,17 +85,22 @@ public class GryphonScream extends DynamicObject {
 		shapeRndr.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
 		shapeRndr.end();
 		}
+		*/
 	}
 	
 	public void setGraphics(){
-		Renderer render = RenderPool.addRendererToPool("animated","spear");
-		render.loadGraphics("spear",1,8);
-		setSize("1:1");
-		renderType = "spear";
+		Renderer render = RenderPool.addRendererToPool("animated","scream");
+		render.loadGraphics("scream_placeholder",4,1);
+		setSize("3:3");
+		renderType = "scream";
+		System.out.println("Scream graphics are set");
 	}
 	
 	@Override
 	public void update(float dt) {
+		
+		position.set(level.getTamer().getPosition());
+		
 		if(isActive){
 			tamerPos.set(level.getTamer().getPosition());
 			tamerHead.set(level.getTamer().getHeading());
@@ -162,5 +164,13 @@ public class GryphonScream extends DynamicObject {
 	@Override
 	public boolean getDebug(){
 		return true;
+	}
+	
+	public Vector2 getPosition(){
+		return position;
+	}
+	
+	public Vector2 getSize(){
+		return size;
 	}
 }

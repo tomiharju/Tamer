@@ -71,7 +71,6 @@ public class AnimatedRenderer implements Renderer {
 		
 		animations = new ArrayList<Animation>();
 		for (int i = 0; i < FRAME_ROWS; i++) {
-			System.out.println("Generating animation");
 			animations.add(new Animation(animSpeed,frames[i]));
 		}
 
