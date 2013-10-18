@@ -90,6 +90,7 @@ public class Level {
 		sortDrawOrder(numObjects);
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).draw(batch);
+		
 	}
 	
 	

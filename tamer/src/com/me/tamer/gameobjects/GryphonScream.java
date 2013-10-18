@@ -55,6 +55,8 @@ public class GryphonScream extends DynamicObject {
 		newHeading = new Vector2();
 	}
 	
+	
+	
 	@Override
 	public void draw(SpriteBatch batch){
 		
@@ -67,7 +69,6 @@ public class GryphonScream extends DynamicObject {
 		drawVert1.set(IsoHelper.twoDToIso(screamVert1));
 		drawVert2.set(IsoHelper.twoDToIso(screamVert2));
 		drawVert3.set(IsoHelper.twoDToIso(screamVert3));
-		
 		shapeRndr.setColor(1, 1, 1, 1);
 		
 		shapeRndr.begin(ShapeType.Line);
@@ -87,6 +88,17 @@ public class GryphonScream extends DynamicObject {
 	@Override
 	public void update(float dt) {
 		if(isActive){
+			tamerPos.set(level.getTamer().getPosition());
+			tamerHead.set(level.getTamer().getHeading());
+			System.out.println("Tamer data " + tamerPos.toString() + " " + tamerHead);
+			screamVert1.set(tamerPos);
+			screamVert2.set(tamerPos);
+			screamVert2.x += tamerHead.x * SCREAM_AREA_LENGTH - tamerHead.y * SCREAM_AREA_WIDTH;
+			screamVert2.y += tamerHead.y * SCREAM_AREA_LENGTH + tamerHead.x * SCREAM_AREA_WIDTH;
+			
+			screamVert3.set(tamerPos);
+			screamVert3.x += tamerHead.x * SCREAM_AREA_LENGTH + tamerHead.y * SCREAM_AREA_WIDTH;
+			screamVert3.y += tamerHead.y * SCREAM_AREA_LENGTH - tamerHead.x * SCREAM_AREA_WIDTH;
 			ArrayList<Creature> creatures = level.getCreatures();
 			for (int i = 0; i < creatures.size(); i++){	
 				if(creatures.get(i).getClass() == WormPart.class){
@@ -94,20 +106,6 @@ public class GryphonScream extends DynamicObject {
 					if(wopa.getPartName() == "Head"){
 						
 						wormPos.set(wopa.getPosition());		
-						tamerPos.set(level.getTamer().getPosition());
-						tamerHead.set(level.getTamer().getHeading());
-						
-						//Scream area is a triangle
-						screamVert1.set(tamerPos);
-						
-						screamVert2.set(tamerPos);
-						screamVert2.x += tamerHead.x * SCREAM_AREA_LENGTH - tamerHead.y * SCREAM_AREA_WIDTH;
-						screamVert2.y += tamerHead.y * SCREAM_AREA_LENGTH + tamerHead.x * SCREAM_AREA_WIDTH;
-						
-						screamVert3.set(tamerPos);
-						screamVert3.x += tamerHead.x * SCREAM_AREA_LENGTH + tamerHead.y * SCREAM_AREA_WIDTH;
-						screamVert3.y += tamerHead.y * SCREAM_AREA_LENGTH - tamerHead.x * SCREAM_AREA_WIDTH;
-						
 						wormPos1.set(wormPos.x - screamVert1.x, wormPos.y - screamVert1.y);
 						wormPos2.set(wormPos.x - screamVert2.x, wormPos.y - screamVert2.y);
 						wormPos3.set(wormPos.x - screamVert3.x, wormPos.y - screamVert3.y);

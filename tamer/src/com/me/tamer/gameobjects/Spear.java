@@ -56,15 +56,15 @@ public class Spear extends DynamicObject{
 	public void wakeUp(Level level){
 		this.level = level;
 		isAttached = false;
-		setPosition("0:0");
 		setVelocity("0:0");
 		setForce("0:0");
-		target.set(0,0);
+
 	}
 	public void throwAt(Vector2 point,float power){
 		target.set(point);
 		Vector2 dir = point.sub(position);
 		force.set(dir.tmp().nor().mul(power));
+		System.out.println("Spear data " + position.toString() + " " + target.toString());
 	}
 	
 	/**

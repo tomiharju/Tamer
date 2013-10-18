@@ -92,7 +92,6 @@ public class Joystick implements UiElement{
 		tamerPosition.add(movement);
 		if(tamerPosition.x > mapBounds.x || tamerPosition.x < -mapBounds.x){
 			Vector2 remove = VectorHelper.projection((mapBounds.tmp().set(1,0)),movement);
-			System.out.println(remove.toString());
 			movementAxis.set(1,0);
 			movement.sub(VectorHelper.projection(movement,movementAxis));
 			
@@ -100,7 +99,6 @@ public class Joystick implements UiElement{
 		}
 		if(tamerPosition.y > mapBounds.y || tamerPosition.y < -mapBounds.y){
 			Vector2 remove = VectorHelper.projection((mapBounds.tmp().set(1,0)),movement);
-			System.out.println(remove.toString());
 			movementAxis.set(0,1);
 			movement.sub(VectorHelper.projection(movement,movementAxis));
 			
