@@ -21,6 +21,7 @@ public interface Renderer {
 	 * Creates texture and sprite objects for this object.
 	 */
 	public void loadGraphics(String objectName);
+	public void loadGraphics(String animName,int FRAME_COLS,int FRAME_ROWS);
 	/**
 	 * @param w width
 	 * @param h	 height
@@ -28,6 +29,6 @@ public interface Renderer {
 	 */
 	public void setSize(float w, float h);
 	public void setPosition(Vector2 pos);
-	public void setOrientation(float angle);
+	public void setOrientation(int orientation);
 	public void setRenderType(String type);
 }

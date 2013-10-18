@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.renders.AnimatedRenderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
@@ -32,21 +33,24 @@ public class Tamer extends DynamicObject{
 		
 		//Z-index for drawing order
 		setZindex(-1);
-		setGraphics("tamer1");
+		setGraphics("tamer");
 		setForce("0:0");
 		setMass("10");
 		setRigidBody("circle");
 		level.setTamer(this);
 	}
+	
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
-		render.loadGraphics(graphics);
+		//render.loadGraphics(graphics);
+		render.loadGraphics(graphics, 1, 8);
 		setSize("2:2.72");
 		renderType = graphics;
 	}
 	
 	@Override
 	public void update(float dt){
+		solveOrientation();
 		position.add(force);
 		force.mul(0f);
 		for(int i = 0 ; i < spears.size() ; i ++){
@@ -69,15 +73,19 @@ public class Tamer extends DynamicObject{
 		heading.nor();
 		force.set(heading);
 		force.mul(SPEED);
-	
 	}
 	/**
 	 * @param direction
 	 * Used only to turn tamer around his position
 	 */
 	public void turn(Vector2 direction){
+<<<<<<< HEAD
 	
 		
+=======
+		heading.lerp(direction,0.03f);
+		heading.nor();
+>>>>>>> 028ff2879b570c568b723544e15daa4ec77a02fc
 	}
 	
 	public void throwSpear(Spear spear,Vector2 point,float power){
@@ -90,6 +98,9 @@ public class Tamer extends DynamicObject{
 		scream.activate();
 	}
 
-	
-	
+	public Vector2 getHeading(){
+		return heading;
+
+	}
+
 }

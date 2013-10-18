@@ -56,11 +56,8 @@ public class TileMap extends StaticObject{
 			tile.set(x,y);
 			terrain.add(tile);
 		}
-		
-		
-		numTiles = terrain.size();
-	
-		
+			
+		numTiles = terrain.size();	
 	}
 	
 	public void setGraphics(String graphics){
@@ -69,6 +66,7 @@ public class TileMap extends StaticObject{
 		setSize("1:0.5");
 		
 		this.renderType = graphics;
+
 	}
 	
 
