@@ -73,8 +73,6 @@ public class TileMap extends StaticObject{
 		this.tile_width = tile_width;
 	}
 
-	
-
 	public int getTile_height() {
 		return tile_height;
 	}
