@@ -60,7 +60,7 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 	
 	public void setGraphics(String graphics){
-		Renderer render = RenderPool.addRendererToPool("animated",graphics);
+		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setSize("0.5:0.5");
 		renderType = graphics;

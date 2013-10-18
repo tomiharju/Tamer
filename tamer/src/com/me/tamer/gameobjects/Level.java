@@ -25,6 +25,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 public class Level {
 
 	private InputController inputController = null;
+	private DrawOrderComparator comparator = null;
 	//Settings
 
 	private Vector2 mapBounds = null;
@@ -61,6 +62,7 @@ public class Level {
 		creatures		= new ArrayList<Creature>();
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
+		comparator 		= new DrawOrderComparator();
 		RuntimeObjectFactory.createLinkToLevel(this);
 
 		ContactPool.createPool(100);
@@ -105,7 +107,7 @@ public class Level {
 	public void sortDrawOrder(int numObjects){
 		if(loopCount % sortRate == 0){
 			if(numObjects > 1){
-				Collections.sort(gameobjects, new DrawOrderComparator());
+				Collections.sort(gameobjects, comparator);
 				/*for (GameObject g : gameobjects){
 					//if(g.getPosition() != null)
 					//System.out.println(g.getClass().getName() +"..." + g.getPosition().y);

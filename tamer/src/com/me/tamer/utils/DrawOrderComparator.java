@@ -7,6 +7,8 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public class DrawOrderComparator implements Comparator<GameObject> {
 
+	private Vector2 o1Pos = new Vector2();
+	private Vector2 o2Pos = new Vector2();
 	@Override
 	public int compare(GameObject o1, GameObject o2) {
 		
@@ -17,7 +19,6 @@ public class DrawOrderComparator implements Comparator<GameObject> {
 			//If z-index is the same continue sorting with screenPos.y
 			
 			//If either one of the objects has null-position -> draw it first
-			Vector2 o1Pos = new Vector2();
 			if (o1.getPosition() != null) o1Pos.set(o1.getPosition());
 			else{
 				//System.out.println("object1 oli null");
@@ -25,7 +26,7 @@ public class DrawOrderComparator implements Comparator<GameObject> {
 				
 			}
 			
-			Vector2 o2Pos = new Vector2();
+			
 			if (o2.getPosition() != null) o2Pos.set(o2.getPosition());
 			else{
 				//System.out.println("object2 oli null: " +o2.getClass().getName());
@@ -33,8 +34,8 @@ public class DrawOrderComparator implements Comparator<GameObject> {
 				
 			}
 		
-			o1Pos.set(IsoHelper.twoDToIso(o1Pos.cpy()));
-			o2Pos.set(IsoHelper.twoDToIso(o2Pos.cpy()));
+			o1Pos.set(IsoHelper.twoDToIso(o1Pos));
+			o2Pos.set(IsoHelper.twoDToIso(o2Pos));
 
 			//Draw the object that is further away first
 			if (o1Pos.y > o2Pos.y){
