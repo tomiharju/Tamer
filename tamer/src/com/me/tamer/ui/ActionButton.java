@@ -38,9 +38,9 @@ public class ActionButton implements UiElement{
 
 	public ActionButton(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingpoint	= new Vector2(430,230);
+		restingpoint	= new Vector2(355,200);
 		delta			= new Vector2(0,0);
-		size			= 75;
+		size			= 110;
 		level			= inputcontroller.getLevel();
 		tamer 			= level.getTamer();
 		env 			= inputcontroller.getEnvironment();
