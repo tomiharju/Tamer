@@ -36,7 +36,7 @@ public class Environment {
 	
 	//Define viewport size
 	private final float VIRTUAL_WIDTH = 12;
-	private final float VIRTUAL_HEIGHT = 40;
+	private final float VIRTUAL_HEIGHT = 20;
 	float ASPECT_RATIO = (float)VIRTUAL_WIDTH / ((float)VIRTUAL_HEIGHT);
 	//Refrence to active level
 	Level level = null;
@@ -63,6 +63,7 @@ public class Environment {
 		
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false,VIRTUAL_WIDTH,VIRTUAL_HEIGHT);// / ASPECT_RATIO);
+		
 		cam.position.set(0f,0f,0f);
 		uiCam = new OrthographicCamera();
 		uiCam.setToOrtho(false);

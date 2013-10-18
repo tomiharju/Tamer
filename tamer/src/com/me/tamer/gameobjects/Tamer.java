@@ -14,7 +14,6 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 public class Tamer extends DynamicObject{
 	
 	private final float SPEED 	= 0.1f;
-	private Vector2 heading 	= new Vector2(0,0);
 	private int numSpears 		= 3;
 	private ArrayList<Spear> spears = null;
 
@@ -80,8 +79,13 @@ public class Tamer extends DynamicObject{
 	 * Used only to turn tamer around his position
 	 */
 	public void turn(Vector2 direction){
+<<<<<<< HEAD
+	
+		
+=======
 		heading.lerp(direction,0.03f);
 		heading.nor();
+>>>>>>> 028ff2879b570c568b723544e15daa4ec77a02fc
 	}
 	
 	public void throwSpear(Spear spear,Vector2 point,float power){

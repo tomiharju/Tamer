@@ -58,6 +58,8 @@ public class GryphonScream extends DynamicObject {
 		setZindex(-1);
 	}
 	
+	
+	
 	@Override
 	public void draw(SpriteBatch batch){
 		
@@ -67,6 +69,24 @@ public class GryphonScream extends DynamicObject {
 	public void debugDraw(ShapeRenderer shapeRndr){
 		
 		if(isActive){
+<<<<<<< HEAD
+		drawVert1.set(IsoHelper.twoDToIso(screamVert1));
+		drawVert2.set(IsoHelper.twoDToIso(screamVert2));
+		drawVert3.set(IsoHelper.twoDToIso(screamVert3));
+		shapeRndr.setColor(1, 1, 1, 1);
+		
+		shapeRndr.begin(ShapeType.Line);
+		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
+		shapeRndr.end();
+		
+		shapeRndr.begin(ShapeType.Line);
+		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
+		shapeRndr.end();
+		
+		shapeRndr.begin(ShapeType.Line);
+		shapeRndr.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
+		shapeRndr.end();
+=======
 			drawVert1.set(IsoHelper.twoDToIso(screamVert1));
 			drawVert2.set(IsoHelper.twoDToIso(screamVert2));
 			drawVert3.set(IsoHelper.twoDToIso(screamVert3));
@@ -84,12 +104,24 @@ public class GryphonScream extends DynamicObject {
 			shapeRndr.begin(ShapeType.Line);
 			shapeRndr.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
 			shapeRndr.end();
+>>>>>>> 028ff2879b570c568b723544e15daa4ec77a02fc
 		}
 	}
 	
 	@Override
 	public void update(float dt) {
 		if(isActive){
+			tamerPos.set(level.getTamer().getPosition());
+			tamerHead.set(level.getTamer().getHeading());
+			System.out.println("Tamer data " + tamerPos.toString() + " " + tamerHead);
+			screamVert1.set(tamerPos);
+			screamVert2.set(tamerPos);
+			screamVert2.x += tamerHead.x * SCREAM_AREA_LENGTH - tamerHead.y * SCREAM_AREA_WIDTH;
+			screamVert2.y += tamerHead.y * SCREAM_AREA_LENGTH + tamerHead.x * SCREAM_AREA_WIDTH;
+			
+			screamVert3.set(tamerPos);
+			screamVert3.x += tamerHead.x * SCREAM_AREA_LENGTH + tamerHead.y * SCREAM_AREA_WIDTH;
+			screamVert3.y += tamerHead.y * SCREAM_AREA_LENGTH - tamerHead.x * SCREAM_AREA_WIDTH;
 			ArrayList<Creature> creatures = level.getCreatures();
 			for (int i = 0; i < creatures.size(); i++){	
 				if(creatures.get(i).getClass() == WormPart.class){
@@ -97,20 +129,6 @@ public class GryphonScream extends DynamicObject {
 					if(wopa.getPartName() == "Head"){
 						
 						wormPos.set(wopa.getPosition());		
-						tamerPos.set(level.getTamer().getPosition());
-						tamerHead.set(level.getTamer().getHeading());
-						
-						//Scream area is a triangle
-						screamVert1.set(tamerPos);
-						
-						screamVert2.set(tamerPos);
-						screamVert2.x += tamerHead.x * SCREAM_AREA_LENGTH - tamerHead.y * SCREAM_AREA_WIDTH;
-						screamVert2.y += tamerHead.y * SCREAM_AREA_LENGTH + tamerHead.x * SCREAM_AREA_WIDTH;
-						
-						screamVert3.set(tamerPos);
-						screamVert3.x += tamerHead.x * SCREAM_AREA_LENGTH + tamerHead.y * SCREAM_AREA_WIDTH;
-						screamVert3.y += tamerHead.y * SCREAM_AREA_LENGTH - tamerHead.x * SCREAM_AREA_WIDTH;
-						
 						wormPos1.set(wormPos.x - screamVert1.x, wormPos.y - screamVert1.y);
 						wormPos2.set(wormPos.x - screamVert2.x, wormPos.y - screamVert2.y);
 						wormPos3.set(wormPos.x - screamVert3.x, wormPos.y - screamVert3.y);
