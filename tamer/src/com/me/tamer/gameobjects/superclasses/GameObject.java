@@ -14,7 +14,7 @@ import com.me.tamer.physics.RigidBody;
  *
  */
 
-public interface GameObject {
+public interface GameObject{
 	
 	
 	/**
@@ -29,15 +29,13 @@ public interface GameObject {
 	public void draw(SpriteBatch batch);
 	public void debugDraw(ShapeRenderer shapeRndr);
 	
-	/**
-	 *	 * @param renderer
-	 *	 Set the tile type for this object. Can be "Tree5" "WormHead" "Hut2" etc...
-	 */
-	public void setRenderer(String renderinfo);
+
 	/**
 	 * Sets the value isCarbage = true
 	 * Causes the carbage collection cycle to remove this object
 	 */
+	public void setGraphics(String graphics);
+	
 	public void markAsCarbage();
 	/**
 	 * Sets isCarbage to false
@@ -65,8 +63,9 @@ public interface GameObject {
 	 */
 	/**
 	 * Called at level loading, used to load all graphics and other assets
+	 * @param level 
 	 */
-	public void setup();
+	public void setup(Level level);
 	/**
 	 * @param Gets level as parameter, needed to be able to add rigidbodies to world etc.
 	 * Used when object is fetched from objectpool and put into gameworld.
@@ -84,6 +83,9 @@ public interface GameObject {
 	 * Actions that needs to be taken when this object this object is removed from game.
 	 */
 	public void dispose(Level level);
+	
+	public int getZIndex();
+	public void setZindex(int z);
 	
 }
 

@@ -12,7 +12,6 @@ public class RuntimeObjectFactory {
 	public static Level level = null;
 	
 	public static void addToObjectPool(String type, GameObject obj){
-		obj.setup();
 		if(objectPool.containsKey(type))
 			objectPool.get(type).add(obj);
 		else{

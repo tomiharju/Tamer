@@ -8,14 +8,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.Interactable;
+import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.tTimer;
 
 public class GryphonScream extends DynamicObject {
-	private final float SCREAM_AREA_WIDTH = 2.0f;
-	private final float SCREAM_AREA_LENGTH = 4.0f;
+	private final float SCREAM_AREA_WIDTH = 4.0f;
+	private final float SCREAM_AREA_LENGTH = 8.0f;
 	private Level level 				= null;
 	private boolean isActive			= false;
 	
@@ -35,9 +35,6 @@ public class GryphonScream extends DynamicObject {
 	private Vector2 tamerPos			= null;
 	private Vector2 tamerHead			= null;
 	private Vector2 newHeading			= null;
-	
-	//Debug
-	private ShapeRenderer shapeRndr;
 	
 	public GryphonScream(){
 		screamVert1 = new Vector2();
@@ -66,6 +63,7 @@ public class GryphonScream extends DynamicObject {
 	@Override 
 	public void debugDraw(ShapeRenderer shapeRndr){
 		
+		if(isActive){
 		drawVert1.set(IsoHelper.twoDToIso(screamVert1));
 		drawVert2.set(IsoHelper.twoDToIso(screamVert2));
 		drawVert3.set(IsoHelper.twoDToIso(screamVert3));
@@ -81,21 +79,15 @@ public class GryphonScream extends DynamicObject {
 		shapeRndr.end();
 		
 		shapeRndr.begin(ShapeType.Line);
-		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
-		shapeRndr.end();
-		
-		shapeRndr.begin(ShapeType.Line);
 		shapeRndr.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
 		shapeRndr.end();
-			
+		}
 	}
 	
 	@Override
 	public void update(float dt) {
-		if (isActive){
-			tTimer timer = new tTimer(this,"deactivateScream",1);
-			timer.start();
-			ArrayList<Interactable> creatures = level.getCreatures();
+		if(isActive){
+			ArrayList<Creature> creatures = level.getCreatures();
 			for (int i = 0; i < creatures.size(); i++){	
 				if(creatures.get(i).getClass() == WormPart.class){
 					WormPart wopa = ((WormPart)creatures.get(i));
@@ -130,12 +122,14 @@ public class GryphonScream extends DynamicObject {
 							newHeading.nor();
 							wopa.setForce(newHeading);
 							
+	
 						}
 					}
 				}	
-			}isActive = false;
-		}		
+			}	
+		}	
 	}
+
 	
 	public void wakeUp(Level level){
 		this.level = level;
@@ -145,16 +139,17 @@ public class GryphonScream extends DynamicObject {
 	public void activate(){
 		System.out.println("Scream activated");
 		isActive = true;
-		markAsCarbage();
-	}
+		tTimer timer = new tTimer(this,"deactivateScream",1);
+		timer.start();
 	
-	public void addToPool(){
-		RuntimeObjectFactory.addToObjectPool("scream",this);
 	}
+
 	
 	public void deactivateScream(){
 		System.out.println("Timer completed");
-		addToPool();
+		isActive = false;
+		markAsCarbage();
+		RuntimeObjectFactory.addToObjectPool("scream",this);
 	}
 	
 	//Debug is on

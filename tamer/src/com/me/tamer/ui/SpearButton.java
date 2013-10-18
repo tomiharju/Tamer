@@ -48,8 +48,8 @@ public class SpearButton implements UiElement {
 		pointRender.setPosition(new Vector2(0,0));
 		tamer = inputController.getLevel().getTamer();
 		
-		tamerPos = new Vector2(tamer.getPosition());
-		tamerHeading = new Vector2(tamer.getHeading());
+		tamerPos = new Vector2();
+		tamerHeading = new Vector2();
 	
 		cam = inputController.getCam();
 		uiCam = inputController.getUiCam();

@@ -25,21 +25,13 @@ public class InputController implements InputProcessor{
 	private HashMap<Integer,UiElement> selectedButtons = null;
 	Vector2 testVector = new Vector2();
 	
-	
-	
-	
-	
 	public InputController(Environment env, Level lvl){
 		this.environment = env;
 		uiCam = environment.getUiCamera();
 		cam = environment.getCamera();
 		this.level = lvl;
 		buttons = new ArrayList<UiElement>();
-		buttons.add(new ActionButton(this));
-		buttons.add(new Joystick(this));
-		buttons.add(new SpearButton(this));
-		selectedButtons = new HashMap<Integer,UiElement>();
-		Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(null);
 	}
 	
 	public void draw(SpriteBatch batch){
@@ -47,10 +39,23 @@ public class InputController implements InputProcessor{
 			u.draw(batch);
 	}
 	public void update(float dt){
+			
 		for(UiElement u : buttons)
 			u.update(dt);
 	}
 	
+	public void enableInput(){
+		buttons.clear();
+	
+		buttons.add(new ActionButton(this));
+		buttons.add(new Joystick(this));
+		buttons.add(new SpearButton(this));
+		selectedButtons = new HashMap<Integer,UiElement>();
+		Gdx.input.setInputProcessor(this);
+	}
+	public void disableInput(){
+		Gdx.input.setInputProcessor(null);
+	}
 	public ArrayList<UiElement> getButtons() {
 		return buttons;
 	}
@@ -70,8 +75,6 @@ public class InputController implements InputProcessor{
 	public OrthographicCamera getUiCam(){
 		return uiCam;
 	}
-
-
 
 	@Override
 	public boolean keyDown(int keycode) {

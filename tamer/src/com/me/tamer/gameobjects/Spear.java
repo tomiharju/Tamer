@@ -3,27 +3,33 @@ package com.me.tamer.gameobjects;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.renders.RenderPool;
+import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.Interactable;
+import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Spear extends DynamicObject{
 	
 	private Level level;
-	private Vector2 target = null ;
-	private Interactable targetCreature = null;
+	private Vector2 target = new Vector2() ;
+	private Creature targetCreature = null;
 	private boolean isAttached = false;
 	
 	public Spear(){
+		setGraphics();
+	}
+	
+	public void setup(){
 		
 	}
-	public void setup(){
-		setRenderer("static:spear");
+	
+	
+	public void setGraphics(){
+		Renderer render = RenderPool.addRendererToPool("static","spear");
+		render.loadGraphics("spear");
 		setSize("1:1");
-		setPosition("0:0");
-		setVelocity("0:0");
-		setForce("0:0");
-		target = new Vector2();
+		renderType = "spear";
 	}
 	
 	public void update(float dt){
@@ -31,9 +37,9 @@ public class Spear extends DynamicObject{
 			position.add(force.tmp().mul(dt));
 		//When the spear has reached its destination, check if there is some creature
 		//If there is, call that creatures spearHit method to resolve damage.
-		if(!isAttached && position.dst(target) < 0.1){
-		
-			ArrayList<Interactable> creatures = level.getCreatures();
+		if(!isAttached && position.dst(target) < 0.5){
+			position.set(target);
+			ArrayList<Creature> creatures = level.getCreatures();
 			int size = creatures.size();
 			System.out.println("Searching for potential hit amont "+size+" creatures.");
 			for(int i = 0 ; i < size ; i ++)
@@ -50,7 +56,10 @@ public class Spear extends DynamicObject{
 	public void wakeUp(Level level){
 		this.level = level;
 		isAttached = false;
-		markAsActive();
+		setPosition("0:0");
+		setVelocity("0:0");
+		setForce("0:0");
+		target.set(0,0);
 	}
 	public void throwAt(Vector2 point,float power){
 		target.set(point);
