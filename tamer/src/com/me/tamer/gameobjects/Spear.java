@@ -54,10 +54,9 @@ public class Spear extends DynamicObject{
 	}
 	
 	public void wakeUp(Level level){
+		System.out.println("Spear woke up!");
 		this.level = level;
-		isAttached = false;
-		setVelocity("0:0");
-		setForce("0:0");
+		
 
 	}
 	public void throwAt(Vector2 point,float power){
