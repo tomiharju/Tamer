@@ -79,13 +79,7 @@ public class Tamer extends DynamicObject{
 	 * Used only to turn tamer around his position
 	 */
 	public void turn(Vector2 direction){
-<<<<<<< HEAD
-	
-		
-=======
-		heading.lerp(direction,0.03f);
-		heading.nor();
->>>>>>> 028ff2879b570c568b723544e15daa4ec77a02fc
+
 	}
 	
 	public void throwSpear(Spear spear,Vector2 point,float power){

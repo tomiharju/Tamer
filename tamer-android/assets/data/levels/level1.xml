@@ -29,7 +29,7 @@
 		<property type="InitialSleep">1</property>
 		<property type="SleepTime">5</property>
 		<property type="TamerSpawn">1</property>
-<<<<<<< HEAD
+
 		<property type="SpawnCount">0</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.SandPart">
@@ -116,21 +116,6 @@
 		<property type="Position">2:-3</property>
 		<property type="Graphics">sand6</property>
 		<property type="Group">0</property>
-=======
-		<property type="SpawnCount">1</property>
-		<SubObject type="com.me.tamer.gameobjects.Worm">		
-		</SubObject>
-	</GameObject>
-	
-	<GameObject type="com.me.tamer.gameobjects.tiles.QuickSand">
-		<SubObject type="com.me.tamer.gameobjects.tiles.SandPart">
-			<property type="Position">-3:-2</property>
-			<property type="Graphics">sand9</property>
-		</SubObject>
-		<SubObject type="com.me.tamer.gameobjects.tiles.SandPart">
-			<property type="Position">-2:-2</property>
-			<property type="Graphics">sand3</property>
-		</SubObject>
->>>>>>> 028ff2879b570c568b723544e15daa4ec77a02fc
+
 	</GameObject>
 </root>
