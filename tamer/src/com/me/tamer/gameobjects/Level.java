@@ -62,6 +62,7 @@ public class Level {
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
 		RuntimeObjectFactory.createLinkToLevel(this);
+
 		ContactPool.createPool(100);
 
 	}
@@ -196,8 +197,7 @@ public class Level {
 				gameobjects.add(go);
 			}
 			newobjects.clear();
-			}
-		
+			}	
 	}
 	
 	/**
@@ -211,7 +211,8 @@ public class Level {
 				go.setup(this);
 		}
 		//Create dummytamer for UiElements to work
-		tamer = new Tamer();
+		//tamer = new Tamer();
+
 		//Create new contact pool
 		ContactPool.createPool(100);
 	}
@@ -254,6 +255,7 @@ public class Level {
 		this.tamer = tamer;
 		inputController.enableInput();
 		gameobjects.add(tamer);
+
 	}
 	
 	

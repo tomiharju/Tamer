@@ -56,14 +56,9 @@ public class TileMap extends StaticObject{
 			tile.set(x,y);
 			terrain.add(tile);
 		}
-		
-		
-		numTiles = terrain.size();
-	
-		
+			
+		numTiles = terrain.size();	
 	}
-
-
 	
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);

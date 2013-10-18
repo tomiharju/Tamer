@@ -73,7 +73,7 @@ public class IsoHelper{
 	 * @param tileHeight
 	 * @return returns cartesian coordinate based on specific tile position.
 	 */
-	public static Vector2 get2dFromTileCoordinates(Vector2 point, int tileHeight){
+	public static Vector2 get2dFromTile(Vector2 point, int tileHeight){
 			Vector2 tempPt =new Vector2(0,0);
 			tempPt.x = point.x * tileHeight;
 			tempPt.y = point.y * tileHeight;

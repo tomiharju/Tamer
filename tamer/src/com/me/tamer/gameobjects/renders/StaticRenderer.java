@@ -44,13 +44,18 @@ public class StaticRenderer implements Renderer {
 	}
 	
 	@Override
-	public void setOrientation(float angle) {
+	public void setOrientation(int orientation) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void setRenderType(String type) {
 		this.type = type;
+		
+	}
+	@Override
+	public void loadGraphics(String animName, int FRAME_COLS, int FRAME_ROWS) {
+		// TODO Auto-generated method stub
 		
 	}
 	

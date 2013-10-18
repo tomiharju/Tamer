@@ -15,8 +15,7 @@
 		<property type="SleepTime">5</property>
 		<property type="TamerSpawn">1</property>
 		<property type="SpawnCount">1</property>
-		<SubObject type="com.me.tamer.gameobjects.Worm">
-			
+		<SubObject type="com.me.tamer.gameobjects.Worm">		
 		</SubObject>
 	</GameObject>
 	
