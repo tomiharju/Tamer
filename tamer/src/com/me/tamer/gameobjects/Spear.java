@@ -15,6 +15,7 @@ public class Spear extends DynamicObject{
 	private Vector2 target = new Vector2() ;
 	private Creature targetCreature = null;
 	private boolean isAttached = false;
+	private Vector2 heading = new Vector2();
 	
 	public Spear(){
 		setGraphics();
@@ -24,10 +25,9 @@ public class Spear extends DynamicObject{
 		
 	}
 	
-	
 	public void setGraphics(){
-		Renderer render = RenderPool.addRendererToPool("static","spear");
-		render.loadGraphics("spear");
+		Renderer render = RenderPool.addRendererToPool("animated","spear");
+		render.loadGraphics("spear",1,8);
 		setSize("1:1");
 		renderType = "spear";
 	}
@@ -78,11 +78,18 @@ public class Spear extends DynamicObject{
 		RuntimeObjectFactory.addToObjectPool("spear",this);
 		markAsCarbage();
 	}
+	
 	public void setPosition(Vector2 pos){
 		position.set(pos);
 	}
+	
 	public boolean isAttached(){
 		return isAttached;
+	}
+	
+	public Vector2 getHeading(){
+		heading.set(getForce().tmp().nor());
+		return heading;
 	}
 
 }

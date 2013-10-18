@@ -58,9 +58,11 @@ public class SpawnPoint extends StaticObject{
 		System.out.println("SPAWN ANGLE IS "+ spawnVelocity.toString());
 		
 	}
+	
 	public void setSleepTime(String time){
 		this.sleepTime = Integer.parseInt(time)*1000;
 	}
+	
 	public void setInitialSleepTime(String time){
 		this.initialSleep = Integer.parseInt(time)*1000;
 	}

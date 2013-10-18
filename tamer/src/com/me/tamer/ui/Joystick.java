@@ -24,7 +24,7 @@ public class Joystick implements UiElement{
 	
 	private Matrix3 translate = new Matrix3().rotate(45);
 	//Joystick variables
-	Vector2 restingpoint 	= new Vector2(150,100);
+	Vector2 restingpoint 	= new Vector2(125,100);
 	Vector2 delta			= null;
 	Vector2 pointer			= null;
 	float size				= 250;
@@ -43,7 +43,7 @@ public class Joystick implements UiElement{
 		tamer 			= inputcontroller.getLevel().getTamer();
 		level			= inputcontroller.getLevel();
 		env 			= inputcontroller.getEnvironment();
-		renderer.loadGraphics("joystick");
+		renderer.loadGraphics("icon_scream_v6");
 		renderer.setSize(size,size);
 		renderer.setPosition(restingpoint);
 	}

@@ -77,9 +77,11 @@ public class AnimatedRenderer implements Renderer {
 
 		stateTime = 0f;
 	}
+	
 	public void setAnimSpeed(float speed){
 		animSpeed = speed;
 	}
+	
 	@Override
 	public void setSize(float w, float h) {
 		//sprite.setSize(w, h);

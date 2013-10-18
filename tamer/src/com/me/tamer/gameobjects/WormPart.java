@@ -12,7 +12,7 @@ public class WormPart extends DynamicObject implements Creature {
 	//Container worm
 	private Worm worm = null;
 	
-	private float restLength = 0.52f;
+	private float restLength = 0.3f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
 	private float speed = 5;
@@ -28,7 +28,7 @@ public class WormPart extends DynamicObject implements Creature {
 	Vector2 impulseB = new Vector2();
 	Vector2 axis = new Vector2();
 	Vector2 relativeVelocity = new Vector2();
-	
+	Vector2 heading = new Vector2();
 	
 	public void createHead(Vector2 pos, Vector2 vel,Worm worm){
 		this.worm = worm;
@@ -43,6 +43,7 @@ public class WormPart extends DynamicObject implements Creature {
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = 0;
 	}
+	
 	public void createBodyPart(int ordinal,Vector2 pos, Vector2 vel,Worm worm){
 		this.worm = worm;
 		setGraphics("wormpart");
@@ -60,9 +61,10 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 	
 	public void setGraphics(String graphics){
-		Renderer render = RenderPool.addRendererToPool("static",graphics);
-		render.loadGraphics(graphics);
-		setSize("0.5:0.5");
+
+		Renderer render = RenderPool.addRendererToPool("animated",graphics);
+		render.loadGraphics(graphics,1,8);
+		setSize("1.7:1.7");
 		renderType = graphics;
 	}
 	
@@ -214,6 +216,12 @@ public class WormPart extends DynamicObject implements Creature {
 	public Vector2 getPosition(){
 		return position;
 	}
+	
+	public Vector2 getHeading(){
+		heading.set(getVelocity().tmp().nor());
+		return heading;
+	}
+	
 	@Override
 	public void setPosition(Vector2 pos) {
 		this.position.set(pos);

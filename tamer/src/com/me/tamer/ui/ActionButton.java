@@ -38,14 +38,14 @@ public class ActionButton implements UiElement{
 
 	public ActionButton(InputController inputController) {
 		this.inputcontroller = inputController;
-		restingpoint	= new Vector2(430,230);
+		restingpoint	= new Vector2(355,200);
 		delta			= new Vector2(0,0);
-		size			= 75;
+		size			= 110;
 		level			= inputcontroller.getLevel();
 		tamer 			= level.getTamer();
 		env 			= inputcontroller.getEnvironment();
 		renderer 		= new UiRenderer();
-		renderer.loadGraphics("joystick");
+		renderer.loadGraphics("icon_scream_v6");
 		renderer.setSize(size,size);
 		renderer.setPosition(restingpoint);
 		RuntimeObjectFactory.addToObjectPool("scream",new GryphonScream());
@@ -57,7 +57,7 @@ public class ActionButton implements UiElement{
 		//if(isPressed)renderer.setColor(pressedCol);
 		//else renderer.setColor(notPressedCol);
 		
-		renderer.setColor(0.0f, 0.0f, 1.0f, 1.0f);
+		//renderer.setColor(0.0f, 0.0f, 1.0f, 1.0f);
 		
 		renderer.setSize(size, size);
 		renderer.setPosition(restingpoint);
