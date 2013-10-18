@@ -12,7 +12,7 @@ public class WormPart extends DynamicObject implements Creature {
 	//Container worm
 	private Worm worm = null;
 	
-	private float restLength = 0.3f;
+	private float restLength = 0.5f;
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
 	private float speed = 5;
@@ -39,7 +39,6 @@ public class WormPart extends DynamicObject implements Creature {
 		position = new Vector2(pos);
 		velocity = new Vector2(vel);
 		force = new Vector2(vel).mul(speed);
-		size = new Vector2(radii * 2 ,radii * 2  );
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = 0;
 	}
@@ -55,7 +54,6 @@ public class WormPart extends DynamicObject implements Creature {
 		velocity = new Vector2(0,0);
 		force = new Vector2(vel).mul(speed);
 		//Set worm graphic size, add a little extra to avoid excess collision due to parts being in contact all the time
-		size = new Vector2(radii * 2 ,radii * 2 );
 		body = new RigidBodyCircle(position,velocity,mass,radii);
 		this.ordinal = ordinal;
 	}
@@ -64,7 +62,7 @@ public class WormPart extends DynamicObject implements Creature {
 
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
 		render.loadGraphics(graphics,1,8);
-		setSize("1.7:1.7");
+		setSize("1:1");
 		renderType = graphics;
 	}
 	

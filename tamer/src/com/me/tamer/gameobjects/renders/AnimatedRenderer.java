@@ -48,7 +48,7 @@ public class AnimatedRenderer implements Renderer {
 		
 		if (animations.size() > 0){
 			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
-			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y );
+			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
 		}
 	}
 
@@ -84,7 +84,6 @@ public class AnimatedRenderer implements Renderer {
 	
 	@Override
 	public void setSize(float w, float h) {
-		//sprite.setSize(w, h);
 		size.set(w,h);
 	}
 

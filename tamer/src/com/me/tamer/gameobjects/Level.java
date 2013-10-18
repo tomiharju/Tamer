@@ -98,9 +98,10 @@ public class Level {
 	
 	
 	public void debugDraw(ShapeRenderer sr){
-		for(GameObject o : gameobjects)
-			if(o.getDebug()){
-				o.debugDraw(sr);
+		int size = gameobjects.size();
+		for(int i = 0 ; i < size ; i++)
+			if(gameobjects.get(i).getDebug()){
+				gameobjects.get(i).debugDraw(sr);
 			}
 	}
 	
