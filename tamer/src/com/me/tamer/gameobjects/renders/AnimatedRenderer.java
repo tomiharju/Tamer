@@ -29,13 +29,12 @@ public class AnimatedRenderer implements Renderer {
 	private TextureRegion[][] frames;
 	
 	private TextureRegion currentFrame;
-	private boolean animate;
 	private float stateTime;
 	private float animSpeed = 0.025f;
-	private Vector2 animPos;
 	private Vector2 size = new Vector2();
 	private Vector2 pos = new Vector2();
-	private String type;
+	private String type = null;
+	
 	public AnimatedRenderer(){
 		
 	}
@@ -46,7 +45,7 @@ public class AnimatedRenderer implements Renderer {
 		
 		stateTime += Gdx.graphics.getDeltaTime();
 		
-		if (animations.size() > 0){
+		if (!animations.isEmpty()){
 			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
 			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
 		}
@@ -88,7 +87,6 @@ public class AnimatedRenderer implements Renderer {
 
 	@Override
 	public void setPosition(Vector2 pos) {
-		//sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getHeight() /2  );
 		this.pos.set(pos);	
 	}
 

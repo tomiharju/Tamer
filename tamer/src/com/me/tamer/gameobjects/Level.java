@@ -13,7 +13,8 @@ import com.me.tamer.core.Environment;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.Creature;
-import com.me.tamer.gameobjects.tiles.Obstacle;
+import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.gameobjects.tiles.Prop;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
@@ -37,7 +38,7 @@ public class Level {
 	private ArrayList<GameObject> gameobjects = null;
 	private ArrayList<GameObject> carbages	= null;
 	private ArrayList<GameObject> newobjects = null;
-	private DynamicObject 	tamer = null;
+	private DynamicObject tamer = null;
 	private ArrayList<GameObject> obstacles = null;
 	private ArrayList<Creature> creatures	= null;
 	
@@ -79,6 +80,7 @@ public class Level {
 	public void update(float dt){
 		runCarbageCollection();
 		addNewObjects();
+		resolveObstacles(dt);
 		resolveCollisions(dt);
 		int numObjects = gameobjects.size();
 		for(int k = 0 ; k < numObjects ; k++)
@@ -109,12 +111,7 @@ public class Level {
 		if(loopCount % sortRate == 0){
 			if(numObjects > 1){
 				Collections.sort(gameobjects, comparator);
-				/*for (GameObject g : gameobjects){
-					//if(g.getPosition() != null)
-					//System.out.println(g.getClass().getName() +"..." + g.getPosition().y);
-					System.out.println(g.getClass().getName() +"..." + g.getZIndex());
-				}
-				System.out.println("-------------------------------");*/
+				loopCount = 0;
 			}
 		} loopCount++;
 	}
@@ -181,6 +178,9 @@ public class Level {
 		*/	
 	}
 	
+	public void resolveObstacles(float dt){
+		
+	}
 	public void runCarbageCollection(){
 		int size = gameobjects.size();
 		for( int i = 0 ; i < size ; i ++)
@@ -238,6 +238,9 @@ public class Level {
 	public void addRigidBody(RigidBody body){
 		rigidbodies.add(body);
 	}
+	public void addObstacle(GameObject obstacle){
+		this.obstacles.add(obstacle);
+	}
 	
 	
 	/**
@@ -255,7 +258,7 @@ public class Level {
 	}
 	
 	/**
-	 * Creates tamer and sets starting position
+	 * 
 	 */
 	public void setTamer(Tamer tamer){
 		this.tamer = tamer;
@@ -271,6 +274,7 @@ public class Level {
 		newobjects.clear();
 		rigidbodies.clear();
 		tamer = null;
+		obstacles.clear();
 	}
 
 	public Vector2 getMapBounds(){

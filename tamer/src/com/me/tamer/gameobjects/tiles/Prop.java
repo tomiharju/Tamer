@@ -8,7 +8,12 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.physics.RigidBody;
 
-public class Obstacle extends StaticObject {
+/**
+ * @author tomi
+ * Props are all the non-interactive gameobjects in the level, props are trees, rocks, stumps and 
+ * all the other objects which only affect with their rigidbodies and graphical aspect.
+ */
+public class Prop extends StaticObject {
 	
 	
 	public void setup(Level level){

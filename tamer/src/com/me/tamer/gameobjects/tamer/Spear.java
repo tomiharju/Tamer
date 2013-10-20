@@ -1,8 +1,9 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.tamer;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
@@ -30,6 +31,7 @@ public class Spear extends DynamicObject{
 		render.loadGraphics("spear",1,8);
 		setSize("1:1");
 		renderType = "spear";
+		System.out.println("Spear graphics are set");
 	}
 	
 	public void update(float dt){
@@ -56,6 +58,8 @@ public class Spear extends DynamicObject{
 	public void wakeUp(Level level){
 		System.out.println("Spear woke up!");
 		this.level = level;
+		isAttached = false;
+		markAsActive();
 		
 
 	}
@@ -63,7 +67,6 @@ public class Spear extends DynamicObject{
 		target.set(point);
 		Vector2 dir = point.sub(position);
 		force.set(dir.tmp().nor().mul(power));
-		System.out.println("Spear data " + position.toString() + " " + target.toString());
 	}
 	
 	/**

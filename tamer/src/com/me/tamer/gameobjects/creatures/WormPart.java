@@ -1,10 +1,12 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.creatures;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.Creature;
+import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.physics.RigidBodyCircle;
 
 public class WormPart extends DynamicObject implements Creature {

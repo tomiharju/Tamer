@@ -1,12 +1,12 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.tamer;
 
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.gameobjects.renders.AnimatedRenderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
@@ -29,8 +29,8 @@ public class Tamer extends DynamicObject{
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
 		}
 		
-			RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
-		
+		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
+		System.out.println("Tamer has woken up! " + this.toString());
 		//Z-index for drawing order
 		setZindex(-1);
 		setGraphics("tamer");
@@ -65,6 +65,7 @@ public class Tamer extends DynamicObject{
 	
 	/**
 	 * @param direction
+	 * Joystick uses this method to move tamer around
 	 */
 	public void manouver(Vector2 direction){
 		//heading.lerp(direction,0.025f);
@@ -76,10 +77,11 @@ public class Tamer extends DynamicObject{
 	}
 	/**
 	 * @param direction
-	 * Used only to turn tamer around his position
+	 * Used only to turn tamer around his position when throwing a spear
 	 */
 	public void turn(Vector2 direction){
-
+		heading.lerp(direction, 0.02f);
+		heading.nor();
 	}
 	
 	public void throwSpear(Spear spear,Vector2 point,float power){

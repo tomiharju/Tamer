@@ -3,9 +3,9 @@ package com.me.tamer.ui;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Spear;
-import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 

@@ -1,10 +1,12 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.creatures;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.utils.IsoHelper;
 
 

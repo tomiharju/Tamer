@@ -21,7 +21,7 @@ import com.me.tamer.core.Environment;
 import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.Renderer.RenderType;
 import com.me.tamer.gameobjects.superclasses.GameObject;
-import com.me.tamer.gameobjects.SpawnPoint;
+import com.me.tamer.gameobjects.tiles.SpawnPoint;
 
 
 /**
@@ -87,12 +87,13 @@ public class LevelCreator {
 				subObjects = gameobject.getChildrenByName("SubObject");
 				
 			
-				objectToAdd.setup(level);
+				
 				
 				if(subObjects.size != 0){
 					System.out.println("Creating Sub-objects for {"+objectToAdd.getClass().getSimpleName()+"}");
 					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName(),level);
 				}
+				objectToAdd.setup(level);
 				
 			}
 			

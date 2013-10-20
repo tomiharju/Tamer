@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.core.Environment;
-import com.me.tamer.gameobjects.GryphonScream;
 import com.me.tamer.gameobjects.Level;
-import com.me.tamer.gameobjects.Spear;
-import com.me.tamer.gameobjects.Tamer;
-import com.me.tamer.gameobjects.Worm;
+import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.tamer.GryphonScream;
+import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class ActionButton implements UiElement{
@@ -48,7 +48,6 @@ public class ActionButton implements UiElement{
 		renderer.loadGraphics("icon_scream_v6");
 		renderer.setSize(size,size);
 		renderer.setPosition(restingpoint);
-		RuntimeObjectFactory.addToObjectPool("scream",new GryphonScream());
 		
 	}
 	

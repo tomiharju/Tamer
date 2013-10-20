@@ -1,16 +1,20 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.tiles;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.Environment;
+import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.creatures.AntOrc;
+import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.renders.Renderer.RenderType;
 import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
+import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.GameObjectFactory;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
