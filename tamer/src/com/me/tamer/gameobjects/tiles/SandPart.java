@@ -13,7 +13,7 @@ public class SandPart extends StaticObject{
 		level.getObstacles().add(this);
 	}
 	public void setGraphics(String graphics){
-		Renderer render = RenderPool.addRendererToPool("animated",graphics);
+		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setSize("1:0.5");
 		this.renderType = graphics;

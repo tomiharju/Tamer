@@ -35,13 +35,14 @@ public class InputController implements InputProcessor{
 	}
 	
 	public void draw(SpriteBatch batch){
-		for(UiElement u : buttons)
-			u.draw(batch);
+		int size = buttons.size();
+		for(int i = 0 ; i < size ; i ++)
+			buttons.get(i).draw(batch);
 	}
 	public void update(float dt){
-			
-		for(UiElement u : buttons)
-			u.update(dt);
+		int size = buttons.size();
+		for(int i = 0 ; i < size ; i ++)
+			buttons.get(i).update(dt);
 	}
 	
 	public void enableInput(){

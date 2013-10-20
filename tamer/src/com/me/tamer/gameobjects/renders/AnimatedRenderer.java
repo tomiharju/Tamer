@@ -33,8 +33,8 @@ public class AnimatedRenderer implements Renderer {
 	private float stateTime;
 	private float animSpeed = 0.025f;
 	private Vector2 animPos;
-	private Vector2 size;
-	private Vector2 pos;
+	private Vector2 size = new Vector2();
+	private Vector2 pos = new Vector2();
 	private String type;
 	public AnimatedRenderer(){
 		
@@ -48,7 +48,7 @@ public class AnimatedRenderer implements Renderer {
 		
 		if (animations.size() > 0){
 			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
-			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y );
+			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
 		}
 	}
 
@@ -83,14 +83,13 @@ public class AnimatedRenderer implements Renderer {
 	
 	@Override
 	public void setSize(float w, float h) {
-		//sprite.setSize(w, h);
-		size = new Vector2(w,h);
+		size.set(w,h);
 	}
 
 	@Override
 	public void setPosition(Vector2 pos) {
 		//sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getHeight() /2  );
-		this.pos = new Vector2(pos);	
+		this.pos.set(pos);	
 	}
 
 	@Override

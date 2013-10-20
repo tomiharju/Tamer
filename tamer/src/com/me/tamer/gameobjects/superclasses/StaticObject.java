@@ -14,7 +14,8 @@ import com.me.tamer.utils.IsoHelper;
 public class StaticObject implements GameObject{
 	protected RigidBody body = null;
 	protected Vector2 position;
-	protected Vector2 size;
+	protected Vector2 size = new Vector2();
+	
 	protected String renderType = null;
 	private boolean isCarbage = false;
 	private boolean debug = false;
@@ -56,7 +57,7 @@ public class StaticObject implements GameObject{
 		float w = Float.parseFloat(values[0]);
 		float h = Float.parseFloat(values[1]);
 		
-		this.size = new Vector2(w,h);
+		this.size.set(w,h);
 		
 	}
 	@Override
