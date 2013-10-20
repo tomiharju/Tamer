@@ -1,20 +1,14 @@
 package com.me.tamer.core;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.me.tamer.gameobjects.Level;
-import com.me.tamer.gameobjects.superclasses.GameObject;
-import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.ui.InputController;
+import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.LevelCreator;
 
 /**
@@ -25,10 +19,9 @@ import com.me.tamer.utils.LevelCreator;
  */
 
 
-public class Environment {
+public class Environment extends Actor{
 
-	//Main drawing batch
-	private SpriteBatch batch 		= null;
+	//Check which ones should be moved on a higher level
 	
 	//Cameras
 	private OrthographicCamera uiCam = null;
@@ -42,35 +35,28 @@ public class Environment {
 	Level level = null;
 	InputController inputController;
 
-	
 	//debug
-	private ShapeRenderer shapeRndr;
-	
-	
-	
+	private ShapeRenderer shapeRenderer;
+
 	public Environment(){
-		//Spritebatch is used for drawing sprites
-		batch 			= new SpriteBatch();
-		
 		setupCamera();
 		createLevel(1);
 		inputController = new InputController(this,level);
 		level.linkToUi(inputController);
-		shapeRndr = new ShapeRenderer();
+		shapeRenderer = new ShapeRenderer();
 	}
 	
-	public void setupCamera(){
-		
+	public void setupCamera(){	
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false,VIRTUAL_WIDTH,VIRTUAL_HEIGHT);// * ASPECT_RATIO);
 		
 		cam.position.set(0f,0f,0f);
 		uiCam = new OrthographicCamera();
 		uiCam.setToOrtho(false);
-	
 	}
 	
 	public void resize(float width, float height){
+		//This should be done on screen level?
 		/*
 		 // calculate new viewport
         float aspectRatio = (float)width/(float)height;
@@ -124,45 +110,35 @@ public class Environment {
 	public void createLevel(int current_level){
 		level = LevelCreator.create(current_level);	
 	}
-		
-	public void draw(){
+	
+	public void draw(SpriteBatch batch, float parentAlpha){
 		//update camera ( needed if its matrix is changed, its translated for example )
 		cam.update();
-		
 		//set Viewport
-       
-		//Start uploading sprites
-		
-		batch.begin();
-		
-		
+
 		batch.setProjectionMatrix(cam.combined); 
 		level.draw(batch);
 		
 		//Set projection matrix to batch
 		batch.setProjectionMatrix(uiCam.combined); 
 		inputController.draw(batch);
-		
-		batch.end();
-		
-		shapeRndr.setProjectionMatrix(cam.combined);
-		level.debugDraw(shapeRndr);
-		
+			
+		shapeRenderer.setProjectionMatrix(cam.combined);
+		level.debugDraw(shapeRenderer);	
 	}
 	
 	
-	public void update(float dt){
+	public void act(float dt){
 		inputController.update(dt);
 		level.update(dt);
-		
 	}
 	
-	public void cleanUp(){
+	//Cleaning up. How should we call this?
+	public void dispose(SpriteBatch batch){
 		batch.dispose();
 	}
+	
 	public InputController getInputController(){
 		return inputController;
 	}
-	
-
-	}
+}

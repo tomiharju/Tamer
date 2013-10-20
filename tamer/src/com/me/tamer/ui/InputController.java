@@ -48,7 +48,7 @@ public class InputController implements InputProcessor{
 	public void enableInput(){
 		buttons.clear();
 	
-		buttons.add(new ActionButton(this));
+		buttons.add(new ScreamButton(this));
 		buttons.add(new Joystick(this));
 		buttons.add(new SpearButton(this));
 		buttons.add(new LassoButton(this));

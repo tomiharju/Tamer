@@ -7,71 +7,29 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.me.tamer.services.MusicManager.TamerMusic;
 
-public class PlayScreen implements Screen{
+public class PlayScreen extends AbstractScreen{
 
-	private TamerGame main;
 	private Environment environment;
 	
-	//FPS limiting
-	int FPS = 30;
-	long lastFrame = 0;
-	long curFrame = System.currentTimeMillis();
-	
-	public PlayScreen(TamerGame core){
-		this.main = main;
-	
+	public PlayScreen(TamerGame game){
+		super(game);
 	}
-
-
-	@Override
-	public void render(float delta) {
-		
-		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		environment.update(delta);
-		environment.draw();
-
-		
 	
-	}
-
-	@Override
-	public void resize(int width, int height) {
-			environment.resize(width, height);
-		
-	}
-
 	@Override
 	public void show() {
 		//This method is called when the app is loaded
-		this.environment = new Environment();
-		// TODO Auto-generated method stub
-		
-	}
+		game.getMusicManager().stop();
+		environment = new Environment();
 
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
+        // add the ship to the stage
+        stage.addActor( environment );
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
+        // add a fade-in effect to the whole stage
+        stage.getRoot().getColor().a = 0f;
+        stage.getRoot().addAction( Actions.fadeIn( 0.5f ) );
 	}
 }
 	

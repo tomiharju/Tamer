@@ -1,5 +1,6 @@
 package com.me.tamer.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -20,7 +21,7 @@ public class LassoButton implements UiElement {
 	Vector2 tamerPos = null;
 	Vector2 tamerHeading = null;
 	
-	final Vector2 restingPoint = new Vector2(410,100);
+	final Vector2 restingPoint = new Vector2(Gdx.graphics.getWidth() - 55,100);
 	final float BUTTON_SIZE = 110;
 	final float MIN_POWER = 2;
 	final float MAX_POWER = 10;
