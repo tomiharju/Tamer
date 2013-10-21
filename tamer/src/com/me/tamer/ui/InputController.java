@@ -46,6 +46,7 @@ public class InputController extends Actor implements InputProcessor{
 		for(int i = 0 ; i < size ; i ++)
 			buttons.get(i).draw(batch);
 	}
+	
 	public void act(float dt){
 		int size = buttons.size();
 		for(int i = 0 ; i < size ; i ++)
