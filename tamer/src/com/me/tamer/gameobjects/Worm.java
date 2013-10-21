@@ -31,7 +31,7 @@ public class Worm extends DynamicObject implements Creature{
 		//No action because this object is not ment to be on game right away
 	}
 	
-	public void wakeUp(Level level){
+	public void wakeUp(Environment level){
 		System.out.println("WORM WOKE UP!");
 		addPart("head",0,position,velocity);
 		for(int i = 0 ; i < 3 ; i++)

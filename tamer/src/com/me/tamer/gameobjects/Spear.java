@@ -11,7 +11,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Spear extends DynamicObject{
 	
-	private Level level;
+	private Environment level;
 	private Vector2 target = new Vector2() ;
 	private Creature targetCreature = null;
 	private boolean isAttached = false;
@@ -53,7 +53,7 @@ public class Spear extends DynamicObject{
 		
 	}
 	
-	public void wakeUp(Level level){
+	public void wakeUp(Environment level){
 		System.out.println("Spear woke up!");
 		this.level = level;
 		

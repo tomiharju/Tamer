@@ -2,44 +2,51 @@ package com.me.tamer.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.me.tamer.core.Environment;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.core.Level;
+import com.me.tamer.core.PlayScreen;
+import com.me.tamer.gameobjects.Environment;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class InputController implements InputProcessor{
+public class InputController extends Actor implements InputProcessor{
 
+	private PlayScreen playScreen;
+	
+	private OrthographicCamera cam, uiCam;
+	
 	ArrayList<UiElement> buttons ;
-	private Environment environment;
-	OrthographicCamera uiCam = null;
-	OrthographicCamera cam = null;
-	private Vector2 input = new Vector2();
 	private Level level;
+	private Vector2 input = new Vector2();
+	private Environment environment;
 	private HashMap<Integer,UiElement> selectedButtons = null;
 	Vector2 testVector = new Vector2();
 	
-	public InputController(Environment env, Level lvl){
-		this.environment = env;
-		uiCam = environment.getUiCamera();
-		cam = environment.getCamera();
+	public InputController(Level lvl, Environment envi, PlayScreen playScreen){
+		this.playScreen = playScreen;
 		this.level = lvl;
+		this.environment = envi;
 		buttons = new ArrayList<UiElement>();
 		Gdx.input.setInputProcessor(null);
+		
+		cam = playScreen.getCamera();
+		uiCam = playScreen.getUiCamera();
 	}
 	
-	public void draw(SpriteBatch batch){
+	public void draw(SpriteBatch batch, float parentAlpha){
+		batch.setProjectionMatrix(uiCam.combined); 
+		
 		int size = buttons.size();
 		for(int i = 0 ; i < size ; i ++)
 			buttons.get(i).draw(batch);
 	}
-	public void update(float dt){
+	public void act(float dt){
 		int size = buttons.size();
 		for(int i = 0 ; i < size ; i ++)
 			buttons.get(i).update(dt);
@@ -63,22 +70,21 @@ public class InputController implements InputProcessor{
 		return buttons;
 	}
 
+	public Level getLevel() {
+		return level;
+	}
 
 	public Environment getEnvironment() {
 		return environment;
 	}
-
-
-	public Level getLevel() {
-		return level;
-	}
+	
 	public OrthographicCamera getCam(){
 		return cam;
 	}
 	public OrthographicCamera getUiCam(){
 		return uiCam;
 	}
-
+	
 	@Override
 	public boolean keyDown(int keycode) {
 		

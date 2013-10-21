@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.me.tamer.core.Environment;
+import com.me.tamer.core.Level;
 import com.me.tamer.gameobjects.GryphonScream;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Spear;
 import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.Worm;
@@ -23,8 +23,8 @@ public class ScreamButton implements UiElement{
 	private Tamer tamer 						= null;
 	private GryphonScream scream				= null;
 	private ArrayList<Worm> worms 				= null;
-	private Level level 						= null;
-	private Environment env 					= null;
+	private Environment level 						= null;
+	private Level env 					= null;
 	
 	//Button variables
 	Vector2 restingpoint 	= null;
@@ -42,9 +42,9 @@ public class ScreamButton implements UiElement{
 		restingpoint	= new Vector2(Gdx.graphics.getWidth() - 110,200);
 		delta			= new Vector2(0,0);
 		size			= 110;
-		level			= inputcontroller.getLevel();
+		level			= inputcontroller.getEnvironment();
 		tamer 			= level.getTamer();
-		env 			= inputcontroller.getEnvironment();
+		env 			= inputcontroller.getLevel();
 		renderer 		= new UiRenderer();
 		renderer.loadGraphics("icon_scream_v6");
 		renderer.setSize(size,size);

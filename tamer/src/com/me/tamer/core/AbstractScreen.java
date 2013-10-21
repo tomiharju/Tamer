@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Array;
 
 public class AbstractScreen implements Screen{
@@ -26,7 +27,7 @@ public class AbstractScreen implements Screen{
     private Skin skin;
     private Table table;
 
-    public AbstractScreen(TamerGame game )
+    public AbstractScreen(final TamerGame game )
     {
         this.game = game;
         this.stage = new Stage();
@@ -101,7 +102,6 @@ public class AbstractScreen implements Screen{
     public void hide()
     {
         Gdx.app.log( TamerGame.LOG, "Hiding screen: " + getName() );
-
         // dispose the screen when leaving the screen;
         // note that the dispose() method is not called automatically by the
         // framework, so we must figure out when it's appropriate to call it
@@ -132,7 +132,5 @@ public class AbstractScreen implements Screen{
         if( font != null ) font.dispose();
         if( batch != null ) batch.dispose();
         if( skin != null ) skin.dispose();
-        
- 
     }
 }

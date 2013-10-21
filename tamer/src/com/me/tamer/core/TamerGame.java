@@ -3,6 +3,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.me.tamer.services.LevelManager;
 import com.me.tamer.services.MusicManager;
 import com.me.tamer.services.PreferenceManager;
 
@@ -19,15 +20,14 @@ public class TamerGame extends Game{
 	//Services
     private MusicManager musicManager;
     private PreferenceManager preferenceManager;
+    private LevelManager levelManager;
     
 	//Main drawing batch
 	private SpriteBatch batch 		= null;
 
-    
 	@Override
 	public void create() {
-		Gdx.app.log( TamerGame.LOG, "Creating game on " + Gdx.app.getType() );
-		
+		Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() +" :: Creating game on " + Gdx.app.getType() );
 		//Spritebatch is used for drawing sprites
 		batch = new SpriteBatch();
 		
@@ -39,9 +39,16 @@ public class TamerGame extends Game{
         musicManager.setVolume( preferenceManager.getVolume() );
         musicManager.setEnabled( preferenceManager.isMusicEnabled() );
         
-		setScreen(new MenuScreen(this));	
+        // create the level manager
+        levelManager = new LevelManager();
+        
+		setScreen(new MainMenuScreen(this));	
 	}
 	
+	public LevelManager getLevelManager() {
+		return levelManager;
+	}
+
 	@Override
 	public void render(){
 		batch.begin();
@@ -73,13 +80,14 @@ public class TamerGame extends Game{
         super.dispose();
         Gdx.app.log( TamerGame.LOG, "Disposing game" );
         musicManager.dispose();
-
+        
+        //sprites
+        batch.dispose();
     }
     
 	public MusicManager getMusicManager(){
         return musicManager;
     }
-
 }
 
 

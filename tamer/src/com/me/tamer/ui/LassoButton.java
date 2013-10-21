@@ -47,7 +47,7 @@ public class LassoButton implements UiElement {
 		pointRender.loadGraphics("icon_scream_v6");
 		pointRender.setSize(0.5f,0.5f);
 		pointRender.setPosition(new Vector2(0,0));
-		tamer = inputController.getLevel().getTamer();
+		tamer = inputController.getEnvironment().getTamer();
 		
 		tamerPos = new Vector2();
 		tamerHeading = new Vector2();

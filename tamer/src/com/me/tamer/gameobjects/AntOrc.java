@@ -10,7 +10,7 @@ import com.me.tamer.utils.IsoHelper;
 
 public class AntOrc extends DynamicObject implements Creature{
 	
-	private Level level;
+	private Environment level;
 	private ArrayList<Vector2> waypoints;
 	private float wormScanRad = 5.0f; //ScanArea is a circle
 	private float waypointScanRad = 3.0f;
@@ -26,7 +26,7 @@ public class AntOrc extends DynamicObject implements Creature{
 		waypoints.add(new Vector2(0,0));//place holder for the first value
 	}
 	
-	public void wakeUp(Level level){
+	public void wakeUp(Environment level){
 		this.level = level;
 		//Add the spawnin position as first waypoint
 		waypoints.add(0, getPosition());

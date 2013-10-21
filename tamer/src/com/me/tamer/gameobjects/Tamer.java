@@ -23,7 +23,7 @@ public class Tamer extends DynamicObject{
 	
 	
 	}
-	public void wakeUp(Level level){
+	public void wakeUp(Environment level){
 		spears = new ArrayList<Spear>();
 		for( int i = 0 ; i < numSpears ; i++){
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.core.Environment;
+import com.me.tamer.core.Level;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.renders.Renderer.RenderType;
@@ -36,7 +36,7 @@ public class SpawnPoint extends StaticObject{
 	public SpawnPoint(){
 		creatures = new ArrayList<Creature>();
 	}
-	public void setup(Level level){
+	public void setup(Environment level){
 		level.addNewObject(this);
 		startSpawning();
 	}
@@ -128,7 +128,7 @@ public class SpawnPoint extends StaticObject{
 	
 
 
-	public void setLevel(Level level) {
+	public void setLevel(Environment level) {
 		//this.level = level;
 	}
 

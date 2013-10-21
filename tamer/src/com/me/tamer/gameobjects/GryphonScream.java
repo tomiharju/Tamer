@@ -18,7 +18,7 @@ import com.me.tamer.utils.tTimer;
 public class GryphonScream extends DynamicObject {
 	private final float SCREAM_AREA_WIDTH = 4.0f;
 	private final float SCREAM_AREA_LENGTH = 8.0f;
-	private Level level 				= null;
+	private Environment level 				= null;
 	private boolean isActive			= false;
 	private Vector2 position			= new Vector2();
 	private Vector2 size				= new Vector2(10,10);
@@ -140,7 +140,7 @@ public class GryphonScream extends DynamicObject {
 		}	
 	}
 
-	public void wakeUp(Level level){
+	public void wakeUp(Environment level){
 		this.level = level;
 		markAsActive();
 	}

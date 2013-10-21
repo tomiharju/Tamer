@@ -17,8 +17,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
-import com.me.tamer.core.Environment;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.core.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.Renderer.RenderType;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.SpawnPoint;
@@ -30,7 +30,7 @@ import com.me.tamer.gameobjects.SpawnPoint;
  * Is responsible for creating gameobjects via GameObjectFactory
  * Reads level data from level[x].properties
  */
-public class LevelCreator {
+public class EnvironmentCreator {
 	
 	/**
 	 * @param level_number self explanatory
@@ -42,9 +42,9 @@ public class LevelCreator {
 	
 	
 	
-	public static Level create(int level_number){
+	public static Environment create(int level_number){
 		
-		Level level = new Level();
+		Environment level = new Environment();
 		
 		XmlReader reader = new XmlReader();
 		try {
@@ -111,7 +111,7 @@ public class LevelCreator {
 	
 	}
 	
-	public static void addSubObjects(Element currentXmlLevel, GameObject owner, String ownerClassName,Level level){
+	public static void addSubObjects(Element currentXmlLevel, GameObject owner, String ownerClassName,Environment level){
 		String objectType;
 		Array<Element> objects;
 		Array<Element> subObjects;

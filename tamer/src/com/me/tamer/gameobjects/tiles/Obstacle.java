@@ -2,7 +2,7 @@ package com.me.tamer.gameobjects.tiles;
 
 
 import com.badlogic.gdx.Gdx;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
@@ -11,7 +11,7 @@ import com.me.tamer.physics.RigidBody;
 public class Obstacle extends StaticObject {
 	
 	
-	public void setup(Level level){
+	public void setup(Environment level){
 		level.addNewObject(this);
 	}
 

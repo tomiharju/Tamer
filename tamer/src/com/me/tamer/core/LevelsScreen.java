@@ -1,14 +1,60 @@
 package com.me.tamer.core;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class LevelsScreen extends AbstractScreen{
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
-	public LevelsScreen(TamerGame game){
+
+public class LevelsScreen extends AbstractMenu{
+	List<TextButton> levelButtons;
+	protected List<Level> levels;
+	protected int levelId = 0;
+	
+	public LevelsScreen(final TamerGame game){
 		super(game);
+		create();
+		levelButtons = new ArrayList<TextButton>();
+		levels = game.getLevelManager().getLevels();
+		
+		levelId = 0;
+		
+		for ( int i = 0; i < levels.size(); i++){
+			TextButton newButton = new TextButton( levels.get(i).getName() ,textButtonStyle);		
+			newButton.addListener(new ChangeListener() {
+				final int button = levelId;
+	            public void changed (ChangeEvent event, Actor actor) {
+	            	
+	            	game.getLevelManager().setCurrentLevel( levels.get(button).getId() );
+	            	game.setScreen( new PlayScreen(game));
+	            }
+	        });
+			
+			levelButtons.add(newButton);
+			levelId++;
+		}	
+	}
+	
+	@Override
+	public void create(){
+		super.create();
 	}
 	
 	@Override
 	public void show() {
-		// TODO 
+		super.show();
+		Table table = super.getTable();
+	    table.add( "Levels" ).spaceBottom( 50 );
+	    table.row();
+	    
+	    for (int i = 0; i < levelButtons.size(); i++){
+	    	table.add(levelButtons.get(i)).size( 300, 60 ).uniform().spaceBottom( 10 );
+	    	table.row();
+	    }
+	    table.add(toMainMenuButton).size( 300, 60 ).uniform().spaceBottom( 10 );    
 	}
 }

@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.me.tamer.core.Environment;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.core.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.renders.StaticRenderer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
@@ -18,8 +18,8 @@ public class Joystick implements UiElement{
 	private UiRenderer renderer = null;
 	private Tamer tamer = null;
 	private Vector2 tamerPosition = null;
+	private Environment environment = null;
 	private Level level = null;
-	private Environment env = null;
 	private Vector2 movementAxis = null;
 	
 	private Matrix3 translate = new Matrix3().rotate(45);
@@ -40,9 +40,9 @@ public class Joystick implements UiElement{
 		pointer			= new Vector2(restingpoint.x,restingpoint.y);
 		tamerPosition	= new Vector2();
 		renderer 		= new UiRenderer();
-		tamer 			= inputcontroller.getLevel().getTamer();
-		level			= inputcontroller.getLevel();
-		env 			= inputcontroller.getEnvironment();
+		tamer 			= inputcontroller.getEnvironment().getTamer();
+		environment		= inputcontroller.getEnvironment();
+		level 			= inputcontroller.getLevel();
 		renderer.loadGraphics("icon_scream_v6");
 		renderer.setSize(size,size);
 		renderer.setPosition(restingpoint);
@@ -76,15 +76,14 @@ public class Joystick implements UiElement{
 				delta.mul(translate);
 				checkBounds(delta.mul(dt));
 			}
-			
 		}
 		
-		env.moveCamera(tamer.getPosition());
+		environment.moveCamera(tamer.getPosition());
 	
 	}
 	
 	public void checkBounds(Vector2 movement){
-		Vector2 mapBounds = level.getMapBounds();
+		Vector2 mapBounds = environment.getMapBounds();
 		tamerPosition.set(tamer.getPosition());
 	
 		movement.set(IsoHelper.twoDToIso(movement));

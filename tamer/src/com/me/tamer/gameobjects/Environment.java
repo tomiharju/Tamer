@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.core.Environment;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.me.tamer.core.Level;
+import com.me.tamer.core.PlayScreen;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.Creature;
@@ -22,8 +24,10 @@ import com.me.tamer.utils.DrawOrderComparator;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
-public class Level {
+public class Environment extends Actor{
 
+	private PlayScreen playScreen;
+	
 	private InputController inputController = null;
 	private DrawOrderComparator comparator = null;
 	//Settings
@@ -54,7 +58,7 @@ public class Level {
 	private int loopCount = 0;
 	private int sortRate = 6;
 		
-	public Level(){
+	public Environment(){	
 		gameobjects 	= new ArrayList<GameObject>();
 		carbages 		= new ArrayList<GameObject>();
 		newobjects 		= new ArrayList<GameObject>();
@@ -68,7 +72,12 @@ public class Level {
 		ContactPool.createPool(100);
 
 	}
-	public void linkToUi(InputController inputController){
+	
+	public void setPlayScreen(PlayScreen playScreen){
+		this.playScreen = playScreen;
+	}
+	
+	public void setInputController(InputController inputController){
 		this.inputController = inputController;
 	}
 	
@@ -76,7 +85,7 @@ public class Level {
 	 * @param dt
 	 * General update loop
 	 */
-	public void update(float dt){
+	public void act(float dt){
 		runCarbageCollection();
 		addNewObjects();
 		resolveCollisions(dt);
@@ -88,7 +97,9 @@ public class Level {
 	 * @param batch
 	 * General drawing loop
 	 */
-	public void draw(SpriteBatch batch){
+	public void draw(SpriteBatch batch, float parentAlpha){
+		batch.setProjectionMatrix(playScreen.getCamera().combined); 
+		
 		int numObjects = gameobjects.size();
 		sortDrawOrder(numObjects);
 		for(int k = 0 ; k < numObjects ; k++)
@@ -103,6 +114,16 @@ public class Level {
 			if(gameobjects.get(i).getDebug()){
 				gameobjects.get(i).debugDraw(sr);
 			}
+	}
+	
+	public void moveCamera(Vector2 tamerPos){
+		
+		//Vector2 camBounds = level.getCamBounds();
+		//float y = Math.min(camBounds.y , Math.max(tamerPos.y,-camBounds.y ));
+		//float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
+		
+		Vector2 newPos = IsoHelper.twoDToIso(tamerPos);
+		playScreen.getCamera().position.set(newPos.x,newPos.y,0);	
 	}
 	
 	public void sortDrawOrder(int numObjects){

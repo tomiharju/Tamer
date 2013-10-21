@@ -165,7 +165,7 @@ public class WormPart extends DynamicObject implements Creature {
 	/* (non-Javadoc)
 	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)
 	 */
-	public void dispose(Level level){
+	public void dispose(Environment level){
 		//TODO: play some death animations before actually disposing?
 		level.getCreatures().remove(this);
 		level.getRigidBodies().remove(this.body);
