@@ -49,7 +49,9 @@ public class IsoHelper{
 
 	public static Vector2 twoDToTileIso(Vector2 point){
 		temp.set(point);
-		temp.mul(isomatrix);
+		temp.x = ( point.x + point.y ) * 0.5f;
+		temp.y = ( point.y - point.x ) * 0.25f;
+		
 		return temp;
 	}
 
@@ -71,7 +73,7 @@ public class IsoHelper{
 	 * @param tileHeight
 	 * @return returns cartesian coordinate based on specific tile position.
 	 */
-	public static Vector2 get2dFromTileCoordinates(Vector2 point, int tileHeight){
+	public static Vector2 get2dFromTile(Vector2 point, int tileHeight){
 			Vector2 tempPt =new Vector2(0,0);
 			tempPt.x = point.x * tileHeight;
 			tempPt.y = point.y * tileHeight;

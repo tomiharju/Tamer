@@ -14,20 +14,27 @@ import com.me.tamer.utils.RendererFactory;
 
 public class DynamicObject implements GameObject{
 	
-	protected Vector2 position;		//"Mathematical position"
-	protected Vector2 velocity;		//"Mathmematical velocity"
-	protected Vector2 heading;
-	protected Vector2 force;			// Magnitude and direction of per loop position iteration
+	protected Vector2 position = new Vector2();		//"World position"
+	protected Vector2 velocity = new Vector2();		//"World velocity"
+	protected Vector2 heading = new Vector2();
+	protected Vector2 force = new Vector2();		// Magnitude and direction of per loop position iteration
 	private float mass;			
-	private float invMass;				// Precalculated invmass, used in physics calculations
+	private float invMass;							// Precalculated invmass, used in physics calculations
 	protected Vector2 size;
-	private String renderType;
+	protected String renderType;
 	private boolean isCarbage = false;
 	protected RigidBody body = null;
 	private boolean debug = false;
 	private int zIndex = 0;
+	private Vector2 isoHeading;		//Used for determining the sprite
+	private Vector2 zeroHeading;
+	private double headingAngle;
 	
-	
+	public DynamicObject(){
+		isoHeading = new Vector2();
+		zeroHeading = new Vector2();
+		zeroHeading.set((float)Math.sin(Math.PI/8),(float)Math.cos(Math.PI/8));
+	}
 	@Override
 	public void update(float dt) {
 		position.add(velocity.mul(dt));
@@ -38,17 +45,9 @@ public class DynamicObject implements GameObject{
 		Renderer renderer = RenderPool.getRenderer(renderType);
 		renderer.setSize(size.x,size.y);
 		renderer.setPosition(IsoHelper.twoDToIso(position));
-		renderer.setOrientation(0);
+		renderer.setOrientation( solveOrientation() );
 		renderer.draw(batch);
 		
-	}
-	
-	
-	@Override
-	public void setRenderer(String renderinfo) {
-		String[] info = renderinfo.split(":");
-		RenderPool.addRendererToPool(info[0],info[1]);
-		this.renderType = info[1];
 	}
 	
 	@Override
@@ -76,14 +75,14 @@ public class DynamicObject implements GameObject{
 		String[] values = pos.split(":");
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
-		this.position = new Vector2(x,y);
+		this.position.set(x,y);
 	}
 	
 	public void setVelocity(String vel){
 		String[] values = vel.split(":");
 		float x = Float.parseFloat(values[0]);
 		float y = Float.parseFloat(values[1]);
-		this.velocity = new Vector2(x,y);
+		this.velocity.set(x,y);
 		
 	}
 	
@@ -91,7 +90,7 @@ public class DynamicObject implements GameObject{
 		String[] values = force.split(":");
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
-		this.force = new Vector2(x,y);
+		this.force.set(x,y);
 	}
 	
 	public void setRigidBody(String bodytype){
@@ -137,7 +136,7 @@ public class DynamicObject implements GameObject{
 	}
 	
 	@Override
-	public void setup() {
+	public void setup(Level level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -151,13 +150,27 @@ public class DynamicObject implements GameObject{
 	}
 	
 	public void setVelocity(Vector2 velocity) {
-		this.velocity = velocity;
+		this.velocity.set(velocity);
 	}
 	
 	@Override
 	public void resolveForces(float dt) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public int solveOrientation(){
+		if(getHeading() != null){
+			isoHeading.set(IsoHelper.twoDToIso(getHeading()));	
+			headingAngle = Math.acos((isoHeading.dot(zeroHeading) / (isoHeading.len() * zeroHeading.len())));
+			headingAngle = headingAngle / Math.PI * 4;
+			if (headingAngle == 0) headingAngle = 0.001f;
+			if (isoHeading.x > 0) headingAngle = 8 - headingAngle;
+			headingAngle = Math.floor(headingAngle);
+			//System.out.println("headingAngle: " +headingAngle);
+		}
+		
+		return (int)headingAngle;
 	}
 	
 	@Override
@@ -195,6 +208,31 @@ public class DynamicObject implements GameObject{
 	public void setZindex(int z) {
 		zIndex = z;
 		
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+	public int getzIndex() {
+		return zIndex;
+	}
+	
+	public Vector2 getForce(){
+		return force;
+	}
+
+	public void setzIndex(int zIndex) {
+		this.zIndex = zIndex;
+	}
+
+	public void setPosition(Vector2 position) {
+		this.position.set(position);
+	}
+
+	public void setSize(Vector2 size) {
+		this.size = size;
 	}
 
 

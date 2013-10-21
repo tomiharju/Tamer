@@ -3,9 +3,9 @@ package com.me.tamer.ui;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Spear;
-import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
@@ -20,8 +20,8 @@ public class SpearButton implements UiElement {
 	Vector2 tamerPos = null;
 	Vector2 tamerHeading = null;
 	
-	final Vector2 restingPoint = new Vector2(350,100);
-	final float BUTTON_SIZE = 150;
+	final Vector2 restingPoint = new Vector2(300,100);
+	final float BUTTON_SIZE = 110;
 	final float MIN_POWER = 2;
 	final float MAX_POWER = 10;
 	final float SPEED = 5;
@@ -39,7 +39,7 @@ public class SpearButton implements UiElement {
 		targetPoint		= new Vector2(0,0);
 		buttonRender = new UiRenderer();
 		pointRender = new UiRenderer();
-		buttonRender.loadGraphics("joystick");
+		buttonRender.loadGraphics("icon_scream_v6");
 		buttonRender.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		buttonRender.setPosition(restingPoint);
 		
@@ -48,8 +48,8 @@ public class SpearButton implements UiElement {
 		pointRender.setPosition(new Vector2(0,0));
 		tamer = inputController.getLevel().getTamer();
 		
-		tamerPos = new Vector2(tamer.getPosition());
-		tamerHeading = new Vector2(tamer.getHeading());
+		tamerPos = new Vector2();
+		tamerHeading = new Vector2();
 	
 		cam = inputController.getCam();
 		uiCam = inputController.getUiCam();

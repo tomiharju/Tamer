@@ -10,12 +10,12 @@ import com.me.tamer.physics.RigidBody;
 import com.me.tamer.physics.RigidBodyBox;
 import com.me.tamer.physics.RigidBodyCircle;
 import com.me.tamer.utils.IsoHelper;
-import com.me.tamer.utils.RendererFactory;
 
 public class StaticObject implements GameObject{
 	protected RigidBody body = null;
 	protected Vector2 position;
-	protected Vector2 size;
+	protected Vector2 size = new Vector2();
+	
 	protected String renderType = null;
 	private boolean isCarbage = false;
 	private boolean debug = false;
@@ -38,13 +38,7 @@ public class StaticObject implements GameObject{
 		
 	}
 
-	@Override
-	public void setRenderer(String renderinfo) {
-		String[] info = renderinfo.split(":");
-		RenderPool.addRendererToPool(info[0],info[1]);
-		this.renderType = info[1];
-	}
-
+	
 
 	@Override
 	public void markAsCarbage() {
@@ -63,11 +57,9 @@ public class StaticObject implements GameObject{
 		float w = Float.parseFloat(values[0]);
 		float h = Float.parseFloat(values[1]);
 		
-		this.size = new Vector2(w,h);
+		this.size.set(w,h);
 		
 	}
-
-
 	@Override
 	public void setPosition(String pos) {
 		String[] values = pos.split(":");
@@ -101,7 +93,7 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void setup() {
+	public void setup(Level level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -152,6 +144,12 @@ public class StaticObject implements GameObject{
 	@Override
 	public void setZindex(int z) {
 		zIndex = z;
+		
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -22,7 +22,7 @@ public class UiRenderer implements Renderer {
 	@Override
 	public void loadGraphics(String graphicsName) {
 		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
-		sprite.setColor(0,0,0,0.3f);
+		//sprite.setColor(0,0,0,0.3f);
 	}
 	@Override
 	public void setSize(float w, float h) {
@@ -39,7 +39,7 @@ public class UiRenderer implements Renderer {
 
 	}
 	@Override
-	public void setOrientation(float angle) {
+	public void setOrientation(int orientation) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -54,6 +54,12 @@ public class UiRenderer implements Renderer {
 	}
 	public void resetColor(){
 		sprite.setColor(0,0,0,0.1f);
+	}
+
+	@Override
+	public void loadGraphics(String animName, int FRAME_COLS, int FRAME_ROWS) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

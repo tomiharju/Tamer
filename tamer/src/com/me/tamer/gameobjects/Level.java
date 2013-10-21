@@ -9,19 +9,24 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.Environment;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
-import com.me.tamer.gameobjects.superclasses.Interactable;
-import com.me.tamer.gameobjects.tiles.ObstacleTile;
+import com.me.tamer.gameobjects.superclasses.Creature;
+import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.gameobjects.tiles.Prop;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
+import com.me.tamer.ui.InputController;
 import com.me.tamer.utils.DrawOrderComparator;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Level {
 
+	private InputController inputController = null;
+	private DrawOrderComparator comparator = null;
 	//Settings
 
 	private Vector2 mapBounds = null;
@@ -33,9 +38,9 @@ public class Level {
 	private ArrayList<GameObject> gameobjects = null;
 	private ArrayList<GameObject> carbages	= null;
 	private ArrayList<GameObject> newobjects = null;
-	private DynamicObject 	tamer = null;
-	private ArrayList<ObstacleTile> obstacles = null;
-	private ArrayList<Interactable> creatures	= null;
+	private DynamicObject tamer = null;
+	private ArrayList<GameObject> obstacles = null;
+	private ArrayList<Creature> creatures	= null;
 	
 	//Physical contact list
 	private ArrayList<Contact> contacts;
@@ -54,12 +59,18 @@ public class Level {
 		gameobjects 	= new ArrayList<GameObject>();
 		carbages 		= new ArrayList<GameObject>();
 		newobjects 		= new ArrayList<GameObject>();
-		obstacles 		= new ArrayList<ObstacleTile>();
-		creatures		= new ArrayList<Interactable>();
+		obstacles 		= new ArrayList<GameObject>();
+		creatures		= new ArrayList<Creature>();
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
+		comparator 		= new DrawOrderComparator();
 		RuntimeObjectFactory.createLinkToLevel(this);
 
+		ContactPool.createPool(100);
+
+	}
+	public void linkToUi(InputController inputController){
+		this.inputController = inputController;
 	}
 	
 	/**
@@ -69,6 +80,7 @@ public class Level {
 	public void update(float dt){
 		runCarbageCollection();
 		addNewObjects();
+		resolveObstacles(dt);
 		resolveCollisions(dt);
 		int numObjects = gameobjects.size();
 		for(int k = 0 ; k < numObjects ; k++)
@@ -83,26 +95,23 @@ public class Level {
 		sortDrawOrder(numObjects);
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).draw(batch);
+		
 	}
 	
 	
 	public void debugDraw(ShapeRenderer sr){
-		for(GameObject o : gameobjects)
-			if(o.getDebug()){
-				o.debugDraw(sr);
+		int size = gameobjects.size();
+		for(int i = 0 ; i < size ; i++)
+			if(gameobjects.get(i).getDebug()){
+				gameobjects.get(i).debugDraw(sr);
 			}
 	}
 	
 	public void sortDrawOrder(int numObjects){
 		if(loopCount % sortRate == 0){
 			if(numObjects > 1){
-				Collections.sort(gameobjects, new DrawOrderComparator());
-				/*for (GameObject g : gameobjects){
-					//if(g.getPosition() != null)
-					//System.out.println(g.getClass().getName() +"..." + g.getPosition().y);
-					System.out.println(g.getClass().getName() +"..." + g.getZIndex());
-				}
-				System.out.println("-------------------------------");*/
+				Collections.sort(gameobjects, comparator);
+				loopCount = 0;
 			}
 		} loopCount++;
 	}
@@ -120,6 +129,7 @@ public class Level {
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).resolveForces(dt);
 		
+		/*
 		for(int i = 0 ; i < numBodies ; i ++){
 			if(!rigidbodies.get(i).isDynamic())
 				continue;
@@ -164,9 +174,13 @@ public class Level {
 				//!!!PUT CONTACT BACK INTO POOL!!!
 				ContactPool.restore(c);
 			}	
-		}		
+		}	
+		*/	
 	}
 	
+	public void resolveObstacles(float dt){
+		
+	}
 	public void runCarbageCollection(){
 		int size = gameobjects.size();
 		for( int i = 0 ; i < size ; i ++)
@@ -189,8 +203,7 @@ public class Level {
 				gameobjects.add(go);
 			}
 			newobjects.clear();
-			}
-		
+			}	
 	}
 	
 	/**
@@ -198,16 +211,14 @@ public class Level {
 	 * We use this obstacle list to apply effects on worms ( for example we check if worms is inside quicksand tile, and then apply force to it)
 	 */
 	public void setupObjects(){
+		//Call setup method which then adds that objects properties to level datastructures
+		//For example calling setup on worm, it creates all the parts.
 		for(GameObject go : gameobjects){
-			if(go instanceof ObstacleTile)
-				obstacles.add((ObstacleTile) go);
-			if(go instanceof SpawnPoint)
-				((SpawnPoint) go).startSpawning();
-			if(go.getRigidBody() != null)
-				rigidbodies.add(go.getRigidBody());
+				go.setup(this);
 		}
-		//Create and set tamer into level
-		setTamerPos("0:0");
+		//Create dummytamer for UiElements to work
+		//tamer = new Tamer();
+
 		//Create new contact pool
 		ContactPool.createPool(100);
 	}
@@ -227,12 +238,15 @@ public class Level {
 	public void addRigidBody(RigidBody body){
 		rigidbodies.add(body);
 	}
+	public void addObstacle(GameObject obstacle){
+		this.obstacles.add(obstacle);
+	}
 	
 	
 	/**
 	 * LevelCreator calls this to set Camera borders, could be expanded later if more settings needed
 	 */
-	public void setMapBounds(String value){
+	public void setMapSize(String value){
 		
 		String[] values =value.split(":");
 		
@@ -244,19 +258,13 @@ public class Level {
 	}
 	
 	/**
-	 * Creates tamer and sets starting position
+	 * 
 	 */
-	public void setTamerPos(String pos){
-		tamer = new Tamer();
-		tamer.setRenderer("animated:tamer1");
-		tamer.setSize("2:2.72");
-		tamer.setPosition(pos);
-		tamer.setVelocity("0:0");
-		tamer.setForce("0:0");
-		tamer.setMass("10");
-		tamer.setRigidBody("circle");
-		gameobjects.add(tamer);	
-		
+	public void setTamer(Tamer tamer){
+		this.tamer = tamer;
+		inputController.enableInput();
+		gameobjects.add(tamer);
+
 	}
 	
 	
@@ -266,6 +274,7 @@ public class Level {
 		newobjects.clear();
 		rigidbodies.clear();
 		tamer = null;
+		obstacles.clear();
 	}
 
 	public Vector2 getMapBounds(){
@@ -284,8 +293,11 @@ public class Level {
 		return camBoundsOffset;
 	}
 	
-	public ArrayList<Interactable> getCreatures(){
+	public ArrayList<Creature> getCreatures(){
 		return creatures;
+	}
+	public ArrayList<GameObject> getObstacles(){
+		return obstacles;
 	}
 	
 	public Tamer getTamer(){

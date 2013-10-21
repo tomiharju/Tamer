@@ -37,10 +37,10 @@ public class Environment {
 	//Define viewport size
 	private final float VIRTUAL_WIDTH = 12;
 	private final float VIRTUAL_HEIGHT = 20;
-	float ASPECT_RATIO = (float)VIRTUAL_WIDTH / ((float)VIRTUAL_HEIGHT);
+	float ASPECT_RATIO = (float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
 	//Refrence to active level
 	Level level = null;
-	InputController inputcontroller;
+	InputController inputController;
 
 	
 	//debug
@@ -54,15 +54,17 @@ public class Environment {
 		
 		setupCamera();
 		createLevel(1);
-		inputcontroller = new InputController(this,level);
-		
+		inputController = new InputController(this,level);
+		level.linkToUi(inputController);
 		shapeRndr = new ShapeRenderer();
 	}
 	
 	public void setupCamera(){
 		
-		cam = new OrthographicCamera(VIRTUAL_WIDTH,VIRTUAL_HEIGHT / ASPECT_RATIO);
+		cam = new OrthographicCamera();
+		cam.setToOrtho(false,VIRTUAL_WIDTH,VIRTUAL_HEIGHT);// * ASPECT_RATIO);
 		
+		cam.position.set(0f,0f,0f);
 		uiCam = new OrthographicCamera();
 		uiCam.setToOrtho(false);
 	
@@ -122,9 +124,7 @@ public class Environment {
 	public void createLevel(int current_level){
 		level = LevelCreator.create(current_level);	
 	}
-	
-	
-	
+		
 	public void draw(){
 		//update camera ( needed if its matrix is changed, its translated for example )
 		cam.update();
@@ -141,11 +141,10 @@ public class Environment {
 		
 		//Set projection matrix to batch
 		batch.setProjectionMatrix(uiCam.combined); 
-		inputcontroller.draw(batch);
+		inputController.draw(batch);
 		
 		batch.end();
 		
-		//ShapeRenderer shapeRndr = new ShapeRenderer();
 		shapeRndr.setProjectionMatrix(cam.combined);
 		level.debugDraw(shapeRndr);
 		
@@ -153,13 +152,16 @@ public class Environment {
 	
 	
 	public void update(float dt){
-		inputcontroller.update(dt);
+		inputController.update(dt);
 		level.update(dt);
 		
 	}
 	
 	public void cleanUp(){
 		batch.dispose();
+	}
+	public InputController getInputController(){
+		return inputController;
 	}
 	
 

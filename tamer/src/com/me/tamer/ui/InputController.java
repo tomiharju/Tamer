@@ -25,32 +25,40 @@ public class InputController implements InputProcessor{
 	private HashMap<Integer,UiElement> selectedButtons = null;
 	Vector2 testVector = new Vector2();
 	
-	
-	
-	
-	
 	public InputController(Environment env, Level lvl){
 		this.environment = env;
 		uiCam = environment.getUiCamera();
 		cam = environment.getCamera();
 		this.level = lvl;
 		buttons = new ArrayList<UiElement>();
-		buttons.add(new ActionButton(this));
-		buttons.add(new Joystick(this));
-		buttons.add(new SpearButton(this));
-		selectedButtons = new HashMap<Integer,UiElement>();
-		Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(null);
 	}
 	
 	public void draw(SpriteBatch batch){
-		for(UiElement u : buttons)
-			u.draw(batch);
+		int size = buttons.size();
+		for(int i = 0 ; i < size ; i ++)
+			buttons.get(i).draw(batch);
 	}
 	public void update(float dt){
-		for(UiElement u : buttons)
-			u.update(dt);
+		int size = buttons.size();
+		for(int i = 0 ; i < size ; i ++)
+			buttons.get(i).update(dt);
 	}
 	
+	public void enableInput(){
+		buttons.clear();
+	
+		buttons.add(new ActionButton(this));
+		buttons.add(new Joystick(this));
+		buttons.add(new SpearButton(this));
+		buttons.add(new LassoButton(this));
+		
+		selectedButtons = new HashMap<Integer,UiElement>();
+		Gdx.input.setInputProcessor(this);
+	}
+	public void disableInput(){
+		Gdx.input.setInputProcessor(null);
+	}
 	public ArrayList<UiElement> getButtons() {
 		return buttons;
 	}

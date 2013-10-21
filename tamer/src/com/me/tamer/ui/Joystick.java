@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.me.tamer.core.Environment;
 import com.me.tamer.gameobjects.Level;
-import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.renders.StaticRenderer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.VectorHelper;
 
@@ -24,7 +24,7 @@ public class Joystick implements UiElement{
 	
 	private Matrix3 translate = new Matrix3().rotate(45);
 	//Joystick variables
-	Vector2 restingpoint 	= new Vector2(150,100);
+	Vector2 restingpoint 	= new Vector2(125,100);
 	Vector2 delta			= null;
 	Vector2 pointer			= null;
 	float size				= 250;
@@ -43,7 +43,7 @@ public class Joystick implements UiElement{
 		tamer 			= inputcontroller.getLevel().getTamer();
 		level			= inputcontroller.getLevel();
 		env 			= inputcontroller.getEnvironment();
-		renderer.loadGraphics("joystick");
+		renderer.loadGraphics("icon_scream_v6");
 		renderer.setSize(size,size);
 		renderer.setPosition(restingpoint);
 	}
@@ -92,7 +92,6 @@ public class Joystick implements UiElement{
 		tamerPosition.add(movement);
 		if(tamerPosition.x > mapBounds.x || tamerPosition.x < -mapBounds.x){
 			Vector2 remove = VectorHelper.projection((mapBounds.tmp().set(1,0)),movement);
-			System.out.println(remove.toString());
 			movementAxis.set(1,0);
 			movement.sub(VectorHelper.projection(movement,movementAxis));
 			
@@ -100,7 +99,6 @@ public class Joystick implements UiElement{
 		}
 		if(tamerPosition.y > mapBounds.y || tamerPosition.y < -mapBounds.y){
 			Vector2 remove = VectorHelper.projection((mapBounds.tmp().set(1,0)),movement);
-			System.out.println(remove.toString());
 			movementAxis.set(0,1);
 			movement.sub(VectorHelper.projection(movement,movementAxis));
 			

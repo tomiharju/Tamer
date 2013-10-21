@@ -21,7 +21,7 @@ import com.me.tamer.core.Environment;
 import com.me.tamer.gameobjects.Level;
 import com.me.tamer.gameobjects.renders.Renderer.RenderType;
 import com.me.tamer.gameobjects.superclasses.GameObject;
-import com.me.tamer.gameobjects.SpawnPoint;
+import com.me.tamer.gameobjects.tiles.SpawnPoint;
 
 
 /**
@@ -71,29 +71,29 @@ public class LevelCreator {
 			Array<Element> objects = root.getChildrenByName("GameObject");
 			
 			for(Element gameobject : objects){
+				propertyConfig.clear();
 				//First child is always GameObject
 				//Create new LinkedHashMap ( it keeps input order ) to hold all values for this gameobject
 				objectType = gameobject.getAttribute("type");
-				
+				//Read all properties ( non sub-object data )
 				properties = gameobject.getChildrenByName("property");
+				//Add found values to config map
 				for(Element property : properties){
 					propertyConfig.put(property.getAttribute("type"),property.getText());
 				}
-				
-				
-				subObjects = gameobject.getChildrenByName("SubObject");
-				/*
-				for(Element subObject : subObjects){
-					subObjectConfig.put(subObject.getAttribute("type"),subObject.getText());
-				}
-				*/
-				
+				//Create new gameobject
 				GameObject objectToAdd = GameObjectFactory.createGameObject(objectType,propertyConfig);
-				level.addObject(objectToAdd);
+				//If object has subobjects, create them aswell
+				subObjects = gameobject.getChildrenByName("SubObject");
+				
+			
+				
 				
 				if(subObjects.size != 0){
-					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName());
+					System.out.println("Creating Sub-objects for {"+objectToAdd.getClass().getSimpleName()+"}");
+					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName(),level);
 				}
+				objectToAdd.setup(level);
 				
 			}
 			
@@ -104,7 +104,7 @@ public class LevelCreator {
 			return level;	  
 		  
 		} catch (Exception e) {
-		 e.printStackTrace();
+			System.out.println(e.getLocalizedMessage());
 		 return null;
 		
 		}
@@ -112,13 +112,13 @@ public class LevelCreator {
 	
 	}
 	
-	public static void addSubObjects(Element currentXmlLevel, GameObject owner, String ownerClassName){
+	public static void addSubObjects(Element currentXmlLevel, GameObject owner, String ownerClassName,Level level){
 		String objectType;
 		Array<Element> objects;
 		Array<Element> subObjects;
 		Array<Element> properties;
 		LinkedHashMap<String,String> propertyConfig = new LinkedHashMap<String,String>();
-		
+	
 		//SubObjects
 		try{
 			objects = currentXmlLevel.getChildrenByName("SubObject");
@@ -143,10 +143,11 @@ public class LevelCreator {
 					Method adder = ownerClass.getMethod("add"+objectClassNameTrimmed,objectToAdd.getClass());
 					
 					adder.invoke(owner, objectToAdd);
+					objectToAdd.setup(level);
 					
 					subObjects = object.getChildrenByName("SubObject");
 					if(subObjects != null){
-						addSubObjects(object, objectToAdd, objectToAdd.getClass().getName());
+						addSubObjects(object, objectToAdd, objectToAdd.getClass().getName(),level);
 					}
 				}
 			}
