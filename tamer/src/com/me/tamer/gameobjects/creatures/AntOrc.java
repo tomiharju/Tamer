@@ -1,16 +1,18 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.creatures;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.utils.IsoHelper;
 
 
 public class AntOrc extends DynamicObject implements Creature{
 	
-	private Environment level;
+	private Environment environment;
 	private ArrayList<Vector2> waypoints;
 	private float wormScanRad = 5.0f; //ScanArea is a circle
 	private float waypointScanRad = 3.0f;
@@ -26,8 +28,8 @@ public class AntOrc extends DynamicObject implements Creature{
 		waypoints.add(new Vector2(0,0));//place holder for the first value
 	}
 	
-	public void wakeUp(Environment level){
-		this.level = level;
+	public void wakeUp(Environment environment){
+		this.environment = environment;
 		//Add the spawnin position as first waypoint
 		waypoints.add(0, getPosition());
 		markAsActive();
@@ -78,7 +80,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public void scanWorms(){
 		//lock to wormpart that is scanned first
-		creatures = level.getCreatures();
+		creatures = environment.getCreatures();
 		for (Creature creature : creatures){		
 			if (creature.getClass().getName() == "WormPart"){
 				if ( ((WormPart)creature).getPosition().dst( getPosition() ) < wormScanRad){

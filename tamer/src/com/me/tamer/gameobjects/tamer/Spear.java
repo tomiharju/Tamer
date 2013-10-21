@@ -1,8 +1,9 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.tamer;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
@@ -11,7 +12,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Spear extends DynamicObject{
 	
-	private Environment level;
+	private Environment environment;
 	private Vector2 target = new Vector2() ;
 	private Creature targetCreature = null;
 	private boolean isAttached = false;
@@ -30,6 +31,7 @@ public class Spear extends DynamicObject{
 		render.loadGraphics("spear",1,8);
 		setSize("1:1");
 		renderType = "spear";
+		System.out.println("Spear graphics are set");
 	}
 	
 	public void update(float dt){
@@ -39,7 +41,7 @@ public class Spear extends DynamicObject{
 		//If there is, call that creatures spearHit method to resolve damage.
 		if(!isAttached && position.dst(target) < 0.5){
 			position.set(target);
-			ArrayList<Creature> creatures = level.getCreatures();
+			ArrayList<Creature> creatures = environment.getCreatures();
 			int size = creatures.size();
 			System.out.println("Searching for potential hit amont "+size+" creatures.");
 			for(int i = 0 ; i < size ; i ++)
@@ -53,9 +55,11 @@ public class Spear extends DynamicObject{
 		
 	}
 	
-	public void wakeUp(Environment level){
+	public void wakeUp(Environment environment){
 		System.out.println("Spear woke up!");
-		this.level = level;
+		this.environment = environment;
+		isAttached = false;
+		markAsActive();
 		
 
 	}
@@ -63,7 +67,6 @@ public class Spear extends DynamicObject{
 		target.set(point);
 		Vector2 dir = point.sub(position);
 		force.set(dir.tmp().nor().mul(power));
-		System.out.println("Spear data " + position.toString() + " " + target.toString());
 	}
 	
 	/**

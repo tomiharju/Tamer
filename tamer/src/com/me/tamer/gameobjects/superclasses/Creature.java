@@ -1,7 +1,7 @@
 package com.me.tamer.gameobjects.superclasses;
 
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Spear;
+import com.me.tamer.gameobjects.tamer.Spear;
 
 public interface Creature {
 

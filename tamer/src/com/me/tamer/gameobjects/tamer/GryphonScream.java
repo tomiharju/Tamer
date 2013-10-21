@@ -1,4 +1,4 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.tamer;
 
 
 import java.util.ArrayList;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.creatures.WormPart;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
@@ -18,7 +20,7 @@ import com.me.tamer.utils.tTimer;
 public class GryphonScream extends DynamicObject {
 	private final float SCREAM_AREA_WIDTH = 4.0f;
 	private final float SCREAM_AREA_LENGTH = 8.0f;
-	private Environment level 				= null;
+	private Environment environment 				= null;
 	private boolean isActive			= false;
 	private Vector2 position			= new Vector2();
 	private Vector2 size				= new Vector2(10,10);
@@ -93,18 +95,17 @@ public class GryphonScream extends DynamicObject {
 		render.loadGraphics("scream_placeholder",4,1);
 		setSize("3:3");
 		renderType = "scream";
-		System.out.println("Scream graphics are set");
+		System.out.println("Scream graphics are set " + this.toString());
+		
 	}
 	
 	@Override
 	public void update(float dt) {
 		
-		position.set(level.getTamer().getPosition());
-		
+		position.set(environment.getTamer().getPosition());
 		if(isActive){
-			tamerPos.set(level.getTamer().getPosition());
-			tamerHead.set(level.getTamer().getHeading());
-			System.out.println("Tamer data " + tamerPos.toString() + " " + tamerHead);
+			tamerPos.set(environment.getTamer().getPosition());
+			tamerHead.set(environment.getTamer().getHeading());
 			screamVert1.set(tamerPos);
 			screamVert2.set(tamerPos);
 			screamVert2.x += tamerHead.x * SCREAM_AREA_LENGTH - tamerHead.y * SCREAM_AREA_WIDTH;
@@ -113,7 +114,7 @@ public class GryphonScream extends DynamicObject {
 			screamVert3.set(tamerPos);
 			screamVert3.x += tamerHead.x * SCREAM_AREA_LENGTH + tamerHead.y * SCREAM_AREA_WIDTH;
 			screamVert3.y += tamerHead.y * SCREAM_AREA_LENGTH - tamerHead.x * SCREAM_AREA_WIDTH;
-			ArrayList<Creature> creatures = level.getCreatures();
+			ArrayList<Creature> creatures = environment.getCreatures();
 			for (int i = 0; i < creatures.size(); i++){	
 				if(creatures.get(i).getClass() == WormPart.class){
 					WormPart wopa = ((WormPart)creatures.get(i));
@@ -141,7 +142,7 @@ public class GryphonScream extends DynamicObject {
 	}
 
 	public void wakeUp(Environment level){
-		this.level = level;
+		this.environment = level;
 		markAsActive();
 	}
 	

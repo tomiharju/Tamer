@@ -4,11 +4,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+
 import com.me.tamer.core.Level;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.Tamer;
 import com.me.tamer.gameobjects.renders.StaticRenderer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.VectorHelper;
 

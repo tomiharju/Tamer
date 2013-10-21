@@ -1,11 +1,14 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.creatures;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.gameobjects.tiles.SpawnPoint;
 
 public class Worm extends DynamicObject implements Creature{
 	private SpawnPoint spawn;
@@ -31,7 +34,7 @@ public class Worm extends DynamicObject implements Creature{
 		//No action because this object is not ment to be on game right away
 	}
 	
-	public void wakeUp(Environment level){
+	public void wakeUp(Environment environment){
 		System.out.println("WORM WOKE UP!");
 		addPart("head",0,position,velocity);
 		for(int i = 0 ; i < 3 ; i++)
@@ -39,9 +42,9 @@ public class Worm extends DynamicObject implements Creature{
 		connectPieces();
 		
 		for(WormPart part : parts){
-			level.addObject(part);
-			level.getCreatures().add(part);
-			level.addRigidBody(part.getRigidBody());
+			environment.addObject(part);
+			environment.getCreatures().add(part);
+			environment.addRigidBody(part.getRigidBody());
 			
 		}
 		

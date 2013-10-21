@@ -1,10 +1,12 @@
-package com.me.tamer.gameobjects;
+package com.me.tamer.gameobjects.creatures;
 
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.Creature;
+import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.physics.RigidBodyCircle;
 
 public class WormPart extends DynamicObject implements Creature {
@@ -165,10 +167,10 @@ public class WormPart extends DynamicObject implements Creature {
 	/* (non-Javadoc)
 	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)
 	 */
-	public void dispose(Environment level){
+	public void dispose(Environment environment){
 		//TODO: play some death animations before actually disposing?
-		level.getCreatures().remove(this);
-		level.getRigidBodies().remove(this.body);
+		environment.getCreatures().remove(this);
+		environment.getRigidBodies().remove(this.body);
 		worm.getParts().remove(this);
 	}
 	
