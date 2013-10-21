@@ -1,83 +1,9 @@
-
 <root>
-   
-    <Settings>
-        <property type="MapBounds">10:10:0:0</property>
-    </Settings>
-    
-    <GameObject type ="com.me.tamer.gameobjects.tiles.TileMap">
-    	<property type="Renderer">static:tile_dirt</property>
-    	<property type="MapSize">40:40</property>
-    </GameObject>
-   
-    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-    	<property type="Renderer">static:debugtile3</property>
-    	<property type="Size">1:1</property><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
-    	<property type="Position">-6:-7</property>
-    	<property type="RigidBody">circle</property><!--box/circle/no-body-->
-    </GameObject>
-    
-    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-
-    	<data type="Renderer">animated:tile_sand</data>
-    	<data type="Size">5:5</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
-    	<data type="Position">0:0</data>
-    	<data type="Action">quicksand</data>
-    	<data type="RigidBody">no-body</data><!--box/circle/no-body-->
-    </GameObject>
-    
-    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-    	<property type="Renderer">animated:ending_point</property>
-    	<property type="Size">1:1</property><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
-    	<property type="Position">-6:-6</property>
-    	<property type="Action">endingpoint</property>
-    	<property type="RigidBody">no-body</property><!--box/circle/no-body-->
-    </GameObject>
-
-    <GameObject type ="com.me.tamer.gameobjects.tiles.ObstacleTile">
-    	<data type="Renderer">static:tree1</data>
-    	<data type="Size">2:4.78</data><!-- Size calculation : x = width; y = pixelHeight/pixelWidth*x*2 -->
-    	<data type="Position">2:2</data>
-    	<data type="Action">endingpoint</data>
-    	<data type="RigidBody">no-body</data><!--box/circle/no-body-->
-    </GameObject>
-          
-      
-       
-    
-   
-
-     <GameObject type ="com.me.tamer.gameobjects.SpawnPoint">
-    	<data type="Renderer">static:debugtile3</data>
-    	<data type="Size">1:6</data>
-    	<data type="Position">6:6</data>
-    	<!--Spawnpoint specific data  -->
-    	<data type="SpawnType">worm</data>
-    	<data type="SpawnNumber">1</data>	<!-- IMPORTANT, USED TO DISTINGUISH SPAWNS FROM EACH OTHER!!! -->
-    	<data type="InitialSleep">4</data>
-    	<data type="Interval">2</data>
-    	<data type="SpawnVelocity">-1:-1</data>
-    	<data type="SpawnCount">2</data>
-     </GameObject>
-     
-    
-     
-   
-   
-    
->>>>>>> e11178f3b3b1b8af407e7c3158c069d9ea514d15
-     
-	<GameObject type ="com.me.tamer.gameobjects.SpawnPoint">
-    	<property type="Renderer">static:debugtile3</property>
-    	<property type="Size">1:6</property>
-    	<property type="Position">6:6</property>
-    	<!--Spawnpoint specific property  -->
-    	<property type="SpawnType">worm</property>
-    	<property type="SpawnNumber">1</property>	<!-- IMPORTANT, USED TO DISTINGUISH SPAWNS FROM EACH OTHER!!! -->
-    	<property type="InitialSleep">4</property>
-    	<property type="Interval">2</property>
-    	<property type="SpawnVelocity">-1:-1</property>
-    	<property type="SpawnCount">1</property>
-     </GameObject>
-    
+	<Settings>
+		<property type="MapSize">10:10</property>
+	</Settings>
+	<GameObject type="com.me.tamer.gameobjects.tiles.TileMap">
+		<property type="Graphics">dirt0</property>
+		<property type="TileMap">-5:-5.-5:-4.-5:-3.-5:-2.-5:2.-5:3.-5:4.-5:5.-4:-5.-4:-4.-4:-3.-4:-2.-4:-1.-4:1.-4:2.-4:3.-4:4.-4:5.-3:-5.-3:-4.-3:-3.-3:-2.-3:-1.-3:1.-3:2.-3:3.-3:4.-3:5.-2:-5.-2:-4.-2:-3.-2:-2.-2:-1.-2:0.-2:1.-2:2.-2:3.-2:4.-2:5.-1:-5.-1:-4.-1:-3.-1:-2.-1:-1.-1:0.-1:1.-1:2.-1:3.-1:4.-1:5.0:-5.0:-4.0:-3.0:-2.0:-1.0:0.0:1.0:2.0:3.0:4.0:5.1:-5.1:-4.1:-3.1:-2.1:-1.1:0.1:1.1:2.1:3.1:4.1:5.2:-5.2:-4.2:-3.2:-2.2:-1.2:0.2:1.2:2.2:3.2:4.2:5.3:-5.3:-4.3:-3.3:-2.3:-1.3:0.3:1.3:2.3:3.3:4.3:5.4:-5.4:-4.4:-3.4:-2.4:-1.4:0.4:1.4:2.4:3.4:4.4:5.5:-5.5:-4.5:-3.5:-2.5:-1.5:0.5:1.5:2.5:3.5:4.5:5</property>
+	</GameObject>
 </root>
