@@ -3,10 +3,12 @@ package com.me.tamer.gameobjects.tamer;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.WormPart;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -67,45 +69,43 @@ public class GryphonScream extends DynamicObject {
 	
 	
 	@Override 
-	public void debugDraw(ShapeRenderer shapeRndr){
-		/*
+	public void debugDraw(ShapeRenderer shapeRenderer){
+		
 		if(isActive){
-		drawVert1.set(IsoHelper.twoDToIso(screamVert1));
-		drawVert2.set(IsoHelper.twoDToIso(screamVert2));
-		drawVert3.set(IsoHelper.twoDToIso(screamVert3));
-		shapeRndr.setColor(1, 1, 1, 1);
-		
-		shapeRndr.begin(ShapeType.Line);
-		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
-		shapeRndr.end();
-		
-		shapeRndr.begin(ShapeType.Line);
-		shapeRndr.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
-		shapeRndr.end();
-		
-		shapeRndr.begin(ShapeType.Line);
-		shapeRndr.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
-		shapeRndr.end();
+			drawVert1.set(IsoHelper.twoDToIso(screamVert1));
+			drawVert2.set(IsoHelper.twoDToIso(screamVert2));
+			drawVert3.set(IsoHelper.twoDToIso(screamVert3));
+			shapeRenderer.setColor(1, 1, 1, 1);
+			
+			shapeRenderer.begin(ShapeType.Line);
+			shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
+			shapeRenderer.end();
+			
+			shapeRenderer.begin(ShapeType.Line);
+			shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
+			shapeRenderer.end();
+			
+			shapeRenderer.begin(ShapeType.Line);
+			shapeRenderer.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
+			shapeRenderer.end();
 		}
-		*/
+		
 	}
 	
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("animated","scream");
-		render.loadGraphics("scream_placeholder",4,1);
+		render.loadGraphics("scream_ph",4,1);
 		setSize("3:3");
 		renderType = "scream";
-		System.out.println("Scream graphics are set " + this.toString());
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream graphics are set");
 		
 	}
 	
 	@Override
 	public void update(float dt) {
-		
-		position.set(environment.getTamer().getPosition());
 		if(isActive){
-			tamerPos.set(environment.getTamer().getPosition());
-			tamerHead.set(environment.getTamer().getHeading());
+			tamerPos.set(environment.getTamer().getPosition().cpy());
+			tamerHead.set(environment.getTamer().getHeading().cpy());
 			screamVert1.set(tamerPos);
 			screamVert2.set(tamerPos);
 			screamVert2.x += tamerHead.x * SCREAM_AREA_LENGTH - tamerHead.y * SCREAM_AREA_WIDTH;
@@ -138,6 +138,9 @@ public class GryphonScream extends DynamicObject {
 					}
 				}	
 			}	
+			setPosition(tamerPos);
+			//isoHeading.set(IsoHelper.twoDToIso(getHeading()));	
+			//headingAngle = Math.acos((isoHeading.dot(zeroHeading) / (isoHeading.len() * zeroHeading.len())));
 		}	
 	}
 
@@ -147,15 +150,14 @@ public class GryphonScream extends DynamicObject {
 	}
 	
 	public void activate(){
-		System.out.println("Scream activated");
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream activated");
 		isActive = true;
 		tTimer timer = new tTimer(this,"deactivateScream",1);
 		timer.start();
-	
 	}
 
 	public void deactivateScream(){
-		System.out.println("Timer completed");
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream timer completed. Returning to object pool.");
 		isActive = false;
 		markAsCarbage();
 		RuntimeObjectFactory.addToObjectPool("scream",this);
@@ -164,13 +166,13 @@ public class GryphonScream extends DynamicObject {
 	//Debug is on
 	@Override
 	public boolean getDebug(){
-		return true;
+		return false;
 	}
 	
 	public Vector2 getPosition(){
 		return position;
 	}
-	
+
 	public Vector2 getSize(){
 		return size;
 	}

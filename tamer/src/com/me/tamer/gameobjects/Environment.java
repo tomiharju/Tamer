@@ -1,35 +1,28 @@
 package com.me.tamer.gameobjects;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Matrix3;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.me.tamer.core.Level;
-import com.me.tamer.core.PlayScreen;
+import com.me.tamer.core.TamerStage;
+import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
-import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.tamer.Tamer;
-import com.me.tamer.gameobjects.tiles.Prop;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
-import com.me.tamer.ui.InputController;
 import com.me.tamer.utils.DrawOrderComparator;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Environment extends Actor{
 
-	private PlayScreen playScreen;
+	private TamerStage stage;
 	
-	private InputController inputController = null;
 	private DrawOrderComparator comparator = null;
 	//Settings
 
@@ -74,34 +67,40 @@ public class Environment extends Actor{
 
 	}
 	
-	public void setPlayScreen(PlayScreen playScreen){
-		this.playScreen = playScreen;
+	public void setStage(TamerStage stage){
+		this.stage = stage;
 	}
 	
-	public void setInputController(InputController inputController){
-		this.inputController = inputController;
-	}
 	
 	/**
 	 * @param dt
 	 * General update loop
 	 */
 	public void act(float dt){
-		runCarbageCollection();
-		addNewObjects();
-		resolveObstacles(dt);
-		resolveCollisions(dt);
-		int numObjects = gameobjects.size();
-		for(int k = 0 ; k < numObjects ; k++)
-			gameobjects.get(k).update(dt);
+		
+		switch (TamerStage.gameState){
+			case(TamerStage.GAME_RUNNING):
+				runCarbageCollection();
+				addNewObjects();
+				resolveObstacles(dt);
+				resolveCollisions(dt);
+				int numObjects = gameobjects.size();
+				for(int k = 0 ; k < numObjects ; k++)
+					gameobjects.get(k).update(dt);
+				break;
+			case( TamerStage.GAME_PAUSED):
+				break;
+			default:
+				break;
+		}
 	}
 	/**
 	 * @param batch
 	 * General drawing loop
 	 */
 	public void draw(SpriteBatch batch, float parentAlpha){
-		batch.setProjectionMatrix(playScreen.getCamera().combined); 
 		
+		batch.setProjectionMatrix(stage.getCamera().combined); 
 		int numObjects = gameobjects.size();
 		sortDrawOrder(numObjects);
 		for(int k = 0 ; k < numObjects ; k++)
@@ -125,7 +124,7 @@ public class Environment extends Actor{
 		//float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
 		
 		Vector2 newPos = IsoHelper.twoDToIso(tamerPos);
-		playScreen.getCamera().position.set(newPos.x,newPos.y,0);	
+		stage.getCamera().position.set(newPos.x,newPos.y,0);	
 	}
 	
 	public void sortDrawOrder(int numObjects){
@@ -283,7 +282,7 @@ public class Environment extends Actor{
 	 */
 	public void setTamer(Tamer tamer){
 		this.tamer = tamer;
-		inputController.enableInput();
+		//inputController.enableInput();
 		gameobjects.add(tamer);
 
 	}

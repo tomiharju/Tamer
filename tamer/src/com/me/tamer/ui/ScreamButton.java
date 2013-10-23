@@ -1,106 +1,77 @@
 package com.me.tamer.ui;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.core.Level;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renders.UiRenderer;
 import com.me.tamer.gameobjects.tamer.GryphonScream;
 import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
-public class ScreamButton implements UiElement{
+public class ScreamButton extends Actor{
 	
-	private InputController inputcontroller 	= null;
+	private ControlContainer controlContainer 	= null;
 	private UiRenderer renderer 				= null;
 	private Tamer tamer 						= null;
-	private GryphonScream scream				= null;
-	private ArrayList<Worm> worms 				= null;
 	private Environment environment 						= null;
-	private Level level 					= null;
 	
 	//Button variables
 	Vector2 restingpoint 	= null;
 	Vector2 delta			= null;
-	float size				= 0;
-	float pointersize		= 30f;
+	private Vector2 input			= null;
+	private Vector2 localCenter 	= null;
+	private final float BUTTON_SIZE				= 110;
 	boolean isPressed		= false;
-	//Temporary colors for button
-	Color pressedCol		= null;
-	Color notPressedCol		= null;
 
 
-	public ScreamButton(InputController inputController) {
-		this.inputcontroller = inputController;
+	public ScreamButton(ControlContainer inputController) {
+		this.controlContainer = inputController;
 		restingpoint	= new Vector2(Gdx.graphics.getWidth() - 110,200);
 		delta			= new Vector2(0,0);
-		size			= 110;
-		environment			= inputcontroller.getEnvironment();
+		input			= new Vector2(0,0);
+		localCenter 	= new Vector2(BUTTON_SIZE / 2, BUTTON_SIZE / 2);
+		environment		= controlContainer.getEnvironment();
 		tamer 			= environment.getTamer();
-		level 			= inputcontroller.getLevel();
 		renderer 		= new UiRenderer();
 		renderer.loadGraphics("icon_scream_v6");
-		renderer.setSize(size,size);
+		renderer.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer.setPosition(restingpoint);
 		
+		setPosition(restingpoint.x - BUTTON_SIZE/2, restingpoint.y - BUTTON_SIZE/2);
+		setSize(BUTTON_SIZE, BUTTON_SIZE);
+		
+		addListener(new InputListener(){
+			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				input.set(x,y);
+				if(input.dst(localCenter) < BUTTON_SIZE / 2 ){ 
+					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+							+ " :: Gryphon touch started at (" + x + ", " + y + ")");
+	                
+	                if (tamer == null) tamer = environment.getTamer();
+	                if (tamer != null){
+	                	GryphonScream scream = (GryphonScream) RuntimeObjectFactory.getObjectFromPool("scream");
+		        		if(scream != null)
+		        			tamer.useScream(scream);
+		        		else
+		        			Gdx.app.log(TamerGame.LOG, this.getClass()
+									.getSimpleName() + " :: Tried to use scream before it is returned to pool");
+	                }
+	                return true;
+				}
+				else return false;
+	        }
+		});	
 	}
 	
-	@Override
-	public void draw(SpriteBatch batch) {
-	
-		//renderer.setColor(0.0f, 0.0f, 1.0f, 1.0f);
-		
-		renderer.setSize(size, size);
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		renderer.setSize(BUTTON_SIZE, BUTTON_SIZE);
 		renderer.setPosition(restingpoint);
-		renderer.draw(batch);
-		
+		renderer.draw(batch);	
 	}
-	
-	@Override
-	public void update(float dt) {
-		
-	}
-
-	@Override
-	public boolean isTouched(Vector2 input) {
-		if(input.dst(restingpoint) < size && !isPressed){
-			isPressed = true;
-			return true;
-		}	
-		isPressed = false;
-		return false;
-	}
-	
-	@Override
-	public void relocate() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean handleInput(Vector2 input) {	
-		GryphonScream scream = (GryphonScream) RuntimeObjectFactory.getObjectFromPool("scream");
-		if(scream != null)
-			tamer.useScream(scream);
-		else
-			System.out.println("Scream is cooling down");
-		return true;
-	}
-	
-	@Override
-	public void touchUp(Vector2 input) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void touchDown() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -14,13 +14,7 @@ public class MainMenuScreen extends AbstractMenu{
 	@Override
 	public void create(){
 		super.create();
-	}
-	
-	@Override
-	public void show(){
-		super.show();
-		game.getMusicManager().play( TamerMusic.MENU );
-	    // retrieve the default table actor
+		 // retrieve the default table actor
 		Table table = super.getTable();
 	    table.add( "TAMER" ).spaceBottom( 50 );
 	    table.row();
@@ -30,6 +24,12 @@ public class MainMenuScreen extends AbstractMenu{
 	    table.add( levelsButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
 	    table.row();
 	    table.add( optionsButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
-	    table.row();	   
+	    table.row();	
+	}
+	
+	@Override
+	public void show(){
+		super.show();
+		game.getMusicManager().play( TamerMusic.MENU );      
 	}
 }

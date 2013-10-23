@@ -1,27 +1,17 @@
 package com.me.tamer.utils;
 
-import java.io.Console;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
-import com.me.tamer.core.Level;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renders.Renderer.RenderType;
 import com.me.tamer.gameobjects.superclasses.GameObject;
-import com.me.tamer.gameobjects.tiles.SpawnPoint;
 
 
 /**
@@ -86,11 +76,9 @@ public class EnvironmentCreator {
 				//If object has subobjects, create them aswell
 				subObjects = gameobject.getChildrenByName("SubObject");
 				
-			
-				
-				
+
 				if(subObjects.size != 0){
-					System.out.println("Creating Sub-objects for {"+objectToAdd.getClass().getSimpleName()+"}");
+					Gdx.app.debug(TamerGame.LOG, " :: Creating Sub-objects for {"+objectToAdd.getClass().getSimpleName()+"}");
 					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName(),level);
 				}
 				objectToAdd.setup(level);

@@ -7,25 +7,30 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 
 public class AbstractMenu extends AbstractScreen{
-	TextButton continueButton, newGameButton, levelsButton, optionsButton, toMainMenuButton;
+	TextButton continueButton, newGameButton, levelsButton, optionsButton, mainMenuButton;
 	Skin skin;
     Table table;
 	TextButtonStyle textButtonStyle;
+	
  
 	public AbstractMenu( TamerGame game ){
 		super (game);
+		
 	}
 	
     public void create(){
+    	//create stage
+    	stage = new Stage();
+    	
         // A skin can be loaded via JSON or defined programmatically, either is fine. Using a skin is optional but strongly
         // recommended solely for the convenience of getting a texture, region, etc as a drawable, tinted drawable, etc.
         skin = new Skin();
@@ -46,7 +51,7 @@ public class AbstractMenu extends AbstractScreen{
         textButtonStyle = new TextButtonStyle();
         textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
         textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-        textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+        //textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
         textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
  
         textButtonStyle.font = skin.getFont("default");
@@ -56,30 +61,28 @@ public class AbstractMenu extends AbstractScreen{
         newGameButton=new TextButton("New Game",textButtonStyle);
         newGameButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                Gdx.app.log(TamerGame.LOG, "Setting new PlayScreen");
-                game.setScreen( new PlayScreen(game));
+                game.setScreen( game.createNewPlayScreen() );
             }
         });
         
         levelsButton = new TextButton("Select Level",textButtonStyle);
         levelsButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-            	game.setScreen( new LevelsScreen(game));
+            	game.setScreen( game.getLevelsScreen() );
             }
         });
         
         optionsButton = new TextButton("Options",textButtonStyle);
         optionsButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                Gdx.app.log(TamerGame.LOG, "Options button pressed //TODO");
+                Gdx.app.debug(TamerGame.LOG, "Options button pressed");
             }
         });
         
-        toMainMenuButton = new TextButton("Main Menu",textButtonStyle);
-		toMainMenuButton.addListener(new ChangeListener() {
+        mainMenuButton = new TextButton("Main Menu",textButtonStyle);
+		mainMenuButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-            	Gdx.app.log(TamerGame.LOG, "Main Menu button pressed //TODO");
-            	game.setScreen( new MainMenuScreen(game));
+            	game.setScreen( game.getMainMenuScreen() );
             }
         }); 
     }
@@ -97,6 +100,7 @@ public class AbstractMenu extends AbstractScreen{
 	@Override
 	public void show()
 	{
-	    super.show();    
+	    super.show();  
+	    Gdx.input.setInputProcessor( stage );
 	}
 }

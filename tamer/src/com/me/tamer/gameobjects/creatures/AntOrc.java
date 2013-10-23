@@ -30,7 +30,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public void wakeUp(Environment environment){
 		this.environment = environment;
-		//Add the spawnin position as first waypoint
+		//Add the spawning position as a first waypoint
 		waypoints.add(0, getPosition());
 		markAsActive();
 	}

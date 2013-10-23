@@ -5,7 +5,7 @@ import com.me.tamer.utils.EnvironmentCreator;
 
 public class Level{
 	
-	private PlayScreen playScreen;
+	private TamerStage stage;
 	private final int id;
 	private String name;
     private boolean completed;
@@ -17,37 +17,9 @@ public class Level{
 		this.id = id;
 	}
 	
-	public void setPlayScreen(PlayScreen playScreen){
-		this.playScreen = playScreen;
+	public void setStage(TamerStage stage){
+		this.stage = stage;
 	}
-	
-	public void resize(float width, float height){
-		//This should be done on screen level?
-		/*
-		 // calculate new viewport
-        float aspectRatio = (float)width/(float)height;
-        float scale = 1f;
-        Vector2 crop = new Vector2(0f, 0f);
-        if(aspectRatio > ASPECT_RATIO)
-        {
-            scale = (float)height/(float)VIRTUAL_HEIGHT;
-            crop.x = (width - VIRTUAL_WIDTH*scale)/2f;
-        }
-        else if(aspectRatio < ASPECT_RATIO)
-        {
-            scale = (float)width/(float)VIRTUAL_WIDTH;
-            crop.y = (height - VIRTUAL_HEIGHT*scale)/2f;
-        }
-        else
-        {
-            scale = (float)width/(float)VIRTUAL_WIDTH;
-        }
- 
-        float w = (float)VIRTUAL_WIDTH*scale;
-        float h = (float)VIRTUAL_HEIGHT*scale;
-        viewport = new Rectangle(crop.x, crop.y, w, h);
-    	*/
-    	}
 	
 	/**
 	 * @param current_env 
@@ -56,7 +28,7 @@ public class Level{
 	 */
 	public void createEnvironment(){
 		environment = EnvironmentCreator.create(id);
-		environment.setPlayScreen(playScreen);
+		environment.setStage(stage);
 	}
 	
 	public Environment getEnvironment(){

@@ -1,4 +1,5 @@
 package com.me.tamer.core;
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,6 +13,7 @@ public class TamerGame extends Game{
 	 // for logging
     public static final String LOG = TamerGame.class.getSimpleName();
 
+
 	//FPS limiting
 	int FPS = 30;
 	long lastFrame = 0;
@@ -22,11 +24,20 @@ public class TamerGame extends Game{
     private PreferenceManager preferenceManager;
     private LevelManager levelManager;
     
+    //Screens
+    private PlayScreen playScreen;
+    private MainMenuScreen mainMenuScreen;
+    private PauseScreen pauseScreen;
+    private LevelsScreen levelsScreen;
+    
 	//Main drawing batch
 	private SpriteBatch batch 		= null;
 
 	@Override
 	public void create() {
+		//Set log level
+		Gdx.app.setLogLevel(Application.LOG_INFO);
+		
 		Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() +" :: Creating game on " + Gdx.app.getType() );
 		//Spritebatch is used for drawing sprites
 		batch = new SpriteBatch();
@@ -42,11 +53,23 @@ public class TamerGame extends Game{
         // create the level manager
         levelManager = new LevelManager();
         
-		setScreen(new MainMenuScreen(this));	
+        //create screens
+        playScreen = new PlayScreen(this);
+        mainMenuScreen = new MainMenuScreen(this);
+        pauseScreen = new PauseScreen(this);
+        levelsScreen = new LevelsScreen(this);
+        
+        //start the game with main menu screen
+		setScreen(mainMenuScreen);	
+		
+		
 	}
 	
-	public LevelManager getLevelManager() {
-		return levelManager;
+	public PlayScreen createNewPlayScreen(){
+		//dispose old before making new one
+		playScreen.dispose();
+		playScreen = new PlayScreen(this);
+		return playScreen;
 	}
 
 	@Override
@@ -70,12 +93,6 @@ public class TamerGame extends Game{
     }
 
     @Override
-    public void setScreen(Screen screen ){
-        super.setScreen( screen );
-        Gdx.app.log( TamerGame.LOG, "Setting screen: " + screen.getClass().getSimpleName() );
-    }
-
-    @Override
     public void dispose(){
         super.dispose();
         Gdx.app.log( TamerGame.LOG, "Disposing game" );
@@ -88,6 +105,26 @@ public class TamerGame extends Game{
 	public MusicManager getMusicManager(){
         return musicManager;
     }
+	
+	public PlayScreen getPlayScreen() {
+		return playScreen;
+	}
+
+	public MainMenuScreen getMainMenuScreen() {
+		return mainMenuScreen;
+	}
+
+	public PauseScreen getPauseScreen() {
+		return pauseScreen;
+	}
+
+	public LevelsScreen getLevelsScreen() {
+		return levelsScreen;
+	}
+
+	public LevelManager getLevelManager() {
+		return levelManager;
+	}
 }
 
 

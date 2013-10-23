@@ -1,13 +1,13 @@
 package com.me.tamer.gameobjects.tamer;
 
-import java.util.ArrayList;
-
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.Creature;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Spear extends DynamicObject{
@@ -31,16 +31,17 @@ public class Spear extends DynamicObject{
 		render.loadGraphics("spear",1,8);
 		setSize("1:1");
 		renderType = "spear";
-		System.out.println("Spear graphics are set");
+		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Spear graphics are set");
 	}
 	
 	public void update(float dt){
+		/*
 		if(!isAttached)
 			position.add(force.tmp().mul(dt));
 		//When the spear has reached its destination, check if there is some creature
 		//If there is, call that creatures spearHit method to resolve damage.
 		if(!isAttached && position.dst(target) < 0.5){
-			position.set(target);
+			setPosition(target);
 			ArrayList<Creature> creatures = environment.getCreatures();
 			int size = creatures.size();
 			System.out.println("Searching for potential hit amont "+size+" creatures.");
@@ -52,6 +53,7 @@ public class Spear extends DynamicObject{
 				}
 			isAttached = true;
 		}
+		*/
 		
 	}
 	
@@ -65,7 +67,7 @@ public class Spear extends DynamicObject{
 	}
 	public void throwAt(Vector2 point,float power){
 		target.set(point);
-		Vector2 dir = point.sub(position);
+		Vector2 dir = point.sub(getPosition());
 		force.set(dir.tmp().nor().mul(power));
 	}
 	
@@ -82,10 +84,6 @@ public class Spear extends DynamicObject{
 		markAsCarbage();
 	}
 	
-	public void setPosition(Vector2 pos){
-		position.set(pos);
-	}
-	
 	public boolean isAttached(){
 		return isAttached;
 	}
@@ -94,5 +92,4 @@ public class Spear extends DynamicObject{
 		heading.set(getForce().tmp().nor());
 		return heading;
 	}
-
 }

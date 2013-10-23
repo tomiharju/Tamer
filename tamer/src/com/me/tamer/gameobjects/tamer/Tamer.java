@@ -3,7 +3,9 @@ package com.me.tamer.gameobjects.tamer;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
@@ -30,7 +32,8 @@ public class Tamer extends DynamicObject{
 		}
 		
 		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
-		System.out.println("Tamer has woken up! " + this.toString());
+		
+		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Tamer has woken up! " + this.toString());
 		//Z-index for drawing order
 		setZindex(-1);
 		setGraphics("tamer");
@@ -42,7 +45,6 @@ public class Tamer extends DynamicObject{
 	
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
-		//render.loadGraphics(graphics);
 		render.loadGraphics(graphics, 1, 8);
 		setSize("4:2.7");
 		renderType = graphics;
@@ -51,10 +53,10 @@ public class Tamer extends DynamicObject{
 	@Override
 	public void update(float dt){
 		solveOrientation();
-		position.add(force);
+		getPosition().add(force);
 		force.mul(0f);
 		for(int i = 0 ; i < spears.size() ; i ++){
-			if(position.dst(spears.get(i).getPosition()) < 1 ){
+			if(getPosition().dst(spears.get(i).getPosition()) < 1 ){
 				if(spears.get(i).isAttached()){
 					spears.get(i).pickUp();
 					spears.remove(i);

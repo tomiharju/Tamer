@@ -17,20 +17,16 @@ import com.badlogic.gdx.utils.Array;
 
 public class AbstractScreen implements Screen{
 
-    // the fixed viewport dimensions (ratio: 1.6)
-    
     protected final TamerGame game;
-    protected final Stage stage;
-
+    protected Stage stage;
     private BitmapFont font;
     private SpriteBatch batch;
     private Skin skin;
     private Table table;
 
-    public AbstractScreen(final TamerGame game )
+    public AbstractScreen(final TamerGame game)
     {
-        this.game = game;
-        this.stage = new Stage();
+        this.game = game;   
     }
 
     protected String getName()
@@ -79,10 +75,7 @@ public class AbstractScreen implements Screen{
 
     @Override
     public void show(){
-        Gdx.app.log( TamerGame.LOG, "Showing screen: " + getName() );
-
-        // set the stage as the input processor
-        Gdx.input.setInputProcessor( stage );
+        Gdx.app.log( TamerGame.LOG, "Showing screen: " + getName() );    
     }
 
     @Override
@@ -105,7 +98,7 @@ public class AbstractScreen implements Screen{
         // dispose the screen when leaving the screen;
         // note that the dispose() method is not called automatically by the
         // framework, so we must figure out when it's appropriate to call it
-        dispose();
+        //dispose();
     }
 
     @Override
@@ -126,7 +119,7 @@ public class AbstractScreen implements Screen{
         // the following call disposes the screen's stage, but on my computer it
         // crashes the game so I commented it out; more info can be found at:
         // http://www.badlogicgames.com/forum/viewtopic.php?f=11&t=3624
-        // stage.dispose();
+        //stage.dispose();
 
         // as the collaborators are lazily loaded, they may be null
         if( font != null ) font.dispose();

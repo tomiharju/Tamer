@@ -153,6 +153,12 @@ public class StaticObject implements GameObject{
 		
 	}
 
+	@Override
+	public void setPosition(Vector2 pos) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

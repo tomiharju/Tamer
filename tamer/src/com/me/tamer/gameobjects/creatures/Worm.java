@@ -35,7 +35,7 @@ public class Worm extends DynamicObject implements Creature{
 	}
 	
 	public void wakeUp(Environment environment){
-		System.out.println("WORM WOKE UP!");
+		//System.out.println("WORM WOKE UP!");
 		addPart("head",0,position,velocity);
 		for(int i = 0 ; i < 3 ; i++)
 			addPart("joint",i+1,position,velocity);

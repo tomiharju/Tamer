@@ -18,6 +18,11 @@ public class LevelsScreen extends AbstractMenu{
 	public LevelsScreen(final TamerGame game){
 		super(game);
 		create();
+	}
+	
+	@Override
+	public void create(){
+		super.create();
 		levelButtons = new ArrayList<TextButton>();
 		levels = game.getLevelManager().getLevels();
 		
@@ -30,23 +35,14 @@ public class LevelsScreen extends AbstractMenu{
 	            public void changed (ChangeEvent event, Actor actor) {
 	            	
 	            	game.getLevelManager().setCurrentLevel( levels.get(button).getId() );
-	            	game.setScreen( new PlayScreen(game));
+	            	game.setScreen( game.createNewPlayScreen() );
 	            }
 	        });
 			
 			levelButtons.add(newButton);
 			levelId++;
-		}	
-	}
-	
-	@Override
-	public void create(){
-		super.create();
-	}
-	
-	@Override
-	public void show() {
-		super.show();
+		}
+		
 		Table table = super.getTable();
 	    table.add( "Levels" ).spaceBottom( 50 );
 	    table.row();
@@ -55,6 +51,11 @@ public class LevelsScreen extends AbstractMenu{
 	    	table.add(levelButtons.get(i)).size( 300, 60 ).uniform().spaceBottom( 10 );
 	    	table.row();
 	    }
-	    table.add(toMainMenuButton).size( 300, 60 ).uniform().spaceBottom( 10 );    
+	    table.add(mainMenuButton).size( 300, 60 ).uniform().spaceBottom( 10 );
+	}
+	
+	@Override
+	public void show() {
+		super.show();	    
 	}
 }

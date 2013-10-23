@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+import com.badlogic.gdx.Gdx;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 
 
@@ -21,23 +23,24 @@ public class GameObjectFactory {
 			Class<?> objectClass = Class.forName(className);
 			Constructor<?> constructor = objectClass.getConstructor();
 			GameObject object = (GameObject) constructor.newInstance(new Object[]{});
-			System.out.println("Starting to create new gameobject {"+object.getClass().getSimpleName()+"}");
+			
+			Gdx.app.debug(TamerGame.LOG, " :: Starting to create new gameobject {"+object.getClass().getSimpleName()+"}");
 			//--SET PROPERTIES--//
 			Iterator<Entry<String, String>> propertyIt = propertyConfig.entrySet().iterator();
 			while (propertyIt.hasNext()) {
 				Entry<String, String> entry = propertyIt.next();
 			  try{
 				  Method setter = objectClass.getMethod("set"+entry.getKey(),String.class);
-				  System.out.println("Setting value... ["+entry.getKey()+"] -> " + entry.getValue());
+				  Gdx.app.debug(TamerGame.LOG, " :: Setting value... ["+entry.getKey()+"] -> " + entry.getValue());
 				  setter.invoke(object, entry.getValue());
 			  }catch(NoSuchMethodException e){
-				  System.err.println("Trying to set invalid object property ["+entry.getKey()+"] " + e.getMessage());
+				  Gdx.app.debug(TamerGame.LOG, " :: Trying to set invalid object property ["+entry.getKey()+"] " + e.getMessage());
 			  }catch(InvocationTargetException i){
-				  System.err.println("set" + entry.getKey() +" Failed to run succesfully\n" + i.getMessage());
+				  Gdx.app.debug(TamerGame.LOG, " :: set" + entry.getKey() +" Failed to run succesfully\n" + i.getMessage());
 			  }
 			 
 			}
-			System.out.println("GameObject created {" + object.getClass().getSimpleName() + "} In memory as "+object.toString()+" \n");
+			Gdx.app.debug(TamerGame.LOG, " :: GameObject created {" + object.getClass().getSimpleName() + "} In memory as "+object.toString()+" \n");
 		
 			return object;
 			

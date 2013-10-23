@@ -14,10 +14,12 @@ import com.me.tamer.utils.RendererFactory;
 
 public class DynamicObject implements GameObject{
 	
+	//Someone has to fix these to private
 	protected Vector2 position = new Vector2();		//"World position"
 	protected Vector2 velocity = new Vector2();		//"World velocity"
 	protected Vector2 heading = new Vector2();
 	protected Vector2 force = new Vector2();		// Magnitude and direction of per loop position iteration
+	protected float angle = 0;
 	private float mass;			
 	private float invMass;							// Precalculated invmass, used in physics calculations
 	protected Vector2 size;
@@ -46,6 +48,7 @@ public class DynamicObject implements GameObject{
 		renderer.setSize(size.x,size.y);
 		renderer.setPosition(IsoHelper.twoDToIso(position));
 		renderer.setOrientation( solveOrientation() );
+		renderer.setAngle(angle);
 		renderer.draw(batch);
 		
 	}
@@ -76,6 +79,11 @@ public class DynamicObject implements GameObject{
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
 		this.position.set(x,y);
+	}
+	
+	@Override
+	public void setPosition(Vector2 pos){
+		this.position.set(pos.cpy());
 	}
 	
 	public void setVelocity(String vel){
@@ -225,10 +233,6 @@ public class DynamicObject implements GameObject{
 
 	public void setzIndex(int zIndex) {
 		this.zIndex = zIndex;
-	}
-
-	public void setPosition(Vector2 position) {
-		this.position.set(position);
 	}
 
 	public void setSize(Vector2 size) {
