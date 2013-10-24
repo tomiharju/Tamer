@@ -53,21 +53,18 @@ public class TamerGame extends Game{
         // create the level manager
         levelManager = new LevelManager();
         
-        //create screens
-        playScreen = new PlayScreen(this);
+        //create menu screens
         mainMenuScreen = new MainMenuScreen(this);
         pauseScreen = new PauseScreen(this);
         levelsScreen = new LevelsScreen(this);
         
         //start the game with main menu screen
 		setScreen(mainMenuScreen);	
-		
-		
 	}
 	
 	public PlayScreen createNewPlayScreen(){
 		//dispose old before making new one
-		playScreen.dispose();
+		if (playScreen != null) playScreen.dispose();
 		playScreen = new PlayScreen(this);
 		return playScreen;
 	}

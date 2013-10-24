@@ -1,5 +1,7 @@
 package com.me.tamer.gameobjects.tamer;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
@@ -17,6 +19,10 @@ public class Spear extends DynamicObject{
 	private Creature targetCreature = null;
 	private boolean isAttached = false;
 	private Vector2 heading = new Vector2();
+
+	//Same variables in spearbutton
+	private final float GRAVITY = 5.0f;
+	private final float INITIAL_SPEED = 2.0f;
 	
 	public Spear(){
 		setGraphics();
@@ -35,7 +41,7 @@ public class Spear extends DynamicObject{
 	}
 	
 	public void update(float dt){
-		/*
+		
 		if(!isAttached)
 			position.add(force.tmp().mul(dt));
 		//When the spear has reached its destination, check if there is some creature
@@ -52,9 +58,7 @@ public class Spear extends DynamicObject{
 					break;
 				}
 			isAttached = true;
-		}
-		*/
-		
+		}	
 	}
 	
 	public void wakeUp(Environment environment){
@@ -62,8 +66,6 @@ public class Spear extends DynamicObject{
 		this.environment = environment;
 		isAttached = false;
 		markAsActive();
-		
-
 	}
 	public void throwAt(Vector2 point,float power){
 		target.set(point);
