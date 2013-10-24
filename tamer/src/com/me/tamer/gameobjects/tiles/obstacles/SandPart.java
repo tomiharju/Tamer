@@ -14,6 +14,7 @@ public class SandPart extends StaticObject{
 	
 	public void setup(Environment environment){
 		environment.addNewObject(this);
+		setZindex(1);
 	}
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);

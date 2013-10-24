@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.utils.IsoHelper;
@@ -120,6 +119,21 @@ public class AntOrc extends DynamicObject implements Creature{
 
 	@Override
 	public void unBind() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Creature affectedCreature(Vector2 point,float radius) {
+		if( this.position.dst(point) < radius)
+			return this;
+		else
+			return null;
+		
+	}
+
+	@Override
+	public void applyPull(Vector2 point) {
 		// TODO Auto-generated method stub
 		
 	}

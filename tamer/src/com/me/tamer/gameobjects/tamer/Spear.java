@@ -6,9 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
@@ -50,14 +50,16 @@ public class Spear extends DynamicObject{
 			setPosition(target);
 			ArrayList<Creature> creatures = environment.getCreatures();
 			int size = creatures.size();
-			System.out.println("Searching for potential hit amont "+size+" creatures.");
-			for(int i = 0 ; i < size ; i ++)
-				if(position.dst(((DynamicObject) creatures.get(i)).getPosition()) < 0.5){
-					targetCreature = creatures.get(i);
-					targetCreature.spearHit(this);
-					break;
-				}
-			isAttached = true;
+			for(int i = 0 ; i < size ; i ++){
+					targetCreature = creatures.get(i).affectedCreature(position, 0.5f);
+					if(targetCreature != null){
+						targetCreature = creatures.get(i);
+						targetCreature.spearHit(this);
+						isAttached = true;
+						break;
+					}
+			}
+		
 		}	
 	}
 	

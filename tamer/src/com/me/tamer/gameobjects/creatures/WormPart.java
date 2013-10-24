@@ -1,11 +1,11 @@
 package com.me.tamer.gameobjects.creatures;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.physics.RigidBodyCircle;
 
@@ -226,6 +226,22 @@ public class WormPart extends DynamicObject implements Creature {
 	public void setPosition(Vector2 pos) {
 		this.position.set(pos);
 		
+	}
+
+	@Override
+	public Creature affectedCreature(Vector2 point, float radius) {
+		if(this.position.dst(point) < radius)
+			return this;
+		else
+			return null;
+		
+	}
+
+	@Override
+	public void applyPull(Vector2 point) {
+		Vector2 pullVector = point.tmp().sub(position);
+		pullVector.nor().mul(5.5f);
+		velocity.add(pullVector.mul(Gdx.graphics.getDeltaTime())); 
 	}
 	
 

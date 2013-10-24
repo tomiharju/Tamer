@@ -63,7 +63,7 @@ public class TamerStage extends Stage{
 	public void setupCamera(){	
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,VIRTUAL_WIDTH,VIRTUAL_HEIGHT);// * ASPECT_RATIO);
-		camera.position.set(0f,0f,0f);
+		camera.position.set(0f,-4,0f);
 		
 		uiCamera = new OrthographicCamera();
 		uiCamera.setToOrtho(false);

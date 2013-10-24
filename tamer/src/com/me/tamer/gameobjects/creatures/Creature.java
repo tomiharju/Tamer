@@ -1,4 +1,4 @@
-package com.me.tamer.gameobjects.superclasses;
+package com.me.tamer.gameobjects.creatures;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.tamer.Spear;
@@ -32,6 +32,20 @@ public interface Creature {
 	 * What needs to be done when specific creature is killed
 	 */
 	public void kill();
+	
+	/**
+	 * This method is used for checking if point is affecting the creature within given radius.
+	 * For example, when a spear is thrown, we check if that spears position has hit this creature.
+	 * When isAffected is called on Worm, it checks through all its parts for potential hit.
+	 * When isAffected is called on Ant, it only checks if it hits the ant directly.
+	 */
+	public Creature affectedCreature(Vector2 point, float radius);
+	
+	/**
+	 * @param point center of pull
+	 * This method is called from Quicksans, its used to cause the pulling effect to the creature
+	 */
+	public void applyPull(Vector2 point);
 	public void moveToFinish();
 	
 }

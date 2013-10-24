@@ -35,7 +35,6 @@ public class EnvironmentCreator {
 	public static Environment create(int level_number){
 		
 		Environment level = new Environment();
-		System.out.println("STARTING TO READ LEVEL["+level_number+"]");
 		XmlReader reader = new XmlReader();
 		try {
 			FileHandle file = Gdx.files.internal("data/levels/level"+level_number+".xml");
