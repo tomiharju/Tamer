@@ -49,8 +49,7 @@ public class DynamicObject implements GameObject{
 		renderer.setPosition(IsoHelper.twoDToIso(position));
 		renderer.setOrientation( solveOrientation() );
 		renderer.setAngle(angle);
-		renderer.draw(batch);
-		
+		renderer.draw(batch);	
 	}
 	
 	@Override

@@ -28,7 +28,6 @@ public class Environment extends Actor{
 
 	private Vector2 mapBounds = null;
 	private Vector2 cameraBounds = null;
-	private Vector2 camBoundsOffset = null;
 	
 	//Gameobject data
 
@@ -282,11 +281,8 @@ public class Environment extends Actor{
 	 */
 	public void setTamer(Tamer tamer){
 		this.tamer = tamer;
-		//inputController.enableInput();
 		gameobjects.add(tamer);
-
 	}
-	
 	
 	public void dispose(){
 		gameobjects.clear();
@@ -307,10 +303,6 @@ public class Environment extends Actor{
 	
 	public Vector2 getCamBounds(){
 		return cameraBounds;
-	}
-	
-	public Vector2 getCamBoundsOffset(){
-		return camBoundsOffset;
 	}
 	
 	public ArrayList<Creature> getCreatures(){

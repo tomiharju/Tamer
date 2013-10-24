@@ -36,7 +36,7 @@ public class AnimatedRenderer implements Renderer {
 	private float angle;
 	
 	public AnimatedRenderer(){
-		
+		animations = new ArrayList<Animation>();
 	}
 
 	@Override
@@ -52,11 +52,13 @@ public class AnimatedRenderer implements Renderer {
 
 	@Override
 	public void loadGraphics(String graphicsName) {
+		
 		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
 		if(sprite == null)
 			throw new IllegalArgumentException("Could not load sprite!");
 		
-		animations = new ArrayList<Animation>();	
+		
+		animations.add(new Animation(animationDuration,sprite));
 	}
 	
 	@Override
@@ -66,7 +68,6 @@ public class AnimatedRenderer implements Renderer {
 		frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 
 				FRAME_COLS, spriteSheet.getHeight() / FRAME_ROWS);          
 		
-		animations = new ArrayList<Animation>();
 		for (int i = 0; i < FRAME_ROWS; i++) {
 			animations.add(new Animation(animationDuration,frames[i]));
 		}

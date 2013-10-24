@@ -18,20 +18,25 @@ public class Tamer extends DynamicObject{
 	private final float SPEED 	= 0.1f;
 	private int numSpears 		= 3;
 	private ArrayList<Spear> spears = null;
+	private TamerShadow shadow;
+	private Environment environment;
 
-		
-	
 	public void setup(){
-	
-	
+		
 	}
+	
 	public void wakeUp(Environment environment){
+		//Spears
 		spears = new ArrayList<Spear>();
 		for( int i = 0 ; i < numSpears ; i++){
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
 		}
-		
+		//Scream
 		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
+		
+		//Shadow
+		shadow = new TamerShadow(this);
+		environment.addObject(shadow);
 		
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Tamer has woken up! " + this.toString());
 		//Z-index for drawing order
@@ -40,7 +45,8 @@ public class Tamer extends DynamicObject{
 		setForce("0:0");
 		setMass("10");
 		setRigidBody("circle");
-		environment.setTamer(this);
+		this.environment = environment;
+		this.environment.setTamer(this);
 	}
 	
 	public void setGraphics(String graphics){
@@ -98,7 +104,9 @@ public class Tamer extends DynamicObject{
 
 	public Vector2 getHeading(){
 		return heading;
-
 	}
-
+	
+	public TamerShadow getShadow(){
+		return shadow;
+	}
 }

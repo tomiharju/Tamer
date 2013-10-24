@@ -19,19 +19,24 @@ public class SpearButton extends Actor {
 	OrthographicCamera uiCam = null;
 	
 	Vector2 targetPoint = null;
-	Vector2 tamerPos = null;
-	Vector2 tamerHeading = null;
+	Vector2 spearPosition = null;
+	Vector2 spearHeading = null;
 	
 	Vector2 input = null;
 	Vector2 localCenter = null;
 	
 	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 165,100);
 	final float BUTTON_SIZE = 110;
-	final float MIN_POWER = 2;
-	final float MAX_POWER = 7;
-	final float SPEED = 5;
+	final float MIN_DISTANCE = 2;
+	//final float MAX_DISTANCE = 7;
+	final float SPEED = 5; // for increasing the throwing distance
 	
-	float power = 1; 
+	private float maxDistance;
+	
+	private final float GRAVITY = 5.0f;
+	private final float INITIAL_SPEED = 2.0f;
+	
+	float throwDistance = 1; 
 	boolean pressed = false;
 	UiRenderer buttonRender = null;
 	UiRenderer pointRender = null;
@@ -52,8 +57,8 @@ public class SpearButton extends Actor {
 		pointRender.setSize(0.5f,0.5f);
 		pointRender.setPosition(new Vector2(0,0));
 		
-		tamerPos = new Vector2();
-		tamerHeading = new Vector2();
+		spearPosition = new Vector2();
+		spearHeading = new Vector2();
 		
 		input = new Vector2();
 		localCenter = new Vector2();
@@ -83,18 +88,18 @@ public class SpearButton extends Actor {
 	public void act(float dt) {
 		
 		if(isVisible() && pressed){
-			if(power <= MAX_POWER ){
-				power += SPEED*dt;
-				float powerIndicator = Math.min(1,power / MAX_POWER);
-				pointRender.setColor(powerIndicator,0,0,powerIndicator);
+			System.out.println("maxdist: " +getMaxDistance());
+			if(throwDistance <= getMaxDistance() ){
+				throwDistance += SPEED*dt;
+				float distanceIndicator = Math.min(1,throwDistance / getMaxDistance());
+				pointRender.setColor(distanceIndicator,0,0,distanceIndicator);
 			}
 
-			tamerHeading.set(controlContainer.getEnvironment().getTamer().getHeading());
-			tamerHeading.nor().mul(power);
-			tamerPos.set(controlContainer.getEnvironment().getTamer().getPosition());
-			targetPoint.set(tamerPos.add(tamerHeading));
-		}
-		
+			spearHeading.set(controlContainer.getEnvironment().getTamer().getHeading());
+			spearHeading.nor().mul(throwDistance);
+			spearPosition.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
+			targetPoint.set(spearPosition.add(spearHeading));
+		}	
 	}
 	
 	public void createListener(){
@@ -114,15 +119,15 @@ public class SpearButton extends Actor {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
 				input.set(x,y);
 				
-				if( power > MIN_POWER && pressed ){
+				if( throwDistance > MIN_DISTANCE && pressed ){
 					Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
 					if(spear != null)
-						controlContainer.getEnvironment().getTamer().throwSpear(spear, targetPoint,power * 2);
+						controlContainer.getEnvironment().getTamer().throwSpear(spear, targetPoint,throwDistance );
 					else
 						System.err.println("No spears remaining");
 				}
 				
-				power = 1;
+				throwDistance = 1;
 				pressed = false;
 				controlContainer.getJoystick().enableMovement();	
 			}
@@ -134,5 +139,14 @@ public class SpearButton extends Actor {
 				}
 			}
 		});	
+	}
+	
+	public float getMaxDistance(){
+		float shadowDistance = controlContainer.getEnvironment().getTamer().getShadow().getDistance();
+		float height = (float)Math.sqrt(Math.pow(shadowDistance, 2) + Math.pow(shadowDistance, 2));
+		float droppingTime = (float)Math.sqrt(height * GRAVITY);
+		maxDistance = INITIAL_SPEED * droppingTime;
+		
+		return maxDistance;
 	}
 }
