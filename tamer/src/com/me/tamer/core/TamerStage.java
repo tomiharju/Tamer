@@ -2,8 +2,6 @@ package com.me.tamer.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.ui.ControlContainer;

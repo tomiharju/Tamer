@@ -47,7 +47,7 @@ public class SpawnPoint extends StaticObject{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize("1:1");
+		setSize("1:0.5");
 		this.renderType = graphics;
 	}
 	public void setSpawnCount(String count){

@@ -1,6 +1,5 @@
 package com.me.tamer.gameobjects.tiles;
 
-
 import com.badlogic.gdx.Gdx;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -8,14 +7,7 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.physics.RigidBody;
 
-/**
- * @author tomi
- * Props are all the non-interactive gameobjects in the level, props are trees, rocks, stumps and 
- * all the other objects which only affect with their rigidbodies and graphical aspect.
- */
-public class Prop extends StaticObject {
-	
-	
+public class Endingpoint extends StaticObject{
 	public void setup(Environment level){
 		level.addNewObject(this);
 	}
@@ -36,11 +28,7 @@ public class Prop extends StaticObject {
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		float ASPECT_RATIO = (float)Gdx.graphics.getWidth() / (float)Gdx.graphics.getHeight();
-		size.set(size.x/40 , (size.y/40));
-		
-		setSize(size.x+":"+size.y);
+		setSize("1:0.5");
 		this.renderType = graphics;
 	}
-	
 }

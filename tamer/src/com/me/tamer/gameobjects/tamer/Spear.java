@@ -58,7 +58,6 @@ public class Spear extends DynamicObject{
 	}
 	
 	public void wakeUp(Environment environment){
-		System.out.println("Spear woke up!");
 		this.environment = environment;
 		isAttached = false;
 		markAsActive();

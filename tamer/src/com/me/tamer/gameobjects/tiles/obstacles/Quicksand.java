@@ -10,7 +10,7 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.utils.IsoHelper;
 
-public class QuickSand extends StaticObject{
+public class Quicksand extends StaticObject{
 	ArrayList<SandPart> parts;
 	private Vector2 bogHoleCenter;
 	private Vector2 temp;
@@ -18,7 +18,7 @@ public class QuickSand extends StaticObject{
 	private boolean isActivated = false;
 
 	
-	public QuickSand(){
+	public Quicksand(){
 		parts = new ArrayList<SandPart>();
 		bogHoleCenter = new Vector2();
 		temp = new Vector2();
