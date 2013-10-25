@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
+
 import com.me.tamer.gameobjects.creatures.WormPart;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;

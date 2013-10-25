@@ -227,6 +227,12 @@ public class DynamicObject implements GameObject{
 		return force;
 	}
 
+
+	public void setzIndex(int zIndex) {
+		this.zIndex = zIndex;
+	}
+
+
 	public void setSize(Vector2 size) {
 		this.size = size;
 	}

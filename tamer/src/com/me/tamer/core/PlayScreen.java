@@ -12,18 +12,6 @@ public class PlayScreen extends AbstractScreen{
 		super(game);
 		create();
 	}
-
-
-
-	@Override
-	public void render(float delta) {
-		
-		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		environment.update(delta);
-		environment.draw();
-
-
 	
 	public void create(){
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state to GAME_RUNNING");
@@ -52,6 +40,7 @@ public class PlayScreen extends AbstractScreen{
 		Gdx.input.setInputProcessor( stage );
 	}
 	
+
 	@Override
 	public void hide(){
 		super.hide();
@@ -59,6 +48,16 @@ public class PlayScreen extends AbstractScreen{
 		TamerStage.gameState = TamerStage.GAME_PAUSED;
 	}
 	
+	@Override
+    public void render( float delta ){
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		
+		((TamerStage)stage).updateCam();
+		stage.act( delta );
+		stage.draw();
+    }
+
 }
 	
 	

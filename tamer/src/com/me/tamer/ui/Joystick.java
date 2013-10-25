@@ -90,11 +90,13 @@ public class Joystick extends Actor /*implements UiElement*/{
 			else{
 				delta.mul(translate);
 				checkBounds(delta.mul(dt));
+
 			}	
 			environment.moveCamera(environment.getTamer().getPosition());
 		}	
 	}
 	
+
 	
 	public void checkBounds(Vector2 movement){
 		Vector2 mapBounds = environment.getMapBounds();
@@ -133,6 +135,7 @@ public class Joystick extends Actor /*implements UiElement*/{
 	        
 	        public void touchDragged(InputEvent event, float x, float y, int pointer){
 				 point.set(x,y);
+
 			 }
 		});
 	}

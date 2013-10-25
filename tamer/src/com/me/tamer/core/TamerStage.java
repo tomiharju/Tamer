@@ -2,6 +2,7 @@ package com.me.tamer.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.ui.ControlContainer;
@@ -63,7 +64,7 @@ public class TamerStage extends Stage{
 	public void setupCamera(){	
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,VIRTUAL_WIDTH,VIRTUAL_HEIGHT);// * ASPECT_RATIO);
-		camera.position.set(0f,-4,0f);
+		camera.position.set(0f,0f,0f);
 		
 		uiCamera = new OrthographicCamera();
 		uiCamera.setToOrtho(false);

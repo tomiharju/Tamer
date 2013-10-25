@@ -6,7 +6,6 @@ import java.util.Collections;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.creatures.Creature;
@@ -18,6 +17,7 @@ import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
 import com.me.tamer.utils.DrawOrderComparator;
+import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Environment extends Actor{
@@ -37,6 +37,7 @@ public class Environment extends Actor{
 	private ArrayList<GameObject> newobjects = null;
 	private DynamicObject tamer = null;
 	private ArrayList<Obstacle> obstacles = null;
+
 	private ArrayList<Creature> creatures	= null;
 	
 	//Physical contact list
@@ -124,6 +125,7 @@ public class Environment extends Actor{
 		//float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
 		
 		Vector2 newPos = IsoHelper.twoDToTileIso(tamerPos);
+
 		stage.getCamera().position.set(newPos.x,newPos.y,0);	
 	}
 	
@@ -203,6 +205,7 @@ public class Environment extends Actor{
 		for(int i = 0 ; i < size ; i++){
 			obstacles.get(i).resolve(creatures);
 		}
+
 	}
 	public void runCarbageCollection(){
 		int size = gameobjects.size();
