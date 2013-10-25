@@ -2,9 +2,10 @@ package com.me.tamer.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.ui.ControlContainer;
 
@@ -30,6 +31,9 @@ public class TamerStage extends Stage{
 	public static final int GAME_PAUSED = 2; 
 	public static final int GAME_OVER = 3;
 	public static int gameState;
+	
+	//Debug
+	ShapeRenderer debugRender = new ShapeRenderer();
 	
 	
 	public TamerStage(TamerGame game){
@@ -60,7 +64,22 @@ public class TamerStage extends Stage{
         this.addActor( environment );
         this.addActor( hud );
         this.addActor( controlContainer);
-	}    
+	}  
+	
+	
+	@Override
+	public void draw(){
+
+		super.getCamera().update();
+		if (!super.getRoot().isVisible()) return;
+		super.getSpriteBatch().setProjectionMatrix(super.getCamera().combined);
+		super.getSpriteBatch().begin();
+		
+		super.getRoot().draw(super.getSpriteBatch(), 1);
+		environment.debugDraw(debugRender);
+		super.getSpriteBatch().end();
+	}
+	
 	
 	public void setupCamera(){	
 		camera = new OrthographicCamera();

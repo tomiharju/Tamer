@@ -13,8 +13,8 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.WormPart;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.Creature;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.tTimer;
@@ -44,7 +44,9 @@ public class GryphonScream extends DynamicObject {
 	private Vector2 tamerHead			= null;
 	private Vector2 newHeading			= null;
 	
-	public GryphonScream(){
+	//ShapeRenderer shapeRenderer = new ShapeRenderer();
+	
+	public GryphonScream(Environment environment){
 		screamVert1 = new Vector2();
 		screamVert2 = new Vector2();
 		screamVert3 = new Vector2();
@@ -65,32 +67,30 @@ public class GryphonScream extends DynamicObject {
 		//Z-index for drawing order
 		setZindex(-1);
 		setGraphics();
+		
 	}
 	
-	
-	@Override 
 	public void debugDraw(ShapeRenderer shapeRenderer){
+		shapeRenderer.setProjectionMatrix(environment.getStage().getCamera().combined);
 		
-		if(isActive){
-			drawVert1.set(IsoHelper.twoDToIso(screamVert1));
-			drawVert2.set(IsoHelper.twoDToIso(screamVert2));
-			drawVert3.set(IsoHelper.twoDToIso(screamVert3));
-			shapeRenderer.setColor(1, 1, 1, 1);
-			
-			shapeRenderer.begin(ShapeType.Line);
-			shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
-			shapeRenderer.end();
-			
-			shapeRenderer.begin(ShapeType.Line);
-			shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
-			shapeRenderer.end();
-			
-			shapeRenderer.begin(ShapeType.Line);
-			shapeRenderer.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
-			shapeRenderer.end();
-		}
+		drawVert1.set(IsoHelper.twoDToIso(screamVert1));
+		drawVert2.set(IsoHelper.twoDToIso(screamVert2));
+		drawVert3.set(IsoHelper.twoDToIso(screamVert3));
+		shapeRenderer.setColor(1, 1, 1, 1);
+	
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
+		shapeRenderer.end();
 		
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
+		shapeRenderer.end();
+		
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
+		shapeRenderer.end();
 	}
+	
 	
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("animated","scream");
@@ -103,7 +103,9 @@ public class GryphonScream extends DynamicObject {
 	
 	@Override
 	public void update(float dt) {
+		
 		if(isActive){
+			
 			tamerPos.set(environment.getTamer().getPosition().cpy());
 			tamerHead.set(environment.getTamer().getHeading().cpy());
 			screamVert1.set(tamerPos);
@@ -166,7 +168,7 @@ public class GryphonScream extends DynamicObject {
 	//Debug is on
 	@Override
 	public boolean getDebug(){
-		return false;
+		return true;
 	}
 	
 	public Vector2 getPosition(){

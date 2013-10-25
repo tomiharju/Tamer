@@ -32,7 +32,7 @@ public class Tamer extends DynamicObject{
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
 		}
 		//Scream
-		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
+		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream(environment));
 		
 		//Shadow
 		shadow = new TamerShadow(this);
@@ -62,7 +62,7 @@ public class Tamer extends DynamicObject{
 		getPosition().add(force);
 		force.mul(0f);
 		for(int i = 0 ; i < spears.size() ; i ++){
-			if(getPosition().dst(spears.get(i).getPosition()) < 1 ){
+			if(shadow.getPosition().dst(spears.get(i).getPosition()) < 1 ){
 				if(spears.get(i).isAttached()){
 					spears.get(i).pickUp();
 					spears.remove(i);

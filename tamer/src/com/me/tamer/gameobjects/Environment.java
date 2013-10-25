@@ -63,6 +63,8 @@ public class Environment extends Actor{
 		RuntimeObjectFactory.createLinkToLevel(this);
 
 		ContactPool.createPool(100);
+		
+		
 
 	}
 	
@@ -86,7 +88,9 @@ public class Environment extends Actor{
 				int numObjects = gameobjects.size();
 				for(int k = 0 ; k < numObjects ; k++)
 					gameobjects.get(k).update(dt);
+				
 				break;
+				
 			case( TamerStage.GAME_PAUSED):
 				break;
 			default:
@@ -104,11 +108,13 @@ public class Environment extends Actor{
 		sortDrawOrder(numObjects);
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).draw(batch);
-		
 	}
 	
 	
 	public void debugDraw(ShapeRenderer sr){
+
+		sr.setProjectionMatrix(stage.getCamera().combined);
+		
 		int size = gameobjects.size();
 		for(int i = 0 ; i < size ; i++)
 			if(gameobjects.get(i).getDebug()){
@@ -314,6 +320,10 @@ public class Environment extends Actor{
 	
 	public Tamer getTamer(){
 		return (Tamer) tamer;
+	}
+	
+	public TamerStage getStage(){
+		return stage;
 	}
 	
 }

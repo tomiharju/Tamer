@@ -38,6 +38,7 @@ public class SpearButton extends Actor {
 	private final float INITIAL_SPEED = 2.0f;
 	float tamerHeight;
 	private Vector2 tamerPos = new Vector2();
+	private Vector2 targetPointFromTamer = new Vector2();
 	
 	float throwDistance = 1; 
 	boolean pressed = false;
@@ -57,7 +58,7 @@ public class SpearButton extends Actor {
 		pointRender = new UiRenderer();
 		pointRender2 = new UiRenderer();
 		
-		buttonRender.loadGraphics("icon_scream_v6");
+		buttonRender.loadGraphics("button_spear");
 		buttonRender.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		buttonRender.setPosition(restingpoint);
 		
@@ -159,8 +160,12 @@ public class SpearButton extends Actor {
 	public void resolveActualTargetPoint(){
 		//Resolve the actual point where tamer throws the spear
 		tamerPos.set( controlContainer.getEnvironment().getTamer().getPosition() );
+		
+		targetPointFromTamer.set( targetPoint.tmp().sub( tamerPos ));
+		
 		float speedX = targetPoint.tmp().nor().x * INITIAL_SPEED;
 		float speedY = targetPoint.tmp().nor().y * INITIAL_SPEED;
+		System.out.println("sppedY: " +speedY);
 		float flyTime = (float)( Math.sqrt( tamerHeight / GRAVITY + Math.pow( speedY , 2 ) / 4 * GRAVITY ) - speedY / 2 * GRAVITY );
 		
 		

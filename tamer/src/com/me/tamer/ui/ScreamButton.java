@@ -1,8 +1,8 @@
 package com.me.tamer.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -28,7 +28,7 @@ public class ScreamButton extends Actor{
 	private Vector2 localCenter 	= null;
 	private final float BUTTON_SIZE				= 110;
 	boolean isPressed		= false;
-
+	
 
 	public ScreamButton(ControlContainer inputController) {
 		this.controlContainer = inputController;
@@ -39,7 +39,7 @@ public class ScreamButton extends Actor{
 		environment		= controlContainer.getEnvironment();
 		tamer 			= environment.getTamer();
 		renderer 		= new UiRenderer();
-		renderer.loadGraphics("icon_scream_v6");
+		renderer.loadGraphics("button_scream");
 		renderer.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer.setPosition(restingpoint);
 		
@@ -72,6 +72,7 @@ public class ScreamButton extends Actor{
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		renderer.setSize(BUTTON_SIZE, BUTTON_SIZE);
 		renderer.setPosition(restingpoint);
-		renderer.draw(batch);	
+		renderer.draw(batch);
+
 	}
 }

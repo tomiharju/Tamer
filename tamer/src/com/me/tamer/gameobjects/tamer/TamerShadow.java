@@ -9,7 +9,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.utils.IsoHelper;
 
 public class TamerShadow extends DynamicObject{
-	private final float DISTANCE = 5.0f;
+	private final float DISTANCE = 4.0f;
 	private final float SIZE = 2.0f;
 	private Tamer tamer;
 	
