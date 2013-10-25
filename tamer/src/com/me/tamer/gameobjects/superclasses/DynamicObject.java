@@ -3,7 +3,7 @@ package com.me.tamer.gameobjects.superclasses;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.physics.RigidBody;
@@ -14,10 +14,12 @@ import com.me.tamer.utils.RendererFactory;
 
 public class DynamicObject implements GameObject{
 	
+	//Someone has to fix these to private
 	protected Vector2 position = new Vector2();		//"World position"
 	protected Vector2 velocity = new Vector2();		//"World velocity"
 	protected Vector2 heading = new Vector2();
 	protected Vector2 force = new Vector2();		// Magnitude and direction of per loop position iteration
+	protected float angle = 0;
 	private float mass;			
 	private float invMass;							// Precalculated invmass, used in physics calculations
 	protected Vector2 size;
@@ -46,8 +48,8 @@ public class DynamicObject implements GameObject{
 		renderer.setSize(size.x,size.y);
 		renderer.setPosition(IsoHelper.twoDToIso(position));
 		renderer.setOrientation( solveOrientation() );
-		renderer.draw(batch);
-		
+		renderer.setAngle(angle);
+		renderer.draw(batch);	
 	}
 	
 	@Override
@@ -76,6 +78,11 @@ public class DynamicObject implements GameObject{
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
 		this.position.set(x,y);
+	}
+	
+	@Override
+	public void setPosition(Vector2 pos){
+		this.position.set(pos.cpy());
 	}
 	
 	public void setVelocity(String vel){
@@ -136,7 +143,7 @@ public class DynamicObject implements GameObject{
 	}
 	
 	@Override
-	public void setup(Level level) {
+	public void setup(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -174,7 +181,7 @@ public class DynamicObject implements GameObject{
 	}
 	
 	@Override
-	public void wakeUp(Level level) {
+	public void wakeUp(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -184,7 +191,7 @@ public class DynamicObject implements GameObject{
 		
 	}
 	@Override
-	public void dispose(Level level) {
+	public void dispose(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -225,10 +232,6 @@ public class DynamicObject implements GameObject{
 
 	public void setzIndex(int zIndex) {
 		this.zIndex = zIndex;
-	}
-
-	public void setPosition(Vector2 position) {
-		this.position.set(position);
 	}
 
 	public void setSize(Vector2 size) {

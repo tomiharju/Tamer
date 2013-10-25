@@ -21,7 +21,6 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
 public class AnimatedRenderer implements Renderer {
 
 	private Sprite sprite ;
-	//private Animation animation;
 	private ArrayList<Animation> animations;
 	private int currentAnimation = 0;
 	
@@ -29,26 +28,25 @@ public class AnimatedRenderer implements Renderer {
 	private TextureRegion[][] frames;
 	
 	private TextureRegion currentFrame;
-	private boolean animate;
 	private float stateTime;
-	private float animSpeed = 0.025f;
-	private Vector2 animPos;
+	private float animationDuration = 3;
 	private Vector2 size = new Vector2();
 	private Vector2 pos = new Vector2();
-	private String type;
+	private String type = null;
+	private float angle;
+	
 	public AnimatedRenderer(){
-		
+		animations = new ArrayList<Animation>();
 	}
 
 	@Override
-	public void draw(SpriteBatch batch) {
-		//sprite.draw(batch);
-		
+	public void draw(SpriteBatch batch) {	
 		stateTime += Gdx.graphics.getDeltaTime();
 		
-		if (animations.size() > 0){
+		if (!animations.isEmpty()){
 			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
 			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
+			//batch.draw( currentFrame, pos.x - size.x / 2, pos.y - size.y /2, 0, 0, size.x, size.y, 2, 2, angle);
 		}
 	}
 
@@ -59,26 +57,26 @@ public class AnimatedRenderer implements Renderer {
 		if(sprite == null)
 			throw new IllegalArgumentException("Could not load sprite!");
 		
-		animations = new ArrayList<Animation>();	
+		
+		animations.add(new Animation(animationDuration,sprite));
 	}
 	
 	@Override
-	public void loadGraphics(String animName,int FRAME_COLS,int FRAME_ROWS){
+	public void loadGraphics( String animName,int FRAME_COLS,int FRAME_ROWS ){
 		//loadGraphics from spritesheet
 		spriteSheet = new Texture(Gdx.files.internal("data/graphics/animations/"+animName+".png"));
 		frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 
 				FRAME_COLS, spriteSheet.getHeight() / FRAME_ROWS);          
 		
-		animations = new ArrayList<Animation>();
 		for (int i = 0; i < FRAME_ROWS; i++) {
-			animations.add(new Animation(animSpeed,frames[i]));
+			animations.add(new Animation(animationDuration,frames[i]));
 		}
 
 		stateTime = 0f;
 	}
 	
 	public void setAnimSpeed(float speed){
-		animSpeed = speed;
+		animationDuration = speed;
 	}
 	
 	@Override
@@ -88,7 +86,6 @@ public class AnimatedRenderer implements Renderer {
 
 	@Override
 	public void setPosition(Vector2 pos) {
-		//sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y - sprite.getHeight() /2  );
 		this.pos.set(pos);	
 	}
 
@@ -100,5 +97,9 @@ public class AnimatedRenderer implements Renderer {
 	@Override
 	public void setOrientation(int orientation) {
 		this.currentAnimation = orientation;
+	}
+	
+	public void setAngle(float a){
+		this.angle = a;
 	}
 }

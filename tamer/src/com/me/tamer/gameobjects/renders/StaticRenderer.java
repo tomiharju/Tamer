@@ -58,6 +58,11 @@ public class StaticRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void setAngle(float angle) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

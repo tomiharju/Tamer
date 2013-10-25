@@ -3,13 +3,13 @@ package com.me.tamer.utils;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public class RuntimeObjectFactory {
 
 	public static HashMap<String,LinkedList<GameObject>> objectPool = new HashMap<String,LinkedList<GameObject>>();
-	public static Level level = null;
+	public static Environment level = null;
 	
 	public static void addToObjectPool(String type, GameObject obj){
 		if(objectPool.containsKey(type))
@@ -41,7 +41,7 @@ public class RuntimeObjectFactory {
 		}
 	}
 	
-	public static void createLinkToLevel(Level lvl){
+	public static void createLinkToLevel(Environment lvl){
 		level = lvl;
 	}
 	
