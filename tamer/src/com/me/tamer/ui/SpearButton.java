@@ -163,8 +163,8 @@ public class SpearButton extends Actor {
 		
 		targetPointFromTamer.set( targetPoint.tmp().sub( tamerPos ));
 		
-		float speedX = targetPoint.tmp().nor().x * INITIAL_SPEED;
-		float speedY = targetPoint.tmp().nor().y * INITIAL_SPEED;
+		float speedX = targetPointFromTamer.tmp().nor().x * INITIAL_SPEED;
+		float speedY = targetPointFromTamer.tmp().nor().y * INITIAL_SPEED;
 		System.out.println("sppedY: " +speedY);
 		float flyTime = (float)( Math.sqrt( tamerHeight / GRAVITY + Math.pow( speedY , 2 ) / 4 * GRAVITY ) - speedY / 2 * GRAVITY );
 		
