@@ -138,4 +138,10 @@ public class AntOrc extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean isAffected(Vector2 point, float radius) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

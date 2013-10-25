@@ -244,6 +244,12 @@ public class WormPart extends DynamicObject implements Creature {
 		pullVector.nor().mul(5.5f);
 		velocity.add(pullVector.mul(Gdx.graphics.getDeltaTime())); 
 	}
+
+	@Override
+	public boolean isAffected(Vector2 point, float radius) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }

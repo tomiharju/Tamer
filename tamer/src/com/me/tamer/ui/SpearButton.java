@@ -61,7 +61,10 @@ public class SpearButton extends Actor {
 		buttonRender.loadGraphics("icon_scream_v6");
 		buttonRender.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		buttonRender.setPosition(restingpoint);	
-
+		
+		pointRender.loadGraphics("joystick");
+		pointRender.setSize(1f,1f);
+		pointRender.setPosition(new Vector2(0,0));
 		pointRender2.loadGraphics("joystick");
 		pointRender2.setSize(1f,1f);
 		pointRender2.setPosition(new Vector2(0,0));

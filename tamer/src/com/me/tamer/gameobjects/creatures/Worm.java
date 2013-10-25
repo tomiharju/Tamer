@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
-
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
@@ -150,6 +149,17 @@ public class Worm extends DynamicObject implements Creature{
 		
 		
 	}
+	@Override
+	public boolean isAffected(Vector2 point, float radius) {
+		boolean partAffected = false;
+		for(int i = 0 ; i < parts.size() ; i++){
+
+			if(parts.get(i).getPosition().dst(point) < radius){
+				partAffected = true;
+			}
+		}
+		return partAffected;
+	}
 
 	@Override
 	public void applyPull(Vector2 point) {
@@ -161,6 +171,8 @@ public class Worm extends DynamicObject implements Creature{
 			tail.applyPull(point);
 		
 	}
+
+	
 	
 	
 	

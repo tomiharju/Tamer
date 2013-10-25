@@ -50,14 +50,14 @@ public class Quicksand extends StaticObject implements Obstacle{
 		for(int i = 0 ; i < size ; i ++){
 			for(int k = 0; k < psize ; k ++){
 				//Check each section of this quicksand if any creature has entered one of them ( 1 = sand radius )
-				Creature creature = creatures.get(i).affectedCreature(parts.get(k).getPosition(),1f);
+				boolean entered = creatures.get(i).isAffected(parts.get(k).getPosition(),1f);
 				//If some creature is inside this cluster
-				if(creature != null){
+				if(entered){
 					//Check if creature is not already inside this cluster
-					if(!creatures_entered.contains(creature)){
+					if(!creatures_entered.contains(creatures.get(i))){
 						//Add creature to this cluster
-						creatures_entered.add(creature);
-						System.out.println("Number of creatures on the cluster "+this.toString() +" "+creatures_entered.size());
+						creatures_entered.add(creatures.get(i));
+						System.out.println("Creature entered the field. Size " + creatures_entered.size());
 						//Do a coinflip
 						int head = (int) Math.round(Math.random());
 						if(head == 1)
@@ -68,18 +68,22 @@ public class Quicksand extends StaticObject implements Obstacle{
 			}
 		}
 				//Check if one or more entered creatures have left the cluster
-				size = creatures_entered.size();
-				for(int i = 0 ; i < size ; i ++){
+			
+				for(int i = 0 ; i < creatures_entered.size() ; i ++){
+					Creature targetCreature = creatures_entered.get(i);
+					boolean isUnderRadius = false;
 					for(int k = 0; k < psize ; k ++){
 						//Check if this creature is closer than 1 from any of this clusters parts
-						Creature creature  = creatures_entered.get(i).affectedCreature(parts.get(k).getPosition(),0.5f);
-						//if not, remove it from this cluster.
-						if(creature == null){
-							creatures_entered.remove(creatures.get(i));
-						//	System.out.println("Creature has left the radius");
-						}
-						
+						isUnderRadius = targetCreature.isAffected(parts.get(k).getPosition(),1f);
+						if(isUnderRadius)
+							break;
 					}
+					if(!isUnderRadius){
+						creatures_entered.remove(targetCreature);
+						System.out.println("Creature left the cluster! "+ creatures_entered.size());
+
+					}
+					
 				}
 			
 	

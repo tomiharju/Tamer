@@ -125,7 +125,6 @@ public class Environment extends Actor{
 		//float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
 		
 		Vector2 newPos = IsoHelper.twoDToTileIso(tamerPos);
-
 		stage.getCamera().position.set(newPos.x,newPos.y,0);	
 	}
 	
