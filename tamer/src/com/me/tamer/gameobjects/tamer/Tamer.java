@@ -15,7 +15,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED 	= 0.2f;
+	private final float SPEED 	= 0.4f;
 	private int numSpears 		= 3;
 	private ArrayList<Spear> spears = null;
 	private TamerShadow shadow;
@@ -76,12 +76,17 @@ public class Tamer extends DynamicObject{
 	 * Joystick uses this method to move tamer around
 	 */
 	public void manouver(Vector2 direction){
-		//heading.lerp(direction,0.025f);
 		direction.rotate(45);
-		heading.set(direction);
-		heading.nor();
-		force.set(heading);
-		force.mul(SPEED);
+		float lenght = direction.len();
+		float power = Math.max(Math.abs(direction.y), Math.min(Math.abs(lenght),0.5f));
+		direction.nor().mul(power*SPEED);
+		System.out.println("power  " + power);
+		if(power > 0.1){
+			heading.set(direction);
+			heading.nor();
+			force.set(direction);
+			
+		}
 	}
 	/**
 	 * @param direction

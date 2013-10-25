@@ -1,16 +1,21 @@
 package com.me.tamer.gameobjects.tiles;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
+import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.physics.RigidBody;
 
-public class Endingpoint extends StaticObject{
+public class Endingpoint extends StaticObject implements Obstacle{
 	public void setup(Environment level){
 		level.addNewObject(this);
-		setZindex(0);
+		level.getObstacles().add(this);
+		setZindex(1);
 
 	}
 
@@ -32,5 +37,16 @@ public class Endingpoint extends StaticObject{
 		render.loadGraphics(graphics);
 		setSize("1:0.5");
 		this.renderType = graphics;
+	}
+
+	@Override
+	public void resolve(ArrayList<Creature> creatures) {
+		int size = creatures.size();
+		for(int i = 0 ; i < size ; i ++){
+			if(creatures.get(i).isAffected(getCenterPosition(), 1f))
+				creatures.get(i).moveToFinish();
+			
+		}
+		
 	}
 }

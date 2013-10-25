@@ -23,8 +23,5 @@ public class SandPart extends StaticObject{
 		this.renderType = graphics;
 		
 	}
-	
-	public void isInside(Vector2 point){
-		
-	}
+
 }

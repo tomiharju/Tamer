@@ -47,12 +47,12 @@ public class Spear extends DynamicObject{
 		
 		if(!isAttached)
 			//position.add(force.tmp().mul(dt));
-			
 			position.add( direction.x * (INITIAL_SPEED * dt + GRAVITY * dt), direction.y * (INITIAL_SPEED * dt + GRAVITY * dt) );
 		//When the spear has reached its destination, check if there is some creature
 		//If there is, call that creatures spearHit method to resolve damage.
 		if(!isAttached && position.dst(target) < 0.5){
 			setPosition(target);
+			
 			ArrayList<Creature> creatures = environment.getCreatures();
 			int size = creatures.size();
 			for(int i = 0 ; i < size ; i ++){
@@ -60,7 +60,7 @@ public class Spear extends DynamicObject{
 					if(targetCreature != null){
 						targetCreature = creatures.get(i);
 						targetCreature.spearHit(this);
-						isAttached = true;
+						
 						break;
 					}
 			}
@@ -94,6 +94,7 @@ public class Spear extends DynamicObject{
 		}
 		RuntimeObjectFactory.addToObjectPool("spear",this);
 		markAsCarbage();
+		System.out.println("Spear picked up");
 	}
 	
 	public boolean isAttached(){

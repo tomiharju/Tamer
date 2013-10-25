@@ -136,7 +136,7 @@ public class Worm extends DynamicObject implements Creature{
 
 	@Override
 	public void moveToFinish() {
-		// TODO Auto-generated method stub
+		head.moveToFinish();
 		
 	}
 

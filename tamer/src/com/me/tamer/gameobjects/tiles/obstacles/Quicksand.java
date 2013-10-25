@@ -38,10 +38,11 @@ public class Quicksand extends StaticObject implements Obstacle{
 	
 	public void setBogHole(){
 		for(SandPart s : parts)
-			bogHoleCenter.add(s.getPosition());
+			bogHoleCenter.add(s.getCenterPosition());
 		bogHoleCenter.div(parts.size());
 		//Move center half tile size up so that its realy in the center of the tile
-		bogHoleCenter.set(bogHoleCenter.x,bogHoleCenter.y+0.5f);
+		bogHoleCenter.set(bogHoleCenter.x,bogHoleCenter.y);
+		System.out.println("Bog center " + bogHoleCenter.toString());
 	}
 	
 	public void resolve(ArrayList<Creature> creatures){
@@ -50,7 +51,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 		for(int i = 0 ; i < size ; i ++){
 			for(int k = 0; k < psize ; k ++){
 				//Check each section of this quicksand if any creature has entered one of them ( 1 = sand radius )
-				boolean entered = creatures.get(i).isAffected(parts.get(k).getPosition(),1f);
+				boolean entered = creatures.get(i).isAffected(parts.get(k).getCenterPosition(),1f);
 				//If some creature is inside this cluster
 				if(entered){
 					//Check if creature is not already inside this cluster
@@ -74,7 +75,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 					boolean isUnderRadius = false;
 					for(int k = 0; k < psize ; k ++){
 						//Check if this creature is closer than 1 from any of this clusters parts
-						isUnderRadius = targetCreature.isAffected(parts.get(k).getPosition(),1f);
+						isUnderRadius = targetCreature.isAffected(parts.get(k).getCenterPosition(),1f);
 						if(isUnderRadius)
 							break;
 					}
