@@ -19,6 +19,7 @@ public class SpearButton extends Actor {
 	OrthographicCamera uiCam = null;
 	
 	Vector2 targetPoint = null;
+	Vector2 actualTargetPoint = null;
 	Vector2 spearPosition = null;
 	Vector2 spearHeading = null;
 	
@@ -35,11 +36,14 @@ public class SpearButton extends Actor {
 	
 	private final float GRAVITY = 5.0f;
 	private final float INITIAL_SPEED = 2.0f;
+	float tamerHeight;
+	private Vector2 tamerPos = new Vector2();
 	
 	float throwDistance = 1; 
 	boolean pressed = false;
 	UiRenderer buttonRender = null;
 	UiRenderer pointRender = null;
+	UiRenderer pointRender2 = null;
 	
 	
 	
@@ -47,8 +51,12 @@ public class SpearButton extends Actor {
 		this.controlContainer = controlContainer;
 	
 		targetPoint		= new Vector2(0,0);
+		actualTargetPoint = new Vector2(0,0);
+		
 		buttonRender = new UiRenderer();
 		pointRender = new UiRenderer();
+		pointRender2 = new UiRenderer();
+		
 		buttonRender.loadGraphics("icon_scream_v6");
 		buttonRender.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		buttonRender.setPosition(restingpoint);
@@ -56,6 +64,10 @@ public class SpearButton extends Actor {
 		pointRender.loadGraphics("joystick");
 		pointRender.setSize(0.5f,0.5f);
 		pointRender.setPosition(new Vector2(0,0));
+		
+		pointRender2.loadGraphics("joystick");
+		pointRender2.setSize(1f,1f);
+		pointRender2.setPosition(new Vector2(0,0));
 		
 		spearPosition = new Vector2();
 		spearHeading = new Vector2();
@@ -81,6 +93,8 @@ public class SpearButton extends Actor {
 			batch.setProjectionMatrix(cam.combined);
 			pointRender.setPosition(IsoHelper.twoDToIso(targetPoint));
 			pointRender.draw(batch);
+			pointRender2.setPosition(IsoHelper.twoDToIso(actualTargetPoint));
+			pointRender2.draw(batch);
 			batch.setProjectionMatrix(uiCam.combined);
 		}
 	}
@@ -99,6 +113,7 @@ public class SpearButton extends Actor {
 			spearHeading.nor().mul(throwDistance);
 			spearPosition.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
 			targetPoint.set(spearPosition.add(spearHeading));
+			resolveActualTargetPoint();
 		}	
 	}
 	
@@ -122,7 +137,7 @@ public class SpearButton extends Actor {
 				if( throwDistance > MIN_DISTANCE && pressed ){
 					Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
 					if(spear != null)
-						controlContainer.getEnvironment().getTamer().throwSpear(spear, targetPoint,throwDistance );
+						controlContainer.getEnvironment().getTamer().throwSpear(spear, targetPoint, throwDistance );
 					else
 						System.err.println("No spears remaining");
 				}
@@ -141,10 +156,25 @@ public class SpearButton extends Actor {
 		});	
 	}
 	
+	public void resolveActualTargetPoint(){
+		//Resolve the actual point where tamer throws the spear
+		tamerPos.set( controlContainer.getEnvironment().getTamer().getPosition() );
+		float speedX = targetPoint.tmp().nor().x * INITIAL_SPEED;
+		float speedY = targetPoint.tmp().nor().y * INITIAL_SPEED;
+		float flyTime = (float)( Math.sqrt( tamerHeight / GRAVITY + Math.pow( speedY , 2 ) / 4 * GRAVITY ) - speedY / 2 * GRAVITY );
+		
+		
+		spearPosition.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
+		//System.out.println("spearPosition: "+spearPosition);
+		
+		System.out.println("targetPoint: " +targetPoint +", actual: " +actualTargetPoint);
+		actualTargetPoint.set( tamerPos.x + speedX * flyTime, tamerPos.y + speedY * flyTime );
+	}
+	
 	public float getMaxDistance(){
 		float shadowDistance = controlContainer.getEnvironment().getTamer().getShadow().getDistance();
-		float height = (float)Math.sqrt(Math.pow(shadowDistance, 2) + Math.pow(shadowDistance, 2));
-		float droppingTime = (float)Math.sqrt(height * GRAVITY);
+		tamerHeight = (float)Math.sqrt(Math.pow(shadowDistance, 2) + Math.pow(shadowDistance, 2));
+		float droppingTime = (float)Math.sqrt(tamerHeight * GRAVITY);
 		maxDistance = INITIAL_SPEED * droppingTime;
 		
 		return maxDistance;

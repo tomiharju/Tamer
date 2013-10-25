@@ -23,6 +23,8 @@ public class Spear extends DynamicObject{
 	//Same variables in spearbutton
 	private final float GRAVITY = 5.0f;
 	private final float INITIAL_SPEED = 2.0f;
+	private Vector2 direction = new Vector2();
+	private float distance;
 	
 	public Spear(){
 		setGraphics();
@@ -43,7 +45,9 @@ public class Spear extends DynamicObject{
 	public void update(float dt){
 		
 		if(!isAttached)
-			position.add(force.tmp().mul(dt));
+			//position.add(force.tmp().mul(dt));
+			
+			position.add( direction.x * (INITIAL_SPEED * dt + GRAVITY * dt), direction.y * (INITIAL_SPEED * dt + GRAVITY * dt) );
 		//When the spear has reached its destination, check if there is some creature
 		//If there is, call that creatures spearHit method to resolve damage.
 		if(!isAttached && position.dst(target) < 0.5){
@@ -69,8 +73,13 @@ public class Spear extends DynamicObject{
 	}
 	public void throwAt(Vector2 point,float power){
 		target.set(point);
-		Vector2 dir = point.sub(getPosition());
-		force.set(dir.tmp().nor().mul(power));
+		direction.set(point.sub(getPosition()));
+		distance = direction.len();
+		direction.nor();
+		
+		
+		
+		//force.set(dir.mul(power));
 	}
 	
 	/**
