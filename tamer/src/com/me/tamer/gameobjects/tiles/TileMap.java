@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
@@ -25,12 +25,10 @@ public class TileMap extends StaticObject{
 	private ArrayList<Vector2> terrain;
 	private Vector2 bounds;
 	
-	public TileMap(){
-		setZindex(1);
-	}
 	
-	public void setup(Level level){
+	public void setup(Environment level){
 		level.addNewObject(this);
+		setZindex(1);
 	}
 	
 	@Override

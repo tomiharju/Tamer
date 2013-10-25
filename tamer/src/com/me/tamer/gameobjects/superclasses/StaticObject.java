@@ -3,7 +3,7 @@ package com.me.tamer.gameobjects.superclasses;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.physics.RigidBody;
@@ -93,7 +93,7 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void setup(Level level) {
+	public void setup(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -105,7 +105,7 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void wakeUp(Level level) {
+	public void wakeUp(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -131,7 +131,7 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void dispose(Level level) {
+	public void dispose(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -149,6 +149,12 @@ public class StaticObject implements GameObject{
 
 	@Override
 	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPosition(Vector2 pos) {
 		// TODO Auto-generated method stub
 		
 	}

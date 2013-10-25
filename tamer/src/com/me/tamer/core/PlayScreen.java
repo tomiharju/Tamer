@@ -1,27 +1,18 @@
 package com.me.tamer.core;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public class PlayScreen implements Screen{
+public class PlayScreen extends AbstractScreen{
 
-	private TamerGame main;
-	private Environment environment;
+	private Stage stage;
 	
-	//FPS limiting
-	int FPS = 30;
-	long lastFrame = 0;
-	long curFrame = System.currentTimeMillis();
-	
-	public PlayScreen(TamerGame core){
-		this.main = main;
-	
+	public PlayScreen(final TamerGame game){
+		super(game);
+		create();
 	}
+
 
 
 	@Override
@@ -32,47 +23,42 @@ public class PlayScreen implements Screen{
 		environment.update(delta);
 		environment.draw();
 
-		
+
 	
+	public void create(){
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state to GAME_RUNNING");
+		TamerStage.gameState = TamerStage.GAME_RUNNING;
+		//Stop music when the level starts
+		game.getMusicManager().stop();
+		stage = new TamerStage(game);
 	}
-
-	@Override
-	public void resize(int width, int height) {
-			environment.resize(width, height);
-		
-	}
-
+	
 	@Override
 	public void show() {
-		//This method is called when the app is loaded
-		this.environment = new Environment();
-		// TODO Auto-generated method stub
+		super.show();
 		
+		switch(TamerStage.gameState){
+			case(TamerStage.GAME_RUNNING):
+				break;
+			case(TamerStage.GAME_PAUSED):
+				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state from GAME_PAUSED to GAME_RUNNING");
+				TamerStage.gameState = TamerStage.GAME_RUNNING;
+				break;	
+			default:
+				Gdx.app.error (TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: Run into default case of gameState");			
+		}
+		
+		Gdx.input.setInputProcessor( stage );
 	}
-
+	
 	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
+	public void hide(){
+		super.hide();
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switching gameState to GAME_PAUSED");
+		TamerStage.gameState = TamerStage.GAME_PAUSED;
 	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
 	
 	
