@@ -16,42 +16,48 @@ import com.me.tamer.utils.VectorHelper;
 public class Joystick extends Actor /*implements UiElement*/{
 
 	private ControlContainer inputcontroller = null;
-	private UiRenderer renderer = null;
-	private Tamer tamer = null;
-	private Vector2 tamerPosition = null;
+	private UiRenderer renderer_outer = null;
+	private UiRenderer renderer_inner = null;
+
+	private Tamer tamer 			= null;
+	private Vector2 tamerPosition 	= null;
 	private Environment environment = null;
-	private Level level = null;
-	private Vector2 movementAxis = null;
+	private Level level 			= null;
+	private Vector2 movementAxis 	= null;
 	
-	private Matrix3 translate = new Matrix3().rotate(45);
+	private Matrix3 translate 		= new Matrix3().rotate(45);
 	//Joystick variables
-	Vector2 restingpoint 	= new Vector2(130,130);
+	Vector2 restingpoint 			= new Vector2(130,130);
 	protected Vector2 delta			= null;
-	private Vector2 deltaHelp		= null;
 	private Vector2 input			= null;
+	private Vector2 moveTemp		= new Vector2();
 	private Vector2 localCenter 	= null;
 	protected Vector2 point			= null;
-	private final float BUTTON_SIZE				= 250;
-	float pointersize		= 30f;
-	boolean pressed		= false;
-	boolean movementDisabled = false;
+	private final float BUTTON_SIZE	= 250;
+	float pointersize				= 180f;
+	boolean pressed					= false;
+	boolean movementDisabled 		= false;
 	
 	
 	public Joystick(ControlContainer inputController) {
 		this.inputcontroller = inputController;
 		delta			= new Vector2(0,0);
-		deltaHelp		= new Vector2(0,0);
 		input			= new Vector2(0,0);
 		localCenter 	= new Vector2(BUTTON_SIZE/2,BUTTON_SIZE/2);
 		movementAxis	= new Vector2(0,0);
 		point			= new Vector2(restingpoint.x,restingpoint.y);
 		tamerPosition	= new Vector2();
-		renderer 		= new UiRenderer();
+		renderer_outer 		= new UiRenderer();
+		renderer_inner 		= new UiRenderer();
 		tamer 			= inputcontroller.getEnvironment().getTamer();
 		environment		= inputcontroller.getEnvironment();
-		renderer.loadGraphics("icon_scream_v6");
-		renderer.setSize(BUTTON_SIZE,BUTTON_SIZE);
-		renderer.setPosition(restingpoint);
+		renderer_outer.loadGraphics("joystick");
+		renderer_outer.setSize(BUTTON_SIZE,BUTTON_SIZE);
+		renderer_outer.setPosition(restingpoint);
+		
+		renderer_inner.loadGraphics("joystick_inner");
+		renderer_inner.setSize(pointersize,pointersize);
+		renderer_inner.setPosition(restingpoint);
 		
 		//set Actor variables
 		setVisible(false);
@@ -62,21 +68,17 @@ public class Joystick extends Actor /*implements UiElement*/{
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		renderer.setSize(BUTTON_SIZE, BUTTON_SIZE);
-		renderer.setPosition(restingpoint);
-		renderer.draw(batch);
-		renderer.setSize(pointersize,pointersize);
-		renderer.setPosition(point);
-		renderer.draw(batch);		
+	
+		renderer_outer.draw(batch);
+		renderer_inner.draw(batch);		
 	}
 	
 	@Override
 	public void act(float dt) {
 		if (isVisible() && pressed){
 			delta.set(point.tmp().sub(restingpoint));
-		//	deltaHelp.set(delta);
-			if(delta.len() > BUTTON_SIZE / 2){
-				delta = delta.nor().mul(BUTTON_SIZE/2);
+			if(delta.len() > (BUTTON_SIZE - pointersize/2) / 2){
+				delta = delta.nor().mul((BUTTON_SIZE - pointersize/2)/2);
 				point.set(restingpoint.tmp().add(delta));
 			}
 			if(movementDisabled)

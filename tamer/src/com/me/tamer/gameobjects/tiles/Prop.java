@@ -18,6 +18,7 @@ public class Prop extends StaticObject {
 	
 	public void setup(Environment level){
 		level.addNewObject(this);
+		setZindex(0);
 	}
 
 	@Override

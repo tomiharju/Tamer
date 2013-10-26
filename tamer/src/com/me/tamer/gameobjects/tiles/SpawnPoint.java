@@ -42,7 +42,7 @@ public class SpawnPoint extends StaticObject{
 	public void setup(Environment environment){
 		environment.addNewObject(this);
 		startSpawning();
-		setZindex(0);
+		setZindex(1);
 	}
 	
 	public void setGraphics(String graphics){
@@ -76,14 +76,14 @@ public class SpawnPoint extends StaticObject{
 		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		creatures.add(worm);
-		worm.setPosition(position);
+		worm.setPosition(getCenterPosition());
 		worm.setVelocity(spawnVelocity);
 	}
 	public void addAnt(AntOrc ant){
 		spawnType = "ant";
 		RuntimeObjectFactory.addToObjectPool("ant"+spawnId,(GameObject)ant);
 		creatures.add(ant);
-		ant.setPosition(position);
+		ant.setPosition(getCenterPosition());
 		ant.setVelocity(spawnVelocity);
 	}
 

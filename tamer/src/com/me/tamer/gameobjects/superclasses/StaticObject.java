@@ -15,7 +15,7 @@ public class StaticObject implements GameObject{
 	protected RigidBody body = null;
 	protected Vector2 position;
 	protected Vector2 size = new Vector2();
-	
+	protected Vector2 centerPosition = new Vector2();
 	protected String renderType = null;
 	private boolean isCarbage = false;
 	private boolean debug = false;
@@ -58,6 +58,8 @@ public class StaticObject implements GameObject{
 		float h = Float.parseFloat(values[1]);
 		
 		this.size.set(w,h);
+	
+
 		
 	}
 	@Override
@@ -66,11 +68,15 @@ public class StaticObject implements GameObject{
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
 		this.position = new Vector2(x,y);
-	}
+		}
 
 	@Override
 	public Vector2 getPosition() {
 		return position;
+	}
+	public Vector2 getCenterPosition(){
+		this.centerPosition.set(position.x-this.size.x /2,position.y + this.size.y );
+		return centerPosition;
 	}
 
 	@Override
