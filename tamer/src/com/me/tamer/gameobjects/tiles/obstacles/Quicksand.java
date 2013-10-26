@@ -2,10 +2,12 @@ package com.me.tamer.gameobjects.tiles.obstacles;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
@@ -42,7 +44,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 		bogHoleCenter.div(parts.size());
 		//Move center half tile size up so that its realy in the center of the tile
 		bogHoleCenter.set(bogHoleCenter.x,bogHoleCenter.y);
-		System.out.println("Bog center " + bogHoleCenter.toString());
+		//System.out.println("Bog center " + bogHoleCenter.toString());
 	}
 	
 	public void resolve(ArrayList<Creature> creatures){
@@ -58,7 +60,8 @@ public class Quicksand extends StaticObject implements Obstacle{
 					if(!creatures_entered.contains(creatures.get(i))){
 						//Add creature to this cluster
 						creatures_entered.add(creatures.get(i));
-						System.out.println("Creature entered the field. Size " + creatures_entered.size());
+						Gdx.app.debug(TamerGame.LOG, this.getClass()
+								.getSimpleName() + " :: Creature entered the field. Size " + creatures_entered.size());
 						//Do a coinflip
 						int head = (int) Math.round(Math.random());
 						if(head == 1)

@@ -2,7 +2,9 @@ package com.me.tamer.utils;
 
 import java.util.Comparator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public class DrawOrderComparator implements Comparator<GameObject> {
@@ -21,7 +23,8 @@ public class DrawOrderComparator implements Comparator<GameObject> {
 			//If either one of the objects has null-position -> draw it first
 			if (o1.getPosition() != null) o1Pos.set(o1.getPosition());
 			else{
-				//System.out.println("object1 oli null");
+				Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: o1 null");
 				return -1;
 				
 			}
@@ -29,7 +32,8 @@ public class DrawOrderComparator implements Comparator<GameObject> {
 			
 			if (o2.getPosition() != null) o2Pos.set(o2.getPosition());
 			else{
-				//System.out.println("object2 oli null: " +o2.getClass().getName());
+				Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: o2 null");
 				return 1;
 				
 			}

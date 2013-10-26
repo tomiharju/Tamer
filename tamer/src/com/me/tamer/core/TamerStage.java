@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.IsoHelper;
 
@@ -33,7 +34,15 @@ public class TamerStage extends Stage{
 	public static final int GAME_RUNNING = 1; 
 	public static final int GAME_PAUSED = 2; 
 	public static final int GAME_OVER = 3;
+	public static final int GAME_TIME_STILL = 4;
 	public static int gameState;
+	
+	//Camera
+	private Vector2 cameraPosition = new Vector2();
+	private int cameraHolder = 0;
+	public static final int TAMER_CAMERA = 0;
+	public static final int SPEAR_CAMERA = 1;
+	public static final int AIM_CAMERA = 2;
 	
 	//Debug
 	ShapeRenderer debugRender = new ShapeRenderer();
@@ -83,6 +92,7 @@ public class TamerStage extends Stage{
 		
 		super.getRoot().draw(super.getSpriteBatch(), 1);
 		debugDraw();
+		environment.debugDraw(debugRender);
 		super.getSpriteBatch().end();
 	}
 	
@@ -92,18 +102,12 @@ public class TamerStage extends Stage{
 		debugRender.setColor(1, 1, 1, 1);
 		
 		for (int i = 0; i<debugLines.size(); i+=2){
-			//System.out.println(debugLines.size());
-			
-			
 			start.set ( IsoHelper.twoDToTileIso(debugLines.get(i).tmp() ));
 			end.set( IsoHelper.twoDToTileIso(debugLines.get(i+1).tmp() ));
 			
-			//System.out.println("debug draw");
 			debugRender.begin(ShapeType.Line);
 			debugRender.line(start.x , start.y, end.x, end.y );
 			debugRender.end();
-			
-			//System.out.println(i);
 		}
 	}
 	
@@ -125,8 +129,57 @@ public class TamerStage extends Stage{
 	}
 	
 	//Think this through
-	public void updateCam(){
+	public void updateCamera(){
+		controlCamera();
 		camera.update();
+		camera.position.set(cameraPosition.x,cameraPosition.y,0);
+	}
+	
+	public void controlCamera(){
+		switch (cameraHolder) {
+		case TAMER_CAMERA:
+			if(environment.getTamer()!=null)cameraPosition.set(IsoHelper.twoDToTileIso(environment.getTamer().getPosition()));	
+			break;	
+		case SPEAR_CAMERA:
+			if (gameState != GAME_TIME_STILL){
+				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched gameState to GAME_TIME_STILL");
+				gameState = GAME_TIME_STILL;
+				//disable joystick while in SPEAR_CAMERA MODE
+				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: disabling input");
+				controlContainer.setInputDisabled(true);
+			}
+			
+			if (((Tamer)environment.getTamer()).getActiveSpear()!=null){
+				cameraPosition.set(IsoHelper.twoDToTileIso(((Tamer)environment.getTamer()).getActiveSpear().getPosition()));
+			}
+			else {
+				//Back to default camera
+				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: switched to TAMER_CAMERA");
+				cameraHolder = TAMER_CAMERA;
+				
+				//Back to default gameState
+				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched gameState to GAME_RUNNING");
+				gameState = GAME_RUNNING;
+				
+				//enable joystick
+				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: enabling input");
+				controlContainer.setInputDisabled(false);
+			}
+			break;
+		case AIM_CAMERA:
+			cameraPosition.set(IsoHelper.twoDToTileIso(controlContainer.getSpearButton().getCameraPoint()));
+			break;
+		default:
+			Gdx.app.error(TamerGame.LOG, this.getClass().getSimpleName() + " :: ran into cameraHolder default case");
+			break;
+		}
+		
+	}
+	
+	public void setCameraHolder(int holder){
+		this.cameraHolder = holder;
 	}
 	
 	public OrthographicCamera getCamera(){
@@ -139,5 +192,9 @@ public class TamerStage extends Stage{
 	
 	public TamerGame getGame(){
 		return game;
+	}
+	
+	public int getCameraHolder(){
+		return cameraHolder;
 	}
 }

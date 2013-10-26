@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
@@ -15,7 +16,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED 	= 0.4f;
+	private final float SPEED 	= 0.25f;
 	private int numSpears 		= 3;
 	private ArrayList<Spear> spears = null;
 	private TamerShadow shadow;
@@ -78,15 +79,12 @@ public class Tamer extends DynamicObject{
 	 */
 	public void manouver(Vector2 direction){
 		direction.rotate(45);
-		float lenght = direction.len();
-		float power = Math.max(Math.abs(direction.y), Math.min(Math.abs(lenght),0.5f));
+		float power = direction.len();//Math.max(Math.abs(direction.y), Math.min(Math.abs(lenght),0.5f));
 		direction.nor().mul(power*SPEED);
-		System.out.println("power  " + power);
 		if(power > 0.1){
 			heading.set(direction);
 			heading.nor();
-			force.set(direction);
-			
+			force.set(direction);	
 		}
 	}
 	/**
@@ -98,10 +96,12 @@ public class Tamer extends DynamicObject{
 		heading.nor();
 	}
 	
-	public void throwSpear(Spear spear,Vector2 point,float power){
+	public void throwSpear(Spear spear,ArrayList<Vector2> waypoints){
+		environment.getStage().setCameraHolder(TamerStage.SPEAR_CAMERA);
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched to SPEAR_CAMERA");
 		spears.add(spear);
 		spear.setPosition(position.tmp().add(heading.mul(1.5f)));
-		spear.throwAt(point, power);
+		spear.throwAt(waypoints);
 	}
 	
 	public void useScream(GryphonScream scream){
@@ -114,5 +114,11 @@ public class Tamer extends DynamicObject{
 	
 	public TamerShadow getShadow(){
 		return shadow;
+	}
+	
+	public Spear getActiveSpear(){
+		for (int i = 0; i < spears.size(); i++) {
+			if (!spears.get(i).isAttached()) return spears.get(i); 
+		} return null;
 	}
 }

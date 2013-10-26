@@ -2,12 +2,12 @@ package com.me.tamer.gameobjects.creatures;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
-
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
-import com.me.tamer.utils.IsoHelper;
 
 
 public class AntOrc extends DynamicObject implements Creature{
@@ -43,7 +43,7 @@ public class AntOrc extends DynamicObject implements Creature{
 			//Needs to fumble with the invMass
 			//Start some timer
 			//setPosition( target.getPosition() );
-			System.out.println("Mulkku Attached");
+			Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: ant attached");
 		}
 		else if(target != null) followTarget();
 		else followPath();		

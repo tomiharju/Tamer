@@ -27,7 +27,8 @@ public class ScreamButton extends Actor{
 	private Vector2 input			= null;
 	private Vector2 localCenter 	= null;
 	private final float BUTTON_SIZE				= 110;
-	boolean isPressed		= false;
+	boolean pressed		= false;
+	boolean inputDisabled = false;
 	
 
 	public ScreamButton(ControlContainer inputController) {
@@ -49,7 +50,7 @@ public class ScreamButton extends Actor{
 		addListener(new InputListener(){
 			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				input.set(x,y);
-				if(input.dst(localCenter) < BUTTON_SIZE / 2 ){ 
+				if(input.dst(localCenter) < BUTTON_SIZE / 2 && !inputDisabled){ 
 					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 							+ " :: Gryphon touch started at (" + x + ", " + y + ")");
 	                
@@ -73,6 +74,10 @@ public class ScreamButton extends Actor{
 		renderer.setSize(BUTTON_SIZE, BUTTON_SIZE);
 		renderer.setPosition(restingpoint);
 		renderer.draw(batch);
-
+	}
+	
+	public void setInputDisabled(boolean b){
+		inputDisabled = b;
 	}
 }
+

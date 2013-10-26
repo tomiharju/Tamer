@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.me.tamer.core.Level;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 
@@ -19,6 +18,7 @@ public class ControlContainer extends Group{
 	//Actors
 	Joystick joystick;
 	SpearButton spearButton;
+	ScreamButton screamButton;
 	
 	public ControlContainer( Environment envi, TamerStage stage ){
 		this.stage = stage;
@@ -34,7 +34,8 @@ public class ControlContainer extends Group{
 		joystick = new Joystick(this);
 		this.addActor( joystick);
 		
-		this.addActor(new ScreamButton(this));
+		screamButton = new ScreamButton(this);
+		this.addActor(screamButton);
 		
 		spearButton = new SpearButton(this);
 		this.addActor(spearButton);
@@ -52,6 +53,7 @@ public class ControlContainer extends Group{
 		for (int i = 0; i < actors.size; i++){
 			actors.get(i).act(dt);
 		}
+		
 	}
 	@Override
 	public void draw (SpriteBatch batch, float parentAlpha) {
@@ -61,7 +63,7 @@ public class ControlContainer extends Group{
 			actors.get(i).draw(batch, parentAlpha);
 		}
 	}
-
+	
 	public Environment getEnvironment() {
 		return environment;
 	}
@@ -75,5 +77,20 @@ public class ControlContainer extends Group{
 	
 	public Joystick getJoystick(){
 		return joystick;
+	}
+	
+	public SpearButton getSpearButton(){
+		return spearButton;
+	}
+	
+	public TamerStage getStage(){
+		return stage;
+		
+	}
+	
+	public void setInputDisabled(boolean b){
+		joystick.setInputDisabled(b);
+		spearButton.setInputDisabled(b);
+		screamButton.setInputDisabled(b);
 	}
 }

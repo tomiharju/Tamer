@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.physics.RigidBody;
 import com.me.tamer.physics.RigidBodyBox;
 import com.me.tamer.physics.RigidBodyCircle;
@@ -28,15 +29,13 @@ public class DynamicObject implements GameObject{
 	protected RigidBody body = null;
 	private boolean debug = false;
 	private int zIndex = 0;
-	private Vector2 isoHeading;		//Used for determining the sprite
-	private Vector2 zeroHeading;
+	private Vector2 isoHeading = new Vector2();		//Used for determining the sprite
+	private Vector2 zeroHeading = new Vector2(-0.5f,1);// -1 + (float)Math.sin(Math.PI/8),1 + (float)Math.cos(Math.PI/8));//-0.5f, 2.0f);//;
 	private double headingAngle;
 	
 	public DynamicObject(){
-		isoHeading = new Vector2();
-		zeroHeading = new Vector2();
-		zeroHeading.set((float)Math.sin(Math.PI/8),(float)Math.cos(Math.PI/8));
 	}
+	
 	@Override
 	public void update(float dt) {
 		position.add(velocity.mul(dt));
@@ -50,6 +49,24 @@ public class DynamicObject implements GameObject{
 		renderer.setOrientation( solveOrientation() );
 		renderer.setAngle(angle);
 		renderer.draw(batch);	
+	}
+	
+	public int solveOrientation(){
+		if(getHeading() != null){
+			zeroHeading.nor();
+
+			headingAngle = Math.acos(getHeading().dot(zeroHeading) / (getHeading().len() * zeroHeading.len()));
+			
+			headingAngle = headingAngle / Math.PI * 180 / 45;
+			
+			if (headingAngle == 0) headingAngle = 0.001f;
+			if (heading.x > zeroHeading.x && heading.y > 0) headingAngle = 8 - headingAngle;
+			else if (heading.x > -zeroHeading.x && heading.y < 0) headingAngle = 8 - headingAngle;
+			
+			headingAngle = Math.floor(headingAngle);
+		}
+		
+		return (int)headingAngle;
 	}
 	
 	@Override
@@ -149,6 +166,7 @@ public class DynamicObject implements GameObject{
 	}
 	
 	public void setHeading(Vector2 heading){
+		heading.nor();
 		this.heading.set(heading);
 	}
 	
@@ -164,20 +182,6 @@ public class DynamicObject implements GameObject{
 	public void resolveForces(float dt) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public int solveOrientation(){
-		if(getHeading() != null){
-			isoHeading.set(IsoHelper.twoDToIso(getHeading()));	
-			headingAngle = Math.acos((isoHeading.dot(zeroHeading) / (isoHeading.len() * zeroHeading.len())));
-			headingAngle = headingAngle / Math.PI * 4;
-			if (headingAngle == 0) headingAngle = 0.001f;
-			if (isoHeading.x > 0) headingAngle = 8 - headingAngle;
-			headingAngle = Math.floor(headingAngle);
-			//System.out.println("headingAngle: " +headingAngle);
-		}
-		
-		return (int)headingAngle;
 	}
 	
 	@Override
@@ -236,12 +240,4 @@ public class DynamicObject implements GameObject{
 	public void setSize(Vector2 size) {
 		this.size = size;
 	}
-
-
-	
-
-	
-
-	
-
 }

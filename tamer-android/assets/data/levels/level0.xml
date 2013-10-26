@@ -1,11 +1,7 @@
 <root>
 	<Settings>
 		<property type="MapSize">20:20</property>
-<<<<<<< HEAD
 		<property type="MapBounds">30:15</property>
-=======
-		<property type="MapBounds">20:10</property>
->>>>>>> f0d15d697a91fb9239d8c24933973c8b1515af37
 	</Settings>
 	<GameObject type="com.me.tamer.gameobjects.tiles.TileMap">
 		<property type="Graphics">dirt3</property>
@@ -18,35 +14,7 @@
 		<property type="Graphics">tree2</property>
 		<property type="DrawPos">0</property>
 	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.obstacles.Quicksand">
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-4:3</property>
-				<property type="Graphics">swamp8</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-3:3</property>
-				<property type="Graphics">swamp7</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-4:2</property>
-				<property type="Graphics">swamp3</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-4:1</property>
-				<property type="Graphics">swamp3</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-2:3</property>
-				<property type="Graphics">swamp7</property>
-				<property type="Group">0</property>
-			</SubObject>
-<<<<<<< HEAD
-		
-	</GameObject>
+
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="Position">-7:2</property>
 		<property type="PixelsX">209</property>
@@ -54,169 +22,7 @@
 		<property type="Graphics">tree1</property>
 	</GameObject>
 	
-=======
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-3:2</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-1:3</property>
-				<property type="Graphics">swamp7</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-2:2</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-3:1</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-4:0</property>
-				<property type="Graphics">swamp3</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">0:3</property>
-				<property type="Graphics">swamp7</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-4:-1</property>
-				<property type="Graphics">swamp3</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-2:1</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-1:2</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-3:0</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-2:1</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">0:2</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-3:-1</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-1:1</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-2:0</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-4:-2</property>
-				<property type="Graphics">swamp4</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">1:3</property>
-				<property type="Graphics">swamp6</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">0:1</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">1:2</property>
-				<property type="Graphics">swamp5</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-1:0</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-3:-2</property>
-				<property type="Graphics">swamp1</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-2:-1</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">1:1</property>
-				<property type="Graphics">swamp5</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-2:-2</property>
-				<property type="Graphics">swamp1</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">0:0</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-1:-1</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">-1:-2</property>
-				<property type="Graphics">swamp1</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">1:0</property>
-				<property type="Graphics">swamp5</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">0:-1</property>
-				<property type="Graphics">swamp11</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">0:-2</property>
-				<property type="Graphics">swamp1</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">1:-1</property>
-				<property type="Graphics">swamp5</property>
-				<property type="Group">0</property>
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-				<property type="Position">1:-2</property>
-				<property type="Graphics">swamp2</property>
-				<property type="Group">0</property>
-			</SubObject>
-	</GameObject>
->>>>>>> f0d15d697a91fb9239d8c24933973c8b1515af37
+
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="Position">-6:0</property>
 		<property type="PixelsX">137.5</property>
@@ -247,15 +53,7 @@
 		<property type="InitialSleep">0</property>
 		<property type="SleepTime">8</property>
 		<property type="TamerSpawn">1</property>
-		<property type="SpawnCount">6</property>
-			<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
-			</SubObject>
-			<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
-			</SubObject>
+		<property type="SpawnCount">2</property>
 			<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
 			</SubObject>
 			<SubObject type="com.me.tamer.gameobjects.creatures.Worm">

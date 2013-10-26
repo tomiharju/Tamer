@@ -19,10 +19,8 @@ public class Joystick extends Actor /*implements UiElement*/{
 	private UiRenderer renderer_outer = null;
 	private UiRenderer renderer_inner = null;
 
-	private Tamer tamer 			= null;
 	private Vector2 tamerPosition 	= null;
 	private Environment environment = null;
-	private Level level 			= null;
 	private Vector2 movementAxis 	= null;
 	
 	private Matrix3 translate 		= new Matrix3().rotate(45);
@@ -30,13 +28,13 @@ public class Joystick extends Actor /*implements UiElement*/{
 	Vector2 restingpoint 			= new Vector2(130,130);
 	protected Vector2 delta			= null;
 	private Vector2 input			= null;
-	private Vector2 moveTemp		= new Vector2();
 	private Vector2 localCenter 	= null;
 	protected Vector2 point			= null;
 	private final float BUTTON_SIZE	= 250;
 	float pointersize				= 180f;
 	boolean pressed					= false;
 	boolean movementDisabled 		= false;
+	boolean inputDisabled			= false;
 	
 	
 	public Joystick(ControlContainer inputController) {
@@ -49,7 +47,6 @@ public class Joystick extends Actor /*implements UiElement*/{
 		tamerPosition	= new Vector2();
 		renderer_outer 		= new UiRenderer();
 		renderer_inner 		= new UiRenderer();
-		tamer 			= inputcontroller.getEnvironment().getTamer();
 		environment		= inputcontroller.getEnvironment();
 		renderer_outer.loadGraphics("joystick");
 		renderer_outer.setSize(BUTTON_SIZE,BUTTON_SIZE);
@@ -84,22 +81,19 @@ public class Joystick extends Actor /*implements UiElement*/{
 			if(movementDisabled)
 				environment.getTamer().turn(delta);
 			else{
-				delta.mul(translate);
 				checkBounds(delta.mul(dt));
-
 			}	
-			environment.moveCamera(environment.getTamer().getPosition());
 		}	
 	}
-	
-
 	
 	public void checkBounds(Vector2 movement){
 		Vector2 mapBounds = environment.getMapBounds();
 		tamerPosition.set(environment.getTamer().getShadow().getPosition());
-		movement.set(IsoHelper.twoDToTileIso(movement));
+		
 		tamerPosition.set(IsoHelper.twoDToTileIso(tamerPosition));
 		tamerPosition.add(movement);
+		
+		
 		if(tamerPosition.x > mapBounds.x / 2 || tamerPosition.x < -mapBounds.x / 2){
 			movementAxis.set(1,0);
 			movement.sub(VectorHelper.projection(movement,movementAxis));
@@ -116,7 +110,7 @@ public class Joystick extends Actor /*implements UiElement*/{
 		addListener(new InputListener(){
 			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {	 
 				input.set(x,y);
-				if(input.dst(localCenter) < BUTTON_SIZE / 2 ){
+				if(input.dst(localCenter) < BUTTON_SIZE / 2 && !inputDisabled){
 					point.set(x,y);
 					pressed = true;
 					return true;
@@ -138,9 +132,14 @@ public class Joystick extends Actor /*implements UiElement*/{
 	
 	public void disableMovement(){
 		movementDisabled = true;
+		
 	}
 	
 	public void enableMovement(){
 		movementDisabled = false;
+	}
+	
+	public void setInputDisabled(boolean b){
+		inputDisabled = b;
 	}
 }

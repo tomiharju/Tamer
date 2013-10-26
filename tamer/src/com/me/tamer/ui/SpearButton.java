@@ -1,5 +1,7 @@
 package com.me.tamer.ui;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.UiRenderer;
@@ -19,11 +22,9 @@ public class SpearButton extends Actor {
 	ControlContainer controlContainer = null;
 	OrthographicCamera cam = null;
 	OrthographicCamera uiCam = null;
-	
-	Vector2 targetPoint = null;
 
-	Vector2 spearPosition = null;
-	Vector2 spearHeading = null;
+	Vector2 help = null;
+	Vector2 targetpointHeading = null;
 	
 	Vector2 input = null;
 	Vector2 localCenter = null;
@@ -31,37 +32,25 @@ public class SpearButton extends Actor {
 	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 165,100);
 	final float BUTTON_SIZE = 110;
 	final float MIN_DISTANCE = 2;
-	//final float MAX_DISTANCE = 7;
 	final float SPEED = 5; // for increasing the throwing distance
-	
-	private float maxDistance;
-	
-	private final float GRAVITY = 5.0f;
-	private final float INITIAL_SPEED = 2.0f;
+	final float MAX_DISTANCE = 10;
 
-	//Check if these are used
-	float tamerHeight;
-	private Vector2 tamerPos = new Vector2();
-	private Vector2 targetPointFromTamer = new Vector2();
-	private Vector2 joku = new Vector2();
-	float speedHorizontal;
-	float speedVertical;
-	private Vector2 help = new Vector2();
-	
-	
-	private Vector2 actualTargetPoint = null;
+	private Vector2 targetPoint = new Vector2();
+	private ArrayList<Vector2> waypoints = new ArrayList<Vector2>();
+	private Vector2 waypoint1 = new Vector2();
+	private Vector2 waypoint2 = new Vector2();
+	private Vector2 waypoint3 = new Vector2();
+	private Vector2 cameraPoint = new Vector2(); //this is the point that AIM_CAMERA mode follows
 
 	float throwDistance = 1; 
 	boolean pressed = false;
+	boolean inputDisabled = false;
 	UiRenderer buttonRender = null;
 	UiRenderer pointRender = null;
 	UiRenderer pointRender2 = null;
 	
 	public SpearButton(ControlContainer controlContainer) {
 		this.controlContainer = controlContainer;
-	
-		targetPoint		= new Vector2(0,0);
-		actualTargetPoint = new Vector2(0,0);
 		
 		buttonRender = new UiRenderer();
 		pointRender = new UiRenderer();
@@ -79,8 +68,8 @@ public class SpearButton extends Actor {
 		pointRender2.setSize(1f,1f);
 		pointRender2.setPosition(new Vector2(0,0));
 		
-		spearPosition = new Vector2();
-		spearHeading = new Vector2();
+		help = new Vector2();
+		targetpointHeading = new Vector2();
 		
 		input = new Vector2();
 		localCenter = new Vector2();
@@ -101,16 +90,13 @@ public class SpearButton extends Actor {
 		
 		if (pressed){
 			batch.setProjectionMatrix(cam.combined);
-			pointRender.setPosition(IsoHelper.twoDToTileIso(targetPoint));
-			System.out.println("1: " +targetPoint);
-			//pointRender.setPosition(IsoHelper.twoDToTileIso(controlContainer.getEnvironment().getTamer().getShadow().getPosition()));
+			
+			pointRender.setPosition(IsoHelper.twoDToTileIso(waypoint1));
 			pointRender.draw(batch);
-			pointRender2.setPosition(IsoHelper.twoDToTileIso(actualTargetPoint));
-			
-			
-			System.out.println("2: " +targetPoint.cpy().nor());
-			pointRender2.setPosition(IsoHelper.twoDToTileIso(targetPoint.cpy().nor()));
+
+			pointRender2.setPosition(IsoHelper.twoDToTileIso(waypoint2));
 			pointRender2.draw(batch);
+			
 			batch.setProjectionMatrix(uiCam.combined);
 		}
 	}
@@ -119,28 +105,41 @@ public class SpearButton extends Actor {
 		
 		if(isVisible() && pressed){
 
-			if(throwDistance <= getMaxDistance() ){
+			if(throwDistance <= MAX_DISTANCE ){
 				throwDistance += SPEED*dt;
-				float distanceIndicator = Math.min(1,throwDistance / getMaxDistance());
+				float distanceIndicator = Math.min(1,throwDistance / MAX_DISTANCE);
 				pointRender.setColor(distanceIndicator,0,0,distanceIndicator);
 			}
-
-			spearHeading.set(controlContainer.getEnvironment().getTamer().getHeading());
-			spearHeading.nor().mul(throwDistance);
-			spearPosition.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
-			targetPoint.set(spearPosition.add(spearHeading));
-			//tamerPos.set(controlContainer.getEnvironment().getTamer().getPosition());
-			resolveActualTargetPoint();
+			
+			targetpointHeading.set(controlContainer.getEnvironment().getTamer().getHeading());
+			targetpointHeading.nor();
+			targetPoint.set(targetpointHeading.tmp().mul(throwDistance));
+			
+			help.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
+			waypoint1.set(help.add(targetPoint));
+			
+			help.set( controlContainer.getEnvironment().getTamer().getPosition() );
+			waypoint2.set(help.add(targetPoint));
+			//Set camera to follow way point 2
+			cameraPoint.set(waypoint2);
+			
+			help.set( controlContainer.getEnvironment().getTamer().getPosition().tmp().add(-1,1) );
+			waypoint3.set(help.add(targetPoint.tmp().mul(0.8f)));
 		}	
 	}
 	
 	public void createListener(){
 		addListener(new InputListener(){
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				
 				input.set(x,y);
-
-
-				if(input.dst(localCenter) < BUTTON_SIZE / 2 ){
+				
+				if(input.dst(localCenter) < BUTTON_SIZE / 2  && !inputDisabled){
+					//set to AIM Camera
+					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+							+ " :: switched to AIM_CAMERA");
+					controlContainer.getStage().setCameraHolder(TamerStage.AIM_CAMERA);
+					
 					controlContainer.getJoystick().disableMovement();
 					pressed = true;
 					return true;
@@ -149,14 +148,17 @@ public class SpearButton extends Actor {
 	        }
 			 
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: switched to TAMER_CAMERA");
+				controlContainer.getStage().setCameraHolder(TamerStage.TAMER_CAMERA);
 				input.set(x,y);
-				//System.out.println("joku: " +joku);
-				//System.out.println(" speed : " +speedHorizontal +", " +speedVertical);
 				if( throwDistance > MIN_DISTANCE && pressed ){
-					TamerStage.addDebugLine(tamerPos, targetPoint);
+					//resolve waypoints for the targetpoint
+					addWaypoints();
+					
 					Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
 					if(spear != null)
-						controlContainer.getEnvironment().getTamer().throwSpear(spear, targetPoint, throwDistance );
+						controlContainer.getEnvironment().getTamer().throwSpear(spear, waypoints );
 					else
 						System.err.println("No spears remaining");
 				}
@@ -175,49 +177,18 @@ public class SpearButton extends Actor {
 		});	
 	}
 	
-	public void resolveActualTargetPoint(){
-		//Resolve the actual point where tamer throws the spear
-		tamerPos.set( controlContainer.getEnvironment().getTamer().getPosition() );
-		
-		help.set (targetPoint);
-		System.out.println(help);
-		targetPointFromTamer.set( targetPoint.tmp().sub( tamerPos ));
-		
-		
-		joku.x = targetPoint.len();
-		joku.y = tamerHeight;
-		
-		//System.out.println("joku: " +joku);
-		
-		joku.nor();
-		
-		speedHorizontal = joku.x * INITIAL_SPEED;
-		speedVertical = joku.y * INITIAL_SPEED;
-		
-		
-		
-		//System.out.println("tamerPOs: " +tamerPos +", targetPointFromTamer: " +targetPoint);//FromTamer);
-		
-		float flyTime = (float)( Math.sqrt( tamerHeight / GRAVITY + Math.pow( speedVertical , 2 ) / 4 * GRAVITY ) - speedVertical / 2 * GRAVITY );
-		
-		
-		spearPosition.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
-		
-		System.out.println(help);
-		actualTargetPoint.set(  spearPosition.tmp().add(spearHeading.nor())) ;//.mul( flyTime * speedHorizontal)  );
-		
-		//System.out.println("spearPosition: "+spearPosition);
-		
-		//System.out.println("targetPoint: " +targetPoint +", actual: " +actualTargetPoint);
-		//actualTargetPoint.set( tamerPos.x + speedHorizontal * flyTime, tamerPos.y + speedVertical * flyTime );
+	public void addWaypoints(){
+		waypoints.clear();
+		waypoints.add(waypoint1);
+		waypoints.add(waypoint2);
+		waypoints.add(waypoint3);
 	}
 	
-	public float getMaxDistance(){
-		float shadowDistance = controlContainer.getEnvironment().getTamer().getShadow().getDistance();
-		tamerHeight = (float)Math.sqrt(Math.pow(shadowDistance, 2) + Math.pow(shadowDistance, 2));
-		float droppingTime = (float)Math.sqrt(tamerHeight * GRAVITY);
-		maxDistance = INITIAL_SPEED * droppingTime;
-		
-		return maxDistance;
+	public Vector2 getCameraPoint(){
+		return cameraPoint;
+	}
+	
+	public void setInputDisabled(boolean b){
+		inputDisabled = b;
 	}
 }
