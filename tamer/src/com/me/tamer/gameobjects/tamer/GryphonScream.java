@@ -10,10 +10,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.creatures.Creature;
+
 import com.me.tamer.gameobjects.creatures.WormPart;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
@@ -72,11 +73,12 @@ public class GryphonScream extends DynamicObject {
 	
 	public void debugDraw(ShapeRenderer shapeRenderer){
 		shapeRenderer.setProjectionMatrix(environment.getStage().getCamera().combined);
+		shapeRenderer.setColor(1, 1, 1, 1);
 		
 		drawVert1.set(IsoHelper.twoDToIso(screamVert1));
 		drawVert2.set(IsoHelper.twoDToIso(screamVert2));
 		drawVert3.set(IsoHelper.twoDToIso(screamVert3));
-		shapeRenderer.setColor(1, 1, 1, 1);
+		
 	
 		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );

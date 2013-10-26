@@ -1,19 +1,13 @@
 package com.me.tamer.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-
 import com.me.tamer.core.Level;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renders.StaticRenderer;
 import com.me.tamer.gameobjects.renders.UiRenderer;
 import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.IsoHelper;
@@ -79,36 +73,36 @@ public class Joystick extends Actor /*implements UiElement*/{
 	@Override
 	public void act(float dt) {
 		if (isVisible() && pressed){
-			deltaHelp.set(delta);
-			if(deltaHelp.len() > BUTTON_SIZE / 2){
-				deltaHelp = delta.nor().mul(BUTTON_SIZE/2);
+			delta.set(point.tmp().sub(restingpoint));
+		//	deltaHelp.set(delta);
+			if(delta.len() > BUTTON_SIZE / 2){
+				delta = delta.nor().mul(BUTTON_SIZE/2);
 				point.set(restingpoint.tmp().add(delta));
 			}
 			if(movementDisabled)
-				environment.getTamer().turn(deltaHelp);
+				environment.getTamer().turn(delta);
 			else{
-				deltaHelp.mul(translate);
-				checkBounds(deltaHelp.mul(dt));
+				delta.mul(translate);
+				checkBounds(delta.mul(dt));
+
 			}	
 			environment.moveCamera(environment.getTamer().getPosition());
 		}	
 	}
 	
+
 	
 	public void checkBounds(Vector2 movement){
 		Vector2 mapBounds = environment.getMapBounds();
-		tamerPosition.set(environment.getTamer().getPosition());
-	
-		movement.set(IsoHelper.twoDToIso(movement));
-		tamerPosition.set(IsoHelper.twoDToIso(tamerPosition));
+		tamerPosition.set(environment.getTamer().getShadow().getPosition());
+		movement.set(IsoHelper.twoDToTileIso(movement));
+		tamerPosition.set(IsoHelper.twoDToTileIso(tamerPosition));
 		tamerPosition.add(movement);
-		if(tamerPosition.x > mapBounds.x || tamerPosition.x < -mapBounds.x){
-			Vector2 remove = VectorHelper.projection((mapBounds.tmp().set(1,0)),movement);
+		if(tamerPosition.x > mapBounds.x / 2 || tamerPosition.x < -mapBounds.x / 2){
 			movementAxis.set(1,0);
 			movement.sub(VectorHelper.projection(movement,movementAxis));
 		}
-		if(tamerPosition.y > mapBounds.y || tamerPosition.y < -mapBounds.y){
-			Vector2 remove = VectorHelper.projection((mapBounds.tmp().set(1,0)),movement);
+		if(tamerPosition.y > mapBounds.y / 2 || tamerPosition.y < -mapBounds.y / 2){
 			movementAxis.set(0,1);
 			movement.sub(VectorHelper.projection(movement,movementAxis));
 		}
@@ -135,7 +129,7 @@ public class Joystick extends Actor /*implements UiElement*/{
 	        
 	        public void touchDragged(InputEvent event, float x, float y, int pointer){
 				 point.set(x,y);
-				 delta.set(point.tmp().sub(restingpoint));	
+
 			 }
 		});
 	}

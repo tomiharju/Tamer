@@ -40,6 +40,7 @@ public class PlayScreen extends AbstractScreen{
 		Gdx.input.setInputProcessor( stage );
 	}
 	
+
 	@Override
 	public void hide(){
 		super.hide();

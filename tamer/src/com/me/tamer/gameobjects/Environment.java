@@ -8,10 +8,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.me.tamer.core.TamerStage;
-import com.me.tamer.gameobjects.superclasses.Creature;
+import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
@@ -35,7 +36,8 @@ public class Environment extends Actor{
 	private ArrayList<GameObject> carbages	= null;
 	private ArrayList<GameObject> newobjects = null;
 	private DynamicObject tamer = null;
-	private ArrayList<GameObject> obstacles = null;
+	private ArrayList<Obstacle> obstacles = null;
+
 	private ArrayList<Creature> creatures	= null;
 	
 	//Physical contact list
@@ -55,7 +57,7 @@ public class Environment extends Actor{
 		gameobjects 	= new ArrayList<GameObject>();
 		carbages 		= new ArrayList<GameObject>();
 		newobjects 		= new ArrayList<GameObject>();
-		obstacles 		= new ArrayList<GameObject>();
+		obstacles 		= new ArrayList<Obstacle>();
 		creatures		= new ArrayList<Creature>();
 		contacts 		= new ArrayList<Contact>();
 		rigidbodies		= new ArrayList<RigidBody>();
@@ -128,7 +130,7 @@ public class Environment extends Actor{
 		//float y = Math.min(camBounds.y , Math.max(tamerPos.y,-camBounds.y ));
 		//float x = Math.min(camBounds.x , Math.max(tamerPos.x,-camBounds.x ));
 		
-		Vector2 newPos = IsoHelper.twoDToIso(tamerPos);
+		Vector2 newPos = IsoHelper.twoDToTileIso(tamerPos);
 		stage.getCamera().position.set(newPos.x,newPos.y,0);	
 	}
 	
@@ -204,7 +206,11 @@ public class Environment extends Actor{
 	}
 	
 	public void resolveObstacles(float dt){
-		
+		int size = obstacles.size();
+		for(int i = 0 ; i < size ; i++){
+			obstacles.get(i).resolve(creatures);
+		}
+
 	}
 	public void runCarbageCollection(){
 		int size = gameobjects.size();
@@ -241,8 +247,6 @@ public class Environment extends Actor{
 		for(GameObject go : gameobjects){
 				go.setup(this);
 		}
-		//Create dummytamer for UiElements to work
-		//tamer = new Tamer();
 
 		//Create new contact pool
 		ContactPool.createPool(100);
@@ -263,7 +267,7 @@ public class Environment extends Actor{
 	public void addRigidBody(RigidBody body){
 		rigidbodies.add(body);
 	}
-	public void addObstacle(GameObject obstacle){
+	public void addObstacle(Obstacle obstacle){
 		this.obstacles.add(obstacle);
 	}
 	
@@ -272,14 +276,11 @@ public class Environment extends Actor{
 	 * LevelCreator calls this to set Camera borders, could be expanded later if more settings needed
 	 */
 	public void setMapSize(String value){
-		
-		String[] values =value.split(":");
-		
+		//DO WE NEED THIS?
+	}
+	public void setMapBounds(String value){
+		String[] values = value.split(":");
 		mapBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
-//		mapBounds.rotate(45);
-//		cameraBounds = new Vector2(mapBounds.x  , mapBounds.y);
-//		System.err.println(mapBounds.toString());
-//		camBoundsOffset = new Vector2(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
 	}
 	
 	/**
@@ -314,7 +315,7 @@ public class Environment extends Actor{
 	public ArrayList<Creature> getCreatures(){
 		return creatures;
 	}
-	public ArrayList<GameObject> getObstacles(){
+	public ArrayList<Obstacle> getObstacles(){
 		return obstacles;
 	}
 	

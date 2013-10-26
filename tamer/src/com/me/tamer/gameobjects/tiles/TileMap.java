@@ -25,12 +25,10 @@ public class TileMap extends StaticObject{
 	private ArrayList<Vector2> terrain;
 	private Vector2 bounds;
 	
-	public TileMap(){
-		setZindex(1);
-	}
 	
 	public void setup(Environment level){
 		level.addNewObject(this);
+		setZindex(1);
 	}
 	
 	@Override

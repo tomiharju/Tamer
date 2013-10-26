@@ -50,7 +50,7 @@ public class GameObjectFactory {
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException c){
-			System.err.println("Unknown object type\n");
+			System.err.println("Unknown object type "+className+"\n");
 		} catch(Exception e){
 			e.printStackTrace();
 			

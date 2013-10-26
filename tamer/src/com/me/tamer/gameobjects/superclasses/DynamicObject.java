@@ -46,7 +46,7 @@ public class DynamicObject implements GameObject{
 	public void draw(SpriteBatch batch) {
 		Renderer renderer = RenderPool.getRenderer(renderType);
 		renderer.setSize(size.x,size.y);
-		renderer.setPosition(IsoHelper.twoDToIso(position));
+		renderer.setPosition(IsoHelper.twoDToTileIso(position));
 		renderer.setOrientation( solveOrientation() );
 		renderer.setAngle(angle);
 		renderer.draw(batch);	
@@ -222,17 +222,16 @@ public class DynamicObject implements GameObject{
 		// TODO Auto-generated method stub
 		
 	}
-	public int getzIndex() {
-		return zIndex;
-	}
 	
 	public Vector2 getForce(){
 		return force;
 	}
 
+
 	public void setzIndex(int zIndex) {
 		this.zIndex = zIndex;
 	}
+
 
 	public void setSize(Vector2 size) {
 		this.size = size;

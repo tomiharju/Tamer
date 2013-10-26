@@ -37,7 +37,6 @@ public class Prop extends StaticObject {
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		float ASPECT_RATIO = (float)Gdx.graphics.getWidth() / (float)Gdx.graphics.getHeight();
-		System.out.println("Aspect ratio is " + ASPECT_RATIO);
 		size.set(size.x/40 , (size.y/40));
 		
 		setSize(size.x+":"+size.y);

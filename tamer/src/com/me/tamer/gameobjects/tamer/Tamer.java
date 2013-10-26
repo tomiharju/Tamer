@@ -15,7 +15,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED 	= 0.1f;
+	private final float SPEED 	= 0.2f;
 	private int numSpears 		= 3;
 	private ArrayList<Spear> spears = null;
 	private TamerShadow shadow;
@@ -31,6 +31,7 @@ public class Tamer extends DynamicObject{
 		for( int i = 0 ; i < numSpears ; i++){
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
 		}
+		
 		//Scream
 		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream(environment));
 		

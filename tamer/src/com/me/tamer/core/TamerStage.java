@@ -1,13 +1,16 @@
 package com.me.tamer.core;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.ui.ControlContainer;
+import com.me.tamer.utils.IsoHelper;
 
 public class TamerStage extends Stage{
 	
@@ -34,6 +37,9 @@ public class TamerStage extends Stage{
 	
 	//Debug
 	ShapeRenderer debugRender = new ShapeRenderer();
+	private static ArrayList<Vector2> debugLines = new ArrayList<Vector2>();
+	private Vector2 start = new Vector2();
+	private Vector2 end = new Vector2();
 	
 	
 	public TamerStage(TamerGame game){
@@ -76,15 +82,42 @@ public class TamerStage extends Stage{
 		super.getSpriteBatch().begin();
 		
 		super.getRoot().draw(super.getSpriteBatch(), 1);
-		environment.debugDraw(debugRender);
+		debugDraw();
 		super.getSpriteBatch().end();
+	}
+	
+	public void debugDraw(){
+		
+		debugRender.setProjectionMatrix(camera.combined);
+		debugRender.setColor(1, 1, 1, 1);
+		
+		for (int i = 0; i<debugLines.size(); i+=2){
+			//System.out.println(debugLines.size());
+			
+			
+			start.set ( IsoHelper.twoDToTileIso(debugLines.get(i).tmp() ));
+			end.set( IsoHelper.twoDToTileIso(debugLines.get(i+1).tmp() ));
+			
+			//System.out.println("debug draw");
+			debugRender.begin(ShapeType.Line);
+			debugRender.line(start.x , start.y, end.x, end.y );
+			debugRender.end();
+			
+			//System.out.println(i);
+		}
+	}
+	
+	public static void addDebugLine(Vector2 s, Vector2 e){
+		
+		debugLines.add( new Vector2().set(s));
+		debugLines.add( new Vector2().set(e));
 	}
 	
 	
 	public void setupCamera(){	
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,VIRTUAL_WIDTH,VIRTUAL_HEIGHT);// * ASPECT_RATIO);
-		camera.position.set(0f,0f,0f);
+		camera.position.set(0f,-4,0f);
 		
 		uiCamera = new OrthographicCamera();
 		uiCamera.setToOrtho(false);

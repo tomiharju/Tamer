@@ -8,10 +8,10 @@ import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.AntOrc;
+import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
@@ -42,12 +42,13 @@ public class SpawnPoint extends StaticObject{
 	public void setup(Environment environment){
 		environment.addNewObject(this);
 		startSpawning();
+		setZindex(0);
 	}
 	
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize("1:1");
+		setSize("1:0.5");
 		this.renderType = graphics;
 	}
 	public void setSpawnCount(String count){

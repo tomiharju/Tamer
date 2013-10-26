@@ -41,7 +41,7 @@ public class TamerShadow extends DynamicObject{
 		batch.setColor(0.1f, 0.1f, 0.1f, 0.2f);
 		Renderer renderer = RenderPool.getRenderer(renderType);
 		renderer.setSize(size.x,size.y);
-		renderer.setPosition(IsoHelper.twoDToIso(position));
+		renderer.setPosition(IsoHelper.twoDToTileIso(position));
 		renderer.setOrientation( solveOrientation() );
 		renderer.setAngle(angle);
 		renderer.draw(batch);
