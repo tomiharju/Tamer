@@ -23,11 +23,11 @@ public class SpearButton extends Actor {
 	OrthographicCamera cam = null;
 	OrthographicCamera uiCam = null;
 
-	Vector2 help = null;
-	Vector2 targetpointHeading = null;
+	private Vector2 help = new Vector2();
+	private Vector2 targetpointHeading = new Vector2();
 	
-	Vector2 input = null;
-	Vector2 localCenter = null;
+	private Vector2 input = new Vector2();
+	private Vector2 localCenter = new Vector2();
 	
 	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 165,100);
 	final float BUTTON_SIZE = 110;
@@ -68,11 +68,6 @@ public class SpearButton extends Actor {
 		pointRender2.setSize(1f,1f);
 		pointRender2.setPosition(new Vector2(0,0));
 		
-		help = new Vector2();
-		targetpointHeading = new Vector2();
-		
-		input = new Vector2();
-		localCenter = new Vector2();
 		localCenter.set(BUTTON_SIZE / 2, BUTTON_SIZE / 2);
 	
 		cam = controlContainer.getCam();

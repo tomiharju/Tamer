@@ -151,8 +151,7 @@ public class TamerStage extends Stage{
 			
 			if (((Tamer)environment.getTamer()).getActiveSpear()!=null){
 				cameraPosition.set(IsoHelper.twoDToTileIso(((Tamer)environment.getTamer()).getActiveSpear().getPosition()));
-			}
-			else {
+			}else {
 				//Back to default camera
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 						+ " :: switched to TAMER_CAMERA");

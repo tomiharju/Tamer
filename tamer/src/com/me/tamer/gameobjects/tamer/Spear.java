@@ -15,8 +15,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 public class Spear extends DynamicObject{
 	
 	private Environment environment;
-	private Vector2 target = new Vector2() ;
-	private Vector2 targetWaypoint = new Vector2();
+
 	private Creature targetCreature = null;
 	private boolean attached = false;
 	private boolean targetReached = false;
@@ -24,20 +23,13 @@ public class Spear extends DynamicObject{
 	ArrayList<Vector2> waypoints;
 	private int currentWayPoint;
 
-
-	//Same variables in spearbutton
-	private final float GRAVITY = 5.0f;
-	private final float INITIAL_SPEED = 8.0f;
+	
+	private final float SPEED = 12.0f;
 
 	private Vector2 direction = new Vector2();
-	private float distance;
 	
 	public Spear(){
 		setGraphics();
-	}
-	
-	public void setup(){
-		
 	}
 	
 	public void setGraphics(){
@@ -51,10 +43,8 @@ public class Spear extends DynamicObject{
 	public void update(float dt){
 		
 		if(!attached)
-			position.add( direction.x * (INITIAL_SPEED * dt), direction.y * (INITIAL_SPEED * dt));
-		//When the spear has reached its destination, check if there is some creature
-		
-		
+			position.add( direction.x * (SPEED * dt), direction.y * (SPEED * dt));
+
 		if ( currentWayPoint == 0) targetReached = true;
 		
 		//System.out.println("attached: " +attached +", targetReached: " +targetReached +", distance: " +position.dst( waypoints.get(currentWayPoint) ));
@@ -74,13 +64,10 @@ public class Spear extends DynamicObject{
 						break;
 					}
 			}
-		}
-		
-		else if (!attached && position.dst( waypoints.get(currentWayPoint) ) < 0.1) {
+		}else if (!attached && position.dst( waypoints.get(currentWayPoint) ) < 0.1) {
 			currentWayPoint--;
 			heading.set(waypoints.get(currentWayPoint).tmp().sub(getPosition()));	
 			direction.set(waypoints.get(currentWayPoint).tmp().sub(getPosition()));
-			distance = direction.len();
 			direction.nor();
 		}
 	}
@@ -98,7 +85,6 @@ public class Spear extends DynamicObject{
 		
 		heading.set(waypoints.get( waypoints.size() - 1 ).tmp().sub(getPosition()) );
 		direction.set(waypoints.get( waypoints.size() - 1 ).tmp().sub(getPosition() ));
-		distance = direction.len();
 		direction.nor();
 		
 		currentWayPoint = waypoints.size() - 1;
@@ -109,6 +95,7 @@ public class Spear extends DynamicObject{
 	 * Remove from active gameobjects
 	 */
 	public void pickUp(){
+		attached = false;
 		if(targetCreature != null){
 			targetCreature.unBind();
 			targetCreature = null;
@@ -120,10 +107,5 @@ public class Spear extends DynamicObject{
 	
 	public boolean isAttached(){
 		return attached;
-	}
-	
-	public Vector2 getHeading(){
-		//heading.set(getForce().tmp().nor());
-		return heading;
 	}
 }

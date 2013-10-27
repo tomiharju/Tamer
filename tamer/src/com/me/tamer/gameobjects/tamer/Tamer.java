@@ -100,7 +100,7 @@ public class Tamer extends DynamicObject{
 		environment.getStage().setCameraHolder(TamerStage.SPEAR_CAMERA);
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched to SPEAR_CAMERA");
 		spears.add(spear);
-		spear.setPosition(position.tmp().add(heading.mul(1.5f)));
+		spear.setPosition(position);//.tmp().add(heading.mul(1.5f)));
 		spear.throwAt(waypoints);
 	}
 	

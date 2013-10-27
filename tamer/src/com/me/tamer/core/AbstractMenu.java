@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.me.tamer.services.SoundManager.TamerSound;
 
 
 public class AbstractMenu extends AbstractScreen{
@@ -69,6 +70,7 @@ public class AbstractMenu extends AbstractScreen{
         levelsButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
             	game.setScreen( game.getLevelsScreen() );
+            	game.getSoundManager().play( TamerSound.CLICK );
             }
         });
         

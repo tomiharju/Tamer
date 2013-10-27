@@ -110,8 +110,8 @@ public class Joystick extends Actor /*implements UiElement*/{
 		addListener(new InputListener(){
 			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {	 
 				input.set(x,y);
-				if(input.dst(localCenter) < BUTTON_SIZE / 2 && !inputDisabled){
-					point.set(x,y);
+				if(input.dst(localCenter) < BUTTON_SIZE / 2){
+					if(!inputDisabled)point.set(x,y);
 					pressed = true;
 					return true;
 				}
@@ -119,12 +119,13 @@ public class Joystick extends Actor /*implements UiElement*/{
 	        }
 	 
 	        public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+	        		System.out.println("touch up");
 	        		pressed = false;
-	                point.set(restingpoint);
+	        		point.set(restingpoint);
 	        }
 	        
 	        public void touchDragged(InputEvent event, float x, float y, int pointer){
-				 point.set(x,y);
+	        	if(!inputDisabled)point.set(x,y);
 
 			 }
 		});

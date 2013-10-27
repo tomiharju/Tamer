@@ -2,11 +2,11 @@ package com.me.tamer.core;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.tamer.services.LevelManager;
 import com.me.tamer.services.MusicManager;
 import com.me.tamer.services.PreferenceManager;
+import com.me.tamer.services.SoundManager;
 
 
 public class TamerGame extends Game{
@@ -23,6 +23,7 @@ public class TamerGame extends Game{
     private MusicManager musicManager;
     private PreferenceManager preferenceManager;
     private LevelManager levelManager;
+    private SoundManager soundManager;
     
     //Screens
     private PlayScreen playScreen;
@@ -53,10 +54,14 @@ public class TamerGame extends Game{
         // create the level manager
         levelManager = new LevelManager();
         
+        //create the sound manager
+        soundManager = new SoundManager();
+        
         //create menu screens
         mainMenuScreen = new MainMenuScreen(this);
         pauseScreen = new PauseScreen(this);
         levelsScreen = new LevelsScreen(this);
+        
         
         //start the game with main menu screen
 		setScreen(mainMenuScreen);	
@@ -121,6 +126,10 @@ public class TamerGame extends Game{
 
 	public LevelManager getLevelManager() {
 		return levelManager;
+	}
+	
+	public SoundManager getSoundManager() {
+		return soundManager;
 	}
 }
 
