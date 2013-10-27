@@ -29,7 +29,7 @@ public class SpawnPoint extends StaticObject{
 	private int sleepTime;
 	private int spawnCount;
 	private int numCreated = 0;
-	
+	private boolean isTamerSpawn = false;
 	//IMPORTANT: spawn number is used to distinguish spawns from each other.
 	private int spawnId = 0;
 	
@@ -49,7 +49,7 @@ public class SpawnPoint extends StaticObject{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize("1:0.5");
+		setSize(new Vector2(1,0.5f));
 		this.renderType = graphics;
 	}
 	
@@ -105,9 +105,11 @@ public class SpawnPoint extends StaticObject{
 				try {
 					if (TamerStage.gameState == TamerStage.GAME_RUNNING){
 						Thread.sleep(initialSleep);
-						RuntimeObjectFactory.getObjectFromPool("tamer");
-						Gdx.app.debug(TamerGame.LOG, this.getClass()
-								.getSimpleName() + " :: Tamer entered");
+						if(isTamerSpawn){
+							RuntimeObjectFactory.getObjectFromPool("tamer");
+							Gdx.app.debug(TamerGame.LOG, this.getClass()
+									.getSimpleName() + " :: Tamer entered");
+						}
 						while(numCreated < spawnCount){
 							Thread.sleep(sleepTime);
 							numCreated++;
@@ -140,10 +142,13 @@ public class SpawnPoint extends StaticObject{
 	public void setTamerSpawn(String flag){
 		int value = Integer.parseInt(flag);
 		if(value == 1){
+			isTamerSpawn = true;
 			Tamer tamer = new Tamer();
+			
 			tamer.setPosition(position);
 			System.out.println(position);
 			tamer.setSpawnDirection(spawnVelocity);
+
 			RuntimeObjectFactory.addToObjectPool("tamer",(GameObject)tamer);
 		}
 	}

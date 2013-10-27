@@ -8,7 +8,6 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
-import com.me.tamer.gameobjects.tiles.SpawnPoint;
 
 public class Worm extends DynamicObject implements Creature{
 
@@ -44,7 +43,6 @@ public class Worm extends DynamicObject implements Creature{
 		
 		for(WormPart part : parts){
 			environment.addObject(part);
-			environment.addRigidBody(part.getRigidBody());
 			part.setZindex(0);
 		}
 		head = parts.get(0);
@@ -77,14 +75,14 @@ public class Worm extends DynamicObject implements Creature{
 			
 		}
 	}
-	public void resolveForces(float dt){
-		head.solveForces(dt);
-	}
 	
 	public void update(float dt){
+		head.solveJoints(dt);
 		head.updateChild(dt);
-	
 	}
+	
+	
+
 	
 	public void draw(SpriteBatch batch){
 		//No action
@@ -98,12 +96,18 @@ public class Worm extends DynamicObject implements Creature{
 		head = null;
 	}
 	
-	public WormPart getBottom(){
+	public WormPart getTail(){
 		return parts.get(parts.size()-1);
 	}
 	
 	public WormPart getHead(){
 		return head;
+	}
+	public Vector2 getPosition(){
+		return head.getPosition();
+	}
+	public Vector2 getHeading(){
+		return head.getHeading();
 	}
 	
 	public ArrayList<WormPart> getParts(){
@@ -153,7 +157,6 @@ public class Worm extends DynamicObject implements Creature{
 	public boolean isAffected(Vector2 point, float radius) {
 		boolean partAffected = false;
 		for(int i = 0 ; i < parts.size() ; i++){
-
 			if(parts.get(i).getPosition().dst(point) < radius){
 				partAffected = true;
 			}
@@ -170,6 +173,9 @@ public class Worm extends DynamicObject implements Creature{
 		else
 			tail.applyPull(point);
 		
+	}
+	public void setHeading(Vector2 newHeading){
+		head.setHeading(newHeading);
 	}
 
 	

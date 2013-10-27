@@ -35,13 +35,12 @@ public class Environment extends Actor{
 	
 	//Gameobject data
 
-	private ArrayList<GameObject> gameobjects = null;
-	private ArrayList<GameObject> carbages	= null;
-	private ArrayList<GameObject> newobjects = null;
-	private DynamicObject tamer = null;
-	private ArrayList<Obstacle> obstacles = null;
-
-	private ArrayList<Creature> creatures	= null;
+	private ArrayList<GameObject> gameobjects 	= null;
+	private ArrayList<GameObject> carbages		= null;
+	private ArrayList<GameObject> newobjects 	= null;
+	private DynamicObject tamer 				= null;
+	private ArrayList<Obstacle> obstacles 		= null;
+	private ArrayList<Creature> creatures		= null;
 	
 	//Physical contact list
 	private ArrayList<Contact> contacts;
@@ -68,8 +67,8 @@ public class Environment extends Actor{
 		newobjects 		= new ArrayList<GameObject>();
 		obstacles 		= new ArrayList<Obstacle>();
 		creatures		= new ArrayList<Creature>();
-		contacts 		= new ArrayList<Contact>();
-		rigidbodies		= new ArrayList<RigidBody>();
+		//contacts 		= new ArrayList<Contact>();
+		//rigidbodies		= new ArrayList<RigidBody>();
 		comparator 		= new DrawOrderComparator();
 		RuntimeObjectFactory.createLinkToLevel(this);
 
@@ -93,6 +92,7 @@ public class Environment extends Actor{
 		
 		switch (state){
 			case(NORMAL):			
+
 				for(int k = 0 ; k < numObjects ; k++){
 					gameobjects.get(k).update(dt);
 				}

@@ -50,7 +50,7 @@ public interface GameObject{
 	 * @param h
 	 * Calls this.renderer.setSize(w,h);
 	 */
-	public void setSize(String size);
+	public void setSize(Vector2 size);
 	public void setPosition(String pos);
 	public void setDebug(boolean b);
 	public boolean getDebug();

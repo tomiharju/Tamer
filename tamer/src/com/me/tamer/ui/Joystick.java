@@ -25,11 +25,11 @@ public class Joystick extends Actor /*implements UiElement*/{
 	
 	private Matrix3 translate 		= new Matrix3().rotate(45);
 	//Joystick variables
-	Vector2 restingpoint 			= new Vector2(130,130);
+	private Vector2 restingpoint 	= new Vector2(130,130);
+	private Vector2 joystickPoint	= new Vector2(130,130);
 	protected Vector2 delta			= null;
 	private Vector2 input			= null;
 	private Vector2 localCenter 	= null;
-	protected Vector2 point			= null;
 	private final float BUTTON_SIZE	= 250;
 	float pointersize				= 180f;
 	boolean pressed					= false;
@@ -43,7 +43,6 @@ public class Joystick extends Actor /*implements UiElement*/{
 		input			= new Vector2(0,0);
 		localCenter 	= new Vector2(BUTTON_SIZE/2,BUTTON_SIZE/2);
 		movementAxis	= new Vector2(0,0);
-		point			= new Vector2(restingpoint.x,restingpoint.y);
 		tamerPosition	= new Vector2();
 		renderer_outer 		= new UiRenderer();
 		renderer_inner 		= new UiRenderer();
@@ -54,7 +53,7 @@ public class Joystick extends Actor /*implements UiElement*/{
 		
 		renderer_inner.loadGraphics("joystick_inner");
 		renderer_inner.setSize(pointersize,pointersize);
-		renderer_inner.setPosition(restingpoint);
+		renderer_inner.setPosition(joystickPoint);
 		
 		//set Actor variables
 		setVisible(false);
@@ -67,16 +66,17 @@ public class Joystick extends Actor /*implements UiElement*/{
 	public void draw(SpriteBatch batch, float parentAlpha) {
 	
 		renderer_outer.draw(batch);
+		renderer_inner.setPosition(joystickPoint);
 		renderer_inner.draw(batch);		
 	}
 	
 	@Override
 	public void act(float dt) {
 		if (isVisible() && pressed){
-			delta.set(point.tmp().sub(restingpoint));
+			delta.set(joystickPoint.tmp().sub(restingpoint));
 			if(delta.len() > (BUTTON_SIZE - pointersize/2) / 2){
 				delta = delta.nor().mul((BUTTON_SIZE - pointersize/2)/2);
-				point.set(restingpoint.tmp().add(delta));
+				joystickPoint.set(restingpoint.tmp().add(delta));
 			}
 			if(movementDisabled)
 				environment.getTamer().turn(delta);
@@ -84,6 +84,7 @@ public class Joystick extends Actor /*implements UiElement*/{
 				checkBounds(delta.mul(dt));
 			}	
 		}	
+		
 	}
 	
 	public void checkBounds(Vector2 movement){
@@ -111,7 +112,7 @@ public class Joystick extends Actor /*implements UiElement*/{
 			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {	 
 				input.set(x,y);
 				if(input.dst(localCenter) < BUTTON_SIZE / 2){
-					if(!inputDisabled)point.set(x,y);
+					if(!inputDisabled)joystickPoint.set(x,y);
 					pressed = true;
 					return true;
 				}
@@ -120,11 +121,11 @@ public class Joystick extends Actor /*implements UiElement*/{
 	 
 	        public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 	        		pressed = false;
-	        		point.set(restingpoint);
+	        		joystickPoint.set(restingpoint);
 	        }
 	        
 	        public void touchDragged(InputEvent event, float x, float y, int pointer){
-	        	if(!inputDisabled)point.set(x,y);
+	        	if(!inputDisabled)joystickPoint.set(x,y);
 
 			 }
 		});

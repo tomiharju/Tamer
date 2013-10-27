@@ -19,7 +19,7 @@ public class SandPart extends StaticObject{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize("1:0.5");
+		setSize(new Vector2(1,0.5f));
 		this.renderType = graphics;
 		
 	}

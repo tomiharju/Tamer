@@ -81,7 +81,7 @@ public class Tamer extends DynamicObject{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
 		render.loadGraphics(graphics, 1, 8);
-		setSize("4:2.7");
+		setSize(new Vector2(4,2.7f));
 		renderType = graphics;
 	}
 	
