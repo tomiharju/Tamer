@@ -56,10 +56,7 @@ public class StaticObject implements GameObject{
 		String[] values = size.split(":");
 		float w = Float.parseFloat(values[0]);
 		float h = Float.parseFloat(values[1]);
-		
 		this.size.set(w,h);
-	
-
 		
 	}
 	@Override
