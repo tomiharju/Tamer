@@ -11,6 +11,7 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 
@@ -21,6 +22,12 @@ public class Tamer extends DynamicObject{
 	private ArrayList<Spear> spears = null;
 	private TamerShadow shadow;
 	private Environment environment;
+	
+	//Variables for entering the field
+	private boolean enteredField = false;
+	private Vector2 isoPosition = new Vector2();
+	private Vector2 mapBounds = new Vector2();
+	private final float DISTANCE_BOUNDS = 5.0f;
 
 	public void setup(){
 		
@@ -49,7 +56,27 @@ public class Tamer extends DynamicObject{
 		setRigidBody("circle");
 		this.environment = environment;
 		this.environment.setTamer(this);
+		
+		//enter the field
+		mapBounds.set(environment.getMapBounds());
+		mapBounds.x -= DISTANCE_BOUNDS;
+		mapBounds.y -= DISTANCE_BOUNDS;
 	}
+	
+	
+	public void enterTheField(float dt){
+		solveOrientation();
+		position.add(force);
+		System.out.println("tamerpos: " +isoPosition);
+		//System.out.println("entering the field");
+		//Check when inside mapBounds
+		isoPosition.set(IsoHelper.twoDToTileIso(position));
+		if(isoPosition.x > -mapBounds.x && isoPosition.x < mapBounds.x && isoPosition.y > -mapBounds.y && isoPosition.y < mapBounds.y){
+			
+			enteredField = true;
+		}
+	}
+	
 	
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
@@ -104,8 +131,16 @@ public class Tamer extends DynamicObject{
 		spear.throwAt(waypoints);
 	}
 	
+	public void setSpawnDirection(Vector2 spawnDirection){
+		force.set(spawnDirection);
+	}
+	
 	public void useScream(GryphonScream scream){
 		scream.activate();
+	}
+	
+	public boolean hasEnteredField(){
+		return enteredField;
 	}
 
 	public Vector2 getHeading(){

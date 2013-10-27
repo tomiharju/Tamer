@@ -119,7 +119,6 @@ public class Joystick extends Actor /*implements UiElement*/{
 	        }
 	 
 	        public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-	        		System.out.println("touch up");
 	        		pressed = false;
 	        		point.set(restingpoint);
 	        }

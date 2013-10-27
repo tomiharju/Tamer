@@ -45,7 +45,11 @@ public class Spear extends DynamicObject{
 		if(!attached)
 			position.add( direction.x * (SPEED * dt), direction.y * (SPEED * dt));
 
-		if ( currentWayPoint == 0) targetReached = true;
+		if ( currentWayPoint == 0) {
+			//falling spear has zIndex 0
+			setzIndex(0);
+			targetReached = true;
+		}
 		
 		//System.out.println("attached: " +attached +", targetReached: " +targetReached +", distance: " +position.dst( waypoints.get(currentWayPoint) ));
 		
@@ -77,6 +81,7 @@ public class Spear extends DynamicObject{
 		this.environment = environment;
 		attached = false;
 		targetReached = false;
+		setzIndex(-1);
 		markAsActive();
 	}
 	
@@ -96,6 +101,10 @@ public class Spear extends DynamicObject{
 	 */
 	public void pickUp(){
 		attached = false;
+		targetReached = false;// not sure if needed here
+		setzIndex(-1); // not sure if needed here
+		
+		
 		if(targetCreature != null){
 			targetCreature.unBind();
 			targetCreature = null;

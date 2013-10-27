@@ -14,27 +14,25 @@ public class PlayScreen extends AbstractScreen{
 	}
 	
 	public void create(){
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state to GAME_RUNNING");
-		TamerStage.gameState = TamerStage.GAME_RUNNING;
 		//Stop music when the level starts
 		game.getMusicManager().stop();
+		
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state to GAME_RUNNING");
+		TamerStage.gameState = TamerStage.GAME_RUNNING;
+		
+		//stage has to be created after state is set to GAME_RUNNING because of the threads
 		stage = new TamerStage(game);
+		
+		
 	}
 	
 	@Override
 	public void show() {
 		super.show();
 		
-		switch(TamerStage.gameState){
-			case(TamerStage.GAME_RUNNING):
-				break;
-			case(TamerStage.GAME_PAUSED):
+		if(TamerStage.gameState == TamerStage.GAME_PAUSED){
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state from GAME_PAUSED to GAME_RUNNING");
 				TamerStage.gameState = TamerStage.GAME_RUNNING;
-				break;	
-			default:
-				Gdx.app.error (TamerGame.LOG, this.getClass().getSimpleName()
-						+ " :: Run into default case of gameState");			
 		}
 		
 		Gdx.input.setInputProcessor( stage );

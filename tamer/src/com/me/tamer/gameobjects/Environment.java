@@ -55,6 +55,12 @@ public class Environment extends Actor{
 	//Drawing-order
 	private int loopCount = 0;
 	private int sortRate = 6;
+	
+	//States during GAME_RUNNING
+	public final int NORMAL = 0;
+	public final int TAMER_ENTER = 1;
+	public final int SPEAR_TIME = 2;
+	public int state = 0;
 		
 	public Environment(){	
 		gameobjects 	= new ArrayList<GameObject>();
@@ -74,35 +80,46 @@ public class Environment extends Actor{
 		this.stage = stage;
 	}
 	
-	
 	/**
 	 * @param dt
 	 * General update loop
 	 */
 	public void act(float dt){
+		runCarbageCollection();
+		addNewObjects();
+		resolveObstacles(dt);
+		resolveCollisions(dt);
+		int numObjects = gameobjects.size();
 		
-		switch (TamerStage.gameState){
-			case(TamerStage.GAME_RUNNING):			
-				runCarbageCollection();
-				addNewObjects();
-				resolveObstacles(dt);
-				resolveCollisions(dt);
-				int numObjects = gameobjects.size();
+		switch (state){
+			case(NORMAL):			
 				for(int k = 0 ; k < numObjects ; k++){
 					gameobjects.get(k).update(dt);
 				}
 				break;
-			case (TamerStage.GAME_TIME_STILL):
-				runCarbageCollection();
-				addNewObjects();
-				int numObjects2 = gameobjects.size();
-				for(int k = 0 ; k < numObjects2 ; k++){
+			case(TAMER_ENTER):
+				for(int k = 0 ; k < numObjects ; k++){
+					//System.out.println(gameobjects.get(k));
+					if (gameobjects.get(k).getClass()==Tamer.class){
+						((Tamer)gameobjects.get(k)).enterTheField(dt);
+						
+						if (((Tamer)tamer).hasEnteredField()){
+							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+									+ " :: setting state to NORMAL");
+							state = NORMAL;
+						}
+					}		
+				}
+				//System.out.println("-------------");
+				break;
+			case (SPEAR_TIME):
+				for(int k = 0 ; k < numObjects; k++){
 					if (gameobjects.get(k).getClass()==Spear.class)gameobjects.get(k).update(dt);
 				}
 				break;
-			case( TamerStage.GAME_PAUSED):
-				break;
 			default:
+				Gdx.app.error(TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: state default case");
 				break;
 		}
 	}
@@ -269,7 +286,6 @@ public class Environment extends Actor{
 		this.obstacles.add(obstacle);
 	}
 	
-	
 	/**
 	 * LevelCreator calls this to set Camera borders, could be expanded later if more settings needed
 	 */
@@ -285,8 +301,12 @@ public class Environment extends Actor{
 	 * 
 	 */
 	public void setTamer(Tamer tamer){
+
 		this.tamer = tamer;
 		gameobjects.add(tamer);
+		
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: set state to TAMER_ENTER");
+		state = TAMER_ENTER;
 	}
 	
 	public void dispose(){

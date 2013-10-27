@@ -70,7 +70,7 @@ public class AbstractMenu extends AbstractScreen{
         levelsButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
             	game.setScreen( game.getLevelsScreen() );
-            	game.getSoundManager().play( TamerSound.CLICK );
+            	soundManager.play( TamerSound.CLICK );
             }
         });
         

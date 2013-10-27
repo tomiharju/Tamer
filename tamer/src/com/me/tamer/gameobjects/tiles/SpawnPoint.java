@@ -40,6 +40,7 @@ public class SpawnPoint extends StaticObject{
 		creatures = new ArrayList<Creature>();
 	}
 	public void setup(Environment environment){
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: started spawning");
 		environment.addNewObject(this);
 		startSpawning();
 		setZindex(1);
@@ -51,9 +52,11 @@ public class SpawnPoint extends StaticObject{
 		setSize("1:0.5");
 		this.renderType = graphics;
 	}
+	
 	public void setSpawnCount(String count){
 		this.spawnCount = Integer.parseInt(count);
 	}
+	
 	public void setSpawnDirection(String vel){
 		float angle = Float.parseFloat(vel);
 		angle += 45;
@@ -94,11 +97,7 @@ public class SpawnPoint extends StaticObject{
 	 * @param position grid number, which is turned into screen coordinate
 	 * @param spawn_type is the object type to spawn. Currently worm or ant
 	 */
-	public void setup(){
-		Gdx.app.debug(TamerGame.LOG, this.getClass()
-				.getSimpleName() + " :: Spawn number "+spawnId + " Started spawning");
-		startSpawning();
-	}
+
 	public void startSpawning(){
 		new Thread(new Runnable(){
 			@Override
@@ -143,7 +142,8 @@ public class SpawnPoint extends StaticObject{
 		if(value == 1){
 			Tamer tamer = new Tamer();
 			tamer.setPosition(position);
-			tamer.setVelocity(spawnVelocity);
+			System.out.println(position);
+			tamer.setSpawnDirection(spawnVelocity);
 			RuntimeObjectFactory.addToObjectPool("tamer",(GameObject)tamer);
 		}
 	}

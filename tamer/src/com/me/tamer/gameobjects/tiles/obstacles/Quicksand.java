@@ -84,7 +84,8 @@ public class Quicksand extends StaticObject implements Obstacle{
 					}
 					if(!isUnderRadius){
 						creatures_entered.remove(targetCreature);
-						System.out.println("Creature left the cluster! "+ creatures_entered.size());
+						Gdx.app.debug(TamerGame.LOG, this.getClass()
+								.getSimpleName() + " ::Creature left the cluster! "+ creatures_entered.size());
 
 					}
 					

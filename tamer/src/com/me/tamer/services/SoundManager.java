@@ -14,6 +14,14 @@ import com.me.tamer.utils.LRUCache.CacheEntryRemovedListener;
  */
 public class SoundManager implements
 		CacheEntryRemovedListener<TamerSound, Sound>, Disposable {
+	//sound manager is a singleton
+	private static SoundManager singleton;
+	
+	public static SoundManager instance(){
+		if (singleton==null)singleton = new SoundManager();
+		return singleton;
+	}
+	
 	/**
 	 * The available sound files.
 	 */
@@ -48,8 +56,9 @@ public class SoundManager implements
 
 	/**
 	 * Creates the sound manager.
+	 * constructor is private because this is a singleton
 	 */
-	public SoundManager() {
+	private SoundManager() {
 		soundCache = new LRUCache<SoundManager.TamerSound, Sound>(10);
 		soundCache.setEntryRemovedListener(this);
 	}
