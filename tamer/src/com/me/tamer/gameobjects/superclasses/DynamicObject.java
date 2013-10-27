@@ -20,10 +20,10 @@ public class DynamicObject implements GameObject{
 	protected Vector2 velocity = new Vector2();		//"World velocity"
 	protected Vector2 heading = new Vector2();
 	protected Vector2 force = new Vector2();		// Magnitude and direction of per loop position iteration
+	protected Vector2 size = new Vector2();
 	protected float angle = 0;
 	private float mass;			
-	private float invMass;							// Precalculated invmass, used in physics calculations
-	protected Vector2 size;
+	
 	protected String renderType;
 	private boolean isCarbage = false;
 	protected RigidBody body = null;
@@ -81,12 +81,8 @@ public class DynamicObject implements GameObject{
 	}
 	
 	@Override
-	public void setSize(String size) {
-		String[] values = size.split(":");
-		float w = Float.parseFloat(values[0]);
-		float h = Float.parseFloat(values[1]);
-		this.size = new Vector2(w,h);
-		
+	public void setSize(Vector2 size) {
+		this.size.set(size);
 	}
 	
 	@Override
@@ -140,8 +136,7 @@ public class DynamicObject implements GameObject{
 	
 	@Override
 	public Vector2 getSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return size;
 	}
 	
 	public Vector2 getHeading(){
@@ -236,8 +231,4 @@ public class DynamicObject implements GameObject{
 		this.zIndex = zIndex;
 	}
 
-
-	public void setSize(Vector2 size) {
-		this.size = size;
-	}
 }

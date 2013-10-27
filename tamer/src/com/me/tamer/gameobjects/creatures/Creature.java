@@ -52,5 +52,7 @@ public interface Creature {
 	public boolean isAffected(Vector2 point, float radius);
 	public void applyPull(Vector2 point);
 	public void moveToFinish();
+	public void setHeading(Vector2 rotate);
+	public Vector2 getHeading();
 	
 }

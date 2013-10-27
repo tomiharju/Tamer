@@ -96,7 +96,7 @@ public class GryphonScream extends DynamicObject {
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("animated","scream");
 		render.loadGraphics("scream_ph",4,1);
-		setSize("3:3");
+		setSize(new Vector2(3,3));
 		renderType = "scream";
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream graphics are set");
 		
@@ -137,7 +137,7 @@ public class GryphonScream extends DynamicObject {
 					if( cross1 > 0 && cross2 > 0 && cross3 > 0){
 						newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
 						newHeading.nor();
-						worm.getHead().setForce(newHeading);
+						worm.getHead().setHeading(newHeading);
 					}
 				}	
 			}	

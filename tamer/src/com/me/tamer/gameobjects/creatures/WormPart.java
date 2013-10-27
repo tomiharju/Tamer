@@ -65,7 +65,7 @@ public class WormPart extends DynamicObject implements Creature {
 
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
 		render.loadGraphics(graphics,1,8);
-		setSize("1:1");
+		setSize(new Vector2(1,1));
 		renderType = graphics;
 	}
 	
@@ -81,10 +81,10 @@ public class WormPart extends DynamicObject implements Creature {
 	public void attachToChild(WormPart child){
 		this.child = child;
 	}
-	public void solveForces(float dt){
+	public void solveJoints(float dt){
 		if(child != null){
 			solveJoint(dt);
-			child.solveForces(dt);
+			child.solveJoints(dt);
 		}
 	}
 	public void update(float dt){
@@ -132,7 +132,7 @@ public class WormPart extends DynamicObject implements Creature {
 		velocity.add(addB);
 	}
 	
-	public void setForce(Vector2 newHeading){
+	public void setHeading(Vector2 newHeading){
 		force.set(newHeading).mul(speed);
 	}
 	
@@ -171,7 +171,6 @@ public class WormPart extends DynamicObject implements Creature {
 	public void dispose(Environment environment){
 		//TODO: play some death animations before actually disposing?
 		environment.getCreatures().remove(this);
-		environment.getRigidBodies().remove(this.body);
 		worm.getParts().remove(this);
 	}
 	

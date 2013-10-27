@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.tiles;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -35,7 +36,7 @@ public class Endingpoint extends StaticObject implements Obstacle{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize("1:0.5");
+		setSize(new Vector2(1,0.5f));
 		this.renderType = graphics;
 	}
 

@@ -75,24 +75,14 @@ public class Worm extends DynamicObject implements Creature{
 			
 		}
 	}
-	public void resolveForces(float dt){
-		head.solveForces(dt);
-	}
 	
 	public void update(float dt){
+		head.solveJoints(dt);
 		head.updateChild(dt);
 	}
 	
 	
-	public void avoidObstacles(){
-		
-	}
-	
-	
-	
-	
-	
-	
+
 	
 	public void draw(SpriteBatch batch){
 		//No action
@@ -112,6 +102,12 @@ public class Worm extends DynamicObject implements Creature{
 	
 	public WormPart getHead(){
 		return head;
+	}
+	public Vector2 getPosition(){
+		return head.getPosition();
+	}
+	public Vector2 getHeading(){
+		return head.getHeading();
 	}
 	
 	public ArrayList<WormPart> getParts(){
@@ -177,6 +173,9 @@ public class Worm extends DynamicObject implements Creature{
 		else
 			tail.applyPull(point);
 		
+	}
+	public void setHeading(Vector2 newHeading){
+		head.setHeading(newHeading);
 	}
 
 	

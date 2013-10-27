@@ -52,11 +52,8 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void setSize(String size) {
-		String[] values = size.split(":");
-		float w = Float.parseFloat(values[0]);
-		float h = Float.parseFloat(values[1]);
-		this.size.set(w,h);
+	public void setSize(Vector2 size) {
+		this.size.set(size);
 		
 	}
 	@Override
@@ -72,7 +69,7 @@ public class StaticObject implements GameObject{
 		return position;
 	}
 	public Vector2 getCenterPosition(){
-		this.centerPosition.set(position.x-this.size.x /2,position.y + this.size.y );
+		this.centerPosition.set(position.x-this.size.x / 2,position.y + this.size.y );
 		return centerPosition;
 	}
 
