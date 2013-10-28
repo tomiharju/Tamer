@@ -1,11 +1,12 @@
 package com.me.tamer.gameobjects.creatures;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.Creature;
+import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.physics.RigidBodyCircle;
 
@@ -64,7 +65,7 @@ public class WormPart extends DynamicObject implements Creature {
 
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
 		render.loadGraphics(graphics,1,8);
-		setSize("1:1");
+		setSize(new Vector2(1,1));
 		renderType = graphics;
 	}
 	
@@ -80,10 +81,10 @@ public class WormPart extends DynamicObject implements Creature {
 	public void attachToChild(WormPart child){
 		this.child = child;
 	}
-	public void solveForces(float dt){
+	public void solveJoints(float dt){
 		if(child != null){
 			solveJoint(dt);
-			child.solveForces(dt);
+			child.solveJoints(dt);
 		}
 	}
 	public void update(float dt){
@@ -131,7 +132,7 @@ public class WormPart extends DynamicObject implements Creature {
 		velocity.add(addB);
 	}
 	
-	public void setForce(Vector2 newHeading){
+	public void setHeading(Vector2 newHeading){
 		force.set(newHeading).mul(speed);
 	}
 	
@@ -167,10 +168,9 @@ public class WormPart extends DynamicObject implements Creature {
 	/* (non-Javadoc)
 	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)
 	 */
-	public void dispose(Level level){
+	public void dispose(Environment environment){
 		//TODO: play some death animations before actually disposing?
-		level.getCreatures().remove(this);
-		level.getRigidBodies().remove(this.body);
+		environment.getCreatures().remove(this);
 		worm.getParts().remove(this);
 	}
 	
@@ -226,6 +226,28 @@ public class WormPart extends DynamicObject implements Creature {
 	public void setPosition(Vector2 pos) {
 		this.position.set(pos);
 		
+	}
+
+	@Override
+	public Creature affectedCreature(Vector2 point, float radius) {
+		if(this.position.dst(point) < radius)
+			return this;
+		else
+			return null;
+		
+	}
+
+	@Override
+	public void applyPull(Vector2 point) {
+		Vector2 pullVector = point.tmp().sub(position);
+		pullVector.nor().mul(5.5f);
+		velocity.add(pullVector.mul(Gdx.graphics.getDeltaTime())); 
+	}
+
+	@Override
+	public boolean isAffected(Vector2 point, float radius) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 

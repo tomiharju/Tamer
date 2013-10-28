@@ -2,17 +2,17 @@ package com.me.tamer.gameobjects.creatures;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Level;
-import com.me.tamer.gameobjects.superclasses.Creature;
+import com.me.tamer.core.TamerGame;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
-import com.me.tamer.utils.IsoHelper;
 
 
 public class AntOrc extends DynamicObject implements Creature{
 	
-	private Level level;
+	private Environment environment;
 	private ArrayList<Vector2> waypoints;
 	private float wormScanRad = 5.0f; //ScanArea is a circle
 	private float waypointScanRad = 3.0f;
@@ -28,9 +28,9 @@ public class AntOrc extends DynamicObject implements Creature{
 		waypoints.add(new Vector2(0,0));//place holder for the first value
 	}
 	
-	public void wakeUp(Level level){
-		this.level = level;
-		//Add the spawnin position as first waypoint
+	public void wakeUp(Environment environment){
+		this.environment = environment;
+		//Add the spawning position as a first waypoint
 		waypoints.add(0, getPosition());
 		markAsActive();
 	}
@@ -43,7 +43,7 @@ public class AntOrc extends DynamicObject implements Creature{
 			//Needs to fumble with the invMass
 			//Start some timer
 			//setPosition( target.getPosition() );
-			System.out.println("Mulkku Attached");
+			Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: ant attached");
 		}
 		else if(target != null) followTarget();
 		else followPath();		
@@ -80,7 +80,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public void scanWorms(){
 		//lock to wormpart that is scanned first
-		creatures = level.getCreatures();
+		creatures = environment.getCreatures();
 		for (Creature creature : creatures){		
 			if (creature.getClass().getName() == "WormPart"){
 				if ( ((WormPart)creature).getPosition().dst( getPosition() ) < wormScanRad){
@@ -122,5 +122,26 @@ public class AntOrc extends DynamicObject implements Creature{
 	public void unBind() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Creature affectedCreature(Vector2 point,float radius) {
+		if( this.position.dst(point) < radius)
+			return this;
+		else
+			return null;
+		
+	}
+
+	@Override
+	public void applyPull(Vector2 point) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isAffected(Vector2 point, float radius) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

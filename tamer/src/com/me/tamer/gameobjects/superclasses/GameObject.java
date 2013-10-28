@@ -3,7 +3,7 @@ package com.me.tamer.gameobjects.superclasses;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.physics.RigidBody;
 
 
@@ -50,7 +50,7 @@ public interface GameObject{
 	 * @param h
 	 * Calls this.renderer.setSize(w,h);
 	 */
-	public void setSize(String size);
+	public void setSize(Vector2 size);
 	public void setPosition(String pos);
 	public void setDebug(boolean b);
 	public boolean getDebug();
@@ -65,7 +65,7 @@ public interface GameObject{
 	 * Called at level loading, used to load all graphics and other assets
 	 * @param level 
 	 */
-	public void setup(Level level);
+	public void setup(Environment level);
 	/**
 	 * @param Gets level as parameter, needed to be able to add rigidbodies to world etc.
 	 * Used when object is fetched from objectpool and put into gameworld.
@@ -76,16 +76,18 @@ public interface GameObject{
 	 *
 	 * @param level
 	 */
-	public void wakeUp(Level level);
+	public void wakeUp(Environment level);
 	public void resolveForces(float dt);
 	
 	/**
 	 * Actions that needs to be taken when this object this object is removed from game.
 	 */
-	public void dispose(Level level);
+	public void dispose(Environment level);
 	
 	public int getZIndex();
 	public void setZindex(int z);
+
+	public void setPosition(Vector2 pos);
 	
 }
 

@@ -2,71 +2,92 @@ package com.me.tamer.gameobjects.tamer;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.core.TamerGame;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.Creature;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Spear extends DynamicObject{
 	
-	private Level level;
-	private Vector2 target = new Vector2() ;
+	private Environment environment;
+
 	private Creature targetCreature = null;
-	private boolean isAttached = false;
-	private Vector2 heading = new Vector2();
+	private boolean attached = false;
+	private boolean targetReached = false;
+	
+	ArrayList<Vector2> waypoints;
+	private int currentWayPoint;
+
+	
+	private final float SPEED = 12.0f;
+
+	private Vector2 direction = new Vector2();
 	
 	public Spear(){
 		setGraphics();
 	}
 	
-	public void setup(){
-		
-	}
-	
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("animated","spear");
 		render.loadGraphics("spear",1,8);
-		setSize("1:1");
+		setSize(new Vector2(1,1));
 		renderType = "spear";
-		System.out.println("Spear graphics are set");
+		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Spear graphics are set");
 	}
 	
 	public void update(float dt){
-		if(!isAttached)
-			position.add(force.tmp().mul(dt));
-		//When the spear has reached its destination, check if there is some creature
-		//If there is, call that creatures spearHit method to resolve damage.
-		if(!isAttached && position.dst(target) < 0.5){
-			position.set(target);
-			ArrayList<Creature> creatures = level.getCreatures();
-			int size = creatures.size();
-			System.out.println("Searching for potential hit amont "+size+" creatures.");
-			for(int i = 0 ; i < size ; i ++)
-				if(position.dst(((DynamicObject) creatures.get(i)).getPosition()) < 0.5){
-					targetCreature = creatures.get(i);
-					targetCreature.spearHit(this);
-					break;
-				}
-			isAttached = true;
-		}
 		
+		if(!attached)
+			position.add( direction.x * (SPEED * dt), direction.y * (SPEED * dt));
+
+		if ( currentWayPoint == 0) targetReached = true;
+		
+		//System.out.println("attached: " +attached +", targetReached: " +targetReached +", distance: " +position.dst( waypoints.get(currentWayPoint) ));
+		
+		if(!attached && targetReached && position.dst( waypoints.get(currentWayPoint) ) < 0.1){
+			setPosition( waypoints.get(currentWayPoint) );
+			attached = true;
+			
+			ArrayList<Creature> creatures = environment.getCreatures();
+			int size = creatures.size();
+			for(int i = 0 ; i < size ; i ++){
+					targetCreature = creatures.get(i).affectedCreature(position, 0.5f);
+					if(targetCreature != null){
+						targetCreature = creatures.get(i);
+						targetCreature.spearHit(this);
+						
+						break;
+					}
+			}
+		}else if (!attached && position.dst( waypoints.get(currentWayPoint) ) < 0.1) {
+			currentWayPoint--;
+			heading.set(waypoints.get(currentWayPoint).tmp().sub(getPosition()));	
+			direction.set(waypoints.get(currentWayPoint).tmp().sub(getPosition()));
+			direction.nor();
+		}
 	}
 	
-	public void wakeUp(Level level){
-		System.out.println("Spear woke up!");
-		this.level = level;
-		isAttached = false;
-		markAsActive();
-		
+	public void wakeUp(Environment environment){
 
+		this.environment = environment;
+		attached = false;
+		targetReached = false;
+		markAsActive();
 	}
-	public void throwAt(Vector2 point,float power){
-		target.set(point);
-		Vector2 dir = point.sub(position);
-		force.set(dir.tmp().nor().mul(power));
+	
+	public void throwAt(ArrayList<Vector2> waypoints){
+		this.waypoints = waypoints;
+		
+		heading.set(waypoints.get( waypoints.size() - 1 ).tmp().sub(getPosition()) );
+		direction.set(waypoints.get( waypoints.size() - 1 ).tmp().sub(getPosition() ));
+		direction.nor();
+		
+		currentWayPoint = waypoints.size() - 1;
 	}
 	
 	/**
@@ -74,25 +95,17 @@ public class Spear extends DynamicObject{
 	 * Remove from active gameobjects
 	 */
 	public void pickUp(){
+		attached = false;
 		if(targetCreature != null){
 			targetCreature.unBind();
 			targetCreature = null;
 		}
 		RuntimeObjectFactory.addToObjectPool("spear",this);
 		markAsCarbage();
-	}
-	
-	public void setPosition(Vector2 pos){
-		position.set(pos);
+		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Spear picked up ");
 	}
 	
 	public boolean isAttached(){
-		return isAttached;
+		return attached;
 	}
-	
-	public Vector2 getHeading(){
-		heading.set(getForce().tmp().nor());
-		return heading;
-	}
-
 }

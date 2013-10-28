@@ -3,8 +3,11 @@ package com.me.tamer.gameobjects.tamer;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.core.TamerGame;
+import com.me.tamer.core.TamerStage;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
@@ -13,48 +16,55 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED 	= 0.1f;
+	private final float SPEED 	= 0.25f;
 	private int numSpears 		= 3;
 	private ArrayList<Spear> spears = null;
+	private TamerShadow shadow;
+	private Environment environment;
 
-		
-	
 	public void setup(){
-	
-	
+		
 	}
-	public void wakeUp(Level level){
+	
+	public void wakeUp(Environment environment){
+		//Spears
 		spears = new ArrayList<Spear>();
 		for( int i = 0 ; i < numSpears ; i++){
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
 		}
 		
-		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream());
-		System.out.println("Tamer has woken up! " + this.toString());
+		//Scream
+		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream(environment));
+		
+		//Shadow
+		shadow = new TamerShadow(this);
+		environment.addObject(shadow);
+		
+		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Tamer has woken up! " + this.toString());
 		//Z-index for drawing order
 		setZindex(-1);
 		setGraphics("tamer");
 		setForce("0:0");
 		setMass("10");
 		setRigidBody("circle");
-		level.setTamer(this);
+		this.environment = environment;
+		this.environment.setTamer(this);
 	}
 	
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
-		//render.loadGraphics(graphics);
 		render.loadGraphics(graphics, 1, 8);
-		setSize("4:2.7");
+		setSize(new Vector2(4,2.7f));
 		renderType = graphics;
 	}
 	
 	@Override
 	public void update(float dt){
 		solveOrientation();
-		position.add(force);
+		getPosition().add(force);
 		force.mul(0f);
 		for(int i = 0 ; i < spears.size() ; i ++){
-			if(position.dst(spears.get(i).getPosition()) < 1 ){
+			if(shadow.getPosition().dst(spears.get(i).getPosition()) < 1 ){
 				if(spears.get(i).isAttached()){
 					spears.get(i).pickUp();
 					spears.remove(i);
@@ -68,12 +78,14 @@ public class Tamer extends DynamicObject{
 	 * Joystick uses this method to move tamer around
 	 */
 	public void manouver(Vector2 direction){
-		//heading.lerp(direction,0.025f);
 		direction.rotate(45);
-		heading.set(direction);
-		heading.nor();
-		force.set(heading);
-		force.mul(SPEED);
+		float power = direction.len();//Math.max(Math.abs(direction.y), Math.min(Math.abs(lenght),0.5f));
+		direction.nor().mul(power*SPEED);
+		if(power > 0.1){
+			heading.set(direction);
+			heading.nor();
+			force.set(direction);	
+		}
 	}
 	/**
 	 * @param direction
@@ -84,10 +96,12 @@ public class Tamer extends DynamicObject{
 		heading.nor();
 	}
 	
-	public void throwSpear(Spear spear,Vector2 point,float power){
+	public void throwSpear(Spear spear,ArrayList<Vector2> waypoints){
+		environment.getStage().setCameraHolder(TamerStage.SPEAR_CAMERA);
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched to SPEAR_CAMERA");
 		spears.add(spear);
-		spear.setPosition(position.tmp().add(heading.mul(1.5f)));
-		spear.throwAt(point, power);
+		spear.setPosition(position);//.tmp().add(heading.mul(1.5f)));
+		spear.throwAt(waypoints);
 	}
 	
 	public void useScream(GryphonScream scream){
@@ -96,7 +110,15 @@ public class Tamer extends DynamicObject{
 
 	public Vector2 getHeading(){
 		return heading;
-
 	}
-
+	
+	public TamerShadow getShadow(){
+		return shadow;
+	}
+	
+	public Spear getActiveSpear(){
+		for (int i = 0; i < spears.size(); i++) {
+			if (!spears.get(i).isAttached()) return spears.get(i); 
+		} return null;
+	}
 }

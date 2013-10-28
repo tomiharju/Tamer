@@ -3,7 +3,7 @@ package com.me.tamer.gameobjects.superclasses;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Level;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.physics.RigidBody;
@@ -15,7 +15,7 @@ public class StaticObject implements GameObject{
 	protected RigidBody body = null;
 	protected Vector2 position;
 	protected Vector2 size = new Vector2();
-	
+	protected Vector2 centerPosition = new Vector2();
 	protected String renderType = null;
 	private boolean isCarbage = false;
 	private boolean debug = false;
@@ -52,12 +52,8 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void setSize(String size) {
-		String[] values = size.split(":");
-		float w = Float.parseFloat(values[0]);
-		float h = Float.parseFloat(values[1]);
-		
-		this.size.set(w,h);
+	public void setSize(Vector2 size) {
+		this.size.set(size);
 		
 	}
 	@Override
@@ -66,11 +62,15 @@ public class StaticObject implements GameObject{
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
 		this.position = new Vector2(x,y);
-	}
+		}
 
 	@Override
 	public Vector2 getPosition() {
 		return position;
+	}
+	public Vector2 getCenterPosition(){
+		this.centerPosition.set(position.x-this.size.x / 2,position.y + this.size.y );
+		return centerPosition;
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void setup(Level level) {
+	public void setup(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -105,7 +105,7 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void wakeUp(Level level) {
+	public void wakeUp(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -131,7 +131,7 @@ public class StaticObject implements GameObject{
 	}
 
 	@Override
-	public void dispose(Level level) {
+	public void dispose(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -149,6 +149,12 @@ public class StaticObject implements GameObject{
 
 	@Override
 	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPosition(Vector2 pos) {
 		// TODO Auto-generated method stub
 		
 	}
