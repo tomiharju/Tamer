@@ -1,6 +1,5 @@
 <root>
-<<<<<<< HEAD
-=======
+
 	<Settings>
 		<property type="MapSize">20:20</property>
 		<property type="MapBounds">7:4.5</property>
@@ -24,5 +23,4 @@
 			<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
 			</SubObject>
 	</GameObject>
->>>>>>> 27e42aa91fd2af11581145ce90eaee7e0ce8b1c8
 </root>

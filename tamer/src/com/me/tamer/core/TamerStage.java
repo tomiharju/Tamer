@@ -34,8 +34,6 @@ public class TamerStage extends Stage{
 	public static final int GAME_RUNNING = 1; 
 	public static final int GAME_PAUSED = 2; 
 	public static final int GAME_OVER = 3;
-	public static final int GAME_TIME_STILL = 4;
-	public static final int GAME_TAMER_ENTER = 5;
 	public static int gameState;
 	
 	//Camera
@@ -66,7 +64,8 @@ public class TamerStage extends Stage{
 	public void createActors(){
 		
 		//Hud
-        hud = new Hud(this);
+        hud = Hud.instance();
+        hud.initialize(this);
    
 		//environment
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Adding level to PlayScreen and generating environment " +level.getId());
@@ -74,7 +73,8 @@ public class TamerStage extends Stage{
 		environment = level.getEnvironment();
 		
         //input controller
-        controlContainer = new ControlContainer( environment, this);
+        controlContainer = ControlContainer.instance();
+        controlContainer.initialize(this);
         
         //Register actors in drawing order
         this.addActor( environment );
@@ -159,9 +159,9 @@ public class TamerStage extends Stage{
 			if(environment.getTamer()!=null)cameraPosition.set(IsoHelper.twoDToTileIso(environment.getTamer().getPosition()));	
 			break;	
 		case SPEAR_CAMERA:
-			if (environment.state != environment.SPEAR_TIME){
+			if (environment.getState() != Environment.SPEAR_TIME){
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched environment state to SPEAR_TIME");
-				environment.state = environment.SPEAR_TIME;
+				environment.setState(Environment.SPEAR_TIME);
 				//disable joystick while in SPEAR_CAMERA MODE
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: disabling input");
 				controlContainer.setInputDisabled(true);
@@ -177,7 +177,7 @@ public class TamerStage extends Stage{
 				
 				//Back to default gameState
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched environment state to NORMAL");
-				environment.state = environment.NORMAL;
+				environment.setState(Environment.NORMAL);
 				
 				//enable joystick
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
@@ -217,5 +217,9 @@ public class TamerStage extends Stage{
 	
 	public void setGameState(int s){
 		gameState = s;
+	}
+	
+	public Environment getEnvironment(){
+		return environment;
 	}
 }

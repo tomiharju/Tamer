@@ -146,7 +146,7 @@ public class Worm extends DynamicObject implements Creature{
 
 	@Override
 	public Creature affectedCreature(Vector2 point,float radius) {
-		for(int i = 0 ; i < parts.size() ; i++){
+		for(int i = 0; i < parts.size(); i++){
 			return parts.get(i).affectedCreature(point,radius);
 		}
 		return null;

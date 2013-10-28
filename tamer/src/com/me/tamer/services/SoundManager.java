@@ -26,7 +26,8 @@ public class SoundManager implements
 	 * The available sound files.
 	 */
 	public enum TamerSound {
-		CLICK("sound/click.wav");
+		CLICK("sound/click.wav"),
+		HIT("sound/06kill03.wav");
 
 		private final String fileName;
 
@@ -42,7 +43,7 @@ public class SoundManager implements
 	/**
 	 * The volume to be set on the sound.
 	 */
-	private float volume = 1f;
+	private float volume = 0.5f;
 
 	/**
 	 * Whether the sound is enabled.

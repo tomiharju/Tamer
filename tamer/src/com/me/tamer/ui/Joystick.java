@@ -13,24 +13,22 @@ import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.VectorHelper;
 
-public class Joystick extends Actor /*implements UiElement*/{
-
-	private ControlContainer inputcontroller = null;
-	private UiRenderer renderer_outer = null;
-	private UiRenderer renderer_inner = null;
-
-	private Vector2 tamerPosition 	= null;
+public class Joystick extends Actor{
+	private final float BUTTON_SIZE	= 250;
+	private ControlContainer controlContainer = null;
 	private Environment environment = null;
-	private Vector2 movementAxis 	= null;
 	
-	private Matrix3 translate 		= new Matrix3().rotate(45);
+	//Renderers
+	private UiRenderer renderer_outer 		= new UiRenderer();
+	private UiRenderer renderer_inner 		= new UiRenderer();
+	
 	//Joystick variables
 	private Vector2 restingpoint 	= new Vector2(130,130);
 	private Vector2 joystickPoint	= new Vector2(130,130);
-	protected Vector2 delta			= null;
-	private Vector2 input			= null;
-	private Vector2 localCenter 	= null;
-	private final float BUTTON_SIZE	= 250;
+	private Vector2 delta			= new Vector2(0,0);
+	private Vector2 input			= new Vector2(0,0);
+	private Vector2 localCenter 	= new Vector2(BUTTON_SIZE/2,BUTTON_SIZE/2);
+	
 	float pointersize				= 180f;
 	boolean pressed					= false;
 	boolean movementDisabled 		= false;
@@ -38,15 +36,10 @@ public class Joystick extends Actor /*implements UiElement*/{
 	
 	
 	public Joystick(ControlContainer inputController) {
-		this.inputcontroller = inputController;
-		delta			= new Vector2(0,0);
-		input			= new Vector2(0,0);
-		localCenter 	= new Vector2(BUTTON_SIZE/2,BUTTON_SIZE/2);
-		movementAxis	= new Vector2(0,0);
-		tamerPosition	= new Vector2();
-		renderer_outer 		= new UiRenderer();
-		renderer_inner 		= new UiRenderer();
-		environment		= inputcontroller.getEnvironment();
+		this.controlContainer = inputController;
+		
+		environment		= controlContainer.getEnvironment();
+		
 		renderer_outer.loadGraphics("joystick");
 		renderer_outer.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer_outer.setPosition(restingpoint);
@@ -55,7 +48,7 @@ public class Joystick extends Actor /*implements UiElement*/{
 		renderer_inner.setSize(pointersize,pointersize);
 		renderer_inner.setPosition(joystickPoint);
 		
-		//set Actor variables
+		//Actor variables
 		setVisible(false);
 		setPosition(restingpoint.x - BUTTON_SIZE/2, restingpoint.y - BUTTON_SIZE/2);
 		setSize(BUTTON_SIZE, BUTTON_SIZE);
@@ -64,7 +57,6 @@ public class Joystick extends Actor /*implements UiElement*/{
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha) {
-	
 		renderer_outer.draw(batch);
 		renderer_inner.setPosition(joystickPoint);
 		renderer_inner.draw(batch);		
@@ -79,32 +71,11 @@ public class Joystick extends Actor /*implements UiElement*/{
 				joystickPoint.set(restingpoint.tmp().add(delta));
 			}
 			if(movementDisabled)
-				environment.getTamer().turn(delta);
+				environment.getTamer().turn(delta.mul(dt));
 			else{
-				checkBounds(delta.mul(dt));
+				environment.getTamer().manouver(delta.mul(dt));
 			}	
-		}	
-		
-	}
-	
-	public void checkBounds(Vector2 movement){
-		Vector2 mapBounds = environment.getMapBounds();
-		tamerPosition.set(environment.getTamer().getShadow().getPosition());
-		
-		tamerPosition.set(IsoHelper.twoDToTileIso(tamerPosition));
-		tamerPosition.add(movement);
-		
-		
-		if(tamerPosition.x > mapBounds.x / 2 || tamerPosition.x < -mapBounds.x / 2){
-			movementAxis.set(1,0);
-			movement.sub(VectorHelper.projection(movement,movementAxis));
-		}
-		if(tamerPosition.y > mapBounds.y / 2 || tamerPosition.y < -mapBounds.y / 2){
-			movementAxis.set(0,1);
-			movement.sub(VectorHelper.projection(movement,movementAxis));
-		}
-		
-		environment.getTamer().manouver(movement);	
+		}		
 	}
 	
 	public void createListener(){
@@ -126,14 +97,12 @@ public class Joystick extends Actor /*implements UiElement*/{
 	        
 	        public void touchDragged(InputEvent event, float x, float y, int pointer){
 	        	if(!inputDisabled)joystickPoint.set(x,y);
-
 			 }
 		});
 	}
 	
 	public void disableMovement(){
-		movementDisabled = true;
-		
+		movementDisabled = true;	
 	}
 	
 	public void enableMovement(){

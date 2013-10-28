@@ -57,14 +57,14 @@ public class Prop extends StaticObject implements Obstacle{
 			//Check if creature within check radius ( 0.5f to be adjusted )
 			float check_radius = this.size.x / 3 + ((DynamicObject) creatures.get(i)).getSize().x + 0.5f;
 			float distance = ((DynamicObject) creatures.get(i)).getPosition().dst(position);
-			System.out.println("Distance " + distance + " Check radius "+check_radius);
+			//System.out.println("Distance " + distance + " Check radius "+check_radius);
 			if(distance < check_radius){
-				System.out.println("Worm close to collision");
+				//System.out.println("Worm close to collision");
 				separator = ((DynamicObject) creatures.get(i)).getPosition().tmp().sub(position);
 				float x_dot = separator.dot(x_axis);
 				float y_dot = separator.dot(y_axis);
 				if(x_dot > y_dot){
-					System.out.println("Turning towards x-axis");
+					//System.out.println("Turning towards x-axis");
 					creatures.get(i).setHeading(separator.tmp().rotate(45));
 				}
 				else if(y_dot > x_dot){

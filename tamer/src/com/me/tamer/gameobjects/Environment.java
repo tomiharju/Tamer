@@ -19,22 +19,28 @@ import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
+import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
+import com.me.tamer.utils.VectorHelper;
 
 public class Environment extends Actor{
 
 	private TamerStage stage;
+	private ControlContainer controls;
 	
 	private DrawOrderComparator comparator = null;
+	
+	//Help vectors
+	private Vector2 help = new Vector2();
+	private Vector2 movementAxis = new Vector2();
+	
 	//Settings
-
 	private Vector2 mapBounds = null;
 	private Vector2 cameraBounds = null;
 	
 	//Gameobject data
-
 	private ArrayList<GameObject> gameobjects 	= null;
 	private ArrayList<GameObject> carbages		= null;
 	private ArrayList<GameObject> newobjects 	= null;
@@ -45,6 +51,7 @@ public class Environment extends Actor{
 	//Physical contact list
 	private ArrayList<Contact> contacts;
 	private ArrayList<RigidBody> rigidbodies;
+	
 	//Physics optimization variables
 	Vector2 impulseA = new Vector2();
 	Vector2 impulseB = new Vector2();
@@ -56,10 +63,10 @@ public class Environment extends Actor{
 	private int sortRate = 6;
 	
 	//States during GAME_RUNNING
-	public final int NORMAL = 0;
-	public final int TAMER_ENTER = 1;
-	public final int SPEAR_TIME = 2;
-	public int state = 0;
+	public static final int NORMAL = 0;
+	public static final int TAMER_ENTER = 1;
+	public static final int SPEAR_TIME = 2;
+	private int state = 0;
 		
 	public Environment(){	
 		gameobjects 	= new ArrayList<GameObject>();
@@ -71,7 +78,9 @@ public class Environment extends Actor{
 		//rigidbodies		= new ArrayList<RigidBody>();
 		comparator 		= new DrawOrderComparator();
 		RuntimeObjectFactory.createLinkToLevel(this);
-
+		
+		controls = ControlContainer.instance();
+		
 		ContactPool.createPool(100);
 	}
 	
@@ -87,22 +96,29 @@ public class Environment extends Actor{
 		runCarbageCollection();
 		addNewObjects();
 		resolveObstacles(dt);
-		resolveCollisions(dt);
 		int numObjects = gameobjects.size();
 		
 		switch (state){
-			case(NORMAL):			
-
+			case(NORMAL):
+				Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: Enabling input");
+				//enable controls
+				controls.setInputDisabled(false);
+			
 				for(int k = 0 ; k < numObjects ; k++){
 					gameobjects.get(k).update(dt);
 				}
 				break;
 			case(TAMER_ENTER):
+				Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: Disabling input");
+				//disable controls
+				controls.setInputDisabled(true);
+			
 				for(int k = 0 ; k < numObjects ; k++){
 					//System.out.println(gameobjects.get(k));
 					if (gameobjects.get(k).getClass()==Tamer.class){
-						((Tamer)gameobjects.get(k)).enterTheField(dt);
-						
+						gameobjects.get(k).update(dt);
 						if (((Tamer)tamer).hasEnteredField()){
 							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 									+ " :: setting state to NORMAL");
@@ -124,10 +140,6 @@ public class Environment extends Actor{
 		}
 	}
 
-	/**
-	 * @param batch
-	 * General drawing loop
-	 */
 	public void draw(SpriteBatch batch, float parentAlpha){
 		
 		batch.setProjectionMatrix(stage.getCamera().combined); 
@@ -136,7 +148,6 @@ public class Environment extends Actor{
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).draw(batch);
 	}
-	
 	
 	public void debugDraw(ShapeRenderer sr){
 
@@ -252,6 +263,10 @@ public class Environment extends Actor{
 			}	
 	}
 	
+	public void addNewObject(GameObject obj){
+		newobjects.add(obj);
+	}
+	
 	/**
 	 * Looks through all added gameobjects, and adds each obstacle to separate obstacle list
 	 * We use this obstacle list to apply effects on worms ( for example we check if worms is inside quicksand tile, and then apply force to it)
@@ -275,10 +290,6 @@ public class Environment extends Actor{
 		gameobjects.add(obj);
 	}
 	
-	public void addNewObject(GameObject obj){
-		newobjects.add(obj);
-	}
-	
 	public void addRigidBody(RigidBody body){
 		rigidbodies.add(body);
 	}
@@ -292,6 +303,7 @@ public class Environment extends Actor{
 	public void setMapSize(String value){
 		//DO WE NEED THIS?
 	}
+	
 	public void setMapBounds(String value){
 		String[] values = value.split(":");
 		mapBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
@@ -303,10 +315,6 @@ public class Environment extends Actor{
 	public void setTamer(Tamer tamer){
 
 		this.tamer = tamer;
-		gameobjects.add(tamer);
-		
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: set state to TAMER_ENTER");
-		state = TAMER_ENTER;
 	}
 	
 	public void dispose(){
@@ -316,6 +324,16 @@ public class Environment extends Actor{
 		rigidbodies.clear();
 		tamer = null;
 		obstacles.clear();
+	}
+	
+	public boolean checkInsideBounds(Vector2 pos, float offset){
+		help.set(IsoHelper.twoDToTileIso(pos));;
+
+		if(help.x < mapBounds.x / 2 - offset && help.x > -mapBounds.x / 2 + offset && help.y < mapBounds.y / 2 - offset && help.y > -mapBounds.y / 2 + offset){
+			return true;
+		}
+		
+		return false;	
 	}
 
 	public Vector2 getMapBounds(){
@@ -345,4 +363,11 @@ public class Environment extends Actor{
 		return stage;
 	}
 	
+	public void setState(int s){
+		state = s;
+	}
+	
+	public int getState(){
+		return state;
+	}
 }

@@ -1,7 +1,5 @@
 package com.me.tamer.ui;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,15 +7,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.me.tamer.core.Level;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renders.UiRenderer;
 import com.me.tamer.gameobjects.tamer.GryphonScream;
 import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.RuntimeObjectFactory;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class LassoButton extends Actor{
 	
