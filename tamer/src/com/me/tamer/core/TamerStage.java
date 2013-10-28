@@ -59,6 +59,7 @@ public class TamerStage extends Stage{
 		level.setStage(this);
 		Gdx.input.setInputProcessor(this);
 		createActors();
+		
 	}
 	
 	public void createActors(){
