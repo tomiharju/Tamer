@@ -42,8 +42,8 @@ public class TileMap extends StaticObject implements Obstacle{
 	
 	@Override
 	public void draw(SpriteBatch batch){
-		Renderer renderer = RenderPool.getRenderer(renderType);
-		renderer.setSize(size.x,size.y);
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		renderer.setSize(getSize());
 		for(int i = 0 ; i < numTiles ; i++){
 			renderer.setPosition(IsoHelper.twoDToTileIso(terrain.get(i)));
 			renderer.draw(batch);
@@ -71,7 +71,7 @@ public class TileMap extends StaticObject implements Obstacle{
 		render.loadGraphics(graphics);
 		setSize(new Vector2(1,0.5f));
 		
-		this.renderType = graphics;
+		this.setRenderType(graphics);
 
 	}
 

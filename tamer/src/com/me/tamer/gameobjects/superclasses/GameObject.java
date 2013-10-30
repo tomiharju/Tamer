@@ -53,11 +53,10 @@ public interface GameObject{
 	public void setSize(Vector2 size);
 	public void setPosition(String pos);
 	public void setDebug(boolean b);
+	public void setSize(float x,float y);
 	public boolean getDebug();
 	public Vector2 getPosition();
 	public Vector2 getSize();
-	public void setRigidBody(String bodytype);
-	public RigidBody getRigidBody();
 	/**
 	 * Required for objects that are created in runtime with threads.
 	 */

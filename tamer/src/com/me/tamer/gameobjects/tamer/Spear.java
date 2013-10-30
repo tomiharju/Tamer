@@ -17,17 +17,19 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 public class Spear extends DynamicObject{
 	
 	private Environment environment;
-
-	private Creature targetCreature = null;
-	private boolean attached = false;
-	private boolean targetReached = false;
+	private SoundManager sound;
+	
+	private Creature targetCreature 	= null;
+	private boolean attached 			= false;
+	private boolean targetReached 		= false;
 	
 	ArrayList<Vector2> waypoints;
 	private int currentWayPoint;
-	private final float SPEED = 12.0f;
-	private SoundManager sound;
+	private Vector2 direction 			= new Vector2();
+	private final float SPEED 			= 12.0f;
+	
 
-	private Vector2 direction = new Vector2();
+	
 	
 	public Spear(){
 		setGraphics();
@@ -37,8 +39,8 @@ public class Spear extends DynamicObject{
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("animated","spear");
 		render.loadGraphics("spear",1,8);
-		setSize(new Vector2(1.5f,1.5f));
-		renderType = "spear";
+		setSize(new Vector2(1,1));
+		setRenderType("spear");
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Spear graphics are set");
 	}
 	
@@ -53,16 +55,15 @@ public class Spear extends DynamicObject{
 		if(!attached){
 			direction.set(waypoints.get(currentWayPoint).tmp().sub(getPosition()));
 			direction.nor();
-			position.add( direction.x * (SPEED * dt), direction.y * (SPEED * dt));
+			getPosition().add( direction.x * (SPEED * dt), direction.y * (SPEED * dt));
 			
-			if (position.dst( waypoints.get(currentWayPoint) ) < 0.5f){
+			if (getPosition().dst( waypoints.get(currentWayPoint) ) < 0.5f){
 				if (targetReached){
 					ArrayList<Creature> creatures = environment.getCreatures();
 					int size = creatures.size();
 					for(int i = 0 ; i < size ; i ++){
-							targetCreature = creatures.get(i).affectedCreature(position, 0.5f);
+							targetCreature = creatures.get(i).affectedCreature(getPosition(), 0.5f);
 							if(targetCreature != null){
-								targetCreature = creatures.get(i);
 								targetCreature.spearHit(this);
 								Gdx.app.log(TamerGame.LOG, this.getClass()
 										.getSimpleName() + " :: playing sound HIT");
@@ -74,7 +75,7 @@ public class Spear extends DynamicObject{
 					attached = true;
 				}else{
 					currentWayPoint--;
-					heading.set(waypoints.get(currentWayPoint).tmp().sub(waypoints.get(currentWayPoint+1)));
+					getHeading().set(waypoints.get(currentWayPoint).tmp().sub(waypoints.get(currentWayPoint+1)));
 				}
 			}		
 		}
@@ -82,17 +83,16 @@ public class Spear extends DynamicObject{
 	
 	public void wakeUp(Environment environment){
 
-		this.environment = environment;
-		attached = false;
-		targetReached = false;
+		this.environment 	= environment;
+		attached 			= false;
+		targetReached	 	= false;
 		setzIndex(-1);
 		markAsActive();
 	}
 	
 	public void throwAt(ArrayList<Vector2> waypoints){
 		this.waypoints = waypoints;
-		
-		heading.set(waypoints.get( waypoints.size() - 1 ).tmp().sub(getPosition()) );
+		setHeading(waypoints.get( waypoints.size() - 1 ).tmp().sub(getPosition()) );
 		direction.set(waypoints.get( waypoints.size() - 1 ).tmp().sub(getPosition() ));
 		direction.nor();
 		

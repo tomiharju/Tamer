@@ -59,7 +59,7 @@ public class SpawnPoint extends StaticObject{
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setSize(new Vector2(1,0.5f));
-		this.renderType = graphics;
+		this.setRenderType(graphics);
 	}
 	
 	public void setSpawnCount(String count){
@@ -70,10 +70,7 @@ public class SpawnPoint extends StaticObject{
 		float angle = Float.parseFloat(vel);
 		angle += 45;
 		this.spawnVelocity = new Vector2(1,0);
-		this.spawnVelocity.setAngle(angle);
-		
-		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: SPAWN ANGLE IS "+ spawnVelocity.toString());
-		
+		this.spawnVelocity.setAngle(angle);		
 	}
 	
 	public void setSleepTime(String time){
@@ -158,7 +155,7 @@ public class SpawnPoint extends StaticObject{
 			isTamerSpawn = true;
 			tamer = new Tamer();
 			
-			tamer.setPosition(position);
+			tamer.setPosition(getCenterPosition());
 			tamer.setSpawnDirection(spawnVelocity);
 			tamer.setHeading(spawnVelocity.tmp().nor());
 

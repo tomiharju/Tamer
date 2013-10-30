@@ -60,8 +60,6 @@ public class Quicksand extends StaticObject implements Obstacle{
 					if(!creatures_entered.contains(creatures.get(i))){
 						//Add creature to this cluster
 						creatures_entered.add(creatures.get(i));
-						Gdx.app.debug(TamerGame.LOG, this.getClass()
-								.getSimpleName() + " :: Creature entered the field. Size " + creatures_entered.size());
 						//Do a coinflip
 						int head = (int) Math.round(Math.random());
 						if(head == 1)
@@ -84,8 +82,6 @@ public class Quicksand extends StaticObject implements Obstacle{
 					}
 					if(!isUnderRadius){
 						creatures_entered.remove(targetCreature);
-						Gdx.app.debug(TamerGame.LOG, this.getClass()
-								.getSimpleName() + " ::Creature left the cluster! "+ creatures_entered.size());
 
 					}
 					
