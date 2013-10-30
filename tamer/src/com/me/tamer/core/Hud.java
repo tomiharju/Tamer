@@ -93,6 +93,14 @@ public class Hud extends Group{
 		}
 	}	
 	
+	public void resetHud(){
+		remaining = 0;
+		remainingLabel.setText("Remaining: " +remaining);
+		
+		survived = 0;
+		survivedLabel.setText("Survived: " +survived);
+	}
+	
 	public void updateLabel(String type, int amount){
 		if (type.equals("remaining")){
 			remaining += amount;

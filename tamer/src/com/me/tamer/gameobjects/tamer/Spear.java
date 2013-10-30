@@ -37,7 +37,7 @@ public class Spear extends DynamicObject{
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("animated","spear");
 		render.loadGraphics("spear",1,8);
-		setSize(new Vector2(1,1));
+		setSize(new Vector2(1.5f,1.5f));
 		renderType = "spear";
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Spear graphics are set");
 	}

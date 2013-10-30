@@ -21,7 +21,7 @@ public class WormPart extends DynamicObject implements Creature {
 	
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
-	private float speed = 10;
+	private float speed = 20;
 	private float radii = 0;
 	private float mass = 0;
 	//Chain related stuff

@@ -32,6 +32,8 @@ public class TamerGame extends Game{
     
 	//Main drawing batch
 	private SpriteBatch batch 		= null;
+	
+	Hud hud;
 
 	@Override
 	public void create() {
@@ -61,12 +63,21 @@ public class TamerGame extends Game{
         
         //start the game with main menu screen
 		setScreen(mainMenuScreen);	
+		
+		//Hud
+		hud = Hud.instance();
 	}
 	
 	public PlayScreen createNewPlayScreen(){
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Reseting hud");
+		hud.resetHud();
+		
 		//dispose old before making new one
 		if (playScreen != null) playScreen.dispose();
 		playScreen = new PlayScreen(this);
+		
+		
+	
 		return playScreen;
 	}
 

@@ -19,6 +19,8 @@ import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.ContactPool;
 import com.me.tamer.physics.RigidBody;
+import com.me.tamer.services.SoundManager;
+import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
 import com.me.tamer.utils.IsoHelper;
@@ -67,6 +69,10 @@ public class Environment extends Actor{
 	public static final int TAMER_ENTER = 1;
 	public static final int SPEAR_TIME = 2;
 	private int state = 0;
+	
+	
+	//SoundManager
+	SoundManager sound;
 		
 	public Environment(){	
 		gameobjects 	= new ArrayList<GameObject>();
@@ -82,6 +88,8 @@ public class Environment extends Actor{
 		controls = ControlContainer.instance();
 		
 		ContactPool.createPool(100);
+		
+		sound = SoundManager.instance();
 	}
 	
 	public void setStage(TamerStage stage){
@@ -123,6 +131,10 @@ public class Environment extends Actor{
 							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 									+ " :: setting state to NORMAL");
 							state = NORMAL;
+							
+							Gdx.app.log(TamerGame.LOG, this.getClass()
+									.getSimpleName() + " :: Playing sound entering");
+							sound.play(TamerSound.OPENING);
 						}
 					}		
 				}
