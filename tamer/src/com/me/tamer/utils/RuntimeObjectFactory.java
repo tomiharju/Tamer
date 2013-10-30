@@ -11,7 +11,7 @@ public class RuntimeObjectFactory {
 	public static HashMap<String,LinkedList<GameObject>> objectPool = new HashMap<String,LinkedList<GameObject>>();
 	public static Environment level = null;
 	
-	public static void addToObjectPool(String type, GameObject obj){
+	public static synchronized void addToObjectPool(String type, GameObject obj){
 		if(objectPool.containsKey(type))
 			objectPool.get(type).add(obj);
 		else{

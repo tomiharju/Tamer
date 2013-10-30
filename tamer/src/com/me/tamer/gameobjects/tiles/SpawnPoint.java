@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
@@ -33,16 +34,25 @@ public class SpawnPoint extends StaticObject{
 	//IMPORTANT: spawn number is used to distinguish spawns from each other.
 	private int spawnId = 0;
 	
+	private Hud hud;
+	
+	
 	//EXPERIMENTAL STUFF
 	private ArrayList<Creature> creatures;
+	private Tamer tamer;
+	private Environment environment;
 	
 	public SpawnPoint(){
 		creatures = new ArrayList<Creature>();
+		hud = Hud.instance();
 	}
 	public void setup(Environment environment){
+		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: started spawning");
 		environment.addNewObject(this);
+		this.environment = environment;
 		startSpawning();
 		setZindex(1);
+		
 	}
 	
 	public void setGraphics(String graphics){
@@ -51,9 +61,11 @@ public class SpawnPoint extends StaticObject{
 		setSize(new Vector2(1,0.5f));
 		this.renderType = graphics;
 	}
+	
 	public void setSpawnCount(String count){
 		this.spawnCount = Integer.parseInt(count);
 	}
+	
 	public void setSpawnDirection(String vel){
 		float angle = Float.parseFloat(vel);
 		angle += 45;
@@ -73,6 +85,10 @@ public class SpawnPoint extends StaticObject{
 	}
 	
 	public void addWorm(Worm worm){
+		//update hud when worm is added
+		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Updating label remaining");
+		hud.updateLabel("remaining",1);
+		
 		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		creatures.add(worm);
@@ -94,11 +110,7 @@ public class SpawnPoint extends StaticObject{
 	 * @param position grid number, which is turned into screen coordinate
 	 * @param spawn_type is the object type to spawn. Currently worm or ant
 	 */
-	public void setup(){
-		Gdx.app.debug(TamerGame.LOG, this.getClass()
-				.getSimpleName() + " :: Spawn number "+spawnId + " Started spawning");
-		startSpawning();
-	}
+
 	public void startSpawning(){
 		new Thread(new Runnable(){
 			@Override
@@ -108,8 +120,8 @@ public class SpawnPoint extends StaticObject{
 						Thread.sleep(initialSleep);
 						if(isTamerSpawn){
 							RuntimeObjectFactory.getObjectFromPool("tamer");
-							Gdx.app.debug(TamerGame.LOG, this.getClass()
-									.getSimpleName() + " :: Tamer entered");
+							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: set state to TAMER_ENTER");
+							environment.setState(Environment.TAMER_ENTER);
 						}
 						while(numCreated < spawnCount){
 							Thread.sleep(sleepTime);
@@ -144,15 +156,16 @@ public class SpawnPoint extends StaticObject{
 		int value = Integer.parseInt(flag);
 		if(value == 1){
 			isTamerSpawn = true;
-			Tamer tamer = new Tamer();
-			tamer.setPosition(getCenterPosition());
-			tamer.setVelocity(spawnVelocity);
+			tamer = new Tamer();
+			
+			tamer.setPosition(position);
+			tamer.setSpawnDirection(spawnVelocity);
+			tamer.setHeading(spawnVelocity.tmp().nor());
+
 			RuntimeObjectFactory.addToObjectPool("tamer",(GameObject)tamer);
 		}
 	}
-	/*public void setSpawnVelocity(String vel){
-		this.spawnVelocity = vel;
-	}*/
+
 	public Vector2 getSpawnVelocity(){
 		return spawnVelocity;
 	}

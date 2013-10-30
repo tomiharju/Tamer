@@ -87,7 +87,7 @@ public class TileMap extends StaticObject implements Obstacle{
 				collisionHeading.set(creatures.get(i).getHeading());
 				collisionHeading.set(VectorHelper.projection(collisionHeading,collisionAxis));
 				collisionHeading.rotate(45);
-				System.out.println("Collision heading "+collisionHeading.toString());
+				//System.out.println("Collision heading "+collisionHeading.toString());
 
 				creatures.get(i).setHeading(collisionHeading);
 			}
@@ -97,7 +97,7 @@ public class TileMap extends StaticObject implements Obstacle{
 				collisionHeading.set(VectorHelper.projection(collisionHeading,collisionAxis));
 				collisionHeading.rotate(45);
 
-				System.out.println("Collision heading "+collisionHeading.toString());
+				//System.out.println("Collision heading "+collisionHeading.toString());
 				
 				creatures.get(i).setHeading(collisionHeading);
 			}

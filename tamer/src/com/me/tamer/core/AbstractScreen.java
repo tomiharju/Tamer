@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Array;
+import com.me.tamer.services.SoundManager;
 
 public class AbstractScreen implements Screen{
 
@@ -23,10 +24,12 @@ public class AbstractScreen implements Screen{
     private SpriteBatch batch;
     private Skin skin;
     private Table table;
+    SoundManager soundManager;
 
     public AbstractScreen(final TamerGame game)
     {
-        this.game = game;   
+        this.game = game;
+        soundManager = SoundManager.instance();
     }
 
     protected String getName()
@@ -75,12 +78,12 @@ public class AbstractScreen implements Screen{
 
     @Override
     public void show(){
-        Gdx.app.log( TamerGame.LOG, "Showing screen: " + getName() );    
+        Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Showing screen: " + getName() );    
     }
 
     @Override
     public void resize(int width,int height ){
-        Gdx.app.log( TamerGame.LOG, "Resizing screen: " + getName() + " to: " + width + " x " + height );
+        Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Resizing screen: " + getName() + " to: " + width + " x " + height );
     }
 
     @Override
@@ -94,7 +97,7 @@ public class AbstractScreen implements Screen{
     @Override
     public void hide()
     {
-        Gdx.app.log( TamerGame.LOG, "Hiding screen: " + getName() );
+        Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Hiding screen: " + getName() );
         // dispose the screen when leaving the screen;
         // note that the dispose() method is not called automatically by the
         // framework, so we must figure out when it's appropriate to call it
@@ -103,18 +106,18 @@ public class AbstractScreen implements Screen{
 
     @Override
     public void pause(){
-        Gdx.app.log( TamerGame.LOG, "Pausing screen: " + getName() );
+        Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Pausing screen: " + getName() );
     }
 
     @Override
     public void resume(){
-        Gdx.app.log( TamerGame.LOG, "Resuming screen: " + getName() );
+        Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Resuming screen: " + getName() );
     }
 
     @Override
     public void dispose()
     {
-        Gdx.app.log( TamerGame.LOG, "Disposing screen: " + getName() );
+        Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Disposing screen: " + getName() );
 
         // the following call disposes the screen's stage, but on my computer it
         // crashes the game so I commented it out; more info can be found at:

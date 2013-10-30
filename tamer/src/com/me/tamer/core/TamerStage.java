@@ -34,7 +34,6 @@ public class TamerStage extends Stage{
 	public static final int GAME_RUNNING = 1; 
 	public static final int GAME_PAUSED = 2; 
 	public static final int GAME_OVER = 3;
-	public static final int GAME_TIME_STILL = 4;
 	public static int gameState;
 	
 	//Camera
@@ -60,12 +59,14 @@ public class TamerStage extends Stage{
 		level.setStage(this);
 		Gdx.input.setInputProcessor(this);
 		createActors();
+		
 	}
 	
 	public void createActors(){
 		
 		//Hud
-        hud = new Hud(this);
+        hud = Hud.instance();
+        hud.initialize(this);
    
 		//environment
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Adding level to PlayScreen and generating environment " +level.getId());
@@ -73,13 +74,31 @@ public class TamerStage extends Stage{
 		environment = level.getEnvironment();
 		
         //input controller
-        controlContainer = new ControlContainer( environment, this);
+        controlContainer = ControlContainer.instance();
+        controlContainer.initialize(this);
         
         //Register actors in drawing order
         this.addActor( environment );
         this.addActor( hud );
         this.addActor( controlContainer);
 	}  
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.badlogic.gdx.scenes.scene2d.Stage#act(float)
+	 */
+	@Override
+	public void act (float delta) {
+		switch (TamerStage.gameState){
+		case(GAME_RUNNING):
+			getRoot().act(delta);
+			break;
+		case(GAME_PAUSED):
+			break;
+		default:
+			break;
+		}
+	}
 	
 	
 	@Override
@@ -141,9 +160,9 @@ public class TamerStage extends Stage{
 			if(environment.getTamer()!=null)cameraPosition.set(IsoHelper.twoDToTileIso(environment.getTamer().getPosition()));	
 			break;	
 		case SPEAR_CAMERA:
-			if (gameState != GAME_TIME_STILL){
-				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched gameState to GAME_TIME_STILL");
-				gameState = GAME_TIME_STILL;
+			if (environment.getState() != Environment.SPEAR_TIME){
+				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched environment state to SPEAR_TIME");
+				environment.setState(Environment.SPEAR_TIME);
 				//disable joystick while in SPEAR_CAMERA MODE
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: disabling input");
 				controlContainer.setInputDisabled(true);
@@ -158,8 +177,8 @@ public class TamerStage extends Stage{
 				cameraHolder = TAMER_CAMERA;
 				
 				//Back to default gameState
-				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched gameState to GAME_RUNNING");
-				gameState = GAME_RUNNING;
+				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched environment state to NORMAL");
+				environment.setState(Environment.NORMAL);
 				
 				//enable joystick
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
@@ -195,5 +214,13 @@ public class TamerStage extends Stage{
 	
 	public int getCameraHolder(){
 		return cameraHolder;
+	}
+	
+	public void setGameState(int s){
+		gameState = s;
+	}
+	
+	public Environment getEnvironment(){
+		return environment;
 	}
 }

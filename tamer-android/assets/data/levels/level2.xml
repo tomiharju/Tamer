@@ -1,4 +1,5 @@
 <root>
+
 	<Settings>
 		<property type="MapSize">20:20</property>
 		<property type="MapBounds">7:4.5</property>

@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
-import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.UiRenderer;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.utils.IsoHelper;
@@ -40,7 +39,7 @@ public class SpearButton extends Actor {
 	private Vector2 waypoint1 = new Vector2();
 	private Vector2 waypoint2 = new Vector2();
 	private Vector2 waypoint3 = new Vector2();
-	private Vector2 cameraPoint = new Vector2(); //this is the point that AIM_CAMERA mode follows
+	private Vector2 cameraPoint = new Vector2(); //the point that AIM_CAMERA mode follows
 
 	float throwDistance = 1; 
 	boolean pressed = false;
@@ -48,6 +47,8 @@ public class SpearButton extends Actor {
 	UiRenderer buttonRender = null;
 	UiRenderer pointRender = null;
 	UiRenderer pointRender2 = null;
+	
+	private final float BORDER_OFFSET = 2.0f;	//offset for camera borders
 	
 	public SpearButton(ControlContainer controlContainer) {
 		this.controlContainer = controlContainer;
@@ -101,7 +102,11 @@ public class SpearButton extends Actor {
 		if(isVisible() && pressed){
 
 			if(throwDistance <= MAX_DISTANCE ){
-				throwDistance += SPEED*dt;
+				help.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
+				if (controlContainer.getEnvironment().checkInsideBounds(help.add(targetPoint),BORDER_OFFSET)){
+					throwDistance += SPEED*dt;
+				}
+				
 				float distanceIndicator = Math.min(1,throwDistance / MAX_DISTANCE);
 				pointRender.setColor(distanceIndicator,0,0,distanceIndicator);
 			}
@@ -110,6 +115,7 @@ public class SpearButton extends Actor {
 			targetpointHeading.nor();
 			targetPoint.set(targetpointHeading.tmp().mul(throwDistance));
 			
+			//this is where spear ends up
 			help.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
 			waypoint1.set(help.add(targetPoint));
 			
@@ -148,7 +154,7 @@ public class SpearButton extends Actor {
 				controlContainer.getStage().setCameraHolder(TamerStage.TAMER_CAMERA);
 				input.set(x,y);
 				if( throwDistance > MIN_DISTANCE && pressed ){
-					//resolve waypoints for the targetpoint
+					//add waypoints for the targetpoint
 					addWaypoints();
 					
 					Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");

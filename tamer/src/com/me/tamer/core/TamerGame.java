@@ -23,7 +23,6 @@ public class TamerGame extends Game{
     private MusicManager musicManager;
     private PreferenceManager preferenceManager;
     private LevelManager levelManager;
-    private SoundManager soundManager;
     
     //Screens
     private PlayScreen playScreen;
@@ -53,9 +52,6 @@ public class TamerGame extends Game{
         
         // create the level manager
         levelManager = new LevelManager();
-        
-        //create the sound manager
-        soundManager = new SoundManager();
         
         //create menu screens
         mainMenuScreen = new MainMenuScreen(this);
@@ -126,10 +122,6 @@ public class TamerGame extends Game{
 
 	public LevelManager getLevelManager() {
 		return levelManager;
-	}
-	
-	public SoundManager getSoundManager() {
-		return soundManager;
 	}
 }
 

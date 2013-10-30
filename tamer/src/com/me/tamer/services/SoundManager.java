@@ -14,11 +14,20 @@ import com.me.tamer.utils.LRUCache.CacheEntryRemovedListener;
  */
 public class SoundManager implements
 		CacheEntryRemovedListener<TamerSound, Sound>, Disposable {
+	//sound manager is a singleton
+	private static SoundManager singleton;
+	
+	public static SoundManager instance(){
+		if (singleton==null)singleton = new SoundManager();
+		return singleton;
+	}
+	
 	/**
 	 * The available sound files.
 	 */
 	public enum TamerSound {
-		CLICK("sound/click.wav");
+		CLICK("sound/click.wav"),
+		HIT("sound/06kill03.wav");
 
 		private final String fileName;
 
@@ -34,7 +43,7 @@ public class SoundManager implements
 	/**
 	 * The volume to be set on the sound.
 	 */
-	private float volume = 1f;
+	private float volume = 0.5f;
 
 	/**
 	 * Whether the sound is enabled.
@@ -48,8 +57,9 @@ public class SoundManager implements
 
 	/**
 	 * Creates the sound manager.
+	 * constructor is private because this is a singleton
 	 */
-	public SoundManager() {
+	private SoundManager() {
 		soundCache = new LRUCache<SoundManager.TamerSound, Sound>(10);
 		soundCache.setEntryRemovedListener(this);
 	}
