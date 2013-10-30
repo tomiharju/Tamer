@@ -98,6 +98,9 @@ public class Hud extends Group{
 			remaining += amount;
 			remainingLabel.setText("Remaining: " +remaining);
 		}
-		if (type.equals("survived"))survived += amount;
+		if (type.equals("survived")){
+			survived += amount;
+			survivedLabel.setText("Survived: " +survived);
+		}
 	}
 }

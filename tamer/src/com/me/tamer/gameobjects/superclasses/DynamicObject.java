@@ -22,6 +22,11 @@ public class DynamicObject implements GameObject{
 	protected Vector2 force = new Vector2();		// Magnitude and direction of per loop position iteration
 	protected Vector2 size = new Vector2();
 	protected float angle = 0;
+	protected float borderOffset = 0;
+	
+
+
+
 	private float mass;			
 	
 	protected String renderType;
@@ -225,7 +230,14 @@ public class DynamicObject implements GameObject{
 	public Vector2 getForce(){
 		return force;
 	}
+	
+	public float getBorderOffset() {
+		return borderOffset;
+	}
 
+	public void setBorderOffset(float borderOffset) {
+		this.borderOffset = borderOffset;
+	}
 
 	public void setzIndex(int zIndex) {
 		this.zIndex = zIndex;

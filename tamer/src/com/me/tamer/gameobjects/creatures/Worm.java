@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 
 public class Worm extends DynamicObject implements Creature{
-
+	
+	private final float BORDER_OFFSET = 3.0f;
 	int ordinal = 1;
 	private ArrayList<WormPart> parts;
 	private WormPart head = null;
@@ -18,6 +18,7 @@ public class Worm extends DynamicObject implements Creature{
 	
 	public Worm(){
 		parts = new ArrayList<WormPart>();
+		setBorderOffset(BORDER_OFFSET);
 	}
 	
 	public void setVelocity(Vector2 vel){
