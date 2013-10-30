@@ -30,7 +30,8 @@ public class SoundManager implements
 		CLICK("sound/click.wav"),
 		OPENING("sound/01taunt00a.wav"),
 		HIT("sound/06kill03.wav"),
-		HAWK("sound/hawk.wav");
+		HAWK("sound/hawk.wav"),
+		THROW("sound/throw16.wav");
 
 		private final String fileName;
 

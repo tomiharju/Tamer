@@ -12,6 +12,8 @@ import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.services.SoundManager;
+import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.VectorHelper;
@@ -38,6 +40,8 @@ public class Tamer extends DynamicObject{
 	private final float DISTANCE_BOUNDS = 5.0f;
 	private final float MIN_SPAWN_DISTANCE = 5.0f;
 	private final float SPAWN_SPEED = 5.0f;
+	
+	private SoundManager sound;
 
 	public void setup(){
 		
@@ -73,6 +77,9 @@ public class Tamer extends DynamicObject{
 		mapBounds.x -= DISTANCE_BOUNDS;
 		mapBounds.y -= DISTANCE_BOUNDS;
 		spawnPosition.set(position);
+		
+		//sound
+		sound = SoundManager.instance();
 		
 	}
 	
@@ -174,6 +181,9 @@ public class Tamer extends DynamicObject{
 		spears.add(spear);
 		spear.setPosition(position);//.tmp().add(heading.mul(1.5f)));
 		spear.throwAt(waypoints);
+		
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing throwing sound");
+		sound.play(TamerSound.THROW);
 	}
 	
 	public void setSpawnDirection(Vector2 spawnDirection){

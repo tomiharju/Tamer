@@ -123,7 +123,7 @@ public class SpearButton extends Actor {
 			//Set camera to follow way point 2
 			cameraPoint.set(waypoint2);
 			
-			help.set( controlContainer.getEnvironment().getTamer().getPosition().tmp().add(-1,1) );
+			help.set( controlContainer.getEnvironment().getTamer().getPosition().tmp().add(-3,3) );
 			waypoint3.set(help.add(targetPoint.tmp().mul(0.8f)));
 		}	
 	}

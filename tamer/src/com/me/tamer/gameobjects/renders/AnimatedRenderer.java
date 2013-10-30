@@ -45,8 +45,8 @@ public class AnimatedRenderer implements Renderer {
 		
 		if (!animations.isEmpty()){
 			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
-			//batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
-			batch.draw( currentFrame, pos.x - size.x / 2, pos.y - size.y /2, 0, 0, size.x, size.y, 1, 1, angle);
+			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
+			//batch.draw( currentFrame, pos.x - size.x / 2, pos.y - size.y /2, 0, 0, size.x, size.y, 1, 1, angle);
 		}
 	}
 
