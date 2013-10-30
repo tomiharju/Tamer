@@ -15,7 +15,10 @@ public class WormPart extends DynamicObject implements Creature {
 	//Container worm
 	private Worm worm = null;
 	
-	private float restLength = 0.7f;
+	
+	private final float SIZE = 1.0f;
+	private final float RESTLENGTH = SIZE * 1.5f;
+	
 	private float k  = 0.8f; //Stretch factor ( 0.8 is pretty high )
 	private int ordinal = 0;
 	private float speed = 10;
@@ -53,7 +56,7 @@ public class WormPart extends DynamicObject implements Creature {
 		radii = .25f;
 		mass = 10;
 		position = new Vector2(pos);
-		position.add(vel.tmp().nor().mul(-ordinal*restLength));
+		position.add(vel.tmp().nor().mul(-ordinal*RESTLENGTH));
 		velocity = new Vector2(0,0);
 		force = new Vector2(vel).mul(speed);
 		//Set worm graphic size, add a little extra to avoid excess collision due to parts being in contact all the time
@@ -65,7 +68,7 @@ public class WormPart extends DynamicObject implements Creature {
 
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
 		render.loadGraphics(graphics,1,8);
-		setSize(new Vector2(1,1));
+		setSize(new Vector2(SIZE,SIZE));
 		renderType = graphics;
 	}
 	
@@ -110,7 +113,7 @@ public class WormPart extends DynamicObject implements Creature {
 
 		relativeVelocity.set(child.velocity.tmp().sub(velocity));
 		float relVelMagnitude = relativeVelocity.dot(unitAxis);
-		float relativeDistance = (currentDistance - restLength);
+		float relativeDistance = (currentDistance - RESTLENGTH);
 		
 		if( relativeDistance > 0){
 			float impulse = 0;
@@ -134,6 +137,7 @@ public class WormPart extends DynamicObject implements Creature {
 	
 	public void setHeading(Vector2 newHeading){
 		force.set(newHeading).mul(speed);
+		heading.set(velocity.tmp().nor());
 	}
 	
 	public void setAsTail(){
@@ -142,7 +146,6 @@ public class WormPart extends DynamicObject implements Creature {
 	public boolean isTail(){
 		return isTail;
 	}
-	
 	
 	@Override
 	public void spearHit(Spear spear) {
@@ -163,7 +166,6 @@ public class WormPart extends DynamicObject implements Creature {
 	public int getOrdinal(){
 		return ordinal;
 	}
-
 
 	/* (non-Javadoc)
 	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)

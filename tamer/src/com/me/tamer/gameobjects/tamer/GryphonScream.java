@@ -77,7 +77,6 @@ public class GryphonScream extends DynamicObject {
 		drawVert2.set(IsoHelper.twoDToTileIso(screamVert2));
 		drawVert3.set(IsoHelper.twoDToTileIso(screamVert3));
 		
-	
 		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
 		shapeRenderer.end();

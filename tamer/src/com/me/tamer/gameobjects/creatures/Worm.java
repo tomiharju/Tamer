@@ -51,7 +51,6 @@ public class Worm extends DynamicObject implements Creature{
 		
 	}
 
-
 	public void addPart(String type, int ordinal,Vector2 pos, Vector2 vel){
 		WormPart part = null;
 		if(type.equalsIgnoreCase("head")){
@@ -72,8 +71,7 @@ public class Worm extends DynamicObject implements Creature{
 				parts.get( i + 1 ).attachToParent(parts.get(i));
 				//TODO: Create a rigidbodyline between parts
 			}else if( (i + 1 ) == parts.size() )
-				parts.get(i).setAsTail();
-			
+				parts.get(i).setAsTail();		
 		}
 	}
 	
@@ -151,9 +149,8 @@ public class Worm extends DynamicObject implements Creature{
 			return parts.get(i).affectedCreature(point,radius);
 		}
 		return null;
-		
-		
 	}
+	
 	@Override
 	public boolean isAffected(Vector2 point, float radius) {
 		boolean partAffected = false;
@@ -173,14 +170,10 @@ public class Worm extends DynamicObject implements Creature{
 			head.applyPull(point);
 		else
 			tail.applyPull(point);
-		
 	}
+	
 	public void setHeading(Vector2 newHeading){
+		//heading.set(newHeading);
 		head.setHeading(newHeading);
 	}
-
-	
-	
-	
-	
 }

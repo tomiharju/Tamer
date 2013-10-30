@@ -8,7 +8,7 @@ import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
-import com.me.tamer.gameobjects.creatures.Worm;
+import com.me.tamer.gameobjects.creatures.WormPart;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
@@ -53,14 +53,15 @@ public class Endingpoint extends StaticObject implements Obstacle{
 			if(creatures.get(i).isAffected(getCenterPosition(), 1f)){
 				creatures.get(i).moveToFinish();
 				
-				if(creatures.get(i).getClass()==Worm.class){
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-							+ " :: updating label survived");
-					hud.updateLabel("survived", 1);
-					
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-							+ " :: updating label remaining");
-					hud.updateLabel("remaining", -1);
+				if(creatures.get(i).getClass()==WormPart.class){
+					if( ((WormPart)creatures.get(i)).getPartName().equals("Head"))
+						Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+								+ " :: updating label survived");
+						hud.updateLabel("survived", 1);
+						
+						Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+								+ " :: updating label remaining");
+						hud.updateLabel("remaining", -1);
 				}
 			}
 				

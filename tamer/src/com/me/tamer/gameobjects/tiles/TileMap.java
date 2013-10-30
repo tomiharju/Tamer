@@ -51,7 +51,6 @@ public class TileMap extends StaticObject implements Obstacle{
 			
 	}
 	
-	
 	public void setTileMap(String data){
 		String[] points = data.split("\\.");
 		terrain = new ArrayList<Vector2>();
@@ -105,7 +104,6 @@ public class TileMap extends StaticObject implements Obstacle{
 			}
 			
 		}
-		
 	}
 	
 

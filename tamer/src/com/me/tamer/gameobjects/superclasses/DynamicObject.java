@@ -34,7 +34,6 @@ public class DynamicObject implements GameObject{
 	protected RigidBody body = null;
 	private boolean debug = false;
 	private int zIndex = 0;
-	private Vector2 isoHeading = new Vector2();		//Used for determining the sprite
 	private Vector2 zeroHeading = new Vector2(-0.5f,1);// -1 + (float)Math.sin(Math.PI/8),1 + (float)Math.cos(Math.PI/8));//-0.5f, 2.0f);//;
 	private double headingAngle;
 	
