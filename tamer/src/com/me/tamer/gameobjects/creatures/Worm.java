@@ -20,25 +20,15 @@ public class Worm extends DynamicObject implements Creature{
 		parts = new ArrayList<WormPart>();
 	}
 	
-	public void setVelocity(Vector2 vel){
-		this.velocity = new Vector2(vel);
-	}
-	public void setPosition(Vector2 pos){
-		this.position = new Vector2(pos);
-	}
-	
-	
-	
 	public void setup(){
 		//No action because this object is not ment to be on game right away
 	}
 	
 	public void wakeUp(Environment environment){
 		environment.getCreatures().add(this);
-		//System.out.println("WORM WOKE UP!");
-		addPart("head",0,position,velocity);
+		addPart("head",0,super.getPosition(),super.getVelocity());
 		for(int i = 0 ; i < 3 ; i++)
-			addPart("joint",i+1,position,velocity);
+			addPart("joint",i+1,super.getPosition(),super.getVelocity());
 		connectPieces();
 		
 		for(WormPart part : parts){
@@ -69,7 +59,6 @@ public class Worm extends DynamicObject implements Creature{
 		for(int i = 0 ; i < parts.size() ; i++){
 			if( (i + 1) < parts.size()){
 				parts.get( i + 1 ).attachToParent(parts.get(i));
-				//TODO: Create a rigidbodyline between parts
 			}else if( (i + 1 ) == parts.size() )
 				parts.get(i).setAsTail();
 			
@@ -79,6 +68,7 @@ public class Worm extends DynamicObject implements Creature{
 	public void update(float dt){
 		head.solveJoints(dt);
 		head.updateChild(dt);
+		head.getVelocity().add(head.getForce().tmp().mul(dt));
 	}
 	
 	
@@ -139,15 +129,16 @@ public class Worm extends DynamicObject implements Creature{
 	}
 
 	@Override
-	public void moveToFinish() {
-		head.moveToFinish();
+	public void moveToPoint(Vector2 point) {
+		head.moveToPoint(point);
 		
 	}
 
 	@Override
 	public Creature affectedCreature(Vector2 point,float radius) {
-		for(int i = 0; i < parts.size(); i++){
-			return parts.get(i).affectedCreature(point,radius);
+		for(int i = 0; i < parts.size() ; i++){
+			if(parts.get(i).affectedCreature(point,radius) != null)
+				return parts.get(i);
 		}
 		return null;
 		
@@ -176,6 +167,7 @@ public class Worm extends DynamicObject implements Creature{
 	}
 	public void setHeading(Vector2 newHeading){
 		head.setHeading(newHeading);
+		head.setForce(getHeading().mul(head.getSpeed()));
 	}
 
 	

@@ -32,7 +32,6 @@ public class AnimatedRenderer implements Renderer {
 	private float animationDuration = 3;
 	private Vector2 size = new Vector2();
 	private Vector2 pos = new Vector2();
-	private String type = null;
 	private float angle;
 	
 	public AnimatedRenderer(){
@@ -45,8 +44,8 @@ public class AnimatedRenderer implements Renderer {
 		
 		if (!animations.isEmpty()){
 			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
-			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
-			//batch.draw( currentFrame, pos.x - size.x / 2, pos.y - size.y /2, 0, 0, size.x, size.y, 2, 2, angle);
+			//batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
+			batch.draw( currentFrame, pos.x - size.x / 2, pos.y - size.y /2, 0, 0, size.x, size.y, 1, 1, angle);
 		}
 	}
 
@@ -81,18 +80,19 @@ public class AnimatedRenderer implements Renderer {
 	
 	@Override
 	public void setSize(float w, float h) {
-		size.set(w,h);
+		this.size.set(w,h);
 	}
-
+	@Override
+	public void setSize(Vector2 size) {
+		this.size.set(size);
+		
+	}
 	@Override
 	public void setPosition(Vector2 pos) {
 		this.pos.set(pos);	
 	}
 
-	@Override
-	public void setRenderType(String type) {
-		this.type = type;	
-	}
+	
 
 	@Override
 	public void setOrientation(int orientation) {
@@ -102,4 +102,6 @@ public class AnimatedRenderer implements Renderer {
 	public void setAngle(float a){
 		this.angle = a;
 	}
+
+	
 }

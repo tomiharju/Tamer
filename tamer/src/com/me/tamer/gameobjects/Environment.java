@@ -313,7 +313,6 @@ public class Environment extends Actor{
 	 * 
 	 */
 	public void setTamer(Tamer tamer){
-
 		this.tamer = tamer;
 	}
 	

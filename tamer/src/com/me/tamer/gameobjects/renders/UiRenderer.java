@@ -30,6 +30,11 @@ public class UiRenderer implements Renderer {
 		
 	}
 	@Override
+	public void setSize(Vector2 size) {
+		sprite.setSize(size.x,size.y);
+		
+	}
+	@Override
 	public void setPosition(Vector2 pos) {
 		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight() / 2 );
 		
@@ -44,10 +49,7 @@ public class UiRenderer implements Renderer {
 		
 	}
 
-	@Override
-	public void setRenderType(String type) {
-		this.type = type;
-	}
+	
 
 	public void setColor(float r, float g, float b,float a){
 		sprite.setColor(r, g, b,a);

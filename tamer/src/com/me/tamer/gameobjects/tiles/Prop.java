@@ -30,24 +30,20 @@ public class Prop extends StaticObject implements Obstacle{
 		setZindex(0);
 	}
 
-	@Override
-	public RigidBody getRigidBody(){
-		return body;
-	}
 	public void setPixelsX(String pixels){
 		float x = Float.parseFloat(pixels);
-		size.set(x,size.y);
+		setSize(x,getSize().y);
 	}
 	public void setPixelsY(String pixels){
 		float y = Float.parseFloat(pixels);
-		size.set(size.x,y);
+		setSize(getSize().x,y);
 	}
 	
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		size.set(size.x/40 , (size.y/40));
-		this.renderType = graphics;
+		setSize(getSize().x / 40 , (getSize().y / 40));
+		setRenderType(graphics);
 	}
 
 	@Override
@@ -55,12 +51,12 @@ public class Prop extends StaticObject implements Obstacle{
 		int size = creatures.size();
 		for( int i = 0 ; i < size ; i ++){
 			//Check if creature within check radius ( 0.5f to be adjusted )
-			float check_radius = this.size.x / 3 + ((DynamicObject) creatures.get(i)).getSize().x + 0.5f;
-			float distance = ((DynamicObject) creatures.get(i)).getPosition().dst(position);
+			float check_radius = getSize().x / 3 + ((DynamicObject) creatures.get(i)).getSize().x + 0.5f;
+			float distance = ((DynamicObject) creatures.get(i)).getPosition().dst(getPosition());
 			//System.out.println("Distance " + distance + " Check radius "+check_radius);
 			if(distance < check_radius){
 				//System.out.println("Worm close to collision");
-				separator = ((DynamicObject) creatures.get(i)).getPosition().tmp().sub(position);
+				separator = ((DynamicObject) creatures.get(i)).getPosition().tmp().sub(getPosition());
 				float x_dot = separator.dot(x_axis);
 				float y_dot = separator.dot(y_axis);
 				if(x_dot > y_dot){

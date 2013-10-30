@@ -38,6 +38,11 @@ public class StaticRenderer implements Renderer {
 		
 	}
 	@Override
+	public void setSize(Vector2 size) {
+		sprite.setSize(size.x,size.y);
+		
+	}
+	@Override
 	public void setPosition(Vector2 pos) {
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y);
 		
@@ -48,11 +53,7 @@ public class StaticRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public void setRenderType(String type) {
-		this.type = type;
-		
-	}
+	
 	@Override
 	public void loadGraphics(String animName, int FRAME_COLS, int FRAME_ROWS) {
 		// TODO Auto-generated method stub

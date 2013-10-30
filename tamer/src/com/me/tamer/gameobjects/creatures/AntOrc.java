@@ -113,7 +113,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	}
 
 	@Override
-	public void moveToFinish() {
+	public void moveToPoint(Vector2 point) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -126,7 +126,7 @@ public class AntOrc extends DynamicObject implements Creature{
 
 	@Override
 	public Creature affectedCreature(Vector2 point,float radius) {
-		if( this.position.dst(point) < radius)
+		if( this.getPosition().dst(point) < radius)
 			return this;
 		else
 			return null;
@@ -144,4 +144,6 @@ public class AntOrc extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 }

@@ -19,28 +19,28 @@ import com.me.tamer.utils.VectorHelper;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED 	= 0.25f;
-	private final float AIM_SPEED = 0.04f; //heading interpolating coefficient
-	private int numSpears 		= 3;
+	private final float SPEED 		= 5f;
+	private final float AIM_SPEED 	= 0.04f; //heading interpolating coefficient
+	private int numSpears 			= 3;
 	private ArrayList<Spear> spears = null;
 	private TamerShadow shadow;
 	private Environment environment;
-	private Vector2 help = new Vector2();
-	private Vector2 movementAxis = new Vector2();
+	private Vector2 help 			= new Vector2();
+	private Vector2 movementAxis 	= new Vector2();
 	
 	//Variables for entering the field
-	private Vector2 spawnPosition = new Vector2();
-	private Vector2 spawnDirection = new Vector2();
-	private Vector2 isoPosition = new Vector2();
-	private Vector2 mapBounds = new Vector2();
-	private boolean enteredField = false;
+	private Vector2 spawnPosition 	= new Vector2();
+	private Vector2 spawnDirection 	= new Vector2();
+	private Vector2 isoPosition 	= new Vector2();
+	private Vector2 mapBounds 		= new Vector2();
+	private boolean enteredField 	= false;
 	
-	private final float DISTANCE_BOUNDS = 5.0f;
-	private final float MIN_SPAWN_DISTANCE = 5.0f;
-	private final float SPAWN_SPEED = 5.0f;
+	private final float DISTANCE_BOUNDS = 		5.0f;
+	private final float MIN_SPAWN_DISTANCE = 	5.0f;
+	private final float SPAWN_SPEED = 			5.0f;
 
 	public void setup(){
-		
+		//NO-ACTION
 	}
 	
 	public void wakeUp(Environment environment){
@@ -62,9 +62,6 @@ public class Tamer extends DynamicObject{
 		//Z-index for drawing order
 		setZindex(-1);
 		setGraphics("tamer");
-		setForce("0:0");
-		setMass("10");
-		setRigidBody("circle");
 		this.environment = environment;
 		this.environment.setTamer(this);
 		
@@ -72,34 +69,35 @@ public class Tamer extends DynamicObject{
 		mapBounds.set(environment.getMapBounds());
 		mapBounds.x -= DISTANCE_BOUNDS;
 		mapBounds.y -= DISTANCE_BOUNDS;
-		spawnPosition.set(position);
+		spawnPosition.set(getPosition());
 		
 	}
 	
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
 		render.loadGraphics(graphics, 1, 8);
-		setSize(new Vector2(4,2.7f));
-		renderType = graphics;
+		setSize(4,2.7f);
+		setRenderType(graphics);
 	}
 	
 	@Override
 	public void update(float dt){
 		if(environment.getState() == Environment.TAMER_ENTER){
 			solveOrientation();
-			isoPosition.set(IsoHelper.twoDToTileIso(position));
+			isoPosition.set(IsoHelper.twoDToTileIso(getPosition()));
 			//First Check when inside mapBounds
 			if(isoPosition.x > -mapBounds.x && isoPosition.x < mapBounds.x && isoPosition.y > -mapBounds.y && isoPosition.y < mapBounds.y){
 				//Then check that min distance is travelled
-				if (position.dst(spawnPosition) > MIN_SPAWN_DISTANCE){
+				if (getPosition().dst(spawnPosition) > MIN_SPAWN_DISTANCE){
 					enteredField = true;
 				}
 			}
-			position.add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
+			getPosition().add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
 		}else{
 			solveOrientation();
-			getPosition().add(force);
-			force.mul(0f);
+			getPosition().add(getForce().tmp().mul(dt));
+			getForce().mul(0);
+			
 			for(int i = 0 ; i < spears.size() ; i ++){
 				if(shadow.getPosition().dst(spears.get(i).getPosition()) < 1 ){
 					if(spears.get(i).isAttached()){
@@ -119,12 +117,12 @@ public class Tamer extends DynamicObject{
 		direction.set(checkBounds(direction));
 		
 		direction.rotate(45);
-		float power = direction.len();//Math.max(Math.abs(direction.y), Math.min(Math.abs(lenght),0.5f));
-		direction.nor().mul(power*SPEED);
-		if(power > 0.1){
-			heading.set(direction);
-			heading.nor();
-			force.set(direction);	
+		float power = direction.len();
+		direction.nor().mul(power * SPEED);
+		if(power > 0.5){
+			setForce(direction);	
+			setHeading(direction);
+
 		}
 	}
 	
@@ -153,8 +151,8 @@ public class Tamer extends DynamicObject{
 	 */
 	public void turn(Vector2 direction){
 		direction.rotate(45);
-		heading.lerp(direction, AIM_SPEED);
-		heading.nor();
+		getHeading().lerp(direction, AIM_SPEED);
+		getHeading().nor();
 	}
 	
 	public void throwSpear(Spear spear,ArrayList<Vector2> waypoints){
@@ -172,7 +170,7 @@ public class Tamer extends DynamicObject{
 		}
 		
 		spears.add(spear);
-		spear.setPosition(position);//.tmp().add(heading.mul(1.5f)));
+		spear.setPosition(getPosition());
 		spear.throwAt(waypoints);
 	}
 	
@@ -188,9 +186,6 @@ public class Tamer extends DynamicObject{
 		return enteredField;
 	}
 
-	public Vector2 getHeading(){
-		return heading;
-	}
 	
 	public TamerShadow getShadow(){
 		return shadow;
