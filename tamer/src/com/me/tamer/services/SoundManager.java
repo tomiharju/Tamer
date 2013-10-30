@@ -26,8 +26,11 @@ public class SoundManager implements
 	 * The available sound files.
 	 */
 	public enum TamerSound {
+		
 		CLICK("sound/click.wav"),
-		HIT("sound/06kill03.wav");
+		OPENING("sound/01taunt00a.wav"),
+		HIT("sound/06kill03.wav"),
+		HAWK("sound/hawk.wav");
 
 		private final String fileName;
 

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 
 public class Worm extends DynamicObject implements Creature{
-
+	
+	private final float BORDER_OFFSET = 3.0f;
 	int ordinal = 1;
 	private ArrayList<WormPart> parts;
 	private WormPart head = null;
@@ -18,6 +18,7 @@ public class Worm extends DynamicObject implements Creature{
 	
 	public Worm(){
 		parts = new ArrayList<WormPart>();
+		setBorderOffset(BORDER_OFFSET);
 	}
 	
 	public void setup(){
@@ -35,11 +36,11 @@ public class Worm extends DynamicObject implements Creature{
 			environment.addObject(part);
 			part.setZindex(0);
 		}
+		
 		head = parts.get(0);
 		tail = parts.get(parts.size()-1);
 		
 	}
-
 
 	public void addPart(String type, int ordinal,Vector2 pos, Vector2 vel){
 		WormPart part = null;
@@ -60,8 +61,7 @@ public class Worm extends DynamicObject implements Creature{
 			if( (i + 1) < parts.size()){
 				parts.get( i + 1 ).attachToParent(parts.get(i));
 			}else if( (i + 1 ) == parts.size() )
-				parts.get(i).setAsTail();
-			
+				parts.get(i).setAsTail();		
 		}
 	}
 	
@@ -141,9 +141,8 @@ public class Worm extends DynamicObject implements Creature{
 				return parts.get(i);
 		}
 		return null;
-		
-		
 	}
+	
 	@Override
 	public boolean isAffected(Vector2 point, float radius) {
 		boolean partAffected = false;
@@ -163,15 +162,11 @@ public class Worm extends DynamicObject implements Creature{
 			head.applyPull(point);
 		else
 			tail.applyPull(point);
-		
 	}
+	
 	public void setHeading(Vector2 newHeading){
+		//heading.set(newHeading);
 		head.setHeading(newHeading);
 		head.setForce(getHeading().mul(head.getSpeed()));
 	}
-
-	
-	
-	
-	
 }

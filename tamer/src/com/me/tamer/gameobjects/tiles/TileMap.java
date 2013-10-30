@@ -51,7 +51,6 @@ public class TileMap extends StaticObject implements Obstacle{
 			
 	}
 	
-	
 	public void setTileMap(String data){
 		String[] points = data.split("\\.");
 		terrain = new ArrayList<Vector2>();
@@ -82,7 +81,9 @@ public class TileMap extends StaticObject implements Obstacle{
 		for( int i = 0 ; i < size ; i ++){
 			collisionPos.set(IsoHelper.twoDToTileIso(((DynamicObject) creatures.get(i)).getPosition()));
 			
-			if(collisionPos.x > mapBounds.x / 2 || collisionPos.x < -mapBounds.x / 2){
+			float offset = ((DynamicObject)creatures.get(i)).getBorderOffset();
+			
+			if(collisionPos.x > mapBounds.x / 2 - offset || collisionPos.x < -mapBounds.x / 2 + offset){
 				collisionAxis.set(0,1);
 				collisionHeading.set(creatures.get(i).getHeading());
 				collisionHeading.set(VectorHelper.projection(collisionHeading,collisionAxis));
@@ -91,7 +92,7 @@ public class TileMap extends StaticObject implements Obstacle{
 
 				creatures.get(i).setHeading(collisionHeading);
 			}
-			if(collisionPos.y > mapBounds.y / 2 || collisionPos.y < -mapBounds.y / 2){
+			if(collisionPos.y > mapBounds.y / 2 - offset|| collisionPos.y < -mapBounds.y / 2 + offset){
 				collisionAxis.set(1,0);
 				collisionHeading.set(creatures.get(i).getHeading());
 				collisionHeading.set(VectorHelper.projection(collisionHeading,collisionAxis));
@@ -103,7 +104,6 @@ public class TileMap extends StaticObject implements Obstacle{
 			}
 			
 		}
-		
 	}
 	
 

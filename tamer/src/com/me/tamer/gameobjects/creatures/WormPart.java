@@ -14,6 +14,7 @@ public class WormPart extends DynamicObject implements Creature {
 	//Container worm
 	private Worm worm = null;
 	
+
 	private float JOINT_LENGTH = 0.7f;
 	private float MIN_LENGTH   = 0.7f;
 	private float lengthAngle  = 0;
@@ -21,6 +22,7 @@ public class WormPart extends DynamicObject implements Creature {
 	private final float SPEED = 5;
 	private float invMass;
 	private float mass;
+
 	//Chain related stuff
 	private WormPart parent 	= null;
 	private WormPart child 		= null;
@@ -57,6 +59,7 @@ public class WormPart extends DynamicObject implements Creature {
 		setVelocity(new Vector2(0,0));
 		setForce(new Vector2(0,0));
 		this.ordinal 		= ordinal;
+
 	}
 	
 	public void setGraphics(String graphics){
@@ -64,6 +67,7 @@ public class WormPart extends DynamicObject implements Creature {
 		render.loadGraphics(graphics,1,8);
 		setSize(1,1);
 		setRenderType(graphics);
+
 	}
 	
 	
@@ -155,6 +159,7 @@ public class WormPart extends DynamicObject implements Creature {
 		
 	}
 	
+
 	private float getInvMass() {
 		return invMass;
 	}
@@ -173,7 +178,6 @@ public class WormPart extends DynamicObject implements Creature {
 	public boolean isTail(){
 		return isTail;
 	}
-	
 	
 	@Override
 	public void spearHit(Spear spear) {
@@ -198,7 +202,6 @@ public class WormPart extends DynamicObject implements Creature {
 	public float getSpeed(){
 		return SPEED;
 	}
-
 
 	/* (non-Javadoc)
 	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)

@@ -14,6 +14,8 @@ import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.services.SoundManager;
+import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.tTimer;
@@ -43,6 +45,7 @@ public class GryphonScream extends DynamicObject {
 	private Vector2 tamerHead			= null;
 	private Vector2 newHeading			= null;
 	
+	private SoundManager sound			= null;
 	//ShapeRenderer shapeRenderer = new ShapeRenderer();
 	
 	public GryphonScream(Environment environment){
@@ -67,6 +70,7 @@ public class GryphonScream extends DynamicObject {
 		setZindex(-1);
 		setGraphics();
 		
+		sound = SoundManager.instance();
 	}
 	
 	public void debugDraw(ShapeRenderer shapeRenderer){
@@ -77,7 +81,6 @@ public class GryphonScream extends DynamicObject {
 		drawVert2.set(IsoHelper.twoDToTileIso(screamVert2));
 		drawVert3.set(IsoHelper.twoDToTileIso(screamVert3));
 		
-	
 		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
 		shapeRenderer.end();
@@ -153,6 +156,9 @@ public class GryphonScream extends DynamicObject {
 		isActive = true;
 		tTimer timer = new tTimer(this,"deactivateScream",1);
 		timer.start();
+		
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing scream sound");
+		sound.play(TamerSound.HAWK);
 	}
 
 	public void deactivateScream(){

@@ -13,6 +13,7 @@ import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
@@ -35,8 +36,7 @@ public class SpawnPoint extends StaticObject{
 	private int spawnId = 0;
 	
 	private Hud hud;
-	
-	
+		
 	//EXPERIMENTAL STUFF
 	private ArrayList<Creature> creatures;
 	private Tamer tamer;

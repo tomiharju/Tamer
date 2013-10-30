@@ -22,6 +22,7 @@ public class DynamicObject implements GameObject{
 	private boolean debug	 	= false;
 	private int zIndex 			= 0;					// Forced drawing order 
 	private Vector2 isoHeading 	= new Vector2();		//Used for determining the sprite
+	protected float borderOffset = 0;
 	private Vector2 zeroHeading = new Vector2(-0.5f,1);// -1 + (float)Math.sin(Math.PI/8),1 + (float)Math.cos(Math.PI/8));//-0.5f, 2.0f);//;
 	private float headingAngle = 0;
 	
@@ -209,7 +210,14 @@ public class DynamicObject implements GameObject{
 	public Vector2 getForce(){
 		return force;
 	}
+	
+	public float getBorderOffset() {
+		return borderOffset;
+	}
 
+	public void setBorderOffset(float borderOffset) {
+		this.borderOffset = borderOffset;
+	}
 
 	public void setzIndex(int zIndex) {
 		this.zIndex = zIndex;
