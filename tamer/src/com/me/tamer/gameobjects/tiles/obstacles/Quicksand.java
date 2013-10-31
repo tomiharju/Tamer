@@ -2,12 +2,10 @@ package com.me.tamer.gameobjects.tiles.obstacles;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
@@ -17,6 +15,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 	private ArrayList<SandPart> parts;
 	private ArrayList<Creature> creatures_entered;
 	private Vector2 bogHoleCenter;
+	private final float PULL_MAGNITUDE = 15;
 	private Vector2 temp;
 	private boolean activated;
 	
@@ -44,13 +43,13 @@ public class Quicksand extends StaticObject implements Obstacle{
 		bogHoleCenter.div(parts.size());
 		//Move center half tile size up so that its realy in the center of the tile
 		bogHoleCenter.set(bogHoleCenter.x,bogHoleCenter.y);
-		//System.out.println("Bog center " + bogHoleCenter.toString());
 	}
 	
 	public void resolve(ArrayList<Creature> creatures){
 		int size = creatures.size();
 		int psize = parts.size();
 		for(int i = 0 ; i < size ; i ++){
+			
 			for(int k = 0; k < psize ; k ++){
 				//Check each section of this quicksand if any creature has entered one of them ( 1 = sand radius )
 				boolean entered = creatures.get(i).isAffected(parts.get(k).getCenterPosition(),1f);
@@ -61,8 +60,8 @@ public class Quicksand extends StaticObject implements Obstacle{
 						//Add creature to this cluster
 						creatures_entered.add(creatures.get(i));
 						//Do a coinflip
-						int head = (int) Math.round(Math.random());
-						if(head == 1)
+						/*int head = (int) Math.round(Math.random());
+						if(head == 1)*/
 							activated = true;
 						
 					}
@@ -93,7 +92,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 			size = creatures_entered.size();
 			//Start pulling all the worms that are within the cluster
 			for(int i = 0 ; i < size ; i ++){
-				creatures_entered.get(i).applyPull(bogHoleCenter);
+				creatures_entered.get(i).applyPull(bogHoleCenter,PULL_MAGNITUDE);
 			}
 			
 		}
@@ -116,7 +115,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 	}
 	
 	public boolean getDebug(){
-		return true;
+		return false;
 	}
 	
 	

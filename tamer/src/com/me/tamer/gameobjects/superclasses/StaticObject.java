@@ -9,7 +9,7 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.utils.IsoHelper;
 
 public class StaticObject implements GameObject{
-	private Vector2 position		= new Vector2();;
+	private Vector2 position		= new Vector2();
 	private Vector2 size 			= new Vector2();
 	private Vector2 centerPosition 	= new Vector2();
 	private String renderType		= null;
@@ -55,6 +55,7 @@ public class StaticObject implements GameObject{
 	public void setSize(float x, float y){
 		this.size.set(x,y);
 	}
+	
 	@Override
 	public void setPosition(String pos) {
 		String[] values = pos.split(":");
@@ -62,7 +63,10 @@ public class StaticObject implements GameObject{
 		int y = Integer.parseInt(values[1]);
 		this.position.set(x,y);
 		}
-
+	
+	public void setPosition(Vector2 pos){
+		this.position.set(pos);
+	}
 	@Override
 	public Vector2 getPosition() {
 		return position;
@@ -141,11 +145,7 @@ public class StaticObject implements GameObject{
 		
 	}
 
-	@Override
-	public void setPosition(Vector2 pos) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	public String getRenderType() {
 		return renderType;

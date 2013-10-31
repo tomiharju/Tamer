@@ -39,7 +39,7 @@ public interface Creature {
 	 * Chec if this creature is withint certain range from certain point. This function returns a boolean value instead of the actual affected object
 	 */
 	public boolean isAffected(Vector2 point, float radius);
-	public void applyPull(Vector2 point);
+	public void applyPull(Vector2 point,float magnitude);
 	public void moveToPoint(Vector2 point);
 	public void setHeading(Vector2 rotate);
 	public Vector2 getHeading();

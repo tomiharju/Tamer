@@ -2,13 +2,11 @@ package com.me.tamer.gameobjects.tiles;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
-import com.me.tamer.gameobjects.creatures.WormPart;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
@@ -39,7 +37,8 @@ public class Endingpoint extends StaticObject implements Obstacle{
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setSize(1,0.5f);
-		this.setRenderType(graphics);
+		setRenderType(graphics);
+		System.out.println("Creating endingpoint");
 	}
 
 	@Override
