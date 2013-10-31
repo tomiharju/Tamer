@@ -26,10 +26,7 @@ public class Spear extends DynamicObject{
 	ArrayList<Vector2> waypoints;
 	private int currentWayPoint;
 	private Vector2 direction 			= new Vector2();
-	private final float SPEED 			= 12.0f;
-	
-
-	
+	private final float SPEED 			= 12.0f;	
 	
 	public Spear(){
 		setGraphics();
@@ -39,7 +36,7 @@ public class Spear extends DynamicObject{
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("animated","spear");
 		render.loadGraphics("spear",1,8);
-		setSize(new Vector2(1,1));
+		setSize(new Vector2(1.3f,1.3f));
 		setRenderType("spear");
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Spear graphics are set");
 	}

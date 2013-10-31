@@ -16,16 +16,17 @@ import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 
 public class Endingpoint extends StaticObject implements Obstacle{
 	private Hud hud;
+	private ArrayList<Creature> survivedWorms = new ArrayList<Creature>();
+	private boolean creatureOnList = false;
 	
 	public void setup(Environment level){
 		level.addNewObject(this);
 		level.getObstacles().add(this);
 		setZindex(1);
 		
-		hud = Hud.instance();
+		hud = Hud.instance();	
 	}
-
-
+	
 	public void setPixelsX(String pixels){
 		float x = Float.parseFloat(pixels);
 		setSize(x,getSize().y);
@@ -51,13 +52,23 @@ public class Endingpoint extends StaticObject implements Obstacle{
 				creatures.get(i).moveToPoint(getCenterPosition());
 
 				if(creatures.get(i).getClass() == Worm.class){
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-							+ " :: updating label survived");
-					hud.updateLabel("survived", 1);
+					creatureOnList = false;
 					
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-							+ " :: updating label remaining");
-					hud.updateLabel("remaining", -1);
+					for (int j=0; j < survivedWorms.size(); j++){
+						if (survivedWorms.get(i)==creatures.get(i))creatureOnList = true;
+					}
+					
+					if(!creatureOnList){
+						survivedWorms.add(creatures.get(i));
+						
+						Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+								+ " :: updating label survived");
+						hud.updateLabel("survived", 1);
+						
+						Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+								+ " :: updating label remaining");
+						hud.updateLabel("remaining", -1);
+					}					
 				}
 			}	
 		}	

@@ -80,8 +80,6 @@ public class Environment extends Actor{
 		newobjects 		= new ArrayList<GameObject>();
 		obstacles 		= new ArrayList<Obstacle>();
 		creatures		= new ArrayList<Creature>();
-		//contacts 		= new ArrayList<Contact>();
-		//rigidbodies		= new ArrayList<RigidBody>();
 		comparator 		= new DrawOrderComparator();
 		RuntimeObjectFactory.createLinkToLevel(this);
 		

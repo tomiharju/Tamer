@@ -47,7 +47,7 @@ public class SoundManager implements
 	/**
 	 * The volume to be set on the sound.
 	 */
-	private float volume = 0.5f;
+	private float volume = 1.0f;
 
 	/**
 	 * Whether the sound is enabled.

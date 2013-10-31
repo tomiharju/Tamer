@@ -52,7 +52,8 @@ public class Hud extends Group{
         skin.add("white", new Texture(pixmap));
  
         BitmapFont bfont=new BitmapFont();
-        bfont.scale(0.5f);
+        System.out.println("height:_ " +Gdx.graphics.getHeight());
+        bfont.scale(Gdx.graphics.getHeight() * 0.001f);
         skin.add("default",bfont);
         
 		textButtonStyle = new TextButtonStyle();
@@ -74,11 +75,9 @@ public class Hud extends Group{
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = skin.getFont("default");
 		
-		
 		remainingLabel = new Label("Remaining: ",labelStyle);
 		remainingLabel.setPosition(120, Gdx.graphics.getHeight() - 35);
 		this.addActor(remainingLabel);
-		
 		
 		survivedLabel = new Label("Survived: ",labelStyle);
 		survivedLabel.setPosition(280, Gdx.graphics.getHeight() - 35);
