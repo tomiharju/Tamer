@@ -24,6 +24,7 @@ public class Tamer extends DynamicObject{
 	private final float SPEED 		= 15f;
 	private final float AIM_SPEED 	= 0.04f; //heading interpolating coefficient
 	private final float MAX_POWER 	= 1.2f;
+	private final float BORDER_OFFSET = -5.0f;
 	private int numSpears 			= 3;
 	private ArrayList<Spear> spears = null;
 	private TamerShadow shadow;
