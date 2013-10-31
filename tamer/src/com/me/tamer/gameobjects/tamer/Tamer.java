@@ -23,6 +23,7 @@ public class Tamer extends DynamicObject{
 	
 	private final float SPEED 		= 15f;
 	private final float AIM_SPEED 	= 0.04f; //heading interpolating coefficient
+	private final float MAX_POWER 	= 1.2f;
 	private int numSpears 			= 3;
 	private ArrayList<Spear> spears = null;
 	private TamerShadow shadow;
@@ -84,7 +85,7 @@ public class Tamer extends DynamicObject{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
 		render.loadGraphics(graphics, 1, 8);
-		setSize(4,2.7f);
+		setSize(5,3.1f);
 		setRenderType(graphics);
 	}
 	
@@ -126,11 +127,12 @@ public class Tamer extends DynamicObject{
 		
 		direction.rotate(45);
 		float power = direction.len();
+		if (power > MAX_POWER) power = MAX_POWER;
+		System.out.println("power: " +power);
 		direction.nor().mul(power * SPEED);
 		if(power > 0.5){
 			setForce(direction);	
 			setHeading(direction);
-
 		}
 	}
 	
@@ -197,7 +199,6 @@ public class Tamer extends DynamicObject{
 		return enteredField;
 	}
 
-	
 	public TamerShadow getShadow(){
 		return shadow;
 	}

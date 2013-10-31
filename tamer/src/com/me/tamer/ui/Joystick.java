@@ -123,4 +123,8 @@ public class Joystick extends Actor{
 	public void setInputDisabled(boolean b){
 		inputDisabled = b;
 	}
+	
+	public Vector2 getDelta(){
+		return delta;
+	}
 }

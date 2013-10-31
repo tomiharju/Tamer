@@ -23,6 +23,10 @@ import com.me.tamer.utils.tTimer;
 public class GryphonScream extends DynamicObject {
 	private final float SCREAM_AREA_WIDTH = 8.0f;
 	private final float SCREAM_AREA_LENGTH = 8.0f;
+	
+	//circle scream area
+	private final float SCREAM_CIRCLE_RADIUS = 6.0f;
+	
 	private Environment environment 				= null;
 	private boolean isActive			= false;
 	private Vector2 position			= new Vector2();
@@ -75,8 +79,20 @@ public class GryphonScream extends DynamicObject {
 	
 	public void debugDraw(ShapeRenderer shapeRenderer){
 		shapeRenderer.setProjectionMatrix(environment.getStage().getCamera().combined);
-		shapeRenderer.setColor(1, 1, 1, 1);
+		shapeRenderer.setColor(1, 1, 1, 0.9f);
 		
+		System.out.println(tamerPos);
+		drawVert1.set(IsoHelper.twoDToTileIso(tamerPos));
+		
+		shapeRenderer.begin(ShapeType.Circle);
+		shapeRenderer.translate(drawVert1.x, drawVert1.y, 0);
+		shapeRenderer.scale(1f, 0.5f, 1f);
+		shapeRenderer.circle(0, 0, SCREAM_CIRCLE_RADIUS,30);
+		
+		shapeRenderer.identity();
+		shapeRenderer.end();
+		
+		/*
 		drawVert1.set(IsoHelper.twoDToTileIso(screamVert1));
 		drawVert2.set(IsoHelper.twoDToTileIso(screamVert2));
 		drawVert3.set(IsoHelper.twoDToTileIso(screamVert3));
@@ -92,6 +108,7 @@ public class GryphonScream extends DynamicObject {
 		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
 		shapeRenderer.end();
+		*/
 	}
 	
 	
@@ -106,9 +123,32 @@ public class GryphonScream extends DynamicObject {
 	
 	@Override
 	public void update(float dt) {
-		
+		tamerPos.set(environment.getTamer().getShadow().getPosition());
 		if(isActive){
 			
+			//Scream circle
+			
+			
+			
+			ArrayList<Creature> creatures = environment.getCreatures();
+			
+			for (int i = 0; i < creatures.size(); i++){	
+				if(creatures.get(i).getClass() == Worm.class){
+					
+					Worm worm = ((Worm)creatures.get(i));
+					wormPos.set(worm.getHead().getPosition());	
+					
+					if( wormPos.dst(tamerPos) < SCREAM_CIRCLE_RADIUS){
+						newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
+						newHeading.nor();
+						worm.setHeading(newHeading);
+					}
+				}
+			}
+			
+			
+			//Scream Triangle
+			/*
 			tamerPos.set(environment.getTamer().getShadow().getPosition());
 			tamerHead.set(environment.getTamer().getHeading());
 			screamVert1.set(tamerPos);
@@ -119,6 +159,7 @@ public class GryphonScream extends DynamicObject {
 			screamVert3.set(tamerPos);
 			screamVert3.x += tamerHead.x * SCREAM_AREA_LENGTH + tamerHead.y * SCREAM_AREA_WIDTH;
 			screamVert3.y += tamerHead.y * SCREAM_AREA_LENGTH - tamerHead.x * SCREAM_AREA_WIDTH;
+			
 			ArrayList<Creature> creatures = environment.getCreatures();
 			
 			for (int i = 0; i < creatures.size(); i++){	
@@ -142,7 +183,8 @@ public class GryphonScream extends DynamicObject {
 						worm.setHeading(newHeading);
 					}
 				}	
-			}	
+			}
+			*/		
 		}	
 	}
 
