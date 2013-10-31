@@ -106,8 +106,7 @@ public class Environment extends Actor{
 		
 		switch (state){
 			case(NORMAL):
-				Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
-						+ " :: Enabling input");
+				
 				//enable controls
 				controls.setInputDisabled(false);
 			
@@ -116,9 +115,7 @@ public class Environment extends Actor{
 				}
 				break;
 			case(TAMER_ENTER):
-				Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
-						+ " :: Disabling input");
-				//disable controls
+							//disable controls
 				controls.setInputDisabled(true);
 			
 				for(int k = 0 ; k < numObjects ; k++){

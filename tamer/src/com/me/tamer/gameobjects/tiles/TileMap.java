@@ -26,7 +26,7 @@ import com.me.tamer.utils.VectorHelper;
  */
 public class TileMap extends StaticObject implements Obstacle{
 	
-	private int numTiles	=0;
+	private int numTiles	= 0;
 	private ArrayList<Vector2> terrain;
 	private Vector2 mapBounds;
 	private Vector2 collisionHeading 	= new Vector2();
@@ -54,6 +54,8 @@ public class TileMap extends StaticObject implements Obstacle{
 	public void setTileMap(String data){
 		String[] points = data.split("\\.");
 		terrain = new ArrayList<Vector2>();
+		
+		
 		for(String s : points){
 			Vector2 tile = new Vector2();
 			String[] coords = s.split("\\:");
@@ -62,16 +64,16 @@ public class TileMap extends StaticObject implements Obstacle{
 			tile.set(x,y);
 			terrain.add(tile);
 		}
-			
+		
 		numTiles = terrain.size();	
 	}
 	
-	public void setGraphics(String graphics){
+	public void setTerrain(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(new Vector2(1,0.5f));
+		setSize(1,0.5f);
 		
-		this.setRenderType(graphics);
+		setRenderType(graphics);
 
 	}
 
@@ -84,22 +86,20 @@ public class TileMap extends StaticObject implements Obstacle{
 			float offset = ((DynamicObject)creatures.get(i)).getBorderOffset();
 			
 			if(collisionPos.x > mapBounds.x / 2 - offset || collisionPos.x < -mapBounds.x / 2 + offset){
-				collisionAxis.set(0,1);
+				collisionAxis.set(0,-1);//.mul(collisionPos.x).nor();
 				collisionHeading.set(creatures.get(i).getHeading());
-				collisionHeading.set(VectorHelper.projection(collisionHeading,collisionAxis));
-				collisionHeading.rotate(45);
-				//System.out.println("Collision heading "+collisionHeading.toString());
+				collisionHeading.set(0,collisionHeading.y);
+			
 
+				collisionHeading.rotate(45);
 				creatures.get(i).setHeading(collisionHeading);
 			}
 			if(collisionPos.y > mapBounds.y / 2 - offset|| collisionPos.y < -mapBounds.y / 2 + offset){
 				collisionAxis.set(1,0);
 				collisionHeading.set(creatures.get(i).getHeading());
-				collisionHeading.set(VectorHelper.projection(collisionHeading,collisionAxis));
-				collisionHeading.rotate(45);
+				collisionHeading.set(collisionHeading.x,0);
 
-				//System.out.println("Collision heading "+collisionHeading.toString());
-				
+				collisionHeading.rotate(45);				
 				creatures.get(i).setHeading(collisionHeading);
 			}
 			

@@ -39,7 +39,8 @@ public class Endingpoint extends StaticObject implements Obstacle{
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setSize(1,0.5f);
-		this.setRenderType(graphics);
+		setRenderType(graphics);
+		System.out.println("Creating endingpoint");
 	}
 
 	@Override
