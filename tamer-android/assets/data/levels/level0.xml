@@ -479,7 +479,7 @@
 		<property type="SpawnDirection">344</property>
 		<property type="SpawnId">10</property>
 		<property type="InitialSleep">3</property>
-		<property type="SleepTime">8</property>
+		<property type="SleepTime">12</property>
 		<property type="TamerSpawn">0</property>
 		<property type="SpawnCount">2</property>
 		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
@@ -713,8 +713,8 @@
 		<property type="SpawnType">Worm</property>
 		<property type="SpawnDirection">0</property>
 		<property type="SpawnId">8</property>
-		<property type="InitialSleep">7</property>
-		<property type="SleepTime">8</property>
+		<property type="InitialSleep">4</property>
+		<property type="SleepTime">12</property>
 		<property type="TamerSpawn">0</property>
 		<property type="SpawnCount">2</property>
 		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
@@ -748,11 +748,7 @@
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">22:-10</property>
-		<property type="Graphics">ending0</property>
-	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
-		<property type="Position">22:-10</property>
-		<property type="Graphics">ending0</property>
+		<property type="Graphics">dirt0</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">21:-11</property>
@@ -768,7 +764,7 @@
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">22:-11</property>
-		<property type="Graphics">ending0</property>
+		<property type="Graphics">dirt0</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="Position">20:-14</property>
@@ -784,7 +780,7 @@
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">22:-8</property>
-		<property type="Graphics">ending0</property>
+		<property type="Graphics">dirt0</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="Position">5:-10</property>

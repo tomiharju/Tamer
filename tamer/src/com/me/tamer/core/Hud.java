@@ -1,6 +1,7 @@
 package com.me.tamer.core;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -70,18 +72,30 @@ public class Hud extends Group{
         });
 		
 		menuButton.setPosition(20, Gdx.graphics.getHeight() - 35);
-		this.addActor(menuButton);
+		//this.addActor(menuButton);
 		
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = skin.getFont("default");
 		
 		remainingLabel = new Label("Remaining: ",labelStyle);
 		remainingLabel.setPosition(120, Gdx.graphics.getHeight() - 35);
-		this.addActor(remainingLabel);
+		//this.addActor(remainingLabel);
 		
 		survivedLabel = new Label("Survived: ",labelStyle);
 		survivedLabel.setPosition(280, Gdx.graphics.getHeight() - 35);
-		this.addActor(survivedLabel);
+		//this.addActor(survivedLabel);
+		
+		
+		FileHandle skinFile = Gdx.files.internal( "skin/uiskin.json" );
+        skin = new Skin( skinFile );
+        
+        Table table = new Table( skin );
+        table.setFillParent( true );
+        
+        this.addActor(table);
+		
+		table.add( menuButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
+		table.add( remainingLabel ).size( 300, 60 ).uniform().spaceBottom( 10 );
 	}
 	
 	public void draw(SpriteBatch batch, float parentAlpha){		
