@@ -256,7 +256,7 @@ public class WormPart extends DynamicObject implements Creature {
 		Vector2 pullVector = point.tmp().sub(getPosition());
 		pullVector.nor().mul(magnitude);
 		getVelocity().add(pullVector); 
-		if(getPosition().dst(point) < 0.05f)
+		if(getPosition().dst(point) < 0.15f)
 			moveToPoint(point);
 	}
 

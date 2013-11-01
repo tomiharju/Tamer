@@ -21,7 +21,7 @@ import com.me.tamer.utils.VectorHelper;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED 		= 15f;
+	private final float SPEED 		= 0.2f;
 	private final float AIM_SPEED 	= 0.04f; //heading interpolating coefficient
 	private final float MAX_POWER 	= 1.2f;
 	private final float BORDER_OFFSET = -5.0f;
@@ -128,7 +128,7 @@ public class Tamer extends DynamicObject{
 		
 		direction.rotate(45);
 		float power = direction.len();
-		if (power > MAX_POWER) power = MAX_POWER;
+	//	if (power > MAX_POWER) power = MAX_POWER;
 		direction.nor().mul(power * SPEED);
 		if(power > 0.5){
 			setForce(direction);	
@@ -141,7 +141,7 @@ public class Tamer extends DynamicObject{
 		help.set(environment.getTamer().getShadow().getPosition());
 		
 		help.set(IsoHelper.twoDToTileIso(help));
-		help.add(movement);
+		help.add(movement.tmp().mul(Gdx.graphics.getDeltaTime()));
 		
 		if(help.x > mapBounds.x / 2 - BORDER_OFFSET || help.x < -mapBounds.x / 2 + BORDER_OFFSET){
 			movementAxis.set(1,0);

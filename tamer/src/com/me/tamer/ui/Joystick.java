@@ -77,9 +77,9 @@ public class Joystick extends Actor{
 		
 		if (isVisible() && pressed){
 			if(movementDisabled)
-				environment.getTamer().turn(delta.mul(dt));
+				environment.getTamer().turn(delta);
 			else{			
-				environment.getTamer().manouver(delta.mul(dt));
+				environment.getTamer().manouver(delta);
 			}	
 		}		
 	}
