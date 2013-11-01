@@ -199,6 +199,7 @@ public class GryphonScream extends DynamicObject {
 		tTimer timer = new tTimer(this,"deactivateScream",1);
 		timer.start();
 		
+		sound.setVolume(0.7f);
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing scream sound");
 		sound.play(TamerSound.HAWK);
 	}
