@@ -22,6 +22,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 	private boolean activated;
 	
 	private ArrayList<Creature> deadCreatures = new ArrayList<Creature>();
+	private boolean alreadyDead = false;
 	private Hud hud;
 	
 	public Quicksand(){
@@ -64,9 +65,17 @@ public class Quicksand extends StaticObject implements Obstacle{
 					if(!creatures_entered.contains(creatures.get(i))){
 						//Add creature to this cluster
 						creatures_entered.add(creatures.get(i));
-						Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-								+ " :: updating label remaining");
-						hud.updateLabel("remaining", -1);
+						
+						alreadyDead = false;
+						for (int j = 0; j < deadCreatures.size(); j++){
+							if (creatures.get(i)==deadCreatures.get(j))alreadyDead = true;
+						}
+						if(!alreadyDead){
+							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+									+ " :: updating label remaining");
+							hud.updateLabel("remaining", -1);
+						}
+						
 						//Do a coinflip
 						/*int head = (int) Math.round(Math.random());
 						if(head == 1)*/

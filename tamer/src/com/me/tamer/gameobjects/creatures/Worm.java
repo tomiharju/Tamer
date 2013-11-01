@@ -154,12 +154,12 @@ public class Worm extends DynamicObject implements Creature{
 
 	@Override
 	public void applyPull(Vector2 point, float magnitue) {
-		float distToHead = point.dst(head.getPosition());
-		float distToTail = point.dst(tail.getPosition());
-		if(distToHead < distToTail)
+		//float distToHead = point.dst(head.getPosition());
+		//float distToTail = point.dst(tail.getPosition());
+		//if(distToHead < distToTail)
 			head.applyPull(point,magnitue);
-		else
-			tail.applyPull(point,magnitue);
+		//else
+			//tail.applyPull(point,magnitue);
 	}
 	
 	public void setHeading(Vector2 newHeading){
