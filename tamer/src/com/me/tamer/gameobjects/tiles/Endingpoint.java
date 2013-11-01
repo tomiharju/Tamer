@@ -2,7 +2,6 @@ package com.me.tamer.gameobjects.tiles;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
