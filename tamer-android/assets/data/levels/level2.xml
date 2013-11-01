@@ -605,7 +605,7 @@
 		<property type="Position">-19:0</property>
 		<property type="Graphics">spawn</property>
 		<property type="SpawnType">Worm</property>
-		<property type="SpawnDirection">331.5</property>
+		<property type="SpawnDirection">315.5</property>
 		<property type="SpawnId">0</property>
 		<property type="InitialSleep">5</property>
 		<property type="SleepTime">20</property>
