@@ -45,6 +45,9 @@ public class Hud extends Group{
 	}
 	
 	public void create(){
+		setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getWidth());
+		//setPosition(0, 600);
+		
 		//Skin and font
 		skin = new Skin();
         Pixmap pixmap = new Pixmap(100, 100, Format.RGBA8888);
@@ -71,18 +74,18 @@ public class Hud extends Group{
             }
         });
 		
-		menuButton.setPosition(20, Gdx.graphics.getHeight() - 35);
+		//menuButton.setPosition(20, Gdx.graphics.getHeight() - 35);
 		//this.addActor(menuButton);
 		
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = skin.getFont("default");
 		
 		remainingLabel = new Label("Remaining: ",labelStyle);
-		remainingLabel.setPosition(120, Gdx.graphics.getHeight() - 35);
+		//remainingLabel.setPosition(120, Gdx.graphics.getHeight() - 35);
 		//this.addActor(remainingLabel);
 		
 		survivedLabel = new Label("Survived: ",labelStyle);
-		survivedLabel.setPosition(280, Gdx.graphics.getHeight() - 35);
+		//survivedLabel.setPosition(280, Gdx.graphics.getHeight() - 35);
 		//this.addActor(survivedLabel);
 		
 		
@@ -93,9 +96,12 @@ public class Hud extends Group{
         table.setFillParent( true );
         
         this.addActor(table);
+        
+        table.setPosition(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 3 );
 		
-		table.add( menuButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
-		table.add( remainingLabel ).size( 300, 60 ).uniform().spaceBottom( 10 );
+		table.add( menuButton ).size( Gdx.graphics.getWidth() / 3, 60 ).uniform().spaceBottom( 10 );
+		table.add( remainingLabel ).size( Gdx.graphics.getWidth() / 3, 60 ).uniform().spaceBottom( 10 );
+		table.add( survivedLabel ).size( Gdx.graphics.getWidth() / 3, 60 ).uniform().spaceBottom( 10 );
 	}
 	
 	public void draw(SpriteBatch batch, float parentAlpha){		

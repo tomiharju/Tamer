@@ -37,16 +37,18 @@ public class TileMap extends StaticObject implements Obstacle{
 		env.addNewObject(this);
 		env.getObstacles().add(this);
 		mapBounds = env.getMapBounds();
-		setZindex(1);
+		setZindex(2);
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch){
+		
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		renderer.setSize(getSize());
 		for(int i = 0 ; i < numTiles ; i++){
 			renderer.setPosition(IsoHelper.twoDToTileIso(terrain.get(i)));
 			renderer.draw(batch);
+		
 		}
 			
 	}

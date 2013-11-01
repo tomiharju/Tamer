@@ -82,9 +82,10 @@ public class WormPart extends DynamicObject implements Creature {
 		this.child = child;
 	}
 	public void solveJoints(float dt){
-		lengthAngle += dt;
-		JOINT_LENGTH = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle)) * 0.3f;
+		
 		if(child != null){
+			lengthAngle += dt;
+			JOINT_LENGTH = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle)) * 0.3f;
 			solveJoint(dt);
 			child.solveJoints(dt);
 		}
@@ -98,7 +99,7 @@ public class WormPart extends DynamicObject implements Creature {
 			child.updateChild(dt);
 		
 		getPosition().add(getVelocity().tmp().mul(dt));
-		getVelocity().mul(.9f);
+		getVelocity().mul(0.9f*dt);
 	
 	}
 	
