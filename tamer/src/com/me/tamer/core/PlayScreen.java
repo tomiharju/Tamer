@@ -3,6 +3,7 @@ package com.me.tamer.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.me.tamer.services.MusicManager.TamerMusic;
 
 public class PlayScreen extends AbstractScreen{
 
@@ -16,8 +17,8 @@ public class PlayScreen extends AbstractScreen{
 	public void create(){
 		//Stop music when the level starts
 		game.getMusicManager().stop();
-		//game.getMusicManager().setVolume(1.0f);
-		//game.getMusicManager().play( TamerMusic.LEVEL ); 
+		game.getMusicManager().setVolume(0.8f);
+		game.getMusicManager().play( TamerMusic.LEVEL ); 
 		
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state to GAME_RUNNING");
 		TamerStage.gameState = TamerStage.GAME_RUNNING;

@@ -17,7 +17,8 @@ public class Quicksand extends StaticObject implements Obstacle{
 	private ArrayList<Creature> creatures_entered;
 	private Vector2 bogHoleCenter;
 
-	private final float PULL_MAGNITUDE = 35;
+	private final float PULL_MAGNITUDE = 8;
+	private Vector2 temp;
 	private boolean activated;
 	
 	private ArrayList<Creature> deadCreatures = new ArrayList<Creature>();
