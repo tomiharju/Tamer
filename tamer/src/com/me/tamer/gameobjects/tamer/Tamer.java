@@ -183,6 +183,7 @@ public class Tamer extends DynamicObject{
 		spear.throwAt(waypoints);
 		
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing throwing sound");
+		sound.setVolume(0.8f);
 		sound.play(TamerSound.THROW);
 	}
 	

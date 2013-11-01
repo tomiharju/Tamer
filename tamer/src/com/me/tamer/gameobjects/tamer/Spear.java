@@ -59,9 +59,10 @@ public class Spear extends DynamicObject{
 					ArrayList<Creature> creatures = environment.getCreatures();
 					int size = creatures.size();
 					for(int i = 0 ; i < size ; i ++){
-							targetCreature = creatures.get(i).affectedCreature(getPosition(), 1.0f);
+							targetCreature = creatures.get(i).affectedCreature(getPosition(), 1.5f);
 							if(targetCreature != null){
 								targetCreature.spearHit(this);
+								sound.setVolume(0.3f);
 								Gdx.app.log(TamerGame.LOG, this.getClass()
 										.getSimpleName() + " :: playing sound HIT");
 								sound.play(TamerSound.HIT);
