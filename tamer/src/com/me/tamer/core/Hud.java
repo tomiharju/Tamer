@@ -45,7 +45,7 @@ public class Hud extends Group{
 	}
 	
 	public void create(){
-		setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getWidth());
+		//setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight() / 5);
 		//setPosition(0, 600);
 		
 		//Skin and font
@@ -57,7 +57,6 @@ public class Hud extends Group{
         skin.add("white", new Texture(pixmap));
  
         BitmapFont bfont=new BitmapFont();
-        System.out.println("height:_ " +Gdx.graphics.getHeight());
         bfont.scale(Gdx.graphics.getHeight() * 0.001f);
         skin.add("default",bfont);
         
@@ -97,7 +96,7 @@ public class Hud extends Group{
         
         this.addActor(table);
         
-        table.setPosition(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 3 );
+        table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 20.0f );
 		
 		table.add( menuButton ).size( Gdx.graphics.getWidth() / 3, 60 ).uniform().spaceBottom( 10 );
 		table.add( remainingLabel ).size( Gdx.graphics.getWidth() / 3, 60 ).uniform().spaceBottom( 10 );
