@@ -62,10 +62,10 @@ public class Prop extends StaticObject implements Obstacle{
 				float y_dot = separator.dot(y_axis);
 				if(x_dot > y_dot){
 					//System.out.println("Turning towards x-axis");
-					creatures.get(i).setHeading(separator.tmp().rotate(45).rotate(45));
+					creatures.get(i).setHeading(separator.tmp().rotate(45));
 				}
 				else if(y_dot > x_dot){
-					creatures.get(i).setHeading(separator.tmp().rotate(-45).rotate(45));
+					creatures.get(i).setHeading(separator);
 
 				}
 				

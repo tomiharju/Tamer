@@ -129,7 +129,6 @@ public class Tamer extends DynamicObject{
 		direction.rotate(45);
 		float power = direction.len();
 		if (power > MAX_POWER) power = MAX_POWER;
-		System.out.println("power: " +power);
 		direction.nor().mul(power * SPEED);
 		if(power > 0.5){
 			setForce(direction);	

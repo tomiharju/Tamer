@@ -17,6 +17,7 @@ public class TamerShadow extends DynamicObject{
 		this.tamer = tamer;
 		setPosition(new Vector2(0,0));
 		setGraphics("joystick");
+		setZindex(-1);
 		
 	}
 	
