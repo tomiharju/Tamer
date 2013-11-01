@@ -72,9 +72,6 @@ public class Worm extends DynamicObject implements Creature{
 		head.getVelocity().add(head.getForce());
 	}
 	
-	
-
-	
 	public void draw(SpriteBatch batch){
 		//No action
 	}
