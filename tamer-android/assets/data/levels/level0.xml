@@ -479,7 +479,7 @@
 		<property type="SpawnDirection">344</property>
 		<property type="SpawnId">10</property>
 		<property type="InitialSleep">3</property>
-		<property type="SleepTime">8</property>
+		<property type="SleepTime">15</property>
 		<property type="TamerSpawn">0</property>
 		<property type="SpawnCount">2</property>
 		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
@@ -627,7 +627,7 @@
 		<property type="SpawnDirection">344</property>
 		<property type="SpawnId">9</property>
 		<property type="InitialSleep">0</property>
-		<property type="SleepTime">8</property>
+		<property type="SleepTime">15</property>
 		<property type="TamerSpawn">1</property>
 		<property type="SpawnCount">2</property>
 		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
@@ -713,7 +713,7 @@
 		<property type="SpawnType">Worm</property>
 		<property type="SpawnDirection">0</property>
 		<property type="SpawnId">8</property>
-		<property type="InitialSleep">7</property>
+		<property type="InitialSleep">15</property>
 		<property type="SleepTime">8</property>
 		<property type="TamerSpawn">0</property>
 		<property type="SpawnCount">2</property>

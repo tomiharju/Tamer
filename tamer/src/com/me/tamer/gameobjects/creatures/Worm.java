@@ -13,7 +13,7 @@ public class Worm extends DynamicObject implements Creature{
 	private final float BORDER_OFFSET = 0.0f;
 	int ordinal = 1;
 	private ArrayList<WormPart> parts;
-	private final float SPEED = 8;
+	private final float SPEED = 2.5f;
 	private WormPart head = null;
 	private WormPart tail = null;
 	
@@ -69,7 +69,7 @@ public class Worm extends DynamicObject implements Creature{
 	public void update(float dt){
 		head.solveJoints(dt);
 		head.updateChild(dt);
-		head.getVelocity().add(head.getForce().tmp().mul(dt));
+		head.getVelocity().add(head.getForce());
 	}
 	
 	
