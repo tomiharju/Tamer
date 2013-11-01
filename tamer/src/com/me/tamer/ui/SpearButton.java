@@ -33,7 +33,7 @@ public class SpearButton extends Actor {
 	final float MIN_DISTANCE = 2;
 	final float SPEED = 12; // for increasing the throwing distance
 	final float MAX_DISTANCE = 15;
-	private final float BORDER_OFFSET = 1.0f;	//offset for camera borders
+	private final float BORDER_OFFSET = -4.8f;	//offset for camera borders
 
 	private Vector2 targetPoint = new Vector2();
 	private ArrayList<Vector2> waypoints = new ArrayList<Vector2>();

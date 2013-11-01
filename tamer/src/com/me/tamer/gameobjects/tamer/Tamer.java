@@ -24,6 +24,7 @@ public class Tamer extends DynamicObject{
 	private final float SPEED 		= 15f;
 	private final float AIM_SPEED 	= 0.04f; //heading interpolating coefficient
 	private final float MAX_POWER 	= 1.2f;
+	private final float BORDER_OFFSET = -5.0f;
 	private int numSpears 			= 3;
 	private ArrayList<Spear> spears = null;
 	private TamerShadow shadow;
@@ -142,12 +143,11 @@ public class Tamer extends DynamicObject{
 		help.set(IsoHelper.twoDToTileIso(help));
 		help.add(movement);
 		
-		
-		if(help.x > mapBounds.x / 2 || help.x < -mapBounds.x / 2){
+		if(help.x > mapBounds.x / 2 - BORDER_OFFSET || help.x < -mapBounds.x / 2 + BORDER_OFFSET){
 			movementAxis.set(1,0);
 			movement.sub(VectorHelper.projection(movement,movementAxis));
 		}
-		if(help.y > mapBounds.y / 2 || help.y < -mapBounds.y / 2){
+		if(help.y > mapBounds.y / 2 - BORDER_OFFSET || help.y < -mapBounds.y / 2 + BORDER_OFFSET){
 			movementAxis.set(0,1);
 			movement.sub(VectorHelper.projection(movement,movementAxis));
 		}
