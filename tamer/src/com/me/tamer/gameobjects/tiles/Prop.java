@@ -39,6 +39,7 @@ public class Prop extends StaticObject implements Obstacle{
 		setSize(getSize().x,y);
 	}
 	
+	
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
@@ -64,7 +65,7 @@ public class Prop extends StaticObject implements Obstacle{
 					creatures.get(i).setHeading(separator.tmp().rotate(45));
 				}
 				else if(y_dot > x_dot){
-					creatures.get(i).setHeading(separator.tmp().rotate(-45));
+					creatures.get(i).setHeading(separator);
 
 				}
 				

@@ -19,7 +19,6 @@ public class WormPart extends DynamicObject implements Creature {
 	private float MIN_LENGTH   = 0.7f;
 	private float lengthAngle  = 0;
 	private int ordinal;
-	private final float SPEED = 5;
 	private float invMass;
 	private float mass;
 
@@ -43,7 +42,7 @@ public class WormPart extends DynamicObject implements Creature {
 		invMass				= 1 / mass;
 		setPosition(pos);
 		setVelocity(vel);
-		setForce(new Vector2(vel).mul(SPEED));
+		setForce(new Vector2(vel).mul(worm.getSPEED()));
 		setHeading(vel);
 		this.ordinal 		= 0;
 	}
@@ -83,9 +82,10 @@ public class WormPart extends DynamicObject implements Creature {
 		this.child = child;
 	}
 	public void solveJoints(float dt){
-		lengthAngle += dt;
-		JOINT_LENGTH = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle)) * 0.3f;
+		
 		if(child != null){
+			lengthAngle += dt;
+			JOINT_LENGTH = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle)) * 0.3f;
 			solveJoint(dt);
 			child.solveJoints(dt);
 		}
@@ -99,7 +99,7 @@ public class WormPart extends DynamicObject implements Creature {
 			child.updateChild(dt);
 		
 		getPosition().add(getVelocity().tmp().mul(dt));
-		getVelocity().mul(.9f);
+		getVelocity().mul(0.9f*dt);
 	
 	}
 	
@@ -155,11 +155,8 @@ public class WormPart extends DynamicObject implements Creature {
 			else
 				return getPosition().tmp().sub(parent.getPosition());
 		}
-		
-		
 	}
 	
-
 	private float getInvMass() {
 		return invMass;
 	}
@@ -181,14 +178,7 @@ public class WormPart extends DynamicObject implements Creature {
 	
 	@Override
 	public void spearHit(Spear spear) {
-		if(partName.equalsIgnoreCase("head")){
-			killPart();
-			markAsCarbage();
-		}
-		else{
-			invMass = 0;
-		}
-		
+		invMass = 0;	
 	}
 	@Override
 	public void lassoHit(String lasso) {
@@ -199,9 +189,7 @@ public class WormPart extends DynamicObject implements Creature {
 	public int getOrdinal(){
 		return ordinal;
 	}
-	public float getSpeed(){
-		return SPEED;
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#dispose(com.me.tamer.gameobjects.Level)
@@ -236,13 +224,12 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 	@Override
 	public void moveToPoint(Vector2 point) {
-		setForce(point.tmp().sub(getPosition()));
-		setHeading(getForce());
+		setHeading(point.tmp().sub(getPosition()));
+		
 		if(child  != null){
 			child.setForce(getForce());
 			child.setHeading(getForce());
 			worm.setHead(child);
-			child.partName = "head";
 		}else
 			worm.markAsCarbage();
 		
@@ -265,9 +252,9 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 
 	@Override
-	public void applyPull(Vector2 point) {
+	public void applyPull(Vector2 point,float magnitude) {
 		Vector2 pullVector = point.tmp().sub(getPosition());
-		pullVector.nor().mul(5.5f);
+		pullVector.nor().mul(magnitude);
 		getVelocity().add(pullVector.mul(Gdx.graphics.getDeltaTime())); 
 		if(getPosition().dst(point) < 0.05f)
 			moveToPoint(point);

@@ -10,9 +10,10 @@ import com.me.tamer.gameobjects.tamer.Spear;
 
 public class Worm extends DynamicObject implements Creature{
 	
-	private final float BORDER_OFFSET = 3.0f;
+	private final float BORDER_OFFSET = 0.0f;
 	int ordinal = 1;
 	private ArrayList<WormPart> parts;
+	private final float SPEED = 2.5f;
 	private WormPart head = null;
 	private WormPart tail = null;
 	
@@ -68,7 +69,7 @@ public class Worm extends DynamicObject implements Creature{
 	public void update(float dt){
 		head.solveJoints(dt);
 		head.updateChild(dt);
-		head.getVelocity().add(head.getForce().tmp().mul(dt));
+		head.getVelocity().add(head.getForce());
 	}
 	
 	
@@ -155,18 +156,22 @@ public class Worm extends DynamicObject implements Creature{
 	}
 
 	@Override
-	public void applyPull(Vector2 point) {
+	public void applyPull(Vector2 point, float magnitue) {
 		float distToHead = point.dst(head.getPosition());
 		float distToTail = point.dst(tail.getPosition());
 		if(distToHead < distToTail)
-			head.applyPull(point);
+			head.applyPull(point,magnitue);
 		else
-			tail.applyPull(point);
+			tail.applyPull(point,magnitue);
 	}
 	
 	public void setHeading(Vector2 newHeading){
 		//heading.set(newHeading);
 		head.setHeading(newHeading);
-		head.setForce(getHeading().mul(head.getSpeed()));
+		head.setForce(getHeading().mul(SPEED));
+	}
+
+	public float getSPEED() {
+		return SPEED;
 	}
 }

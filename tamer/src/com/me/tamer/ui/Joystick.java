@@ -1,17 +1,12 @@
 package com.me.tamer.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.me.tamer.core.Level;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.UiRenderer;
-import com.me.tamer.gameobjects.tamer.Tamer;
-import com.me.tamer.utils.IsoHelper;
-import com.me.tamer.utils.VectorHelper;
 
 public class Joystick extends Actor{
 	private final float BUTTON_SIZE	= 250;
@@ -122,5 +117,9 @@ public class Joystick extends Actor{
 	
 	public void setInputDisabled(boolean b){
 		inputDisabled = b;
+	}
+	
+	public Vector2 getDelta(){
+		return delta;
 	}
 }

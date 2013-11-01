@@ -9,7 +9,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.utils.IsoHelper;
 
 public class TamerShadow extends DynamicObject{
-	private final float DISTANCE = 6.0f;
+	private final float DISTANCE = 7.0f;
 	private final float SIZE = 2.0f;
 	private Tamer tamer;
 	
@@ -17,12 +17,13 @@ public class TamerShadow extends DynamicObject{
 		this.tamer = tamer;
 		setPosition(new Vector2(0,0));
 		setGraphics("joystick");
+		setZindex(-1);
 		
 	}
 	
 	public void setGraphics(String graphics){
 		Renderer renderer = RenderPool.addRendererToPool("animated",graphics);
-		renderer.loadGraphics("joystick");
+		renderer.loadGraphics("tamershadow");
 		setSize(SIZE, SIZE / 2);
 		setRenderType(graphics);
 	}
@@ -38,7 +39,7 @@ public class TamerShadow extends DynamicObject{
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		batch.setColor(0.1f, 0.1f, 0.1f, 0.2f);
+		batch.setColor(0.1f, 0.1f, 0.1f, 0.7f);
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		renderer.setSize(getSize().x,getSize().y);
 		renderer.setPosition(IsoHelper.twoDToTileIso(getPosition()));

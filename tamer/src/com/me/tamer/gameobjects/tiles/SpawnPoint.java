@@ -46,6 +46,7 @@ public class SpawnPoint extends StaticObject{
 		creatures = new ArrayList<Creature>();
 		hud = Hud.instance();
 	}
+	
 	public void setup(Environment environment){
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: started spawning");
 		environment.addNewObject(this);

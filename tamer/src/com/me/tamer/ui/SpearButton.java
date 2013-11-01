@@ -31,8 +31,8 @@ public class SpearButton extends Actor {
 	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 165,100);
 	final float BUTTON_SIZE = 110;
 	final float MIN_DISTANCE = 2;
-	final float SPEED = 5; // for increasing the throwing distance
-	final float MAX_DISTANCE = 10;
+	final float SPEED = 12; // for increasing the throwing distance
+	final float MAX_DISTANCE = 15;
 	private final float BORDER_OFFSET = 1.0f;	//offset for camera borders
 
 	private Vector2 targetPoint = new Vector2();
@@ -49,6 +49,8 @@ public class SpearButton extends Actor {
 	UiRenderer pointRender = null;
 	UiRenderer pointRender2 = null;
 	
+	private Joystick joystick;
+	
 	public SpearButton(ControlContainer controlContainer) {
 		this.controlContainer = controlContainer;
 		
@@ -60,8 +62,8 @@ public class SpearButton extends Actor {
 		buttonRender.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		buttonRender.setPosition(restingpoint);	
 		
-		pointRender.loadGraphics("joystick");
-		pointRender.setSize(1f,1f);
+		pointRender.loadGraphics("reticle");
+		pointRender.setSize(1.5f,1.5f);
 		pointRender.setPosition(new Vector2(0,0));
 		
 		pointRender2.loadGraphics("joystick");
@@ -72,6 +74,8 @@ public class SpearButton extends Actor {
 	
 		cam = controlContainer.getCam();
 		uiCam = controlContainer.getUiCam();
+		
+		joystick = controlContainer.getJoystick();
 		
 		setVisible(false);
 		setPosition(restingpoint.x - BUTTON_SIZE/2, restingpoint.y - BUTTON_SIZE/2);
@@ -89,8 +93,8 @@ public class SpearButton extends Actor {
 			pointRender.setPosition(IsoHelper.twoDToTileIso(waypoint1));
 			pointRender.draw(batch);
 
-			pointRender2.setPosition(IsoHelper.twoDToTileIso(waypoint2));
-			pointRender2.draw(batch);
+			//pointRender2.setPosition(IsoHelper.twoDToTileIso(waypoint2));
+			//pointRender2.draw(batch);
 			
 			batch.setProjectionMatrix(uiCam.combined);
 		}
@@ -99,15 +103,16 @@ public class SpearButton extends Actor {
 	public void act(float dt) {
 		
 		if(isVisible() && pressed){
-
 			if(throwDistance <= MAX_DISTANCE ){
 				help.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
 				if (controlContainer.getEnvironment().checkInsideBounds(help.add(targetPoint),BORDER_OFFSET)){
 					throwDistance += SPEED*dt;
+					//throwDistance = joystick.getDelta().len() * 5.0f;
+					//System.out.println("restinpoint: " +restingpoint +", input: " +input);
 				}
 				
 				float distanceIndicator = Math.min(1,throwDistance / MAX_DISTANCE);
-				pointRender.setColor(distanceIndicator,0,0,distanceIndicator);
+				//pointRender.setColor(distanceIndicator,0,0,distanceIndicator);
 			}
 			
 			targetpointHeading.set(controlContainer.getEnvironment().getTamer().getHeading());
@@ -123,7 +128,7 @@ public class SpearButton extends Actor {
 			//Set camera to follow way point 2
 			cameraPoint.set(waypoint2);
 			
-			help.set( controlContainer.getEnvironment().getTamer().getPosition().tmp().add(-1,1) );
+			help.set( controlContainer.getEnvironment().getTamer().getPosition().tmp().add(-3,3) );
 			waypoint3.set(help.add(targetPoint.tmp().mul(0.8f)));
 		}	
 	}

@@ -134,7 +134,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	}
 
 	@Override
-	public void applyPull(Vector2 point) {
+	public void applyPull(Vector2 point,float magnitude) {
 		// TODO Auto-generated method stub
 		
 	}
