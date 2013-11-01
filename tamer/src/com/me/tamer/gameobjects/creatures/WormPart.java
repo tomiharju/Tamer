@@ -83,11 +83,11 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 	public void solveJoints(float dt){
 		
-		if(child != null){
-			lengthAngle += dt;
-			JOINT_LENGTH = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle)) * 0.3f;
-			solveJoint(dt);
-			child.solveJoints(dt);
+			if(child != null){
+				solveJoint(dt);
+				lengthAngle += dt;
+				JOINT_LENGTH = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle)) * 0.3f;
+				child.solveJoints(dt);
 		}
 	}
 	public void update(float dt){
@@ -99,7 +99,7 @@ public class WormPart extends DynamicObject implements Creature {
 			child.updateChild(dt);
 		
 		getPosition().add(getVelocity().tmp().mul(dt));
-		getVelocity().mul(0.9f*dt);
+		getVelocity().mul(0.9f * dt);
 	
 	}
 	
@@ -120,7 +120,7 @@ public class WormPart extends DynamicObject implements Creature {
 				impulse 	= 0;
 			else
 				impulse 	= remove / (invMass + child.getInvMass());
-			
+			impulse = impulse * 0.9f;
 			applyImpulse(unitAxis.mul(impulse));
 		}
 	}
@@ -255,7 +255,7 @@ public class WormPart extends DynamicObject implements Creature {
 	public void applyPull(Vector2 point,float magnitude) {
 		Vector2 pullVector = point.tmp().sub(getPosition());
 		pullVector.nor().mul(magnitude);
-		getVelocity().add(pullVector.mul(Gdx.graphics.getDeltaTime())); 
+		getVelocity().add(pullVector); 
 		if(getPosition().dst(point) < 0.05f)
 			moveToPoint(point);
 	}
