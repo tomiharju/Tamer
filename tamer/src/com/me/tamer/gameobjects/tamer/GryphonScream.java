@@ -123,28 +123,43 @@ public class GryphonScream extends DynamicObject {
 	
 	@Override
 	public void update(float dt) {
+		
+	}
+
+	public void wakeUp(Environment level){
+		this.environment = level;
+		markAsActive();
+	}
+	
+	public void activate(){
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream activated");
+		//isActive = true;
+		//tTimer timer = new tTimer(this,"deactivateScream",1);
+		//timer.start();
+		
+		sound.setVolume(0.7f);
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing scream sound");
+		sound.play(TamerSound.HAWK);
+		
 		tamerPos.set(environment.getTamer().getShadow().getPosition());
-		if(isActive){
+	
 			
-			//Scream circle
-			
-			
-			
-			ArrayList<Creature> creatures = environment.getCreatures();
-			
-			for (int i = 0; i < creatures.size(); i++){	
-				if(creatures.get(i).getClass() == Worm.class){
-					
-					Worm worm = ((Worm)creatures.get(i));
-					wormPos.set(worm.getHead().getPosition());	
-					
-					if( wormPos.dst(tamerPos) < SCREAM_CIRCLE_RADIUS){
-						newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
-						newHeading.nor();
-						worm.setHeading(newHeading);
-					}
+		//Scream circle
+		ArrayList<Creature> creatures = environment.getCreatures();
+		
+		for (int i = 0; i < creatures.size(); i++){	
+			if(creatures.get(i).getClass() == Worm.class){
+				
+				Worm worm = ((Worm)creatures.get(i));
+				wormPos.set(worm.getHead().getPosition());	
+				
+				if( wormPos.dst(tamerPos) < SCREAM_CIRCLE_RADIUS){
+					newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
+					newHeading.nor();
+					worm.setHeading(newHeading);
 				}
 			}
+		
 			
 			
 			//Scream Triangle
@@ -184,24 +199,10 @@ public class GryphonScream extends DynamicObject {
 					}
 				}	
 			}
-			*/		
+			*/
+			
+			RuntimeObjectFactory.addToObjectPool("scream",this);
 		}	
-	}
-
-	public void wakeUp(Environment level){
-		this.environment = level;
-		markAsActive();
-	}
-	
-	public void activate(){
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream activated");
-		isActive = true;
-		tTimer timer = new tTimer(this,"deactivateScream",1);
-		timer.start();
-		
-		sound.setVolume(0.7f);
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing scream sound");
-		sound.play(TamerSound.HAWK);
 	}
 
 	public void deactivateScream(){
