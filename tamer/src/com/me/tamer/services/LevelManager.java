@@ -39,9 +39,12 @@ public class LevelManager {
         // register the levels
         levels = new ArrayList<Level>( 3 );
         
-        levels.add( level1 );
+        
         
         levels.add( level0 );
+        levels.add( level1 );
+        
+        
         
         
         
