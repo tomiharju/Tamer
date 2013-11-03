@@ -7,14 +7,21 @@ public class Helper {
 	static Vector2 projection = new Vector2();
 	static Vector2 unit = new Vector2();
 	
-	private static Matrix3 isomatrix = new Matrix3().scale(1,0.5f).rotate(-45);
+	private static Matrix3 worldMatrix = new Matrix3().scale(1,0.5f).rotate(-45);
+	private static Matrix3 screenMatrix = new Matrix3();
 	private static Vector2 temp = new Vector2(0,0);
 	
 
 	public static Vector2 worldToScreen(Vector2 point){
-		
 		temp.set(point);
-		temp.mul(isomatrix);
+		temp.mul(worldMatrix);
+		return temp;
+	}
+	
+	public static Vector2 screenToWorld(Vector2 point){
+		screenMatrix.set(worldMatrix);
+		temp.set(point);
+		temp.mul(screenMatrix.inv());
 		return temp;
 	}
 	
