@@ -16,10 +16,8 @@ public class Helper {
 	private static Matrix3 screenMatrix = new Matrix3();
 	private static Vector2 temp = new Vector2(0,0);
 	
-
-	
-
 	public static Vector2 worldToScreen(Vector2 point){
+	
 		temp.set(point);
 		temp.mul(worldMatrix);
 		return temp;

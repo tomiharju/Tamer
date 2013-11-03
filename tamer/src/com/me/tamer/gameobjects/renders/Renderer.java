@@ -32,4 +32,5 @@ public interface Renderer {
 	public void setPosition(Vector2 pos);
 	public void setOrientation(int orientation);
 	public void setAngle(float angle);
+	public void setBounds(float x, float y, float width, float height);
 }

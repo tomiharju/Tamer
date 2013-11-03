@@ -47,7 +47,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 	
 	public void setBogHole(){
 		for(SandPart s : parts)
-			bogHoleCenter.add(s.getCenterPosition());
+			bogHoleCenter.add(Helper.screenToWorld(s.getScreenTileCenter()));
 		bogHoleCenter.div(parts.size());
 	}
 	
@@ -115,10 +115,9 @@ public class Quicksand extends StaticObject implements Obstacle{
 		
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(bogHoleCenter));
-		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x-0.1f,temp.y-0.1f, 0.2f,0.2f);
+		shapeRndr.begin(ShapeType.Circle);
+		shapeRndr.circle(temp.x, temp.y, 0.1f,30);
 		shapeRndr.end();
-		
 	}
 	
 	public boolean getDebug(){

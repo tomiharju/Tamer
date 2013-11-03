@@ -3,28 +3,7 @@
 		<property type="MapSize">20:20</property>
 		<property type="MapBounds">10:10</property>
 	</Settings>
-	<GameObject type="com.me.tamer.gameobjects.tiles.obstacles.Quicksand">
-		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-			<property type="Position">-2:0</property>
-			<property type="Graphics">swamp1</property>
-			<property type="Group">0</property>
-		</SubObject>
-		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-			<property type="Position">-2:-1</property>
-			<property type="Graphics">swamp1</property>
-			<property type="Group">0</property>
-		</SubObject>
-		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-			<property type="Position">-1:-1</property>
-			<property type="Graphics">swamp1</property>
-			<property type="Group">0</property>
-		</SubObject>
-		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
-			<property type="Position">-1:0</property>
-			<property type="Graphics">swamp1</property>
-			<property type="Group">0</property>
-		</SubObject>
-	</GameObject>
+	
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
 		<property type="Position">-5:3</property>
 		<property type="Graphics">spawn</property>
