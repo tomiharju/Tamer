@@ -7,7 +7,7 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 
 public class SandPart extends StaticObject{
 	
@@ -20,24 +20,11 @@ public class SandPart extends StaticObject{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(1,0.5f);
+		setSize(Helper.TILESIZE);
 		this.setRenderType(graphics);
 		
 	}
 	
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		
-		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(IsoHelper.twoDToTileIso(getPosition()));
-		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x-0.1f,temp.y-0.1f, 0.2f,0.2f);
-		shapeRndr.end();
-		
-	}
 	
-	public boolean getDebug(){
-		return true;
-	}
 
 }

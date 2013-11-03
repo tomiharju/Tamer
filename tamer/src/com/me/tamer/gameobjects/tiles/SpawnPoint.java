@@ -17,6 +17,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 /**
@@ -59,7 +60,7 @@ public class SpawnPoint extends StaticObject{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(new Vector2(1,0.5f));
+		setSize(Helper.TILESIZE);
 		this.setRenderType(graphics);
 	}
 	

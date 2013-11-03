@@ -15,27 +15,24 @@ import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class ScreamButton extends Actor{
+	private final float BUTTON_SIZE				= 110;
 	
-	private ControlContainer controlContainer 	= null;
-	private UiRenderer renderer 				= null;
-	private Tamer tamer 						= null;
-	private Environment environment 			= null;
+
+	private ControlContainer controlContainer 			= null;
+	private UiRenderer renderer 						= null;
+	private Tamer tamer 								= null;
+	private Environment environment 					= null;
 	
 	//Button variables
-	Vector2 restingpoint 			= null;
-	Vector2 delta					= null;
-	private Vector2 input			= null;
-	private Vector2 localCenter 	= null;
-	private final float BUTTON_SIZE	= 110;
+	Vector2 restingpoint 	= new Vector2(Gdx.graphics.getWidth() - 110,200);
+	Vector2 delta			= new Vector2(0,0);
+	private Vector2 input			= new Vector2(0,0);
+	private Vector2 localCenter 	= new Vector2(BUTTON_SIZE / 2, BUTTON_SIZE / 2);
 	boolean pressed		= false;
 	
 
-	public ScreamButton(ControlContainer inputController) {
-		this.controlContainer = inputController;
-		restingpoint	= new Vector2(Gdx.graphics.getWidth() - 110,200);
-		delta			= new Vector2(0,0);
-		input			= new Vector2(0,0);
-		localCenter 	= new Vector2(BUTTON_SIZE / 2, BUTTON_SIZE / 2);
+	public ScreamButton(ControlContainer controls) {
+		this.controlContainer = controls;
 		environment		= controlContainer.getEnvironment();
 		tamer 			= environment.getTamer();
 		renderer 		= new UiRenderer();
@@ -63,12 +60,7 @@ public class ScreamButton extends Actor{
 				if(input.dst(localCenter) < BUTTON_SIZE / 2){ 
 	                if (tamer == null) tamer = environment.getTamer();
 	                if (tamer != null){
-	                	GryphonScream scream = (GryphonScream) RuntimeObjectFactory.getObjectFromPool("scream");
-		        		if(scream != null)
-		        			tamer.useScream(scream);
-		        		else
-		        			Gdx.app.log(TamerGame.LOG, this.getClass()
-									.getSimpleName() + " :: Tried to use scream before it is returned to pool");
+		        		tamer.useScream();
 	                }
 	                return true;
 				}

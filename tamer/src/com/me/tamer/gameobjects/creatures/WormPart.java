@@ -10,7 +10,7 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.tamer.Spear;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 
 public class WormPart extends DynamicObject implements Creature {
 	
@@ -111,7 +111,7 @@ public class WormPart extends DynamicObject implements Creature {
 	public void debugDraw(ShapeRenderer shapeRndr) {
 
 		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(IsoHelper.twoDToTileIso(getPosition()));
+		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
 		shapeRndr.rect(temp.x -0.1f,temp.y-0.1f, 0.2f ,0.2f);
 		shapeRndr.end();

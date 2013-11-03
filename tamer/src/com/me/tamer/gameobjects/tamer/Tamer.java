@@ -14,20 +14,20 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
-import com.me.tamer.utils.VectorHelper;
 
 
 public class Tamer extends DynamicObject{
 	
 	private final float SPEED 		= 0.2f;
-	private final float AIM_SPEED 	= 0.04f; //heading interpolating coefficient
+	private final float AIM_SPEED 	= 0.001f; //heading interpolating coefficient
 	private final float MAX_POWER 	= 1.2f;
 	private final float BORDER_OFFSET = -5.0f;
 	private int numSpears 			= 3;
 	private ArrayList<Spear> spears = null;
-	private TamerShadow shadow;
+	private TamerShadow shadow		=null;
+	private GryphonScream scream 	= null;
 	private Environment environment;
 	private Vector2 help 			= new Vector2();
 	private Vector2 movementAxis 	= new Vector2();
@@ -58,7 +58,8 @@ public class Tamer extends DynamicObject{
 		}
 		
 		//Scream
-		RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream(environment));
+		//RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream(environment));
+		scream = new GryphonScream(environment);
 		
 		//Shadow
 		shadow = new TamerShadow(this);
@@ -94,7 +95,7 @@ public class Tamer extends DynamicObject{
 	public void update(float dt){
 		if(environment.getState() == Environment.TAMER_ENTER){
 			solveOrientation();
-			isoPosition.set(IsoHelper.twoDToTileIso(getPosition()));
+			isoPosition.set(Helper.worldToScreen(getPosition()));
 			//First Check when inside mapBounds
 			if(isoPosition.x > -mapBounds.x && isoPosition.x < mapBounds.x && isoPosition.y > -mapBounds.y && isoPosition.y < mapBounds.y){
 				//Then check that min distance is travelled
@@ -140,16 +141,16 @@ public class Tamer extends DynamicObject{
 		Vector2 mapBounds = environment.getMapBounds();
 		help.set(environment.getTamer().getShadow().getPosition());
 		
-		help.set(IsoHelper.twoDToTileIso(help));
+		help.set(Helper.worldToScreen(help));
 		help.add(movement.tmp().mul(Gdx.graphics.getDeltaTime()));
 		
 		if(help.x > mapBounds.x / 2 - BORDER_OFFSET || help.x < -mapBounds.x / 2 + BORDER_OFFSET){
 			movementAxis.set(1,0);
-			movement.sub(VectorHelper.projection(movement,movementAxis));
+			movement.sub(Helper.projection(movement,movementAxis));
 		}
 		if(help.y > mapBounds.y / 2 - BORDER_OFFSET || help.y < -mapBounds.y / 2 + BORDER_OFFSET){
 			movementAxis.set(0,1);
-			movement.sub(VectorHelper.projection(movement,movementAxis));
+			movement.sub(Helper.projection(movement,movementAxis));
 		}
 		
 		return movement;	
@@ -191,7 +192,7 @@ public class Tamer extends DynamicObject{
 		this.spawnDirection.set(spawnDirection);
 	}
 	
-	public void useScream(GryphonScream scream){
+	public void useScream(){
 		scream.activate();
 	}
 	

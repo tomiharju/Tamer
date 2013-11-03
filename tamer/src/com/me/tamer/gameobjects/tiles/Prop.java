@@ -15,7 +15,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.physics.RigidBody;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 
 /**
  * @author tomi
@@ -26,7 +26,7 @@ public class Prop extends StaticObject implements Obstacle{
 	
 	
 	
-	private float scale = 0;
+	private float scale 	 = 0;
 	private float bounds	 = 0;
 	private Vector2 temp	 = new Vector2();
 	
@@ -38,11 +38,11 @@ public class Prop extends StaticObject implements Obstacle{
 
 	public void setPixelsX(String pixels){
 		float x = Float.parseFloat(pixels);
-		setSize(x,getSize().y);
+		setSize(x / Helper.TILE_WIDTH,getSize().y );
 	}
 	public void setPixelsY(String pixels){
 		float y = Float.parseFloat(pixels);
-		setSize(getSize().x,y);
+		setSize(getSize().x ,y / Helper.TILE_WIDTH);
 	}
 	public void setScale(String scale){
 		float s = Float.parseFloat(scale);
@@ -55,7 +55,7 @@ public class Prop extends StaticObject implements Obstacle{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(getSize().x / 40 , (getSize().y / 40));
+		setSize(getSize().x , getSize().y);
 		setRenderType(graphics);
 	}
 
@@ -67,8 +67,7 @@ public class Prop extends StaticObject implements Obstacle{
 			temp.set(((DynamicObject) creatures.get(i)).getPosition());
 		//	temp.add(((DynamicObject) creatures.get(i)).getVelocity().tmp().mul(Gdx.graphics.getDeltaTime()));
 			Vector2 center = getPosition();
-			boolean xCollision = false;
-			boolean yCollision = false;
+		
 			if(temp.x > center.x - bounds  && temp.x < center.x + bounds 
  				& temp.y > center.y  && temp.y < center.y + bounds * 2){
 				System.out.println("Worm at " +temp.toString() +" center at "+center.toString()+ " bounds " +bounds );
@@ -118,13 +117,13 @@ public class Prop extends StaticObject implements Obstacle{
 	public void debugDraw(ShapeRenderer shapeRndr) {
 		
 		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(IsoHelper.twoDToTileIso(getPosition()));
+		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
 		shapeRndr.rect(temp.x - bounds / 2,temp.y, bounds , bounds / 2);
 		shapeRndr.end();
 		
 		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(IsoHelper.twoDToTileIso(getPosition()));
+		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
 		shapeRndr.rect(temp.x -0.1f,temp.y-0.1f, 0.2f ,0.2f);
 		shapeRndr.end();

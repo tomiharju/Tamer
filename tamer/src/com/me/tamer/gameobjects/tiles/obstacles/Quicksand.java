@@ -12,12 +12,13 @@ import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 
 public class Quicksand extends StaticObject implements Obstacle{
 	private ArrayList<SandPart> parts;
 	private ArrayList<Creature> creatures_entered;
 	private Vector2 bogHoleCenter;
+	private Vector2 temp = new Vector2();
 
 	private final float PULL_MAGNITUDE = 8;
 	private boolean activated;
@@ -48,8 +49,6 @@ public class Quicksand extends StaticObject implements Obstacle{
 		for(SandPart s : parts)
 			bogHoleCenter.add(s.getCenterPosition());
 		bogHoleCenter.div(parts.size());
-		//Move center half tile size up so that its realy in the center of the tile
-		bogHoleCenter.set(bogHoleCenter.x,bogHoleCenter.y);
 	}
 	
 	public void resolve(ArrayList<Creature> creatures){
@@ -111,7 +110,20 @@ public class Quicksand extends StaticObject implements Obstacle{
 			}		
 		}
 	}
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		
+		shapeRndr.setColor(1, 1, 1, 1);
+		temp.set(Helper.worldToScreen(bogHoleCenter));
+		shapeRndr.begin(ShapeType.Rectangle);
+		shapeRndr.rect(temp.x-0.1f,temp.y-0.1f, 0.2f,0.2f);
+		shapeRndr.end();
+		
+	}
 	
+	public boolean getDebug(){
+		return true;
+	}
 	
 	
 	public void draw(SpriteBatch batch){

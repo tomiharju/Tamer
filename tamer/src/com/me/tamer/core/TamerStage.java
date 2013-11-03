@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.ui.ControlContainer;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 
 public class TamerStage extends Stage{
 	
@@ -121,8 +121,8 @@ public class TamerStage extends Stage{
 		debugRender.setColor(1, 1, 1, 1);
 		
 		for (int i = 0; i<debugLines.size(); i+=2){
-			start.set ( IsoHelper.twoDToTileIso(debugLines.get(i).tmp() ));
-			end.set( IsoHelper.twoDToTileIso(debugLines.get(i+1).tmp() ));
+			start.set ( Helper.worldToScreen(debugLines.get(i).tmp() ));
+			end.set( Helper.worldToScreen(debugLines.get(i+1).tmp() ));
 			
 			debugRender.begin(ShapeType.Line);
 			debugRender.line(start.x , start.y, end.x, end.y );
@@ -130,8 +130,7 @@ public class TamerStage extends Stage{
 		}
 	}
 	
-	public static void addDebugLine(Vector2 s, Vector2 e){
-		
+	public static void addDebugLine(Vector2 s, Vector2 e){	
 		debugLines.add( new Vector2().set(s));
 		debugLines.add( new Vector2().set(e));
 	}
@@ -157,7 +156,7 @@ public class TamerStage extends Stage{
 	public void controlCamera(){
 		switch (cameraHolder) {
 		case TAMER_CAMERA:
-			if(environment.getTamer()!=null)cameraPosition.set(IsoHelper.twoDToTileIso(environment.getTamer().getPosition()));	
+			if(environment.getTamer()!=null)cameraPosition.set(Helper.worldToScreen(environment.getTamer().getPosition()));	
 			break;	
 		case SPEAR_CAMERA:
 			if (environment.getState() != Environment.SPEAR_TIME){
@@ -167,8 +166,9 @@ public class TamerStage extends Stage{
 				controlContainer.disableInput();
 			}
 			
-			if (((Tamer)environment.getTamer()).getActiveSpear() != null){
-				cameraPosition.set(IsoHelper.twoDToTileIso(((Tamer)environment.getTamer()).getActiveSpear().getPosition()));
+
+			if (((Tamer)environment.getTamer()).getActiveSpear()!=null){
+				cameraPosition.set(Helper.worldToScreen(((Tamer)environment.getTamer()).getActiveSpear().getPosition()));
 			}else {
 				//Back to default camera
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
@@ -181,7 +181,8 @@ public class TamerStage extends Stage{
 			}
 			break;
 		case AIM_CAMERA:
-			cameraPosition.set(IsoHelper.twoDToTileIso(controlContainer.getSpearButton().getCameraPoint()));
+			cameraPosition.set(Helper.worldToScreen(controlContainer.getSpearButton().getCameraPoint()));
+			//environment.setAimMode();
 			break;
 		default:
 			Gdx.app.error(TamerGame.LOG, this.getClass().getSimpleName() + " :: ran into cameraHolder default case");
