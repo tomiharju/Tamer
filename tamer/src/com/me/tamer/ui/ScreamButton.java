@@ -17,6 +17,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 public class ScreamButton extends Actor{
 	private final float BUTTON_SIZE				= 110;
 	
+
 	private ControlContainer controlContainer 			= null;
 	private UiRenderer renderer 						= null;
 	private Tamer tamer 								= null;
@@ -28,7 +29,6 @@ public class ScreamButton extends Actor{
 	private Vector2 input			= new Vector2(0,0);
 	private Vector2 localCenter 	= new Vector2(BUTTON_SIZE / 2, BUTTON_SIZE / 2);
 	boolean pressed		= false;
-	boolean inputDisabled = false;
 	
 
 	public ScreamButton(ControlContainer controls) {
@@ -40,25 +40,11 @@ public class ScreamButton extends Actor{
 		renderer.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer.setPosition(restingpoint);
 		
+		//Actor variables
 		setPosition(restingpoint.x - BUTTON_SIZE/2, restingpoint.y - BUTTON_SIZE/2);
 		setSize(BUTTON_SIZE, BUTTON_SIZE);
-		
-		addListener(new InputListener(){
-			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				input.set(x,y);
-				if(input.dst(localCenter) < BUTTON_SIZE / 2 && !inputDisabled){ 
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-							+ " :: Gryphon touch started at (" + x + ", " + y + ")");
-	                
-	                if (tamer == null) tamer = environment.getTamer();
-	                if (tamer != null){
-		        		tamer.useScream();
-	                }
-	                return true;
-				}
-				else return false;
-	        }
-		});	
+		createListener();
+			
 	}
 	
 	public void draw(SpriteBatch batch, float parentAlpha) {
@@ -67,8 +53,21 @@ public class ScreamButton extends Actor{
 		renderer.draw(batch);
 	}
 	
-	public void setInputDisabled(boolean b){
-		inputDisabled = b;
+	public void createListener(){
+		addListener(new InputListener(){
+			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				input.set(x,y);
+				if(input.dst(localCenter) < BUTTON_SIZE / 2){ 
+	                if (tamer == null) tamer = environment.getTamer();
+	                if (tamer != null){
+		        		tamer.useScream();
+	                }
+	                return true;
+				}
+				else return false;
+	        }
+		});
 	}
+	
 }
 

@@ -1,9 +1,6 @@
 package com.me.tamer.gameobjects.tiles;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
@@ -13,8 +10,6 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
-import com.me.tamer.utils.IsoHelper;
-import com.me.tamer.utils.RendererFactory;
 import com.me.tamer.utils.Helper;
 
 /**
@@ -73,9 +68,7 @@ public class TileMap extends StaticObject implements Obstacle{
 	public void setTerrain(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize((float)Math.sqrt(2),(float)Math.sqrt(2)/2);
-
-		
+		setSize(Helper.TILESIZE);
 		setRenderType(graphics);
 
 	}

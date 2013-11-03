@@ -77,7 +77,6 @@ public class SpearButton extends Actor {
 		
 		joystick = controlContainer.getJoystick();
 		
-		setVisible(false);
 		setPosition(restingpoint.x - BUTTON_SIZE/2, restingpoint.y - BUTTON_SIZE/2);
 		setSize(BUTTON_SIZE, BUTTON_SIZE);
 		
@@ -147,7 +146,7 @@ public class SpearButton extends Actor {
 				
 				input.set(x,y);
 				
-				if(input.dst(localCenter) < BUTTON_SIZE / 2  && !inputDisabled){
+				if(input.dst(localCenter) < BUTTON_SIZE / 2 ){
 					//set to AIM Camera
 					/*
 					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
@@ -216,7 +215,5 @@ public class SpearButton extends Actor {
 		return cameraPoint;
 	}
 	
-	public void setInputDisabled(boolean b){
-		inputDisabled = b;
-	}
+	
 }

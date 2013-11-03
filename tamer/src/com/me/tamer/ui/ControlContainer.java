@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
@@ -28,7 +27,7 @@ public class ControlContainer extends Group{
 	
 	public static ControlContainer instance(){
 		if (instance == null) instance = new ControlContainer();
-		return instance;
+			return instance;
 	}
 	
 	public void initialize(TamerStage stage){
@@ -50,16 +49,12 @@ public class ControlContainer extends Group{
 		
 		spearButton = new SpearButton(this);
 		this.addActor(spearButton);
-		
+		//Hide all buttons in startup
+		setVisible(false);
 	}
 	
 	@Override
 	public void act(float dt){
-		//add here other control elements as well... or maybe just create listeners on this
-		if (environment.getTamer() != null) {
-			joystick.setVisible(true);
-			spearButton.setVisible(true);
-		}
 		SnapshotArray<Actor> actors = getChildren();
 		for (int i = 0; i < actors.size; i++){
 			actors.get(i).act(dt);
@@ -103,9 +98,10 @@ public class ControlContainer extends Group{
 		this.stage = stage;
 	}
 	
-	public void setInputDisabled(boolean b){
-		joystick.setInputDisabled(b);
-		spearButton.setInputDisabled(b);
-		screamButton.setInputDisabled(b);
+	public void enableInput(){
+		setVisible(true);
+	}
+	public void disableInput(){
+		setVisible(false);
 	}
 }
