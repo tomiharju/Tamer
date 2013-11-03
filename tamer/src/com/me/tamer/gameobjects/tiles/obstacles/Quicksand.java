@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
+import com.me.tamer.utils.IsoHelper;
 
 public class Quicksand extends StaticObject implements Obstacle{
 	private ArrayList<SandPart> parts;
@@ -18,7 +20,6 @@ public class Quicksand extends StaticObject implements Obstacle{
 	private Vector2 bogHoleCenter;
 
 	private final float PULL_MAGNITUDE = 8;
-	private Vector2 temp;
 	private boolean activated;
 	
 	private ArrayList<Creature> deadCreatures = new ArrayList<Creature>();
@@ -111,20 +112,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 		}
 	}
 	
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		/*
-		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(IsoHelper.twoDToTileIso(bogHoleCenter));
-		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x-0.2f,temp.y, 0.4f,0.4f);
-		shapeRndr.end();
-		*/		
-	}
 	
-	public boolean getDebug(){
-		return false;
-	}
 	
 	public void draw(SpriteBatch batch){
 		//Override to avoid default action

@@ -48,10 +48,9 @@ public class IsoHelper{
 	}
 
 	public static Vector2 twoDToTileIso(Vector2 point){
+	
 		temp.set(point);
-		temp.x = ( point.x + point.y ) * 0.5f;
-		temp.y = ( point.y - point.x ) * 0.25f;
-		
+		temp.mul(isomatrix);		
 		return temp;
 	}
 

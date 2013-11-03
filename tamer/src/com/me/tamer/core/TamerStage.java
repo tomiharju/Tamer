@@ -15,8 +15,8 @@ import com.me.tamer.utils.IsoHelper;
 
 public class TamerStage extends Stage{
 	
-	private final float VIRTUAL_WIDTH = 12;
-	private final float VIRTUAL_HEIGHT = 20;
+	private final float VIRTUAL_WIDTH = 12 * (float)Math.sqrt(2);
+	private final float VIRTUAL_HEIGHT = 40 * (float)(Math.sqrt(2) / 2);
 	float ASPECT_RATIO = (float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
 	
 	private OrthographicCamera camera, uiCamera;
@@ -164,26 +164,20 @@ public class TamerStage extends Stage{
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched environment state to SPEAR_TIME");
 				environment.setState(Environment.SPEAR_TIME);
 				//disable joystick while in SPEAR_CAMERA MODE
-				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: disabling input");
-				controlContainer.setInputDisabled(true);
+				controlContainer.disableInput();
 			}
 			
-			if (((Tamer)environment.getTamer()).getActiveSpear()!=null){
+			if (((Tamer)environment.getTamer()).getActiveSpear() != null){
 				cameraPosition.set(IsoHelper.twoDToTileIso(((Tamer)environment.getTamer()).getActiveSpear().getPosition()));
 			}else {
 				//Back to default camera
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 						+ " :: switched to TAMER_CAMERA");
 				cameraHolder = TAMER_CAMERA;
-				
 				//Back to default gameState
-				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched environment state to NORMAL");
 				environment.setState(Environment.NORMAL);
-				
-				//enable joystick
-				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-						+ " :: enabling input");
-				controlContainer.setInputDisabled(false);
+				//Re-enable joystick
+				controlContainer.enableInput();
 			}
 			break;
 		case AIM_CAMERA:

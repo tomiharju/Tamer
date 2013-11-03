@@ -3,6 +3,9 @@ package com.me.tamer.gameobjects.tiles;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
@@ -12,6 +15,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.physics.RigidBody;
+import com.me.tamer.utils.IsoHelper;
 
 /**
  * @author tomi
@@ -20,9 +24,11 @@ import com.me.tamer.physics.RigidBody;
  */
 public class Prop extends StaticObject implements Obstacle{
 	
-	private Vector2 x_axis = new Vector2(1,0);
-	private Vector2 y_axis = new Vector2(0,1);
-	private Vector2 separator = new Vector2();
+	
+	
+	private float scale = 0;
+	private float bounds	 = 0;
+	private Vector2 temp	 = new Vector2();
 	
 	public void setup(Environment level){
 		level.addNewObject(this);
@@ -38,6 +44,12 @@ public class Prop extends StaticObject implements Obstacle{
 		float y = Float.parseFloat(pixels);
 		setSize(getSize().x,y);
 	}
+	public void setScale(String scale){
+		float s = Float.parseFloat(scale);
+		this.scale = s;
+		bounds =  this.scale * 4;
+	
+	}
 	
 	
 	public void setGraphics(String graphics){
@@ -51,6 +63,31 @@ public class Prop extends StaticObject implements Obstacle{
 	public void resolve(ArrayList<Creature> creatures) {
 		int size = creatures.size();
 		for( int i = 0 ; i < size ; i ++){
+			
+			temp.set(((DynamicObject) creatures.get(i)).getPosition());
+		//	temp.add(((DynamicObject) creatures.get(i)).getVelocity().tmp().mul(Gdx.graphics.getDeltaTime()));
+			Vector2 center = getPosition();
+			boolean xCollision = false;
+			boolean yCollision = false;
+			if(temp.x > center.x - bounds  && temp.x < center.x + bounds 
+ 				& temp.y > center.y  && temp.y < center.y + bounds * 2){
+				System.out.println("Worm at " +temp.toString() +" center at "+center.toString()+ " bounds " +bounds );
+				temp.set(-creatures.get(i).getHeading().y*(float)Math.random()*1,creatures.get(i).getHeading().x*(float)Math.random()*1);
+				creatures.get(i).setHeading(temp);
+				}
+			
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			/*
 			//Check if creature within check radius ( 0.5f to be adjusted )
 			float check_radius = getSize().x / 3 + ((DynamicObject) creatures.get(i)).getSize().x + 0.5f;
 			float distance = ((DynamicObject) creatures.get(i)).getPosition().dst(getPosition());
@@ -72,9 +109,38 @@ public class Prop extends StaticObject implements Obstacle{
 				
 				
 			}
-			
-		}
+		*/	
+		
 		
 	}
+	
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		
+		shapeRndr.setColor(1, 1, 1, 1);
+		temp.set(IsoHelper.twoDToTileIso(getPosition()));
+		shapeRndr.begin(ShapeType.Rectangle);
+		shapeRndr.rect(temp.x - bounds / 2,temp.y, bounds , bounds / 2);
+		shapeRndr.end();
+		
+		shapeRndr.setColor(1, 1, 1, 1);
+		temp.set(IsoHelper.twoDToTileIso(getPosition()));
+		shapeRndr.begin(ShapeType.Rectangle);
+		shapeRndr.rect(temp.x -0.1f,temp.y-0.1f, 0.2f ,0.2f);
+		shapeRndr.end();
+			
+	}
+	
+	public boolean getDebug(){
+		return true;
+	}
+	
+	public Vector2 getCenterPosition(){
+		return getPosition().tmp().set(getPosition().x - bounds, getPosition().y + bounds );
+		
+	}
+	
+
+	
 	
 }

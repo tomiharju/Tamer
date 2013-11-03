@@ -1,6 +1,8 @@
 package com.me.tamer.gameobjects.creatures;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -8,6 +10,7 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.utils.IsoHelper;
 
 public class WormPart extends DynamicObject implements Creature {
 	
@@ -33,6 +36,7 @@ public class WormPart extends DynamicObject implements Creature {
 	Vector2 axis 				= new Vector2();
 	Vector2 relativeVelocity 	= new Vector2();
 	Vector2 orientationVector	= new Vector2();
+	Vector2 temp 				= new Vector2();
 	
 	public void createHead(Vector2 pos, Vector2 vel,Worm worm){
 		this.worm 			= worm;
@@ -101,6 +105,21 @@ public class WormPart extends DynamicObject implements Creature {
 		getPosition().add(getVelocity().tmp().mul(dt));
 		getVelocity().mul(0.9f * dt);
 	
+	}
+	
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+
+		shapeRndr.setColor(1, 1, 1, 1);
+		temp.set(IsoHelper.twoDToTileIso(getPosition()));
+		shapeRndr.begin(ShapeType.Rectangle);
+		shapeRndr.rect(temp.x -0.1f,temp.y-0.1f, 0.2f ,0.2f);
+		shapeRndr.end();
+			
+	}
+	
+	public boolean getDebug(){
+		return true;
 	}
 	
 	public void solveJoint(float dt){
