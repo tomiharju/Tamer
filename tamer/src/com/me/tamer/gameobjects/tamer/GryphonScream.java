@@ -16,9 +16,8 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
-import com.me.tamer.utils.tTimer;
 
 public class GryphonScream extends DynamicObject {
 	private final float SCREAM_AREA_WIDTH = 8.0f;
@@ -32,47 +31,32 @@ public class GryphonScream extends DynamicObject {
 	private Vector2 position			= new Vector2();
 	private Vector2 size				= new Vector2(0,0);
 	
-	private Vector2 screamVert1 		= null;
-	private Vector2 screamVert2 		= null;
-	private Vector2 screamVert3 		= null;
+	private Vector2 screamVert1 		= new Vector2();
+	private Vector2 screamVert2 		= new Vector2();
+	private Vector2 screamVert3 		= new Vector2();
 	
-	private Vector2 drawVert1			= null;
-	private Vector2 drawVert2			= null;
-	private Vector2 drawVert3			= null;
+	private Vector2 drawVert1			= new Vector2();
+	private Vector2 drawVert2			= new Vector2();
+	private Vector2 drawVert3			= new Vector2();
 	
-	private Vector2 wormPos1			= null;
-	private Vector2 wormPos2			= null;
-	private Vector2 wormPos3			= null;
+	private Vector2 wormPos1			= new Vector2();
+	private Vector2 wormPos2			= new Vector2();
+	private Vector2 wormPos3			= new Vector2();
 	
-	private Vector2 wormPos				= null;
-	private Vector2 tamerPos			= null;
-	private Vector2 tamerHead			= null;
-	private Vector2 newHeading			= null;
+	private Vector2 wormPos				= new Vector2();
+	private Vector2 tamerPos			= new Vector2();
+	private Vector2 tamerHead			= new Vector2();
+	private Vector2 newHeading			= new Vector2();
 	
 	private SoundManager sound			= null;
 	//ShapeRenderer shapeRenderer = new ShapeRenderer();
 	
 	public GryphonScream(Environment environment){
-		screamVert1 = new Vector2();
-		screamVert2 = new Vector2();
-		screamVert3 = new Vector2();
-		
-		drawVert1 = new Vector2();
-		drawVert2 = new Vector2();
-		drawVert3 = new Vector2();
-		
-		wormPos1 = new Vector2();
-		wormPos2 = new Vector2();
-		wormPos3 = new Vector2();
-		
-		wormPos = new Vector2();
-		tamerPos = new Vector2();
-		tamerHead = new Vector2();
-		newHeading = new Vector2();
-		
 		//Z-index for drawing order
 		setZindex(-1);
 		setGraphics();
+		
+		this.environment = environment;
 		
 		sound = SoundManager.instance();
 	}
@@ -81,8 +65,7 @@ public class GryphonScream extends DynamicObject {
 		shapeRenderer.setProjectionMatrix(environment.getStage().getCamera().combined);
 		shapeRenderer.setColor(1, 1, 1, 0.9f);
 		
-		System.out.println(tamerPos);
-		drawVert1.set(IsoHelper.twoDToTileIso(tamerPos));
+		drawVert1.set(Helper.worldToScreen(tamerPos));
 		
 		shapeRenderer.begin(ShapeType.Circle);
 		shapeRenderer.translate(drawVert1.x, drawVert1.y, 0);
@@ -111,24 +94,21 @@ public class GryphonScream extends DynamicObject {
 		*/
 	}
 	
-	
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("animated","scream");
 		render.loadGraphics("scream_ph",4,1);
 		setSize(new Vector2(0,0)); // set to 0 to hide this
 		setRenderType("scream");
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream graphics are set");
-		
 	}
 	
 	@Override
 	public void update(float dt) {
-		
 	}
 
-	public void wakeUp(Environment level){
-		this.environment = level;
-		markAsActive();
+	public void wakeUp(Environment environment){
+		//this.environment = environment;
+		//markAsActive();
 	}
 	
 	public void activate(){
@@ -140,10 +120,9 @@ public class GryphonScream extends DynamicObject {
 		sound.setVolume(0.7f);
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing scream sound");
 		sound.play(TamerSound.HAWK);
-		
+		System.out.println(tamerPos +", "+environment);
 		tamerPos.set(environment.getTamer().getShadow().getPosition());
 	
-			
 		//Scream circle
 		ArrayList<Creature> creatures = environment.getCreatures();
 		
@@ -200,7 +179,7 @@ public class GryphonScream extends DynamicObject {
 				}	
 			}
 			*/
-			
+			markAsCarbage();
 			RuntimeObjectFactory.addToObjectPool("scream",this);
 		}	
 	}

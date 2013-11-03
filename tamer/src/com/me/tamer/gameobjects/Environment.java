@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.creatures.Creature;
@@ -25,7 +27,7 @@ import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RuntimeObjectFactory;
-import com.me.tamer.utils.VectorHelper;
+import com.me.tamer.utils.Helper;
 
 public class Environment extends Actor{
 
@@ -73,6 +75,9 @@ public class Environment extends Actor{
 	
 	//SoundManager
 	SoundManager sound;
+	
+	//inputs for aiming
+	private boolean aimMode = false;
 		
 	public Environment(){	
 		gameobjects 	= new ArrayList<GameObject>();
@@ -88,6 +93,10 @@ public class Environment extends Actor{
 		ContactPool.createPool(100);
 		
 		sound = SoundManager.instance();
+		
+		//Create listener for aim-mode
+		setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		createInputListener();
 	}
 	
 	public void setStage(TamerStage stage){
@@ -174,6 +183,53 @@ public class Environment extends Actor{
 				loopCount = 0;
 			}
 		} loopCount++;
+	}
+	
+	public void setAimMode(boolean b){
+		aimMode = b;
+	}
+	
+	public void createInputListener(){
+		this.addListener(new InputListener(){
+			Vector2 input = new Vector2();
+			Vector2 waypoint1 = new Vector2(),waypoint2 = new Vector2(),waypoint3 = new Vector2(),targetPoint = new Vector2();
+			private ArrayList<Vector2> waypoints = new ArrayList<Vector2>();
+			
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				input.set(x,y);
+				if (aimMode){
+					targetPoint.set(input);
+					//this is where spear ends up
+					help.set( ((Tamer)tamer).getShadow().getPosition() );
+					waypoint1.set(help.add(targetPoint));
+					
+					help.set( ((Tamer)tamer).getPosition() );
+					waypoint2.set(help.add(targetPoint));
+					//Set camera to follow way point 2
+					//cameraPoint.set(waypoint2);
+					
+					help.set( ((Tamer)tamer).getPosition().tmp().add(-3,3) );
+					waypoint3.set(help.add(targetPoint.tmp().mul(0.8f)));
+					
+					waypoints.clear();
+					waypoints.add(waypoint1);
+					waypoints.add(waypoint2);
+					waypoints.add(waypoint3);
+					
+					Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
+					if(spear != null)
+						((Tamer)tamer).throwSpear(spear, waypoints );
+					else
+						System.err.println("No spears remaining");
+				
+					System.out.println(input);
+					
+					
+					return true;
+				}else
+					return false;
+			}
+		});
 	}
 	
 	/**
@@ -333,7 +389,7 @@ public class Environment extends Actor{
 	}
 	
 	public boolean checkInsideBounds(Vector2 pos, float offset){
-		help.set(IsoHelper.twoDToTileIso(pos));;
+		help.set(Helper.worldToScreen(pos));;
 
 		if(help.x < mapBounds.x / 2 - offset && help.x > -mapBounds.x / 2 + offset && help.y < mapBounds.y / 2 - offset && help.y > -mapBounds.y / 2 + offset){
 			return true;

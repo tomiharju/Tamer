@@ -42,13 +42,7 @@ public class LevelManager {
         
         
         levels.add( level0 );
-        levels.add( level1 );
-        
-        
-        
-        
-        
-        
+        //levels.add( level1 );
         //levels.add( level2 );
         //levels.add( level3 );
         

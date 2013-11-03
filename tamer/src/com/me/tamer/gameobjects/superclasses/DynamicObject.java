@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 
 public class DynamicObject implements GameObject{
 	
@@ -35,7 +35,7 @@ public class DynamicObject implements GameObject{
 	public void draw(SpriteBatch batch) {
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		renderer.setSize(getSize());
-		renderer.setPosition(IsoHelper.twoDToTileIso(position));
+		renderer.setPosition(Helper.worldToScreen(position));
 		renderer.setOrientation( solveOrientation() );
 		renderer.setAngle(getAngle());
 		renderer.draw(batch);	

@@ -1,0 +1,28 @@
+package com.me.tamer.utils;
+
+import com.badlogic.gdx.math.Matrix3;
+import com.badlogic.gdx.math.Vector2;
+
+public class Helper {
+	static Vector2 projection = new Vector2();
+	static Vector2 unit = new Vector2();
+	
+	private static Matrix3 isomatrix = new Matrix3().scale(1,0.5f).rotate(-45);
+	private static Vector2 temp = new Vector2(0,0);
+	
+
+	public static Vector2 worldToScreen(Vector2 point){
+		
+		temp.set(point);
+		temp.mul(isomatrix);
+		return temp;
+	}
+	
+	public static Vector2 projection(Vector2 a, Vector2 b){
+		unit.set(b);
+		unit.nor();
+		float dot = a.dot(unit);
+		projection.set(unit.mul(dot));
+		return projection;	
+	}
+}

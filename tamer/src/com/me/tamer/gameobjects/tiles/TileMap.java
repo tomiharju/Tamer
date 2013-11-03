@@ -15,7 +15,7 @@ import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.utils.IsoHelper;
 import com.me.tamer.utils.RendererFactory;
-import com.me.tamer.utils.VectorHelper;
+import com.me.tamer.utils.Helper;
 
 /**
  * @author tomi
@@ -46,7 +46,7 @@ public class TileMap extends StaticObject implements Obstacle{
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		renderer.setSize(getSize());
 		for(int i = 0 ; i < numTiles ; i++){
-			renderer.setPosition(IsoHelper.twoDToTileIso(terrain.get(i)));
+			renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
 			renderer.draw(batch);
 		
 		}
@@ -73,7 +73,8 @@ public class TileMap extends StaticObject implements Obstacle{
 	public void setTerrain(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(1,0.5f);
+		setSize((float)Math.sqrt(2),(float)Math.sqrt(2)/2);
+
 		
 		setRenderType(graphics);
 
@@ -83,7 +84,7 @@ public class TileMap extends StaticObject implements Obstacle{
 	public void resolve(ArrayList<Creature> creatures) {
 		int size = creatures.size();
 		for( int i = 0 ; i < size ; i ++){
-			collisionPos.set(IsoHelper.twoDToTileIso(((DynamicObject) creatures.get(i)).getPosition()));
+			collisionPos.set(Helper.worldToScreen(((DynamicObject) creatures.get(i)).getPosition()));
 			
 			float offset = ((DynamicObject)creatures.get(i)).getBorderOffset();
 			
