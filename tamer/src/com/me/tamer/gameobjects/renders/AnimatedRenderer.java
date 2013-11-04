@@ -103,5 +103,11 @@ public class AnimatedRenderer implements Renderer {
 		this.angle = a;
 	}
 
+	@Override
+	public void setBounds(float x, float y, float width, float height) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

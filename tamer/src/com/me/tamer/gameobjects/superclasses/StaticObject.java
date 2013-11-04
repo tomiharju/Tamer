@@ -74,15 +74,27 @@ public class StaticObject implements GameObject{
 		return position;
 	}
 	public Vector2 getCenterPosition(){
-		this.centerPosition.set(position.x,position.y + Helper.TILESIZE.y / 2);
+		//this does not work. Use the getScreenTileCenter and translate back to world if needed
+		
+		//this.centerPosition.set(position.x,position.y + Helper.TILESIZE.y / 2);
+		//this.centerPosition.set(position.x + 1 / 2,position.y + 1 / 2);
+		//this.centerPosition.set(position.x,position.y);
 		return centerPosition;
 	}
+	
+	public Vector2 getScreenTileCenter(){
+		this.centerPosition.set(Helper.worldToScreen(position).x + Helper.TILESIZE.x / 2, Helper.worldToScreen(position).y + Helper.TILESIZE.y / 2);
+		return centerPosition;
+	}
+	
+	/*
 	public void setCenterPosition(Vector2 centerPosition) {
 		this.centerPosition.set(centerPosition);
 	}
 	public void setCenterPosition(float x,float y) {
 		this.centerPosition.set(x,y);
 	}
+	*/
 	@Override
 	public Vector2 getSize() {
 		return size;

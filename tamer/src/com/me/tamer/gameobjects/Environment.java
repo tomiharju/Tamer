@@ -177,9 +177,11 @@ public class Environment extends Actor{
 			private ArrayList<Vector2> waypoints = new ArrayList<Vector2>();
 			
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				input.set(x,y);
+		
 				if (aimMode){
+					input.set(x - Gdx.graphics.getWidth() / 2,y - Gdx.graphics.getHeight() / 2);
 					targetPoint.set(input);
+					targetPoint = Helper.screenToWorld(targetPoint);
 					//this is where spear ends up
 					help.set( ((Tamer)tamer).getShadow().getPosition() );
 					waypoint1.set(help.add(targetPoint));
@@ -203,9 +205,8 @@ public class Environment extends Actor{
 					else
 						System.err.println("No spears remaining");
 				
-					System.out.println(input);
-					
-					
+					System.out.println(targetPoint);
+						
 					return true;
 				}else
 					return false;

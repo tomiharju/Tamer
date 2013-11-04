@@ -3,6 +3,7 @@
 		<property type="MapSize">20:20</property>
 		<property type="MapBounds">10:10</property>
 	</Settings>
+
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
 		<property type="Position">-2:7</property>
 		<property type="Graphics">spawn</property>
@@ -69,6 +70,7 @@
 		<property type="Scale">0.25</property>
 		<property type="DrawPos">1</property>
 	</GameObject>
+
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
 		<property type="Position">0:-5</property>
 		<property type="Graphics">spawn</property>
