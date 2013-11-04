@@ -16,7 +16,6 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
 public class StaticRenderer implements Renderer {
 	
 	private Sprite sprite;
-	private String type;
 	public StaticRenderer(){
 	
 	}
@@ -28,7 +27,7 @@ public class StaticRenderer implements Renderer {
 	
 	@Override
 	public void loadGraphics(String graphicsName) {
-		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
+		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName)));
 		if(sprite == null)
 			throw new IllegalArgumentException("Could not load sprite!");
 	}
@@ -44,8 +43,8 @@ public class StaticRenderer implements Renderer {
 	}
 	@Override
 	public void setPosition(Vector2 pos) {
-		//sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y);
-		sprite.setPosition(pos.x, pos.y);
+		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y);
+		
 		
 	}
 	

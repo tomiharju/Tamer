@@ -5,10 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Helper {
 	//Global scaleing variables
-	//Tile width in virtual pixels
+	//ELI IHAN SUOMEKSI TÄMÄ TILE_WIDTH ON NYT SE ARVO, JOKA KERROTTUNA TILEN LEVEYDELLÄ
+	//ELI SQRT(2) JOTTA SAADAAN TILEN LEVEYS PIXELEISSÄ, SIITÄKU LASKEE NIIN TULEE 40 PIXELIÄ.
 	public static float TILE_WIDTH =  480 / (float) (12 * Math.sqrt(2));
 	public static Vector2 TILESIZE = new Vector2((float)Math.sqrt(2),(float)Math.sqrt(2) / 2);
-	
 	static Vector2 projection = new Vector2();
 	static Vector2 unit = new Vector2();
 	

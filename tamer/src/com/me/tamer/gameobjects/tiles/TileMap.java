@@ -39,12 +39,12 @@ public class TileMap extends StaticObject implements Obstacle{
 	public void draw(SpriteBatch batch){
 		
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		//renderer.setSize(getSize());
+		renderer.setSize(getSize());
 	
 		
 		for(int i = 0 ; i < numTiles ; i++){
-			//renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
-			renderer.setBounds(Helper.worldToScreen(terrain.get(i)).x,Helper.worldToScreen(terrain.get(i)).y, Helper.TILESIZE.x, Helper.TILESIZE.y);
+			renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
+			//renderer.setBounds(Helper.worldToScreen(terrain.get(i)).x,Helper.worldToScreen(terrain.get(i)).y, Helper.TILESIZE.x, Helper.TILESIZE.y);
 			renderer.draw(batch);
 		
 		}
@@ -72,6 +72,7 @@ public class TileMap extends StaticObject implements Obstacle{
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setSize(Helper.TILESIZE);
+		
 		setRenderType(graphics);
 
 	}
