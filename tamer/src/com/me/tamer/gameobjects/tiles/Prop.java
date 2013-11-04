@@ -68,8 +68,8 @@ public class Prop extends StaticObject implements Obstacle{
 		//	temp.add(((DynamicObject) creatures.get(i)).getVelocity().tmp().mul(Gdx.graphics.getDeltaTime()));
 			Vector2 center = getPosition();
 		
-			if(temp.x > center.x - bounds  && temp.x < center.x + bounds 
- 				& temp.y > center.y  && temp.y < center.y + bounds * 2){
+			if(temp.x > center.x - bounds / 2 && temp.x < center.x + bounds / 2
+ 				& temp.y > center.y  && temp.y < center.y + bounds ){
 				System.out.println("Worm at " +temp.toString() +" center at "+center.toString()+ " bounds " +bounds );
 				temp.set(-creatures.get(i).getHeading().y*(float)Math.random()*1,creatures.get(i).getHeading().x*(float)Math.random()*1);
 				creatures.get(i).setHeading(temp);
@@ -131,7 +131,7 @@ public class Prop extends StaticObject implements Obstacle{
 	}
 	
 	public boolean getDebug(){
-		return true;
+		return false;
 	}
 	
 	public Vector2 getCenterPosition(){
