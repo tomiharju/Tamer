@@ -28,7 +28,7 @@ public class Prop extends StaticObject implements Obstacle{
 	private float scale 	 = 0;
 	private float bounds	 = 0;
 	private Vector2 temp	 = new Vector2();
-	
+	private Vector2 collisionAxis = new Vector2();
 	public void setup(Environment level){
 		level.addNewObject(this);
 		level.getObstacles().add(this);
@@ -64,14 +64,29 @@ public class Prop extends StaticObject implements Obstacle{
 		for( int i = 0 ; i < size ; i ++){
 			
 			temp.set(((DynamicObject) creatures.get(i)).getPosition());
-		//	temp.add(((DynamicObject) creatures.get(i)).getVelocity().tmp().mul(Gdx.graphics.getDeltaTime()));
+			temp.add(((DynamicObject) creatures.get(i)).getVelocity().tmp().mul(Gdx.graphics.getDeltaTime()));
 			Vector2 center = getPosition();
-		
+			
 			if(temp.x > center.x - bounds / 2 && temp.x < center.x + bounds / 2
  				& temp.y > center.y  && temp.y < center.y + bounds ){
-				System.out.println("Worm at " +temp.toString() +" center at "+center.toString()+ " bounds " +bounds );
-				temp.set(-creatures.get(i).getHeading().y*(float)Math.random()*1,creatures.get(i).getHeading().x*(float)Math.random()*1);
-				creatures.get(i).setHeading(temp);
+				
+				if(temp.x > center.x && temp.y < center.y + bounds && temp.y > center.y-bounds)
+					collisionAxis.set(-1,0);
+				else if(temp.x < center.x && temp.y < center.y + bounds && temp.y > center.y-bounds)
+					collisionAxis.set(1,0);
+				else if(temp.y > center.y && temp.x < center.x + bounds && temp.x > center.x-bounds)
+					collisionAxis.set(0,-1);
+				else if(temp.y < center.y && temp.x < center.x + bounds && temp.x > center.x-bounds)
+					collisionAxis.set(0,1);
+				
+				temp.set(Helper.projection(creatures.get(i).getHeading(), collisionAxis));
+			//	((DynamicObject) creatures.get(i)).getPosition().add(temp);
+				temp.set(creatures.get(i).getHeading().tmp().add(temp));
+				System.out.println("Axis is " +collisionAxis.toString() );
+
+				creatures.get(i).setHeading(temp.mul(-1));
+				
+				
 				}
 			
 			}

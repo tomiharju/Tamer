@@ -268,7 +268,7 @@ public class Environment extends Actor{
 			}	
 	}
 	
-	public void addNewObject(GameObject obj){
+	public synchronized void addNewObject(GameObject obj){
 		newobjects.add(obj);
 	}
 	
