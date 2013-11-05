@@ -28,8 +28,9 @@ public interface Renderer {
 	 * Sets the width and height of this sprite
 	 */
 	public void setSize(float w, float h);
+	public void setSize(Vector2 size);
 	public void setPosition(Vector2 pos);
 	public void setOrientation(int orientation);
-	public void setRenderType(String type);
 	public void setAngle(float angle);
+	public void setBounds(float x, float y, float width, float height);
 }

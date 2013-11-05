@@ -7,28 +7,35 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 
 public class Quicksand extends StaticObject implements Obstacle{
 	private ArrayList<SandPart> parts;
 	private ArrayList<Creature> creatures_entered;
 	private Vector2 bogHoleCenter;
-	private Vector2 temp;
+	private Vector2 temp = new Vector2();
+
+	private final float PULL_MAGNITUDE = 8;
 	private boolean activated;
+	
+	private ArrayList<Creature> deadCreatures = new ArrayList<Creature>();
+	private boolean alreadyDead = false;
+	private Hud hud;
 	
 	public Quicksand(){
 		parts 			= new ArrayList<SandPart>();
 		creatures_entered = new ArrayList<Creature>();
 		bogHoleCenter 	= new Vector2();
-		temp 			= new Vector2();
 		activated		= false;
+		
+		hud = Hud.instance();
 	}
 
-	
 	public void setup(Environment environment){
 		environment.addNewObject(this);
 		environment.addObstacle(this);
@@ -40,17 +47,15 @@ public class Quicksand extends StaticObject implements Obstacle{
 	
 	public void setBogHole(){
 		for(SandPart s : parts)
-			bogHoleCenter.add(s.getCenterPosition());
+			bogHoleCenter.add(Helper.screenToWorld(s.getScreenTileCenter()));
 		bogHoleCenter.div(parts.size());
-		//Move center half tile size up so that its realy in the center of the tile
-		bogHoleCenter.set(bogHoleCenter.x,bogHoleCenter.y);
-		//System.out.println("Bog center " + bogHoleCenter.toString());
 	}
 	
 	public void resolve(ArrayList<Creature> creatures){
 		int size = creatures.size();
 		int psize = parts.size();
 		for(int i = 0 ; i < size ; i ++){
+			
 			for(int k = 0; k < psize ; k ++){
 				//Check each section of this quicksand if any creature has entered one of them ( 1 = sand radius )
 				boolean entered = creatures.get(i).isAffected(parts.get(k).getCenterPosition(),1f);
@@ -60,74 +65,64 @@ public class Quicksand extends StaticObject implements Obstacle{
 					if(!creatures_entered.contains(creatures.get(i))){
 						//Add creature to this cluster
 						creatures_entered.add(creatures.get(i));
-						Gdx.app.debug(TamerGame.LOG, this.getClass()
-								.getSimpleName() + " :: Creature entered the field. Size " + creatures_entered.size());
+						
+						alreadyDead = false;
+						for (int j = 0; j < deadCreatures.size(); j++){
+							if (creatures.get(i)==deadCreatures.get(j))alreadyDead = true;
+						}
+						if(!alreadyDead){
+							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+									+ " :: updating label remaining");
+							hud.updateLabel("remaining", -1);
+						}
+						
 						//Do a coinflip
-						int head = (int) Math.round(Math.random());
-						if(head == 1)
+						/*int head = (int) Math.round(Math.random());
+						if(head == 1)*/
 							activated = true;
 						
 					}
 				}
 			}
 		}
-				//Check if one or more entered creatures have left the cluster
-			
-				for(int i = 0 ; i < creatures_entered.size() ; i ++){
-					Creature targetCreature = creatures_entered.get(i);
-					boolean isUnderRadius = false;
-					for(int k = 0; k < psize ; k ++){
-						//Check if this creature is closer than 1 from any of this clusters parts
-						isUnderRadius = targetCreature.isAffected(parts.get(k).getCenterPosition(),1f);
-						if(isUnderRadius)
-							break;
-					}
-					if(!isUnderRadius){
-						creatures_entered.remove(targetCreature);
-						Gdx.app.debug(TamerGame.LOG, this.getClass()
-								.getSimpleName() + " ::Creature left the cluster! "+ creatures_entered.size());
-
-					}
-					
-				}
-			
+		//Check if one or more entered creatures have left the cluster
 	
-		
+		for(int i = 0 ; i < creatures_entered.size() ; i ++){
+			Creature targetCreature = creatures_entered.get(i);
+			boolean isUnderRadius = false;
+			for(int k = 0; k < psize ; k ++){
+				//Check if this creature is closer than 1 from any of this clusters parts
+				isUnderRadius = targetCreature.isAffected(parts.get(k).getCenterPosition(),1f);
+				if(isUnderRadius)
+					break;
+			}
+			if(!isUnderRadius){
+				creatures_entered.remove(targetCreature);
+
+			}	
+		}
+	
 		if(activated){
 			size = creatures_entered.size();
 			//Start pulling all the worms that are within the cluster
 			for(int i = 0 ; i < size ; i ++){
-				creatures_entered.get(i).applyPull(bogHoleCenter);
-			}
-			
+				creatures_entered.get(i).applyPull(bogHoleCenter,PULL_MAGNITUDE);
+			}		
 		}
-		
-		
 	}
-	
-
-	
-	
-	
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
-		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(IsoHelper.twoDToTileIso(bogHoleCenter));
-		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x-0.2f,temp.y, 0.4f,0.4f);
-		shapeRndr.end();
 		
+		shapeRndr.setColor(1, 1, 1, 1);
+		temp.set(Helper.worldToScreen(bogHoleCenter));
+		shapeRndr.begin(ShapeType.Circle);
+		shapeRndr.circle(temp.x, temp.y, 0.1f,30);
+		shapeRndr.end();
 	}
 	
 	public boolean getDebug(){
 		return true;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	public void draw(SpriteBatch batch){

@@ -1,17 +1,12 @@
 package com.me.tamer.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.me.tamer.core.Level;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.UiRenderer;
-import com.me.tamer.gameobjects.tamer.Tamer;
-import com.me.tamer.utils.IsoHelper;
-import com.me.tamer.utils.VectorHelper;
 
 public class Joystick extends Actor{
 	private final float BUTTON_SIZE	= 250;
@@ -51,17 +46,16 @@ public class Joystick extends Actor{
 		renderer_inner.setPosition(joystickPoint);
 		
 		//Actor variables
-		setVisible(false);
 		setPosition(restingpoint.x - BUTTON_SIZE/2, restingpoint.y - BUTTON_SIZE/2);
 		setSize(BUTTON_SIZE, BUTTON_SIZE);
-		
 		createListener();
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		renderer_outer.draw(batch);
-		renderer_inner.setPosition(joystickPoint);
-		renderer_inner.draw(batch);		
+			renderer_outer.draw(batch);
+			renderer_inner.setPosition(joystickPoint);
+			renderer_inner.draw(batch);		
+		
 	}
 	
 	@Override
@@ -80,11 +74,11 @@ public class Joystick extends Actor{
 		else if (controlContainer.getStage().getCamera().zoom + ZOOM_MIN_AMOUNT < 1 + 0.003f * delta.len())
 			controlContainer.getStage().getCamera().zoom += ZOOM_SPEED;
 		
-		if (isVisible() && pressed){
+		if (pressed){
 			if(movementDisabled)
-				environment.getTamer().turn(delta.mul(dt));
+				environment.getTamer().turn(delta);
 			else{			
-				environment.getTamer().manouver(delta.mul(dt));
+				environment.getTamer().manouver(delta);
 			}	
 		}		
 	}
@@ -94,7 +88,7 @@ public class Joystick extends Actor{
 			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {	 
 				input.set(x,y);
 				if(input.dst(localCenter) < BUTTON_SIZE / 2){
-					if(!inputDisabled)joystickPoint.set(x,y);
+					joystickPoint.set(x,y);
 					pressed = true;
 					return true;
 				}
@@ -107,7 +101,9 @@ public class Joystick extends Actor{
 	        }
 	        
 	        public void touchDragged(InputEvent event, float x, float y, int pointer){
-	        	if(!inputDisabled)joystickPoint.set(x,y);
+	        	if(input.dst(localCenter) < BUTTON_SIZE / 2){
+	        		joystickPoint.set(x,y);
+	        	}
 			 }
 		});
 	}
@@ -120,7 +116,8 @@ public class Joystick extends Actor{
 		movementDisabled = false;
 	}
 	
-	public void setInputDisabled(boolean b){
-		inputDisabled = b;
+	
+	public Vector2 getDelta(){
+		return delta;
 	}
 }

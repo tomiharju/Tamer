@@ -45,28 +45,21 @@ public class LassoButton extends Actor{
 		
 		setPosition(restingpoint.x - size/2, restingpoint.y - size/2);
 		setSize(size, size);
-		
-		addListener(new InputListener(){
-			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-	                Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
-							+ " :: Gryphon touch started at (" + x + ", " + y + ")");
-	                
-	                if (tamer == null) tamer = environment.getTamer();
-	                if (tamer != null){
-	                	GryphonScream scream = (GryphonScream) RuntimeObjectFactory.getObjectFromPool("scream");
-		        		if(scream != null)
-		        			tamer.useScream(scream);
-		        		else
-		        			System.out.println("Scream is cooling down");
-	                }
-	                return true;
-	        }
-		});	
+		createListener();
+			
 	}
 	
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		renderer.setSize(size, size);
 		renderer.setPosition(restingpoint);
 		renderer.draw(batch);	
+	}
+	
+	public void createListener(){
+		addListener(new InputListener(){
+			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+	                return true;
+	        }
+		});
 	}
 }

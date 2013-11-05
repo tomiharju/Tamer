@@ -6,30 +6,31 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 
 public class TamerShadow extends DynamicObject{
-	private final float DISTANCE = 6.0f;
+	private final float DISTANCE = 7.0f;
 	private final float SIZE = 2.0f;
 	private Tamer tamer;
 	
 	public TamerShadow(Tamer tamer){
 		this.tamer = tamer;
-		markAsActive();	
-		size = new Vector2(SIZE, SIZE / 2);
-		setGraphics("joystick");
 		setPosition(new Vector2(0,0));
+		setGraphics("joystick");
+		setZindex(-1);
+		
 	}
 	
 	public void setGraphics(String graphics){
 		Renderer renderer = RenderPool.addRendererToPool("animated",graphics);
-		renderer.loadGraphics("joystick");
-		renderType = graphics;
+		renderer.loadGraphics("tamershadow");
+		setSize(SIZE, SIZE / 2);
+		setRenderType(graphics);
 	}
 	
 	@Override
 	public void update(float dt){
-		position.set( tamer.getPosition().x + DISTANCE, tamer.getPosition().y - DISTANCE );
+		getPosition().set( tamer.getPosition().x + DISTANCE, tamer.getPosition().y - DISTANCE );
 	}
 	
 	/*
@@ -38,12 +39,12 @@ public class TamerShadow extends DynamicObject{
 	 */
 	@Override
 	public void draw(SpriteBatch batch) {
-		batch.setColor(0.1f, 0.1f, 0.1f, 0.2f);
-		Renderer renderer = RenderPool.getRenderer(renderType);
-		renderer.setSize(size.x,size.y);
-		renderer.setPosition(IsoHelper.twoDToTileIso(position));
+		batch.setColor(0.1f, 0.1f, 0.1f, 0.7f);
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		renderer.setSize(getSize().x,getSize().y);
+		renderer.setPosition(Helper.worldToScreen(getPosition()));
 		renderer.setOrientation( solveOrientation() );
-		renderer.setAngle(angle);
+		renderer.setAngle(getAngle());
 		renderer.draw(batch);
 		
 		//Reset to default

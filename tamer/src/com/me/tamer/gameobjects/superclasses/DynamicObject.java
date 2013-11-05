@@ -6,67 +6,57 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.gameobjects.tamer.Tamer;
-import com.me.tamer.physics.RigidBody;
-import com.me.tamer.physics.RigidBodyBox;
-import com.me.tamer.physics.RigidBodyCircle;
-import com.me.tamer.utils.IsoHelper;
-import com.me.tamer.utils.RendererFactory;
+import com.me.tamer.utils.Helper;
 
 public class DynamicObject implements GameObject{
 	
 	//Someone has to fix these to private
-	protected Vector2 position = new Vector2();		//"World position"
-	protected Vector2 velocity = new Vector2();		//"World velocity"
-	protected Vector2 heading = new Vector2();
-	protected Vector2 force = new Vector2();		// Magnitude and direction of per loop position iteration
-	protected Vector2 size = new Vector2();
-	protected float angle = 0;
-	private float mass;			
-	
-	protected String renderType;
-	private boolean isCarbage = false;
-	protected RigidBody body = null;
-	private boolean debug = false;
-	private int zIndex = 0;
-	private Vector2 isoHeading = new Vector2();		//Used for determining the sprite
+	private Vector2 position 	= new Vector2();		// "World position"
+	private Vector2 velocity 	= new Vector2();		// "World velocity"
+	private Vector2 heading 	= new Vector2();		// Unit vector of current velocity
+	private Vector2 force 		= new Vector2();		// Magnitude and direction of per loop velocity increment
+	private Vector2 size		= new Vector2();		// Graphics sprite size
+	private float angle 		= 0;	
+	private String renderType	= null;					// Graphics name, used for fetching correct renderer for object
+	private boolean isCarbage 	= false;				// Setting to true, causes carbage collection loop to remove this object from game
+	private boolean debug	 	= false;
+	private int zIndex 			= 0;					// Forced drawing order 
+	private Vector2 isoHeading 	= new Vector2();		//Used for determining the sprite
+	protected float borderOffset = 0;
 	private Vector2 zeroHeading = new Vector2(-0.5f,1);// -1 + (float)Math.sin(Math.PI/8),1 + (float)Math.cos(Math.PI/8));//-0.5f, 2.0f);//;
-	private double headingAngle;
+	private float headingAngle = 0;
 	
-	public DynamicObject(){
-	}
 	
 	@Override
 	public void update(float dt) {
-		position.add(velocity.mul(dt));
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch) {
-		Renderer renderer = RenderPool.getRenderer(renderType);
-		renderer.setSize(size.x,size.y);
-		renderer.setPosition(IsoHelper.twoDToTileIso(position));
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		renderer.setSize(getSize());
+		renderer.setPosition(Helper.worldToScreen(position));
 		renderer.setOrientation( solveOrientation() );
-		renderer.setAngle(angle);
+		renderer.setAngle(getAngle());
 		renderer.draw(batch);	
 	}
 	
 	public int solveOrientation(){
 		if(getHeading() != null){
-			zeroHeading.nor();
+			getZeroHeading().nor();
 
-			headingAngle = Math.acos(getHeading().dot(zeroHeading) / (getHeading().len() * zeroHeading.len()));
+			setHeadingAngle((float) Math.acos(getHeading().dot(getZeroHeading()) / (getHeading().len() * getZeroHeading().len())));
 			
-			headingAngle = headingAngle / Math.PI * 180 / 45;
+			setHeadingAngle((float) (getHeadingAngle() / Math.PI * 180 / 45));
 			
-			if (headingAngle == 0) headingAngle = 0.001f;
-			if (heading.x > zeroHeading.x && heading.y > 0) headingAngle = 8 - headingAngle;
-			else if (heading.x > -zeroHeading.x && heading.y < 0) headingAngle = 8 - headingAngle;
+			if (getHeadingAngle() == 0) setHeadingAngle(0.001f);
+			if (heading.x > getZeroHeading().x && heading.y > 0) setHeadingAngle(8 - getHeadingAngle());
+			else if (heading.x > -getZeroHeading().x && heading.y < 0) setHeadingAngle(8 - getHeadingAngle());
 			
-			headingAngle = Math.floor(headingAngle);
+			setHeadingAngle((float) Math.floor(getHeadingAngle()));
 		}
 		
-		return (int)headingAngle;
+		return (int)getHeadingAngle();
 	}
 	
 	@Override
@@ -95,7 +85,7 @@ public class DynamicObject implements GameObject{
 	
 	@Override
 	public void setPosition(Vector2 pos){
-		this.position.set(pos.cpy());
+		this.position.set(pos);
 	}
 	
 	public void setVelocity(String vel){
@@ -114,6 +104,7 @@ public class DynamicObject implements GameObject{
 	}
 	
 	public void setRigidBody(String bodytype){
+		/*
 		if(bodytype.equalsIgnoreCase("box"))
 			body = new RigidBodyBox(position,new Vector2(0,0),0,size.x,size.y); //Position, speed, mass, width,height ( speed and mass are 0 cause its static object )
 		else if(bodytype.equalsIgnoreCase("circle"))
@@ -122,12 +113,10 @@ public class DynamicObject implements GameObject{
 			body = null;
 		if(body != null)
 			body.setOwner(this);
+			*/
 	}
 	
-	public void setMass(String mass){
-		this.mass = Integer.parseInt(mass);
-		if(this.mass == 0 ) throw new ArithmeticException("Mass cannot be 0");
-	}
+	
 	
 	@Override
 	public Vector2 getPosition() {
@@ -143,10 +132,6 @@ public class DynamicObject implements GameObject{
 		return heading;
 	}
 	
-	@Override
-	public RigidBody getRigidBody() {
-		return body;
-	}
 	
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
@@ -161,8 +146,8 @@ public class DynamicObject implements GameObject{
 	}
 	
 	public void setHeading(Vector2 heading){
-		heading.nor();
 		this.heading.set(heading);
+		this.heading.nor();
 	}
 	
 	public Vector2 getVelocity() {
@@ -225,10 +210,59 @@ public class DynamicObject implements GameObject{
 	public Vector2 getForce(){
 		return force;
 	}
+	
+	public float getBorderOffset() {
+		return borderOffset;
+	}
 
+	public void setBorderOffset(float borderOffset) {
+		this.borderOffset = borderOffset;
+	}
 
 	public void setzIndex(int zIndex) {
 		this.zIndex = zIndex;
+	}
+
+	public void setForce(Vector2 force) {
+		this.force.set(force);
+	}
+
+	public String getRenderType() {
+		return renderType;
+	}
+
+	public void setRenderType(String renderType) {
+		this.renderType = renderType;
+	}
+
+	public float getAngle() {
+		return angle;
+	}
+
+	public void setAngle(float angle) {
+		this.angle = angle;
+	}
+
+	@Override
+	public void setSize(float x, float y) {
+		this.size.set(x,y);
+		
+	}
+
+	public Vector2 getZeroHeading() {
+		return zeroHeading;
+	}
+
+	public void setZeroHeading(Vector2 zeroHeading) {
+		this.zeroHeading = zeroHeading;
+	}
+
+	public float getHeadingAngle() {
+		return headingAngle;
+	}
+
+	public void setHeadingAngle(float headingAngle) {
+		this.headingAngle = headingAngle;
 	}
 
 }

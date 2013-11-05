@@ -38,8 +38,8 @@ public class DrawOrderComparator implements Comparator<GameObject> {
 				
 			}
 		
-			o1Pos.set(IsoHelper.twoDToIso(o1Pos));
-			o2Pos.set(IsoHelper.twoDToIso(o2Pos));
+			o1Pos.set(Helper.worldToScreen(o1Pos));
+			o2Pos.set(Helper.worldToScreen(o2Pos));
 
 			//Draw the object that is further away first
 			if (o1Pos.y > o2Pos.y){

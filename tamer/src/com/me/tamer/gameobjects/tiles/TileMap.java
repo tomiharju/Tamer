@@ -1,9 +1,6 @@
 package com.me.tamer.gameobjects.tiles;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
@@ -13,9 +10,7 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
-import com.me.tamer.utils.IsoHelper;
-import com.me.tamer.utils.RendererFactory;
-import com.me.tamer.utils.VectorHelper;
+import com.me.tamer.utils.Helper;
 
 /**
  * @author tomi
@@ -26,7 +21,7 @@ import com.me.tamer.utils.VectorHelper;
  */
 public class TileMap extends StaticObject implements Obstacle{
 	
-	private int numTiles	=0;
+	private int numTiles	= 0;
 	private ArrayList<Vector2> terrain;
 	private Vector2 mapBounds;
 	private Vector2 collisionHeading 	= new Vector2();
@@ -37,24 +32,30 @@ public class TileMap extends StaticObject implements Obstacle{
 		env.addNewObject(this);
 		env.getObstacles().add(this);
 		mapBounds = env.getMapBounds();
-		setZindex(1);
+		setZindex(2);
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch){
-		Renderer renderer = RenderPool.getRenderer(renderType);
-		renderer.setSize(size.x,size.y);
+		
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		renderer.setSize(getSize());
+	
+		
 		for(int i = 0 ; i < numTiles ; i++){
-			renderer.setPosition(IsoHelper.twoDToTileIso(terrain.get(i)));
+			renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
+			//renderer.setBounds(Helper.worldToScreen(terrain.get(i)).x,Helper.worldToScreen(terrain.get(i)).y, Helper.TILESIZE.x, Helper.TILESIZE.y);
 			renderer.draw(batch);
+		
 		}
 			
 	}
 	
-	
 	public void setTileMap(String data){
 		String[] points = data.split("\\.");
 		terrain = new ArrayList<Vector2>();
+		
+		
 		for(String s : points){
 			Vector2 tile = new Vector2();
 			String[] coords = s.split("\\:");
@@ -63,16 +64,16 @@ public class TileMap extends StaticObject implements Obstacle{
 			tile.set(x,y);
 			terrain.add(tile);
 		}
-			
+		
 		numTiles = terrain.size();	
 	}
 	
-	public void setGraphics(String graphics){
+	public void setTerrain(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(new Vector2(1,0.5f));
+		setSize(Helper.TILESIZE);
 		
-		this.renderType = graphics;
+		setRenderType(graphics);
 
 	}
 
@@ -80,30 +81,29 @@ public class TileMap extends StaticObject implements Obstacle{
 	public void resolve(ArrayList<Creature> creatures) {
 		int size = creatures.size();
 		for( int i = 0 ; i < size ; i ++){
-			collisionPos.set(IsoHelper.twoDToTileIso(((DynamicObject) creatures.get(i)).getPosition()));
+			collisionPos.set(Helper.worldToScreen(((DynamicObject) creatures.get(i)).getPosition()));
 			
-			if(collisionPos.x > mapBounds.x / 2 || collisionPos.x < -mapBounds.x / 2){
-				collisionAxis.set(0,1);
+			float offset = ((DynamicObject)creatures.get(i)).getBorderOffset();
+			
+			if(collisionPos.x > mapBounds.x / 2 - offset || collisionPos.x < -mapBounds.x / 2 + offset){
+				collisionAxis.set(0,-1);//.mul(collisionPos.x).nor();
 				collisionHeading.set(creatures.get(i).getHeading());
-				collisionHeading.set(VectorHelper.projection(collisionHeading,collisionAxis));
-				collisionHeading.rotate(45);
-				//System.out.println("Collision heading "+collisionHeading.toString());
+				collisionHeading.set(0,collisionHeading.y);
+			
 
+				collisionHeading.rotate(45);
 				creatures.get(i).setHeading(collisionHeading);
 			}
-			if(collisionPos.y > mapBounds.y / 2 || collisionPos.y < -mapBounds.y / 2){
+			if(collisionPos.y > mapBounds.y / 2 - offset|| collisionPos.y < -mapBounds.y / 2 + offset){
 				collisionAxis.set(1,0);
 				collisionHeading.set(creatures.get(i).getHeading());
-				collisionHeading.set(VectorHelper.projection(collisionHeading,collisionAxis));
-				collisionHeading.rotate(45);
+				collisionHeading.set(collisionHeading.x,0);
 
-				//System.out.println("Collision heading "+collisionHeading.toString());
-				
+				collisionHeading.rotate(45);				
 				creatures.get(i).setHeading(collisionHeading);
 			}
 			
 		}
-		
 	}
 	
 

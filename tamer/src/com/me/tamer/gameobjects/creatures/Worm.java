@@ -5,29 +5,22 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 
 public class Worm extends DynamicObject implements Creature{
-
+	
+	private final float BORDER_OFFSET = 0.0f;
 	int ordinal = 1;
 	private ArrayList<WormPart> parts;
+	private final float SPEED = 2.5f;
 	private WormPart head = null;
 	private WormPart tail = null;
 	
 	public Worm(){
 		parts = new ArrayList<WormPart>();
+		setBorderOffset(BORDER_OFFSET);
 	}
-	
-	public void setVelocity(Vector2 vel){
-		this.velocity = new Vector2(vel);
-	}
-	public void setPosition(Vector2 pos){
-		this.position = new Vector2(pos);
-	}
-	
-	
 	
 	public void setup(){
 		//No action because this object is not ment to be on game right away
@@ -35,21 +28,20 @@ public class Worm extends DynamicObject implements Creature{
 	
 	public void wakeUp(Environment environment){
 		environment.getCreatures().add(this);
-		//System.out.println("WORM WOKE UP!");
-		addPart("head",0,position,velocity);
+		addPart("head",0,super.getPosition(),super.getVelocity());
 		for(int i = 0 ; i < 3 ; i++)
-			addPart("joint",i+1,position,velocity);
+			addPart("joint",i+1,super.getPosition(),super.getVelocity());
 		connectPieces();
 		
 		for(WormPart part : parts){
 			environment.addObject(part);
 			part.setZindex(0);
 		}
+		
 		head = parts.get(0);
 		tail = parts.get(parts.size()-1);
 		
 	}
-
 
 	public void addPart(String type, int ordinal,Vector2 pos, Vector2 vel){
 		WormPart part = null;
@@ -69,20 +61,16 @@ public class Worm extends DynamicObject implements Creature{
 		for(int i = 0 ; i < parts.size() ; i++){
 			if( (i + 1) < parts.size()){
 				parts.get( i + 1 ).attachToParent(parts.get(i));
-				//TODO: Create a rigidbodyline between parts
 			}else if( (i + 1 ) == parts.size() )
-				parts.get(i).setAsTail();
-			
+				parts.get(i).setAsTail();		
 		}
 	}
 	
 	public void update(float dt){
 		head.solveJoints(dt);
 		head.updateChild(dt);
+		head.getVelocity().add(head.getForce());
 	}
-	
-	
-
 	
 	public void draw(SpriteBatch batch){
 		//No action
@@ -139,20 +127,20 @@ public class Worm extends DynamicObject implements Creature{
 	}
 
 	@Override
-	public void moveToFinish() {
-		head.moveToFinish();
+	public void moveToPoint(Vector2 point) {
+		head.moveToPoint(point);
 		
 	}
 
 	@Override
 	public Creature affectedCreature(Vector2 point,float radius) {
-		for(int i = 0; i < parts.size(); i++){
-			return parts.get(i).affectedCreature(point,radius);
+		for(int i = 0; i < parts.size() ; i++){
+			if(parts.get(i).affectedCreature(point,radius) != null)
+				return parts.get(i);
 		}
 		return null;
-		
-		
 	}
+	
 	@Override
 	public boolean isAffected(Vector2 point, float radius) {
 		boolean partAffected = false;
@@ -165,21 +153,22 @@ public class Worm extends DynamicObject implements Creature{
 	}
 
 	@Override
-	public void applyPull(Vector2 point) {
-		float distToHead = point.dst(head.getPosition());
-		float distToTail = point.dst(tail.getPosition());
-		if(distToHead < distToTail)
-			head.applyPull(point);
-		else
-			tail.applyPull(point);
-		
+	public void applyPull(Vector2 point, float magnitue) {
+		//float distToHead = point.dst(head.getPosition());
+		//float distToTail = point.dst(tail.getPosition());
+		//if(distToHead < distToTail)
+			head.applyPull(point,magnitue);
+		//else
+			//tail.applyPull(point,magnitue);
 	}
+	
 	public void setHeading(Vector2 newHeading){
+		//heading.set(newHeading);
 		head.setHeading(newHeading);
+		head.setForce(getHeading().mul(SPEED));
 	}
 
-	
-	
-	
-	
+	public float getSPEED() {
+		return SPEED;
+	}
 }

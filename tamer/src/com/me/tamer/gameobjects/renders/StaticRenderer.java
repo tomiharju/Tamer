@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.GameObject;
-import com.me.tamer.utils.IsoHelper;
 
 /**
  * @author Kesyttäjät
@@ -17,18 +16,18 @@ import com.me.tamer.utils.IsoHelper;
 public class StaticRenderer implements Renderer {
 	
 	private Sprite sprite;
-	private String type;
 	public StaticRenderer(){
 	
 	}
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
+
 	}
 	
 	@Override
 	public void loadGraphics(String graphicsName) {
-		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
+		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName)));
 		if(sprite == null)
 			throw new IllegalArgumentException("Could not load sprite!");
 	}
@@ -38,8 +37,19 @@ public class StaticRenderer implements Renderer {
 		
 	}
 	@Override
+	public void setSize(Vector2 size) {
+		sprite.setSize(size.x,size.y);
+		
+	}
+	@Override
 	public void setPosition(Vector2 pos) {
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y);
+		
+		
+	}
+	
+	public void setBounds(float x, float y, float width, float height){
+		sprite.setBounds(x, y, width, height);
 		
 	}
 	
@@ -48,11 +58,7 @@ public class StaticRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public void setRenderType(String type) {
-		this.type = type;
-		
-	}
+	
 	@Override
 	public void loadGraphics(String animName, int FRAME_COLS, int FRAME_ROWS) {
 		// TODO Auto-generated method stub

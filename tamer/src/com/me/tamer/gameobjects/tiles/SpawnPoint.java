@@ -13,9 +13,11 @@ import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 /**
@@ -35,8 +37,7 @@ public class SpawnPoint extends StaticObject{
 	private int spawnId = 0;
 	
 	private Hud hud;
-	
-	
+		
 	//EXPERIMENTAL STUFF
 	private ArrayList<Creature> creatures;
 	private Tamer tamer;
@@ -46,6 +47,7 @@ public class SpawnPoint extends StaticObject{
 		creatures = new ArrayList<Creature>();
 		hud = Hud.instance();
 	}
+	
 	public void setup(Environment environment){
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: started spawning");
 		environment.addNewObject(this);
@@ -58,8 +60,8 @@ public class SpawnPoint extends StaticObject{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(new Vector2(1,0.5f));
-		this.renderType = graphics;
+		setSize(Helper.TILESIZE);
+		this.setRenderType(graphics);
 	}
 	
 	public void setSpawnCount(String count){
@@ -70,10 +72,7 @@ public class SpawnPoint extends StaticObject{
 		float angle = Float.parseFloat(vel);
 		angle += 45;
 		this.spawnVelocity = new Vector2(1,0);
-		this.spawnVelocity.setAngle(angle);
-		
-		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: SPAWN ANGLE IS "+ spawnVelocity.toString());
-		
+		this.spawnVelocity.setAngle(angle);		
 	}
 	
 	public void setSleepTime(String time){
@@ -158,7 +157,7 @@ public class SpawnPoint extends StaticObject{
 			isTamerSpawn = true;
 			tamer = new Tamer();
 			
-			tamer.setPosition(position);
+			tamer.setPosition(getCenterPosition());
 			tamer.setSpawnDirection(spawnVelocity);
 			tamer.setHeading(spawnVelocity.tmp().nor());
 
