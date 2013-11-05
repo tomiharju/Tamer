@@ -25,6 +25,7 @@ public class TileMap extends StaticObject implements Obstacle{
 	private int numTiles	= 0;
 	private ArrayList<Vector2> terrain;
 	private Vector2 origo = new Vector2(0,0);
+	private Vector2 tamerpos = new Vector2();
 	private Vector2 mapBounds;
 	private Vector2 collisionHeading 	= new Vector2();
 	private Vector2 collisionAxis		= new Vector2();
@@ -43,12 +44,16 @@ public class TileMap extends StaticObject implements Obstacle{
 	@Override
 	public void draw(SpriteBatch batch){
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		Vector2 tamerpos = (env.getTamer() != null) ? env.getTamer().getPosition() : origo  ;
+		if(env.getTamer() != null)
+			tamerpos.set(Helper.worldToScreen(env.getTamer().getShadow().getPosition()));
+		else
+			tamerpos.set(origo);
 		for(int i = 0 ; i < numTiles ; i++){
-			Vector2 tilepos = (terrain.get(i));
-			if(tilepos.x > tamerpos.x - Helper.VIRTUAL_SIZE_X *1.9 && tilepos.x < tamerpos.x + Helper.VIRTUAL_SIZE_X *1.9
-					&& tilepos.y > tamerpos.y - Helper.VIRTUAL_SIZE_Y *1.1 && tilepos.y < tamerpos.y + Helper.VIRTUAL_SIZE_Y *1.1){
-			renderer.setPosition(Helper.worldToScreen(tilepos));
+			Vector2 tilepos = Helper.worldToScreen(terrain.get(i));
+			if(tilepos.x > tamerpos.x - Helper.VIRTUAL_SIZE_X * 0.75 && tilepos.x < tamerpos.x + Helper.VIRTUAL_SIZE_X *0.75
+					&& tilepos.y > tamerpos.y - Helper.VIRTUAL_SIZE_Y *0.75 && tilepos.y < tamerpos.y + Helper.VIRTUAL_SIZE_Y *0.75){
+			renderer.setPosition(tilepos);
+
 			//renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
 			//renderer.setBounds(Helper.worldToScreen(terrain.get(i)).x,Helper.worldToScreen(terrain.get(i)).y, Helper.TILESIZE.x, Helper.TILESIZE.y);
 			renderer.draw(batch);

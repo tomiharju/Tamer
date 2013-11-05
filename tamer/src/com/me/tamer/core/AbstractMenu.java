@@ -44,7 +44,7 @@ public class AbstractMenu extends AbstractScreen{
         skin.add("white", new Texture(pixmap));
  
         // Store the default libgdx font under the name "default".
-        BitmapFont bfont=new BitmapFont();
+        BitmapFont bfont = new BitmapFont();
         bfont.scale(1);
         skin.add("default",bfont);
  

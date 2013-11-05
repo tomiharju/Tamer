@@ -57,8 +57,8 @@ public class Quicksand extends StaticObject implements Obstacle{
 		for(int i = 0 ; i < size ; i ++){
 			
 			for(int k = 0; k < psize ; k ++){
-				//Check each section of this quicksand if any creature has entered one of them ( 1 = sand radius )
-				boolean entered = creatures.get(i).isAffected(parts.get(k).getCenterPosition(),1f);
+				//Check each section of this quicksand if any creature has entered one of them ( 0.5f = sand radius )
+				boolean entered = creatures.get(i).isAffected(parts.get(k).getCenterPosition(),0.5f);
 				//If some creature is inside this cluster
 				if(entered){
 					//Check if creature is not already inside this cluster
@@ -68,7 +68,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 						
 						alreadyDead = false;
 						for (int j = 0; j < deadCreatures.size(); j++){
-							if (creatures.get(i)==deadCreatures.get(j))alreadyDead = true;
+							if (creatures.get(i) == deadCreatures.get(j))alreadyDead = true;
 						}
 						if(!alreadyDead){
 							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()

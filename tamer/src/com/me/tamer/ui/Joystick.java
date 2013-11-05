@@ -62,8 +62,8 @@ public class Joystick extends Actor{
 	public void act(float dt) {
 		delta.set(joystickPoint.tmp().sub(restingpoint));
 		
-		if(delta.len() > (BUTTON_SIZE - pointersize/2) / 2){
-			delta = delta.nor().mul((BUTTON_SIZE - pointersize/2)/2);
+		if(delta.len() >= (BUTTON_SIZE - pointersize / 2) / 2 ){
+			delta = delta.nor().mul((BUTTON_SIZE - pointersize / 2 ) / 2 );
 			joystickPoint.set(restingpoint.tmp().add(delta));
 
 		}

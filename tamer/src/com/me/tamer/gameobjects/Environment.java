@@ -213,7 +213,6 @@ public class Environment extends Actor{
 					else
 						System.err.println("No spears remaining");
 				
-					System.out.println(targetPoint);
 						
 					return true;
 				}else
@@ -322,7 +321,6 @@ public class Environment extends Actor{
 	
 	public void dispose(){
 		for(GameObject go : gameobjects){
-			
 			go.dispose();
 		}
 		gameobjects.clear();
@@ -333,7 +331,7 @@ public class Environment extends Actor{
 	}
 	
 	public boolean checkInsideBounds(Vector2 pos, float offset){
-		help.set(Helper.worldToScreen(pos));;
+		help.set(Helper.worldToScreen(pos));
 
 		if(help.x < mapBounds.x / 2 - offset && help.x > -mapBounds.x / 2 + offset && help.y < mapBounds.y / 2 - offset && help.y > -mapBounds.y / 2 + offset){
 			return true;
