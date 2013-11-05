@@ -265,4 +265,10 @@ public class DynamicObject implements GameObject{
 		this.headingAngle = headingAngle;
 	}
 
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -17,7 +17,7 @@ import com.me.tamer.services.SoundManager.TamerSound;
 
 
 public class AbstractMenu extends AbstractScreen{
-	TextButton continueButton, newGameButton, levelsButton, optionsButton, mainMenuButton;
+	TextButton continueButton, newGameButton, levelsButton, optionsButton, mainMenuButton, exitButton;
 	Skin skin;
     Table table;
 	TextButtonStyle textButtonStyle;
@@ -54,12 +54,10 @@ public class AbstractMenu extends AbstractScreen{
         textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
         //textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
         textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
- 
         textButtonStyle.font = skin.getFont("default");
- 
         skin.add("default", textButtonStyle);
         
-        newGameButton=new TextButton("New Game",textButtonStyle);
+        newGameButton = new TextButton("New Game",textButtonStyle);
         newGameButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 game.setScreen( game.createNewPlayScreen() );
@@ -87,6 +85,12 @@ public class AbstractMenu extends AbstractScreen{
             	game.setScreen( game.getMainMenuScreen() );
             }
         }); 
+		  exitButton = new TextButton("Exit Game",textButtonStyle);
+		  exitButton.addListener(new ChangeListener() {
+	        public void changed (ChangeEvent event, Actor actor) {
+	        	Gdx.app.exit();
+	        }
+	        }); 
     }
 
     public void resize (int width, int height) {

@@ -279,6 +279,9 @@ public class WormPart extends DynamicObject implements Creature {
 			moveToPoint(point);
 	}
 
+	public void intimidate(){
+		
+	}
 	@Override
 	public boolean isAffected(Vector2 point, float radius) {
 		// TODO Auto-generated method stub

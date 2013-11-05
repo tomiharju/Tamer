@@ -25,6 +25,8 @@ public class MainMenuScreen extends AbstractMenu{
 	    table.row();
 	    table.add( optionsButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
 	    table.row();	
+	    table.add( exitButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
+	    table.row();	
 	}
 	
 	@Override

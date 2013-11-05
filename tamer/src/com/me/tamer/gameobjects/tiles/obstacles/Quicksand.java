@@ -73,7 +73,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 						if(!alreadyDead){
 							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 									+ " :: updating label remaining");
-							hud.updateLabel("remaining", -1);
+							hud.updateLabel(Hud.LABEL_REMAINING, -1);
 						}
 						
 						//Do a coinflip

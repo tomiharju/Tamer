@@ -174,6 +174,12 @@ public class StaticObject implements GameObject{
 		this.renderType = renderType;
 	}
 
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

@@ -62,11 +62,11 @@ public class Endingpoint extends StaticObject implements Obstacle{
 						
 						Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 								+ " :: updating label survived");
-						hud.updateLabel("survived", 1);
+						hud.updateLabel(Hud.LABEL_SURVIVED, 1);
 						
 						Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 								+ " :: updating label remaining");
-						hud.updateLabel("remaining", -1);
+						hud.updateLabel(Hud.LABEL_REMAINING, -1);
 					}					
 				}
 			}	

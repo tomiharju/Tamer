@@ -104,4 +104,7 @@ public class ControlContainer extends Group{
 	public void disableInput(){
 		setVisible(false);
 	}
+	public void dispose(){
+		instance = null;
+	}
 }

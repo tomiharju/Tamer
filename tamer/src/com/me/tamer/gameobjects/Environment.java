@@ -13,10 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.creatures.Creature;
+import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.gameobjects.tiles.TileMap;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.physics.Contact;
 import com.me.tamer.physics.RigidBody;
@@ -55,11 +57,9 @@ public class Environment extends Actor{
 	private ArrayList<Contact> contacts;
 	private ArrayList<RigidBody> rigidbodies;
 	
-	//Physics optimization variables
-	Vector2 impulseA = new Vector2();
-	Vector2 impulseB = new Vector2();
-	Vector2 bVelocity = new Vector2();
-	Vector2 normal = new Vector2();
+	//Optimization variables
+	Vector2 tamerpos = new Vector2();
+
 	
 	//Drawing-order
 	private int loopCount = 0;
@@ -90,7 +90,7 @@ public class Environment extends Actor{
 		controls = ControlContainer.instance();
 		
 		sound = SoundManager.instance();
-		
+		RenderPool.createAtlas();
 		//Create listener for aim-mode
 		setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		createInputListener();
@@ -142,8 +142,16 @@ public class Environment extends Actor{
 		batch.setProjectionMatrix(stage.getCamera().combined); 
 		int numObjects = gameobjects.size();
 		sortDrawOrder(numObjects);
-		for(int k = 0 ; k < numObjects ; k++)
-			gameobjects.get(k).draw(batch);
+		for(int k = 0 ; k < numObjects ; k++){
+			Vector2 pos = gameobjects.get(k).getPosition();
+			if(gameobjects.get(k).getClass() == TileMap.class)
+				gameobjects.get(k).draw(batch);
+			else if(pos.x > tamerpos.x - Helper.VIRTUAL_SIZE_X *1.9 && pos.x < tamerpos.x + Helper.VIRTUAL_SIZE_X *1.9
+					&& pos.y > tamerpos.y - Helper.VIRTUAL_SIZE_Y *1.1 && pos.y < tamerpos.y + Helper.VIRTUAL_SIZE_Y *1.1){
+				
+				gameobjects.get(k).draw(batch);
+			}
+		}
 	}
 	
 	public void debugDraw(ShapeRenderer sr){
@@ -309,13 +317,17 @@ public class Environment extends Actor{
 	 */
 	public void setTamer(Tamer tamer){
 		this.tamer = tamer;
+		tamerpos = tamer.getPosition();
 	}
 	
 	public void dispose(){
+		for(GameObject go : gameobjects){
+			
+			go.dispose();
+		}
 		gameobjects.clear();
 		carbages.clear();
 		newobjects.clear();
-		rigidbodies.clear();
 		tamer = null;
 		obstacles.clear();
 	}

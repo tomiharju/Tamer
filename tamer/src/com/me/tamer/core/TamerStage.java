@@ -57,7 +57,6 @@ public class TamerStage extends Stage{
 		
 		level = game.getLevelManager().getCurrentLevel() ;
 		level.setStage(this);
-		Gdx.input.setInputProcessor(this);
 		createActors();
 		
 	}
@@ -103,7 +102,7 @@ public class TamerStage extends Stage{
 	
 	@Override
 	public void draw(){
-
+		hud.updateLabel(Hud.LABEL_FPS, Gdx.graphics.getFramesPerSecond());
 		super.getCamera().update();
 		if (!super.getRoot().isVisible()) return;
 		super.getSpriteBatch().setProjectionMatrix(super.getCamera().combined);
@@ -189,6 +188,11 @@ public class TamerStage extends Stage{
 			break;
 		}
 		
+	}
+	
+	public void dispose(){
+		controlContainer.dispose();
+		environment.dispose();
 	}
 	
 	public void setCameraHolder(int holder){

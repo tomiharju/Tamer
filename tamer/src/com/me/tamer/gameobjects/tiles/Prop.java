@@ -14,7 +14,6 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
-import com.me.tamer.physics.RigidBody;
 import com.me.tamer.utils.Helper;
 
 /**
@@ -47,7 +46,7 @@ public class Prop extends StaticObject implements Obstacle{
 	public void setScale(String scale){
 		float s = Float.parseFloat(scale);
 		this.scale = s;
-		bounds =  this.scale * 4;
+		bounds =  this.scale;
 	
 	}
 	

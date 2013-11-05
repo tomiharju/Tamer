@@ -1,9 +1,9 @@
 package com.me.tamer.gameobjects.renders;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.me.tamer.utils.RendererFactory;
 
 public class RenderPool {
@@ -11,9 +11,14 @@ public class RenderPool {
 	
 	static HashMap<String, Renderer> renderpool = new HashMap<String,Renderer>();
 	
-	
+	public static TextureAtlas atlas;
+	public static void createAtlas(){
+		atlas = new TextureAtlas(Gdx.files.internal("data/graphics/staticObjects"));
+		
+	}
 	public static HashMap<String,Renderer> getRenderpool(){
 		return renderpool;
+		
 	}
 	
 	public static Renderer addRendererToPool(String rendertype, String graphics){

@@ -9,6 +9,7 @@ import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
+import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.utils.Helper;
 
@@ -23,29 +24,35 @@ public class TileMap extends StaticObject implements Obstacle{
 	
 	private int numTiles	= 0;
 	private ArrayList<Vector2> terrain;
+	private Vector2 origo = new Vector2(0,0);
 	private Vector2 mapBounds;
 	private Vector2 collisionHeading 	= new Vector2();
 	private Vector2 collisionAxis		= new Vector2();
 	private Vector2 collisionPos		= new Vector2();
+	private Environment env = null;
+
 	
 	public void setup(Environment env){
 		env.addNewObject(this);
 		env.getObstacles().add(this);
 		mapBounds = env.getMapBounds();
+		this.env = env;
 		setZindex(2);
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch){
-		
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		renderer.setSize(getSize());
-	
-		
+		Vector2 tamerpos = (env.getTamer() != null) ? env.getTamer().getPosition() : origo  ;
 		for(int i = 0 ; i < numTiles ; i++){
-			renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
+			Vector2 tilepos = (terrain.get(i));
+			if(tilepos.x > tamerpos.x - Helper.VIRTUAL_SIZE_X *1.9 && tilepos.x < tamerpos.x + Helper.VIRTUAL_SIZE_X *1.9
+					&& tilepos.y > tamerpos.y - Helper.VIRTUAL_SIZE_Y *1.1 && tilepos.y < tamerpos.y + Helper.VIRTUAL_SIZE_Y *1.1){
+			renderer.setPosition(Helper.worldToScreen(tilepos));
+			//renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
 			//renderer.setBounds(Helper.worldToScreen(terrain.get(i)).x,Helper.worldToScreen(terrain.get(i)).y, Helper.TILESIZE.x, Helper.TILESIZE.y);
 			renderer.draw(batch);
+			}
 		
 		}
 			
@@ -72,14 +79,15 @@ public class TileMap extends StaticObject implements Obstacle{
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setSize(Helper.TILESIZE);
-		
+		render.setSize(getSize());
 		setRenderType(graphics);
 
 	}
 
 	@Override
 	public void resolve(ArrayList<Creature> creatures) {
-		int size = creatures.size();
+		/*int size = creatures.size();
+		*
 		for( int i = 0 ; i < size ; i ++){
 			collisionPos.set(Helper.worldToScreen(((DynamicObject) creatures.get(i)).getPosition()));
 			
@@ -89,8 +97,6 @@ public class TileMap extends StaticObject implements Obstacle{
 				collisionAxis.set(0,-1);//.mul(collisionPos.x).nor();
 				collisionHeading.set(creatures.get(i).getHeading());
 				collisionHeading.set(0,collisionHeading.y);
-			
-
 				collisionHeading.rotate(45);
 				creatures.get(i).setHeading(collisionHeading);
 			}
@@ -103,7 +109,7 @@ public class TileMap extends StaticObject implements Obstacle{
 				creatures.get(i).setHeading(collisionHeading);
 			}
 			
-		}
+		}*/
 	}
 	
 

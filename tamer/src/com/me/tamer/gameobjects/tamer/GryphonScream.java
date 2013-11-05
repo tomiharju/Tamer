@@ -136,6 +136,7 @@ public class GryphonScream extends DynamicObject {
 					newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
 					newHeading.nor();
 					worm.setHeading(newHeading);
+					worm.getHead().intimidate();
 				}
 			}
 		

@@ -36,7 +36,9 @@ public class PlayScreen extends AbstractScreen{
 		}	
 		Gdx.input.setInputProcessor( stage );
 	}
-	
+	public void dispose(){
+		stage.dispose();
+	}
 
 	@Override
 	public void hide(){
