@@ -182,9 +182,18 @@ public class Environment extends Actor{
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 		
 				if (aimMode){
-					input.set(x - Gdx.graphics.getWidth() / 2,y - Gdx.graphics.getHeight() / 2);
-					targetPoint.set(input);
+					input.set(x - Gdx.graphics.getWidth() / 2,y - Gdx.graphics.getHeight() / 2 );//+ ((Tamer)tamer).getShadow().getDistance() * Helper.TILE_HEIGHT);
+					//targetPoint.set(input);
+					targetPoint.x = input.x / Helper.TILE_WIDTH;
+					targetPoint.y = input.y / Helper.TILE_HEIGHT;
+					//targetPoint.x = targetPoint.x * Helper.TILESIZE.x;
+					//targetPoint.y = targetPoint.y * Helper.TILESIZE.y;
+					
+					System.out.println(targetPoint);
+					
 					targetPoint = Helper.screenToWorld(targetPoint);
+					
+					
 					//this is where spear ends up
 					help.set( ((Tamer)tamer).getShadow().getPosition() );
 					waypoint1.set(help.add(targetPoint));
@@ -208,7 +217,7 @@ public class Environment extends Actor{
 					else
 						System.err.println("No spears remaining");
 				
-					System.out.println(targetPoint);
+					
 						
 					return true;
 				}else
