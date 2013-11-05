@@ -20,14 +20,12 @@ import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.gameobjects.tiles.TileMap;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
-import com.me.tamer.physics.Contact;
-import com.me.tamer.physics.RigidBody;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
-import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.Helper;
+import com.me.tamer.utils.RuntimeObjectFactory;
 
 
 public class Environment extends Actor{
@@ -52,10 +50,7 @@ public class Environment extends Actor{
 	private DynamicObject tamer 				= null;
 	private ArrayList<Obstacle> obstacles 		= null;
 	private ArrayList<Creature> creatures		= null;
-	
-	//Physical contact list
-	private ArrayList<Contact> contacts;
-	private ArrayList<RigidBody> rigidbodies;
+
 	
 	//Optimization variables
 	Vector2 tamerpos = new Vector2();
@@ -229,7 +224,6 @@ public class Environment extends Actor{
 	 * Resolves each collision by adding proper forces.
 	 */
 	public void resolveCollisions(float dt){
-		contacts.clear();
 		int numObjects = gameobjects.size();
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).resolveForces(dt);
@@ -293,9 +287,6 @@ public class Environment extends Actor{
 		gameobjects.add(obj);
 	}
 	
-	public void addRigidBody(RigidBody body){
-		rigidbodies.add(body);
-	}
 	public void addObstacle(Obstacle obstacle){
 		this.obstacles.add(obstacle);
 	}
@@ -344,10 +335,6 @@ public class Environment extends Actor{
 
 	public Vector2 getMapBounds(){
 		return mapBounds;
-	}
-
-	public ArrayList<RigidBody> getRigidBodies(){
-		return rigidbodies;
 	}
 	
 	public Vector2 getCamBounds(){
