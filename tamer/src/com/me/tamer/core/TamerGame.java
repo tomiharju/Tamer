@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.tamer.services.LevelManager;
 import com.me.tamer.services.MusicManager;
 import com.me.tamer.services.PreferenceManager;
-import com.me.tamer.services.SoundManager;
 
 
 public class TamerGame extends Game{

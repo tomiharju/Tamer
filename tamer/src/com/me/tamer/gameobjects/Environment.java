@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -51,11 +52,9 @@ public class Environment extends Actor{
 	private ArrayList<Obstacle> obstacles 		= null;
 	private ArrayList<Creature> creatures		= null;
 
-	
 	//Optimization variables
 	Vector2 tamerpos = new Vector2();
 
-	
 	//Drawing-order
 	private int loopCount = 0;
 	private int sortRate = 6;
@@ -66,12 +65,8 @@ public class Environment extends Actor{
 	public static final int SPEAR_TIME = 2;
 	private int state = 0;
 	
-	
 	//SoundManager
 	SoundManager sound;
-	
-	//inputs for aiming
-	private boolean aimMode = false;
 		
 	public Environment(){	
 		gameobjects 	= new ArrayList<GameObject>();
@@ -86,9 +81,6 @@ public class Environment extends Actor{
 		
 		sound = SoundManager.instance();
 		RenderPool.createAtlas();
-		//Create listener for aim-mode
-		setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		createInputListener();
 	}
 	
 	public void setStage(TamerStage stage){
@@ -167,63 +159,6 @@ public class Environment extends Actor{
 				loopCount = 0;
 			}
 		} loopCount++;
-	}
-	
-	public void setAimMode(boolean b){
-		aimMode = b;
-	}
-	
-	public void createInputListener(){
-		this.addListener(new InputListener(){
-			Vector2 input = new Vector2();
-			Vector2 waypoint1 = new Vector2(),waypoint2 = new Vector2(),waypoint3 = new Vector2(),targetPoint = new Vector2();
-			private ArrayList<Vector2> waypoints = new ArrayList<Vector2>();
-			
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-		
-				if (aimMode){
-					input.set(x - Gdx.graphics.getWidth() / 2,y - Gdx.graphics.getHeight() / 2 );//+ ((Tamer)tamer).getShadow().getDistance() * Helper.TILE_HEIGHT);
-					//targetPoint.set(input);
-					targetPoint.x = input.x / Helper.TILE_WIDTH;
-					targetPoint.y = input.y / Helper.TILE_HEIGHT;
-					//targetPoint.x = targetPoint.x * Helper.TILESIZE.x;
-					//targetPoint.y = targetPoint.y * Helper.TILESIZE.y;
-					
-					System.out.println(targetPoint);
-					
-					targetPoint = Helper.screenToWorld(targetPoint);
-					
-					
-					//this is where spear ends up
-					help.set( ((Tamer)tamer).getShadow().getPosition() );
-					waypoint1.set(help.add(targetPoint));
-					
-					help.set( ((Tamer)tamer).getPosition() );
-					waypoint2.set(help.add(targetPoint));
-					//Set camera to follow way point 2
-					//cameraPoint.set(waypoint2);
-					
-					help.set( ((Tamer)tamer).getPosition().tmp().add(-3,3) );
-					waypoint3.set(help.add(targetPoint.tmp().mul(0.8f)));
-					
-					waypoints.clear();
-					waypoints.add(waypoint1);
-					waypoints.add(waypoint2);
-					waypoints.add(waypoint3);
-					
-					Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
-					if(spear != null)
-						((Tamer)tamer).throwSpear(spear, waypoints );
-					else
-						System.err.println("No spears remaining");
-				
-					
-						
-					return true;
-				}else
-					return false;
-			}
-		});
 	}
 	
 	/**
@@ -322,7 +257,6 @@ public class Environment extends Actor{
 	
 	public void dispose(){
 		for(GameObject go : gameobjects){
-			
 			go.dispose();
 		}
 		gameobjects.clear();
@@ -333,7 +267,7 @@ public class Environment extends Actor{
 	}
 	
 	public boolean checkInsideBounds(Vector2 pos, float offset){
-		help.set(Helper.worldToScreen(pos));;
+		help.set(Helper.worldToScreen(pos));
 
 		if(help.x < mapBounds.x / 2 - offset && help.x > -mapBounds.x / 2 + offset && help.y < mapBounds.y / 2 - offset && help.y > -mapBounds.y / 2 + offset){
 			return true;

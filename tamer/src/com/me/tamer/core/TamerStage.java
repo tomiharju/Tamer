@@ -3,10 +3,16 @@ package com.me.tamer.core;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.tamer.Tamer;
@@ -49,6 +55,29 @@ public class TamerStage extends Stage{
 	private Vector2 start = new Vector2();
 	private Vector2 end = new Vector2();
 	
+	//Shaders
+	ShaderProgram shader;
+	Texture tex0,tex1,mask;
+	SpriteBatch vbatch;
+	OrthographicCamera vcam;
+	float vtime;
+	
+	final String VERT =  
+			"attribute vec4 "+ShaderProgram.POSITION_ATTRIBUTE+";\n" +
+			"attribute vec4 "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
+			"attribute vec2 "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
+			
+			"uniform mat4 u_projTrans;\n" + 
+			" \n" + 
+			"varying vec4 vColor;\n" +
+			"varying vec2 vTexCoord;\n" +
+			
+			"void main() {\n" +  
+			"	vColor = "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
+			"	vTexCoord = "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
+			"	gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" +
+			"}";
+	
 	
 	public TamerStage(TamerGame game){
 		this.game = game;
@@ -59,6 +88,7 @@ public class TamerStage extends Stage{
 		level.setStage(this);
 		createActors();
 		
+		createShaders();
 	}
 	
 	public void createActors(){
@@ -82,6 +112,67 @@ public class TamerStage extends Stage{
         this.addActor( controlContainer);
 	}  
 	
+	public void createShaders(){
+		/*
+		stateTime += Gdx.graphics.getDeltaTime();
+		
+		final float dt = Gdx.graphics.getRawDeltaTime();
+		 
+	    angleWave += dt * angleWaveSpeed;
+	    while(angleWave > Math.PI * 2)
+	        angleWave -= Math.PI * 2;
+	    
+	    float amplitudeWave = 2;
+	    
+	    */
+		
+		FileHandle handle = Gdx.files.classpath("com/me/tamer/utils/VertexShader");
+		String vertexShader = handle.readString();
+		
+		handle = Gdx.files.classpath("com/me/tamer/utils/FragmentShader");
+		String fragmentShader = handle.readString();
+		
+		shader = new ShaderProgram(VERT, fragmentShader);
+		
+		
+		ShaderProgram.pedantic = false;
+		
+		if(shader.isCompiled())System.out.println("shader compiled");
+		System.out.println(shader.getLog());
+		
+		tex0 = new Texture(Gdx.files.internal("data/graphics/button_scream.png"));
+		tex1 = new Texture(Gdx.files.internal("data/graphics/button_spear.png"));
+		mask = new Texture(Gdx.files.internal("data/graphics/joystick.png"));
+		
+		//important since we aren't using some uniforms and attributes that SpriteBatch expects
+		ShaderProgram.pedantic = false;
+		
+		
+		shader.begin();
+		shader.setUniformi("u_texture1", 1);
+		
+		shader.setUniformf("iResolution",100f,100f,0);
+		shader.setUniformf("iMouse", 100f,100f,0,0);
+		
+		shader.end();
+		
+		//bind dirt to glActiveTexture(GL_TEXTURE1)
+		tex1.bind(1);
+		
+		//now we need to reset glActiveTexture to zero!!!! since sprite batch does not do this for us
+		Gdx.gl.glActiveTexture(GL10.GL_TEXTURE0);
+		
+		vbatch = new SpriteBatch(1000, shader);
+		vbatch.setShader(shader);
+		
+		vcam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		vcam.setToOrtho(false);
+		
+		
+		//Create default shader
+		//defaultShader = super.getSpriteBatch().createDefaultShader();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see com.badlogic.gdx.scenes.scene2d.Stage#act(float)
@@ -102,6 +193,8 @@ public class TamerStage extends Stage{
 	
 	@Override
 	public void draw(){
+		
+		
 		hud.updateLabel(Hud.LABEL_FPS, Gdx.graphics.getFramesPerSecond());
 		super.getCamera().update();
 		if (!super.getRoot().isVisible()) return;
@@ -112,6 +205,8 @@ public class TamerStage extends Stage{
 		debugDraw();
 		environment.debugDraw(debugRender);
 		super.getSpriteBatch().end();
+		
+
 	}
 	
 	public void debugDraw(){

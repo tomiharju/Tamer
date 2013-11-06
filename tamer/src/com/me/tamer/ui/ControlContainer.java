@@ -20,6 +20,7 @@ public class ControlContainer extends Group{
 	Joystick joystick;
 	SpearButton spearButton;
 	ScreamButton screamButton;
+	TouchWrap touchWrap;
 	
 	private ControlContainer() {
 		//constructor should not be accessible
@@ -40,6 +41,9 @@ public class ControlContainer extends Group{
 	}
 	
 	public void create(){
+		//touch wrap is added first so it under other controls
+		touchWrap = new TouchWrap(this);
+		this.addActor(touchWrap);
 		
 		joystick = new Joystick(this);
 		this.addActor( joystick);
@@ -49,6 +53,8 @@ public class ControlContainer extends Group{
 		
 		spearButton = new SpearButton(this);
 		this.addActor(spearButton);
+		
+		
 		//Hide all buttons in startup
 		setVisible(false);
 	}
@@ -83,6 +89,10 @@ public class ControlContainer extends Group{
 	
 	public Joystick getJoystick(){
 		return joystick;
+	}
+	
+	public TouchWrap getTouchWrap(){
+		return touchWrap;
 	}
 	
 	public SpearButton getSpearButton(){

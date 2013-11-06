@@ -25,7 +25,7 @@
 		<property type="SpawnType">Worm</property>
 		<property type="SpawnDirection">315.5</property>
 		<property type="SpawnId">0</property>
-		<property type="InitialSleep">5</property>
+		<property type="InitialSleep">0</property>
 		<property type="SleepTime">10</property>
 		<property type="TamerSpawn">1</property>
 		<property type="SpawnCount">4</property>
