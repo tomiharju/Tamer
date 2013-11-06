@@ -20,7 +20,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Tamer extends DynamicObject{
 	
-	private final float SPEED 		= 0.2f;
+	private float SPEED 		= 0f;
 	private final float AIM_SPEED 	= 0.001f; //heading interpolating coefficient
 	private final float MAX_POWER 	= 1.2f;
 	private final float BORDER_OFFSET = -5.0f;
@@ -106,8 +106,8 @@ public class Tamer extends DynamicObject{
 			getPosition().add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
 		}else{
 			solveOrientation();
-			getPosition().add(getForce().tmp().mul(dt));
-			getForce().mul(0);
+			getPosition().add(getHeading().tmp().mul(SPEED * dt));
+			SPEED -= dt;
 			
 			for(int i = 0 ; i < spears.size() ; i ++){
 				if(shadow.getPosition().dst(spears.get(i).getPosition()) < 1 ){
@@ -129,11 +129,10 @@ public class Tamer extends DynamicObject{
 		
 		direction.rotate(45);
 		float power = direction.len();
-	
-		direction.nor().mul(power * SPEED);
+		SPEED = 0.2f * power;
+		
 		if(power > 0.5){
-			setForce(direction);	
-			setHeading(direction);
+			setHeading(direction.nor());
 		}
 	}
 	
