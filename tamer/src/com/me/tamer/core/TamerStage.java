@@ -118,7 +118,6 @@ public class TamerStage extends Stage{
 		
 		debugRender.setProjectionMatrix(camera.combined);
 		debugRender.setColor(1, 1, 1, 1);
-		
 		for (int i = 0; i<debugLines.size(); i+=2){
 			start.set ( Helper.worldToScreen(debugLines.get(i).tmp() ));
 			end.set( Helper.worldToScreen(debugLines.get(i+1).tmp() ));

@@ -163,7 +163,6 @@ public class Worm extends DynamicObject implements Creature{
 	}
 	
 	public void setHeading(Vector2 newHeading){
-		//heading.set(newHeading);
 		head.setHeading(newHeading);
 		head.setForce(getHeading().mul(SPEED));
 	}

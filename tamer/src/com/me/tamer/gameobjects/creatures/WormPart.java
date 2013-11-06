@@ -119,7 +119,7 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 	
 	public boolean getDebug(){
-		return true;
+		return false;
 	}
 	
 	public void solveJoint(float dt){
