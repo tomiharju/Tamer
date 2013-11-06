@@ -96,12 +96,12 @@ public class Tamer extends DynamicObject{
 		if(environment.getState() == Environment.TAMER_ENTER){
 			isoPosition.set(Helper.worldToScreen(getPosition()));
 			//First Check when inside mapBounds
-			if(isoPosition.x > -mapBounds.x && isoPosition.x < mapBounds.x && isoPosition.y > -mapBounds.y && isoPosition.y < mapBounds.y){
+	//		if(isoPosition.x > -mapBounds.x && isoPosition.x < mapBounds.x && isoPosition.y > -mapBounds.y && isoPosition.y < mapBounds.y){
 				//Then check that min distance is travelled
 				if (getPosition().dst(spawnPosition) > MIN_SPAWN_DISTANCE){
 					enteredField = true;
 				}
-			}
+			//}
 			getPosition().add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
 		}else{
 			getPosition().add(getHeading().tmp().mul(SPEED * dt));

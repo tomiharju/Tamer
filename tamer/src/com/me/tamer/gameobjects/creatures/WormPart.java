@@ -10,6 +10,7 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.physics.RigidBodyBox;
 import com.me.tamer.utils.Helper;
 
 public class WormPart extends DynamicObject implements Creature {
@@ -31,6 +32,7 @@ public class WormPart extends DynamicObject implements Creature {
 	private boolean isTail		= false;
 	private String partName 	= null;
 	//Physics optimization variables;
+	private RigidBodyBox body	= null;
 	Vector2 impulseA 			= new Vector2();
 	Vector2 impulseB 			= new Vector2();
 	Vector2 axis 				= new Vector2();
@@ -48,6 +50,7 @@ public class WormPart extends DynamicObject implements Creature {
 		setVelocity(vel);
 		setForce(new Vector2(vel).mul(worm.getSPEED()));
 		setHeading(vel);
+		body = new RigidBodyBox(getPosition(),getVelocity(),10,1,1);
 		this.ordinal 		= 0;
 	}
 	
@@ -103,7 +106,7 @@ public class WormPart extends DynamicObject implements Creature {
 			child.updateChild(dt);
 		
 		getPosition().add(getVelocity().tmp().mul(dt));
-		getVelocity().mul(0.9f * dt);
+		getVelocity().mul(0);
 	
 	}
 	
@@ -286,6 +289,11 @@ public class WormPart extends DynamicObject implements Creature {
 	public boolean isAffected(Vector2 point, float radius) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public RigidBodyBox getCollider() {
+		return body;
 	}
 
 	
