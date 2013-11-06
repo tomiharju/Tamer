@@ -94,7 +94,6 @@ public class Tamer extends DynamicObject{
 	@Override
 	public void update(float dt){
 		if(environment.getState() == Environment.TAMER_ENTER){
-			solveOrientation();
 			isoPosition.set(Helper.worldToScreen(getPosition()));
 			//First Check when inside mapBounds
 			if(isoPosition.x > -mapBounds.x && isoPosition.x < mapBounds.x && isoPosition.y > -mapBounds.y && isoPosition.y < mapBounds.y){
@@ -105,9 +104,8 @@ public class Tamer extends DynamicObject{
 			}
 			getPosition().add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
 		}else{
-			solveOrientation();
 			getPosition().add(getHeading().tmp().mul(SPEED * dt));
-			SPEED -= dt;
+			SPEED = 0;
 			
 			for(int i = 0 ; i < spears.size() ; i ++){
 				if(shadow.getPosition().dst(spears.get(i).getPosition()) < 1 ){
@@ -132,7 +130,7 @@ public class Tamer extends DynamicObject{
 		SPEED = 0.2f * power;
 		
 		if(power > 0.5){
-			setHeading(direction.nor());
+			setHeading(direction);
 		}
 	}
 	

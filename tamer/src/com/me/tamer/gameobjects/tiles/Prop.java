@@ -71,11 +71,11 @@ public class Prop extends StaticObject implements Obstacle{
  				& temp.y > center.y  && temp.y < center.y + bounds ){
 				
 				if(temp.x > center.x && temp.y < center.y + bounds && temp.y > center.y-bounds)
-					collisionAxis.set(-1,0);
+					collisionAxis.set(1,0);
 				else if(temp.x < center.x && temp.y < center.y + bounds && temp.y > center.y-bounds)
 					collisionAxis.set(1,0);
 				else if(temp.y > center.y && temp.x < center.x + bounds && temp.x > center.x-bounds)
-					collisionAxis.set(0,-1);
+					collisionAxis.set(0,1);
 				else if(temp.y < center.y && temp.x < center.x + bounds && temp.x > center.x-bounds)
 					collisionAxis.set(0,1);
 				
