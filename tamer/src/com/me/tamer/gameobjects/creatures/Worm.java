@@ -70,7 +70,7 @@ public class Worm extends DynamicObject implements Creature{
 	public void update(float dt){
 		head.solveJoints(dt);
 		head.updateChild(dt);
-		head.getVelocity().set(head.getForce());
+		head.getVelocity().add(head.getForce());
 	}
 	
 	public void draw(SpriteBatch batch){
@@ -167,7 +167,7 @@ public class Worm extends DynamicObject implements Creature{
 		head.setHeading(newHeading);
 		head.setForce(getHeading().mul(SPEED));
 	}
-
+	
 	public float getSPEED() {
 		return SPEED;
 	}

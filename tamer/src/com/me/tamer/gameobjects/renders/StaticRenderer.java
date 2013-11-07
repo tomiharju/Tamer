@@ -28,7 +28,6 @@ public class StaticRenderer implements Renderer {
 	public void loadGraphics(String graphicsName) {
 		String gfx = graphicsName.split("\\.")[0];
 		sprite = new Sprite(RenderPool.atlas.findRegion(gfx));
-		//sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName)));
 		if(sprite == null)
 			throw new IllegalArgumentException("Graphics not found in atlas!");
 	}
@@ -44,7 +43,7 @@ public class StaticRenderer implements Renderer {
 	}
 	@Override
 	public void setPosition(Vector2 pos) {
-		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y);
+		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y );
 		
 		
 	}

@@ -12,6 +12,7 @@ import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
+import com.me.tamer.utils.Helper;
 
 public class Endingpoint extends StaticObject implements Obstacle{
 	private Hud hud;
@@ -38,7 +39,7 @@ public class Endingpoint extends StaticObject implements Obstacle{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(1,0.5f);
+		setSize(Helper.TILESIZE);
 		setRenderType(graphics);
 	}
 
@@ -47,8 +48,8 @@ public class Endingpoint extends StaticObject implements Obstacle{
 		int size = creatures.size();
 		for(int i = 0 ; i < size ; i ++){
 
-			if(creatures.get(i).isAffected(getCenterPosition(), 1f)){
-				creatures.get(i).moveToPoint(getCenterPosition());
+			if(creatures.get(i).isAffected(getPosition(), 1f)){
+				creatures.get(i).moveToPoint(getPosition());
 
 				if(creatures.get(i).getClass() == Worm.class){
 					creatureOnList = false;

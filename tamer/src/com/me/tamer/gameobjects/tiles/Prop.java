@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
+import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
@@ -32,7 +33,7 @@ public class Prop extends StaticObject implements Obstacle{
 	private Vector2 closestVertice 	= new Vector2();
 	private Vector2 headingAdjust 	= new Vector2();
 	private Vector2 newHeading 		= new Vector2();
-	private Vector2 reflection		= new Vector2();
+	private Vector2 impulse		= new Vector2();
 	private ArrayList<Vector2> vertices;
 	private ArrayList<Vector2> axes;
 	public void setup(Environment level){
@@ -52,7 +53,7 @@ public class Prop extends StaticObject implements Obstacle{
 		float y = Float.parseFloat(pixels);
 		setSize(getSize().x ,y / Helper.TILE_WIDTH);
 	}
-	public void setScale(String scale){
+	public void setHitBox(String scale){
 		float s = Float.parseFloat(scale);
 		this.scale = s;
 		bounds =  this.scale;
@@ -63,7 +64,7 @@ public class Prop extends StaticObject implements Obstacle{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(getSize().x , getSize().y);
+		setSize(getSize());
 		setRenderType(graphics);
 	}
 
@@ -74,23 +75,31 @@ public class Prop extends StaticObject implements Obstacle{
 			
 			temp.set(((DynamicObject) creatures.get(i)).getPosition());
 			Vector2 center = getPosition();
-			if(temp.x > center.x - bounds / 2 && temp.x < center.x + bounds / 2
+			if(temp.x > center.x - bounds && temp.x < center.x
  				& temp.y > center.y  && temp.y < center.y + bounds ){
 				
 				collisionAxis.set(getCollisionNormal(creatures.get(i).getHeading()));
 				headingAdjust.set(Helper.projection(creatures.get(i).getHeading(), collisionAxis));
+				newHeading.set(creatures.get(i).getHeading().tmp().sub(headingAdjust));
+				//System.out.println("Raw adjust " +headingAdjust.toString());
+				//System.out.println("new heading " +newHeading.toString());
+
+			
+
+			
 				
 				closestVertice.set(getClosestVertice(((DynamicObject) creatures.get(i)).getPosition()));
 				Vector2 headToClosest = closestVertice.sub(((DynamicObject) creatures.get(i)).getPosition());
 				//System.out.print("Projecting  " +headToClosest.toString() +" on " + collisionAxis.toString() );
 				Vector2 positionAdjust = Helper.projection(headToClosest,collisionAxis);
-				//System.out.println(" Result "+positionAdjust.toString());
-				((DynamicObject) creatures.get(i)).getVelocity().add(positionAdjust.mul(Gdx.graphics.getDeltaTime()));
 				
-			
-				newHeading.set(creatures.get(i).getHeading().tmp().sub(headingAdjust));
-			
+				float relNv = ((DynamicObject) creatures.get(i)).getForce().dot(collisionAxis);
+				float remove = relNv + positionAdjust.len() / Gdx.graphics.getDeltaTime();
+				impulse.set(collisionAxis.mul(5f * Gdx.graphics.getDeltaTime()));
+				((Worm)creatures.get(i)).getHead().getPosition().add(impulse.mul(1f));
 				creatures.get(i).setHeading(newHeading);
+			
+			
 				}
 			
 			}
@@ -103,22 +112,22 @@ public class Prop extends StaticObject implements Obstacle{
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
 		
-	/*	shapeRndr.setColor(1, 1, 1, 1);
+		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x - bounds / 2,temp.y, bounds , bounds / 2);
+		shapeRndr.rect(temp.x - bounds ,temp.y, bounds , bounds);
 		shapeRndr.end();
-		*/
+		/*
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
 		shapeRndr.rect(temp.x -0.1f,temp.y-0.1f, 0.2f ,0.2f);
-		shapeRndr.end();
+		shapeRndr.end();*/
 			
 	}
 	
 	public boolean getDebug(){
-		return true;
+		return false;
 	}
 	
 	public Vector2 getCenterPosition(){

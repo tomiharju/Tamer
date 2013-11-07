@@ -33,6 +33,6 @@ public class MainMenuScreen extends AbstractMenu{
 	public void show(){
 		super.show();
 		game.getMusicManager().setVolume(0.3f);
-		game.getMusicManager().play( TamerMusic.MENU );      
+	//	game.getMusicManager().play( TamerMusic.MENU );      
 	}
 }

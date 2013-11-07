@@ -153,4 +153,6 @@ public class AntOrc extends DynamicObject implements Creature{
 	}
 
 	
+
+	
 }
