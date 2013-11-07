@@ -4,27 +4,54 @@ precision mediump float;
 uniform vec3 iResolution;
 uniform float iGlobalTime;
 uniform vec4 iMouse;
-uniform sampler2D u_texture1;
+uniform sampler2D u_texture1;  
+
+const float PI = 3.14159265359;
+float time = -iGlobalTime*5.0;
+
+const vec3 eps = vec3(0.01, 0.0, 0.0);
+
+float genWave1(float len)
+{
+	float wave = sin(8.0 * PI * len + time);
+	wave = (wave + 1.0) * 0.5; // <0 ; 1>
+	wave -= 0.3;
+	wave *= wave * wave;
+	return wave;
+}
+
+float genWave2(float len)
+{
+	float wave = sin(7.0 * PI * len + time);
+	float wavePow = 1.0 - pow(abs(wave*1.1), 0.8);
+	wave = wavePow * wave; 
+	return wave;
+}
+
+float scene(float len)
+{
+	// you can select type of waves
+	return genWave1(len);
+}
+
+vec2 normal(float len) 
+{
+	float tg = (scene(len + eps.x) - scene(len)) / eps.x;
+	return normalize(vec2(-tg, 1.0));
+}
 
 void main(void)
 {
-	 vec3 waveParams = vec3( 10.0, 0.8, 0.1 );
-	 vec2 tmp = vec2( iMouse.xy / iResolution.xy );
-	 vec2 uv = gl_FragCoord.xy / iResolution.xy;
-	 vec2 texCoord = uv;
-	 float distance = distance(uv, tmp);
-	 
-	 if ( (distance <= ((iGlobalTime ) + waveParams.z )) && ( distance >= ((iGlobalTime ) - waveParams.z)) ) 
-	 {
-		    float diff = (distance - (iGlobalTime)); 
-		    float powDiff = 1.0 - pow(abs(diff*waveParams.x), waveParams.y); 
-		 
-		    float diffTime = diff  * powDiff; 
-		    vec2 diffUV = normalize(uv - tmp); 
-		    texCoord = uv + (diffUV * diffTime);
-		    
-	 } 
-	 vec4 original = texture2D( u_texture1, texCoord);
-	 gl_FragColor = original; 
+	vec2 uv = gl_FragCoord.xy / iResolution.xy;
+	vec2 so = iMouse.xy / iResolution.xy;
+	vec2 pos2 = vec2(uv - so); 	  //wave origin
+	vec2 pos2n = normalize(pos2);
+
+	float len = length(pos2);
+	float wave = scene(len); 
+
+	vec2 uv2 = -pos2n * wave/(1.0 + 5.0 * len);
+
+	gl_FragColor = vec4(texture2D(u_texture1, uv + uv2));
 }
 

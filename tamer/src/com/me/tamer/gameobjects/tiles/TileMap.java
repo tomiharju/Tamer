@@ -58,9 +58,7 @@ public class TileMap extends StaticObject implements Obstacle{
 			//renderer.setBounds(Helper.worldToScreen(terrain.get(i)).x,Helper.worldToScreen(terrain.get(i)).y, Helper.TILESIZE.x, Helper.TILESIZE.y);
 			renderer.draw(batch);
 			}
-		
-		}
-			
+		}	
 	}
 	
 	public void setTileMap(String data){
@@ -115,16 +113,5 @@ public class TileMap extends StaticObject implements Obstacle{
 			}
 			
 		}*/
-	}
-	
-
-	
-
-	
-	
-	
-	
-	
-	
-
+	}	
 }

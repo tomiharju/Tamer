@@ -2,7 +2,6 @@ package com.me.tamer.gameobjects.renders;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public interface Renderer {
 	/**

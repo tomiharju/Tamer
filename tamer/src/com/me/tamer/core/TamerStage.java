@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.tamer.Tamer;
@@ -20,6 +19,7 @@ import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.Helper;
 
 public class TamerStage extends Stage{
+	public static TamerStage instance;
 	
 	private final float VIRTUAL_WIDTH = 12 * (float)Math.sqrt(2);
 	private final float VIRTUAL_HEIGHT = 40 * (float)(Math.sqrt(2) / 2);
@@ -85,7 +85,12 @@ public class TamerStage extends Stage{
 			"}";
 	
 	
-	public TamerStage(TamerGame game){
+	public static TamerStage instance(){
+		if(instance==null) instance = new TamerStage();
+		return instance;
+	}
+	
+	public void setup(TamerGame game){
 		this.game = game;
 		//Cameras must be set up first
 		setupCamera();
@@ -95,6 +100,10 @@ public class TamerStage extends Stage{
 		createActors();
 		
 		//createShaders();
+	}
+	
+	private TamerStage(){
+		//private constructor because this is singleton
 	}
 	
 	public void createActors(){

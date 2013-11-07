@@ -41,6 +41,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 		environment.addObstacle(this);
 		setBogHole();
 	}
+	
 	public void addSandPart(SandPart p){
 		parts.add(p);
 	}

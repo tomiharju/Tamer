@@ -16,7 +16,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -24,7 +24,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -32,7 +32,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -40,7 +40,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -48,7 +48,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -56,7 +56,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -64,7 +64,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -72,7 +72,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -80,7 +80,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -88,7 +88,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -96,7 +96,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
@@ -119,7 +119,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -127,7 +127,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -135,7 +135,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -143,7 +143,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -151,7 +151,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -159,7 +159,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -167,7 +167,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -175,7 +175,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
@@ -198,7 +198,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -206,7 +206,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -214,7 +214,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -222,7 +222,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -230,7 +230,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -238,7 +238,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -246,7 +246,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -254,7 +254,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -262,7 +262,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -270,7 +270,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -278,7 +278,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -286,7 +286,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -294,7 +294,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -302,7 +302,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -310,7 +310,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -318,7 +318,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -326,7 +326,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -334,7 +334,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -342,7 +342,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -350,7 +350,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -358,7 +358,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -366,7 +366,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -374,7 +374,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -382,7 +382,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -390,7 +390,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -398,7 +398,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -406,7 +406,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -414,7 +414,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -422,7 +422,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -430,7 +430,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -438,7 +438,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -446,7 +446,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -454,7 +454,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.obstacles.Quicksand">
@@ -509,7 +509,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -517,7 +517,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -525,7 +525,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -533,7 +533,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -541,7 +541,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -549,7 +549,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -557,7 +557,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -565,7 +565,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -573,7 +573,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -581,7 +581,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -589,7 +589,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -597,7 +597,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -605,7 +605,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -613,7 +613,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -621,7 +621,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -629,7 +629,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -637,7 +637,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -645,7 +645,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -653,7 +653,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -661,7 +661,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -669,7 +669,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -677,7 +677,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -685,7 +685,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -693,7 +693,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -701,7 +701,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -709,7 +709,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -717,7 +717,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -725,7 +725,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -733,7 +733,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -741,7 +741,7 @@
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
-		<property type="Scale">1.5</property>
+		<property type="HitBox">1.5</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -749,7 +749,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -757,7 +757,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -765,7 +765,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -773,7 +773,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -781,7 +781,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -789,7 +789,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -797,7 +797,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -805,7 +805,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -813,7 +813,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -821,7 +821,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -829,7 +829,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -837,7 +837,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -845,7 +845,7 @@
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
-		<property type="Scale">1.5</property>
+		<property type="HitBox">1.5</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -853,7 +853,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -861,7 +861,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -869,7 +869,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -877,7 +877,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -885,7 +885,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -893,7 +893,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -901,7 +901,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -909,7 +909,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -917,7 +917,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -925,7 +925,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -933,7 +933,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -941,7 +941,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -949,7 +949,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -957,7 +957,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -965,7 +965,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -973,7 +973,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -981,7 +981,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -989,7 +989,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -997,7 +997,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1005,7 +1005,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1013,7 +1013,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1021,7 +1021,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">44</property>
 		<property type="Graphics">bush.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1029,7 +1029,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1037,7 +1037,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1045,7 +1045,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1053,7 +1053,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1061,7 +1061,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1069,7 +1069,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1077,7 +1077,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1085,7 +1085,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1093,7 +1093,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1101,7 +1101,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1109,7 +1109,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1117,7 +1117,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1125,7 +1125,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1133,7 +1133,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1141,7 +1141,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1149,7 +1149,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1157,7 +1157,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1165,7 +1165,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1173,7 +1173,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1181,7 +1181,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1189,7 +1189,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1197,7 +1197,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1205,7 +1205,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1213,7 +1213,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1221,7 +1221,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1229,7 +1229,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1237,7 +1237,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1245,7 +1245,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1253,7 +1253,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1261,7 +1261,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1269,7 +1269,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1277,7 +1277,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1285,7 +1285,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1293,7 +1293,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1301,7 +1301,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1309,7 +1309,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1317,7 +1317,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1325,7 +1325,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1333,7 +1333,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1341,7 +1341,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
@@ -1373,7 +1373,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
@@ -1389,7 +1389,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
@@ -1405,7 +1405,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
@@ -1425,7 +1425,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1433,7 +1433,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1441,7 +1441,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
@@ -1461,7 +1461,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
@@ -1477,7 +1477,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1485,7 +1485,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
@@ -1497,7 +1497,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1505,7 +1505,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1513,7 +1513,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1521,7 +1521,7 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
 		<property type="Graphics">mountain1.png</property>
-		<property type="Scale">1</property>
+		<property type="HitBox">1</property>
 		<property type="DrawBounds">1</property>
 	</GameObject>
 </root>

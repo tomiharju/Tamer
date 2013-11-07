@@ -1,4 +1,4 @@
-package com.me.tamer.core;
+package com.me.tamer.core.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.services.MusicManager.TamerMusic;
 
 public class PauseScreen extends AbstractMenu{

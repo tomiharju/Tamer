@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,8 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.me.tamer.core.TamerStage;
 
 /**
  * @author Kesyttäjät
@@ -45,11 +42,14 @@ public class AnimatedRenderer implements Renderer {
 	private ShaderProgram defaultShader;
 	private float vtime = 0;
 	private Texture tex0,tex1;
+	int u_worldView,a_position;
+	
+	private TamerStage stage;
 	
 	final String VERT =  
 			"attribute vec4 "+ShaderProgram.POSITION_ATTRIBUTE+";\n" +
-			"attribute vec4 "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
-			"attribute vec2 "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
+			//"attribute vec4 "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
+			//"attribute vec2 "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
 			
 			"uniform mat4 u_projTrans;\n" + 
 			" \n" + 
@@ -57,24 +57,25 @@ public class AnimatedRenderer implements Renderer {
 			"varying vec2 vTexCoord;\n" +
 			
 			"void main() {\n" +  
-			"	vColor = "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
-			"	vTexCoord = "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
+			//"	vColor = "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
+			//"	vTexCoord = "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
 			"	gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" +
 			"}";
 	
 	public AnimatedRenderer(){
 		animations = new ArrayList<Animation>();
 		
+		stage = TamerStage.instance();
+		
+		//SHADER STUFF
 		FileHandle handle = Gdx.files.classpath("com/me/tamer/utils/VertexShader");
 		String vertexShader = handle.readString();
 		
 		handle = Gdx.files.classpath("com/me/tamer/utils/FragmentShader");
 		String fragmentShader = handle.readString();
 		
-		shader = new ShaderProgram(VERT, fragmentShader);
-		
-		
-		ShaderProgram.pedantic = false;
+		//shader = new ShaderProgram(VERT, fragmentShader);
+		shader = new ShaderProgram(vertexShader, fragmentShader);
 		
 		if(shader.isCompiled())System.out.println("shader compiled");
 		System.out.println(shader.getLog());
@@ -108,6 +109,10 @@ public class AnimatedRenderer implements Renderer {
 		//vcam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		//vcam.setToOrtho(false);
 		
+		//get locations
+		u_worldView = shader.getUniformLocation("u_worldView");
+		a_position = shader.getAttributeLocation("a_position");
+		
 		//default shader
 		defaultShader = SpriteBatch.createDefaultShader();
 		
@@ -119,14 +124,17 @@ public class AnimatedRenderer implements Renderer {
 		if (!animations.isEmpty()){
 			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
 			
-			//batch.setShader(shader);
+			batch.setShader(shader);
 			
-			//shader.setUniformf("iGlobalTime", vtime+=Gdx.graphics.getDeltaTime());
+			shader.setUniformMatrix(u_worldView, stage.getCamera().combined);
+			shader.setAttributef("a_position", 100.0f, 1.0f, 50.0f, 1.0f);
+			shader.setUniformf("iGlobalTime", vtime+=Gdx.graphics.getDeltaTime());
+			
 			//currentFrame.getTexture().bind(1);
 			
-			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
+			//batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
 			//batch.draw(tex0,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
-			//batch.draw(tex0,pos.x,pos.y);
+			batch.draw(tex0,100,100);
 			
 			//batch.flush();
 			

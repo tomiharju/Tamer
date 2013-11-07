@@ -1,6 +1,5 @@
 package com.me.tamer.gameobjects.tiles;
 
-
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -18,51 +17,48 @@ import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.utils.Helper;
 
 /**
- * @author tomi
- * Props are all the non-interactive gameobjects in the level, props are trees, rocks, stumps and 
- * all the other objects which only affect with their rigidbodies and graphical aspect.
+ * @author tomi Props are all the non-interactive gameobjects in the level,
+ *         props are trees, rocks, stumps and all the other objects which only
+ *         affect with their rigidbodies and graphical aspect.
  */
-public class Prop extends StaticObject implements Obstacle{
-	
-	
-	
-	private float scale 	 = 0;
-	private float bounds	 = 0;
-	private Vector2 temp	 = new Vector2();
-	private Vector2 collisionAxis 	= new Vector2();
-	private Vector2 closestVertice 	= new Vector2();
-	private Vector2 headingAdjust 	= new Vector2();
-	private Vector2 newHeading 		= new Vector2();
-	private Vector2 impulse		= new Vector2();
+public class Prop extends StaticObject implements Obstacle {
+	private float scale = 0;
+	private float bounds = 0;
+	private Vector2 temp = new Vector2();
+	private Vector2 collisionAxis = new Vector2();
+	private Vector2 closestVertice = new Vector2();
+	private Vector2 headingAdjust = new Vector2();
+	private Vector2 newHeading = new Vector2();
+	private Vector2 impulse = new Vector2();
 	private ArrayList<Vector2> vertices;
 	private ArrayList<Vector2> axes;
-	public void setup(Environment level){
+
+	public void setup(Environment level) {
 		level.addNewObject(this);
 		level.getObstacles().add(this);
 		setZindex(0);
 		createVertices();
-	
-		
 	}
 
-	public void setPixelsX(String pixels){
+	public void setPixelsX(String pixels) {
 		float x = Float.parseFloat(pixels);
-		setSize(x / Helper.TILE_WIDTH,getSize().y );
+		setSize(x / Helper.TILE_WIDTH, getSize().y);
 	}
-	public void setPixelsY(String pixels){
+
+	public void setPixelsY(String pixels) {
 		float y = Float.parseFloat(pixels);
-		setSize(getSize().x ,y / Helper.TILE_WIDTH);
+		setSize(getSize().x, y / Helper.TILE_WIDTH);
 	}
-	public void setHitBox(String scale){
+
+	public void setHitBox(String scale) {
 		float s = Float.parseFloat(scale);
 		this.scale = s;
-		bounds =  this.scale;
-	
+		bounds = this.scale;
+
 	}
-	
-	
-	public void setGraphics(String graphics){
-		Renderer render = RenderPool.addRendererToPool("static",graphics);
+
+	public void setGraphics(String graphics) {
+		Renderer render = RenderPool.addRendererToPool("static", graphics);
 		render.loadGraphics(graphics);
 		setSize(getSize());
 		setRenderType(graphics);
@@ -71,121 +67,126 @@ public class Prop extends StaticObject implements Obstacle{
 	@Override
 	public void resolve(ArrayList<Creature> creatures) {
 		int size = creatures.size();
-		for( int i = 0 ; i < size ; i ++){
-			
+		for (int i = 0; i < size; i++) {
+
 			temp.set(((DynamicObject) creatures.get(i)).getPosition());
 			Vector2 center = getPosition();
-			if(temp.x > center.x - bounds && temp.x < center.x
- 				& temp.y > center.y  && temp.y < center.y + bounds ){
-				
-				collisionAxis.set(getCollisionNormal(creatures.get(i).getHeading()));
-				headingAdjust.set(Helper.projection(creatures.get(i).getHeading(), collisionAxis));
-				newHeading.set(creatures.get(i).getHeading().tmp().sub(headingAdjust));
-				//System.out.println("Raw adjust " +headingAdjust.toString());
-				//System.out.println("new heading " +newHeading.toString());
+			if (temp.x > center.x - bounds && temp.x < center.x
+					& temp.y > center.y && temp.y < center.y + bounds) {
 
-			
+				collisionAxis.set(getCollisionNormal(creatures.get(i)
+						.getHeading()));
+				headingAdjust.set(Helper.projection(creatures.get(i)
+						.getHeading(), collisionAxis));
+				newHeading.set(creatures.get(i).getHeading().tmp()
+						.sub(headingAdjust));
+				// System.out.println("Raw adjust " +headingAdjust.toString());
+				// System.out.println("new heading " +newHeading.toString());
 
-			
-				
-				closestVertice.set(getClosestVertice(((DynamicObject) creatures.get(i)).getPosition()));
-				Vector2 headToClosest = closestVertice.sub(((DynamicObject) creatures.get(i)).getPosition());
-				//System.out.print("Projecting  " +headToClosest.toString() +" on " + collisionAxis.toString() );
-				Vector2 positionAdjust = Helper.projection(headToClosest,collisionAxis);
-				
-				float relNv = ((DynamicObject) creatures.get(i)).getForce().dot(collisionAxis);
-				float remove = relNv + positionAdjust.len() / Gdx.graphics.getDeltaTime();
+				closestVertice.set(getClosestVertice(((DynamicObject) creatures
+						.get(i)).getPosition()));
+				Vector2 headToClosest = closestVertice
+						.sub(((DynamicObject) creatures.get(i)).getPosition());
+				// System.out.print("Projecting  " +headToClosest.toString()
+				// +" on " + collisionAxis.toString() );
+				Vector2 positionAdjust = Helper.projection(headToClosest,
+						collisionAxis);
+
+				float relNv = ((DynamicObject) creatures.get(i)).getForce()
+						.dot(collisionAxis);
+				float remove = relNv + positionAdjust.len()
+						/ Gdx.graphics.getDeltaTime();
 				impulse.set(collisionAxis.mul(5f * Gdx.graphics.getDeltaTime()));
-				((Worm)creatures.get(i)).getHead().getPosition().add(impulse.mul(1f));
+				((Worm) creatures.get(i)).getHead().getPosition()
+						.add(impulse.mul(1f));
 				creatures.get(i).setHeading(newHeading);
-			
-			
-				}
-			
+
 			}
-			
-			
-		
-		
+
+		}
 	}
-	
+
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
-		
+
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x - bounds ,temp.y, bounds , bounds);
+		shapeRndr.rect(temp.x - bounds, temp.y, bounds, bounds);
 		shapeRndr.end();
 		/*
-		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(Helper.worldToScreen(getPosition()));
-		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x -0.1f,temp.y-0.1f, 0.2f ,0.2f);
-		shapeRndr.end();*/
-			
+		 * shapeRndr.setColor(1, 1, 1, 1);
+		 * temp.set(Helper.worldToScreen(getPosition()));
+		 * shapeRndr.begin(ShapeType.Rectangle); shapeRndr.rect(temp.x
+		 * -0.1f,temp.y-0.1f, 0.2f ,0.2f); shapeRndr.end();
+		 */
+
 	}
-	
-	public boolean getDebug(){
+
+	public boolean getDebug() {
 		return false;
 	}
-	
-	public Vector2 getCenterPosition(){
-		return getPosition().tmp().set(getPosition().x - bounds, getPosition().y + bounds );
-		
+
+	public Vector2 getCenterPosition() {
+		return getPosition().tmp().set(getPosition().x - bounds,
+				getPosition().y + bounds);
+
 	}
-	
-	public void createVertices(){
+
+	public void createVertices() {
 		vertices = new ArrayList<Vector2>(4);
-		Vector2 v1 = new Vector2((getPosition().x - bounds / 2), (getPosition().y ));
-        Vector2 v2 = new Vector2((getPosition().x - bounds / 2), (getPosition().y + bounds));
-        Vector2 v3 = new Vector2((getPosition().x + bounds / 2), (getPosition().y + bounds));
-        Vector2 v4 = new Vector2((getPosition().x + bounds / 2), (getPosition().y ));
-        vertices.add(v1);
-        vertices.add(v2);
-        vertices.add(v3);
-        vertices.add(v4);
-        
-        axes = new ArrayList<Vector2>();
-        for(int i = 0 ; i < this.vertices.size() ; i++){
+		Vector2 v1 = new Vector2((getPosition().x - bounds / 2),
+				(getPosition().y));
+		Vector2 v2 = new Vector2((getPosition().x - bounds / 2),
+				(getPosition().y + bounds));
+		Vector2 v3 = new Vector2((getPosition().x + bounds / 2),
+				(getPosition().y + bounds));
+		Vector2 v4 = new Vector2((getPosition().x + bounds / 2),
+				(getPosition().y));
+		vertices.add(v1);
+		vertices.add(v2);
+		vertices.add(v3);
+		vertices.add(v4);
+
+		axes = new ArrayList<Vector2>();
+		for (int i = 0; i < this.vertices.size(); i++) {
 			Vector2 p1 = this.vertices.get(i);
-			Vector2 p2 = this.vertices.get(i + 1 == this.vertices.size() ? 0 : i + 1);
+			Vector2 p2 = this.vertices.get(i + 1 == this.vertices.size() ? 0
+					: i + 1);
 			Vector2 edge = p1.cpy().sub(p2);
 			Vector2 normal = edge.rotate(-90);
 			normal.nor();
 			axes.add(normal);
 		}
 	}
-	public Vector2 getCollisionNormal(Vector2 heading){
+
+	public Vector2 getCollisionNormal(Vector2 heading) {
 		float smallestDot = 10000;
 		Vector2 axis = null;
-		for(int i = 0 ; i < axes.size() ; i ++){
+		for (int i = 0; i < axes.size(); i++) {
 			Vector2 normal = axes.get(i);
 			float dot = heading.dot(normal);
-			if(dot < smallestDot){
+			if (dot < smallestDot) {
 				smallestDot = dot;
 				axis = normal;
 			}
 		}
-		
-			return axis.nor();
+
+		return axis.nor();
 	}
 
 	public Vector2 getClosestVertice(Vector2 point) {
 		float mindist = 10000;
 		Vector2 vertice = point;
-		
-		for(int i = 0 ; i < this.vertices.size(); i ++){
+
+		for (int i = 0; i < this.vertices.size(); i++) {
 			float dist = this.vertices.get(i).dst(point);
-			if ( dist < mindist){
+			if (dist < mindist) {
 				mindist = dist;
 				vertice = this.vertices.get(i);
 			}
 		}
 		return vertice;
 	}
-	
 
-	
-	
 }

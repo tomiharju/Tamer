@@ -33,11 +33,8 @@ public class StaticObject implements GameObject{
 		renderer.setPosition(Helper.worldToScreen(position));
 		renderer.setOrientation(0);
 		renderer.draw(batch);
-		
 	}
-
 	
-
 	@Override
 	public void markAsCarbage() {
 		isCarbage = true;
