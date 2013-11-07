@@ -80,7 +80,6 @@ public class Worm extends DynamicObject implements Creature{
 		head.solveJoints(dt);
 		head.updateChild(dt);
 		head.getVelocity().set(head.getForce());
-		
 		solveEffects();
 	}
 	
@@ -100,10 +99,7 @@ public class Worm extends DynamicObject implements Creature{
 	
 	public void doScreamEffect(){
 		if(!head.isBlinking())head.setBlinking(true);
-		else head.setBlinking(false);
-		
-		System.out.println(head.isBlinking());
-		
+		else head.setBlinking(false);	
 	}
 
 	public void setHead(WormPart part){
@@ -196,7 +192,7 @@ public class Worm extends DynamicObject implements Creature{
 		head.setHeading(newHeading);
 		head.setForce(getHeading().mul(SPEED));
 	}
-
+	
 	public float getSPEED() {
 		return SPEED;
 	}
