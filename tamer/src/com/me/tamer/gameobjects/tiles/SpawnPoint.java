@@ -91,7 +91,7 @@ public class SpawnPoint extends StaticObject{
 		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		creatures.add(worm);
-		worm.setPosition(getCenterPosition());
+		worm.setPosition(getPosition());
 		worm.setVelocity(spawnVelocity);
 	}
 	public void addAnt(AntOrc ant){
@@ -138,9 +138,7 @@ public class SpawnPoint extends StaticObject{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}	
-			
 			}		
-		
 		});
 		spawn_thread.start();
 	}

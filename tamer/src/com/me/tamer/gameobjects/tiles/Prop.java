@@ -28,11 +28,20 @@ public class Prop extends StaticObject implements Obstacle{
 	private float scale 	 = 0;
 	private float bounds	 = 0;
 	private Vector2 temp	 = new Vector2();
-	
+	private Vector2 collisionAxis 	= new Vector2();
+	private Vector2 closestVertice 	= new Vector2();
+	private Vector2 headingAdjust 	= new Vector2();
+	private Vector2 newHeading 		= new Vector2();
+	private Vector2 reflection		= new Vector2();
+	private ArrayList<Vector2> vertices;
+	private ArrayList<Vector2> axes;
 	public void setup(Environment level){
 		level.addNewObject(this);
 		level.getObstacles().add(this);
 		setZindex(0);
+		createVertices();
+	
+		
 	}
 
 	public void setPixelsX(String pixels){
@@ -64,50 +73,29 @@ public class Prop extends StaticObject implements Obstacle{
 		for( int i = 0 ; i < size ; i ++){
 			
 			temp.set(((DynamicObject) creatures.get(i)).getPosition());
-		//	temp.add(((DynamicObject) creatures.get(i)).getVelocity().tmp().mul(Gdx.graphics.getDeltaTime()));
 			Vector2 center = getPosition();
-		
 			if(temp.x > center.x - bounds / 2 && temp.x < center.x + bounds / 2
  				& temp.y > center.y  && temp.y < center.y + bounds ){
-				System.out.println("Worm at " +temp.toString() +" center at "+center.toString()+ " bounds " +bounds );
-				temp.set(-creatures.get(i).getHeading().y*(float)Math.random()*1,creatures.get(i).getHeading().x*(float)Math.random()*1);
-				creatures.get(i).setHeading(temp);
+				
+				collisionAxis.set(getCollisionNormal(creatures.get(i).getHeading()));
+				headingAdjust.set(Helper.projection(creatures.get(i).getHeading(), collisionAxis));
+				
+				closestVertice.set(getClosestVertice(((DynamicObject) creatures.get(i)).getPosition()));
+				Vector2 headToClosest = closestVertice.sub(((DynamicObject) creatures.get(i)).getPosition());
+				//System.out.print("Projecting  " +headToClosest.toString() +" on " + collisionAxis.toString() );
+				Vector2 positionAdjust = Helper.projection(headToClosest,collisionAxis);
+				//System.out.println(" Result "+positionAdjust.toString());
+				((DynamicObject) creatures.get(i)).getVelocity().add(positionAdjust.mul(Gdx.graphics.getDeltaTime()));
+				
+			
+				newHeading.set(creatures.get(i).getHeading().tmp().sub(headingAdjust));
+			
+				creatures.get(i).setHeading(newHeading);
 				}
 			
 			}
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			/*
-			//Check if creature within check radius ( 0.5f to be adjusted )
-			float check_radius = getSize().x / 3 + ((DynamicObject) creatures.get(i)).getSize().x + 0.5f;
-			float distance = ((DynamicObject) creatures.get(i)).getPosition().dst(getPosition());
-			//System.out.println("Distance " + distance + " Check radius "+check_radius);
-			if(distance < check_radius){
-				//System.out.println("Worm close to collision");
-				separator = ((DynamicObject) creatures.get(i)).getPosition().tmp().sub(getPosition());
-				float x_dot = separator.dot(x_axis);
-				float y_dot = separator.dot(y_axis);
-				if(x_dot > y_dot){
-					//System.out.println("Turning towards x-axis");
-					creatures.get(i).setHeading(separator.tmp().rotate(45));
-				}
-				else if(y_dot > x_dot){
-					creatures.get(i).setHeading(separator);
-
-				}
-				
-				
-				
-			}
-		*/	
 		
 		
 	}
@@ -115,12 +103,12 @@ public class Prop extends StaticObject implements Obstacle{
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
 		
-		shapeRndr.setColor(1, 1, 1, 1);
+	/*	shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
 		shapeRndr.rect(temp.x - bounds / 2,temp.y, bounds , bounds / 2);
 		shapeRndr.end();
-		
+		*/
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
@@ -130,12 +118,62 @@ public class Prop extends StaticObject implements Obstacle{
 	}
 	
 	public boolean getDebug(){
-		return false;
+		return true;
 	}
 	
 	public Vector2 getCenterPosition(){
 		return getPosition().tmp().set(getPosition().x - bounds, getPosition().y + bounds );
 		
+	}
+	
+	public void createVertices(){
+		vertices = new ArrayList<Vector2>(4);
+		Vector2 v1 = new Vector2((getPosition().x - bounds / 2), (getPosition().y ));
+        Vector2 v2 = new Vector2((getPosition().x - bounds / 2), (getPosition().y + bounds));
+        Vector2 v3 = new Vector2((getPosition().x + bounds / 2), (getPosition().y + bounds));
+        Vector2 v4 = new Vector2((getPosition().x + bounds / 2), (getPosition().y ));
+        vertices.add(v1);
+        vertices.add(v2);
+        vertices.add(v3);
+        vertices.add(v4);
+        
+        axes = new ArrayList<Vector2>();
+        for(int i = 0 ; i < this.vertices.size() ; i++){
+			Vector2 p1 = this.vertices.get(i);
+			Vector2 p2 = this.vertices.get(i + 1 == this.vertices.size() ? 0 : i + 1);
+			Vector2 edge = p1.cpy().sub(p2);
+			Vector2 normal = edge.rotate(-90);
+			normal.nor();
+			axes.add(normal);
+		}
+	}
+	public Vector2 getCollisionNormal(Vector2 heading){
+		float smallestDot = 10000;
+		Vector2 axis = null;
+		for(int i = 0 ; i < axes.size() ; i ++){
+			Vector2 normal = axes.get(i);
+			float dot = heading.dot(normal);
+			if(dot < smallestDot){
+				smallestDot = dot;
+				axis = normal;
+			}
+		}
+		
+			return axis.nor();
+	}
+
+	public Vector2 getClosestVertice(Vector2 point) {
+		float mindist = 10000;
+		Vector2 vertice = point;
+		
+		for(int i = 0 ; i < this.vertices.size(); i ++){
+			float dist = this.vertices.get(i).dst(point);
+			if ( dist < mindist){
+				mindist = dist;
+				vertice = this.vertices.get(i);
+			}
+		}
+		return vertice;
 	}
 	
 

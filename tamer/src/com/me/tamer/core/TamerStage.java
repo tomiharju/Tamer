@@ -25,6 +25,8 @@ public class TamerStage extends Stage{
 	private final float VIRTUAL_HEIGHT = 40 * (float)(Math.sqrt(2) / 2);
 	float ASPECT_RATIO = (float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
 	
+	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
+	
 	private OrthographicCamera camera, uiCamera;
 	
 	private TamerGame game;
@@ -48,12 +50,16 @@ public class TamerStage extends Stage{
 	public static final int TAMER_CAMERA = 0;
 	public static final int SPEAR_CAMERA = 1;
 	public static final int AIM_CAMERA = 2;
+	private final float ZOOM_SPEED = 0.01f;
 	
 	//Debug
 	ShapeRenderer debugRender = new ShapeRenderer();
 	private static ArrayList<Vector2> debugLines = new ArrayList<Vector2>();
 	private Vector2 start = new Vector2();
 	private Vector2 end = new Vector2();
+	
+	//Helper
+	private Vector2 help = new Vector2();
 	
 	//Shaders
 	ShaderProgram shader;
@@ -88,7 +94,7 @@ public class TamerStage extends Stage{
 		level.setStage(this);
 		createActors();
 		
-		createShaders();
+		//createShaders();
 	}
 	
 	public void createActors(){
@@ -113,18 +119,6 @@ public class TamerStage extends Stage{
 	}  
 	
 	public void createShaders(){
-		/*
-		stateTime += Gdx.graphics.getDeltaTime();
-		
-		final float dt = Gdx.graphics.getRawDeltaTime();
-		 
-	    angleWave += dt * angleWaveSpeed;
-	    while(angleWave > Math.PI * 2)
-	        angleWave -= Math.PI * 2;
-	    
-	    float amplitudeWave = 2;
-	    
-	    */
 		
 		FileHandle handle = Gdx.files.classpath("com/me/tamer/utils/VertexShader");
 		String vertexShader = handle.readString();
@@ -167,10 +161,6 @@ public class TamerStage extends Stage{
 		
 		vcam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		vcam.setToOrtho(false);
-		
-		
-		//Create default shader
-		//defaultShader = super.getSpriteBatch().createDefaultShader();
 	}
 	
 	/*
@@ -193,8 +183,6 @@ public class TamerStage extends Stage{
 	
 	@Override
 	public void draw(){
-		
-		
 		hud.updateLabel(Hud.LABEL_FPS, Gdx.graphics.getFramesPerSecond());
 		super.getCamera().update();
 		if (!super.getRoot().isVisible()) return;
@@ -205,15 +193,12 @@ public class TamerStage extends Stage{
 		debugDraw();
 		environment.debugDraw(debugRender);
 		super.getSpriteBatch().end();
-		
-
 	}
 	
 	public void debugDraw(){
 		
 		debugRender.setProjectionMatrix(camera.combined);
 		debugRender.setColor(1, 1, 1, 1);
-		
 		for (int i = 0; i<debugLines.size(); i+=2){
 			start.set ( Helper.worldToScreen(debugLines.get(i).tmp() ));
 			end.set( Helper.worldToScreen(debugLines.get(i+1).tmp() ));
@@ -250,7 +235,11 @@ public class TamerStage extends Stage{
 	public void controlCamera(){
 		switch (cameraHolder) {
 		case TAMER_CAMERA:
-			if(environment.getTamer()!=null)cameraPosition.set(Helper.worldToScreen(environment.getTamer().getPosition()));	
+			if(environment.getTamer()!=null){
+				help.set(Helper.worldToScreen(environment.getTamer().getPosition()));
+				help.y -= TAMER_OFFSET_ONSCREEN;
+				cameraPosition.set( help );	
+			}
 			break;	
 		case SPEAR_CAMERA:
 			if (environment.getState() != Environment.SPEAR_TIME){
@@ -275,8 +264,8 @@ public class TamerStage extends Stage{
 			}
 			break;
 		case AIM_CAMERA:
-			cameraPosition.set(Helper.worldToScreen(controlContainer.getSpearButton().getCameraPoint()));
-			//environment.setAimMode();
+			//cameraPosition.set(Helper.worldToScreen(controlContainer.getSpearButton().getCameraPoint()));
+			camera.zoom = 1 + controlContainer.getSpearButton().getThrowDistance() / 100;
 			break;
 		default:
 			Gdx.app.error(TamerGame.LOG, this.getClass().getSimpleName() + " :: ran into cameraHolder default case");

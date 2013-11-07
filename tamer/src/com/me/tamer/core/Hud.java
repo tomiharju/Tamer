@@ -20,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.SnapshotArray;
 
 public class Hud extends Group{
+	public static final int SIZE = Gdx.graphics.getHeight() / 5;
+	
 	private static Hud instance;
 	private TextButton menuButton;
 	private TextButtonStyle textButtonStyle;

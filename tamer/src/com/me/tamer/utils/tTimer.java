@@ -13,11 +13,14 @@ public class tTimer extends Thread{
 	private long interval;
 	private long accumulation = 0;
 	private long loopAccumulation;
+	private int repetitions;
+	private int repetitionsDone = 0;
 	
-	public tTimer(Object caller, String target, long interval){
+	public tTimer(Object caller, String target, long interval, int repetitions){
 		this.caller = caller;
-		this.interval = interval * 1000;
+		this.interval = interval;
 		this.loopAccumulation = this.interval / 100; // is this too much?
+		this.repetitions = repetitions;
 		
 		try {
 			this.targetMethod = caller.getClass().getMethod(target);
@@ -36,15 +39,18 @@ public class tTimer extends Thread{
 		
 		try {
 			Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Timer thread started: " + caller.toString() +" -> " + targetMethod.toGenericString());
-			
-			while( accumulation < interval){
-				if (TamerStage.gameState == TamerStage.GAME_RUNNING){
-					Thread.sleep(loopAccumulation);
-					accumulation += loopAccumulation;
+			while(repetitionsDone < repetitions){
+				while( accumulation < interval){
+					
+					if (TamerStage.gameState == TamerStage.GAME_RUNNING){
+						Thread.sleep((long)loopAccumulation);
+						accumulation += loopAccumulation;
+					}
 				}
+				accumulation = 0;
+				targetMethod.invoke(caller);
+				repetitionsDone++;
 			}
-			
-			targetMethod.invoke(caller);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

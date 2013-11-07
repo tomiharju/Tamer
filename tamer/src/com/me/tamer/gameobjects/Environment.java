@@ -95,6 +95,7 @@ public class Environment extends Actor{
 		runCarbageCollection();
 		addNewObjects();
 		resolveObstacles(dt);
+
 		int numObjects = gameobjects.size();
 		
 		switch (state){
@@ -122,6 +123,7 @@ public class Environment extends Actor{
 			default:
 				break;
 		}
+		
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha){
@@ -207,7 +209,7 @@ public class Environment extends Actor{
 			}	
 	}
 	
-	public void addNewObject(GameObject obj){
+	public synchronized void addNewObject(GameObject obj){
 		newobjects.add(obj);
 	}
 	

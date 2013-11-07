@@ -40,7 +40,7 @@ public class SpearButton extends Actor {
 	private Vector2 waypoint3 = new Vector2();
 	private Vector2 cameraPoint = new Vector2(); //the point that AIM_CAMERA mode follows
 
-	float throwDistance = 1; 
+	float throwDistance = 0; 
 	boolean buttonPressed = false;
 	boolean inputDisabled = false;
 	UiRenderer buttonRender = null;
@@ -146,16 +146,14 @@ public class SpearButton extends Actor {
 				input.set(x,y);
 				
 				if(input.dst(localCenter) < BUTTON_SIZE / 2 ){
+					
 					//set to AIM Camera
-					/*
 					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 							+ " :: switched to AIM_CAMERA");
 					controlContainer.getStage().setCameraHolder(TamerStage.AIM_CAMERA);
-					*/
-				
-					controlContainer.getJoystick().disableMovement();
-					buttonPressed = true;
 					
+					controlContainer.getJoystick().disableMovement();
+					buttonPressed = true;		
 					controlContainer.getTouchWrap().setAimMode(true);
 					
 					return true;
@@ -165,14 +163,7 @@ public class SpearButton extends Actor {
 	        }
 			 
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-						+ " :: switched to TAMER_CAMERA");
-				controlContainer.getStage().setCameraHolder(TamerStage.TAMER_CAMERA);
-				
-				throwDistance = 0.0f;
-				buttonPressed = false;
-				controlContainer.getTouchWrap().setAimMode(false);
-				controlContainer.getJoystick().enableMovement();	
+				stopAim();		
 			}
 			
 			public void touchDragged(InputEvent event, float x, float y, int pointer){
@@ -182,6 +173,23 @@ public class SpearButton extends Actor {
 				}
 			}
 		});	
+	}
+	
+	public void stopAim(){
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+				+ " :: switched to TAMER_CAMERA");
+		controlContainer.getStage().setCameraHolder(TamerStage.TAMER_CAMERA);
+		
+		//throwdistance needs to be zero (effects won't trigger)
+		throwDistance = 0;
+		
+		buttonPressed = false;
+		controlContainer.getTouchWrap().setAimMode(false);
+		controlContainer.getJoystick().enableMovement();
+	}
+	
+	public float getThrowDistance(){
+		return throwDistance;
 	}
 	
 	public Vector2 getCameraPoint(){

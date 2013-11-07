@@ -146,8 +146,9 @@ public class DynamicObject implements GameObject{
 	}
 	
 	public void setHeading(Vector2 heading){
+		heading.nor();
 		this.heading.set(heading);
-		this.heading.nor();
+		
 	}
 	
 	public Vector2 getVelocity() {

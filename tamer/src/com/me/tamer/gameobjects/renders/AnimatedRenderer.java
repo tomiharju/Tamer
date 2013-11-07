@@ -119,18 +119,18 @@ public class AnimatedRenderer implements Renderer {
 		if (!animations.isEmpty()){
 			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
 			
-			batch.setShader(shader);
+			//batch.setShader(shader);
 			
-			shader.setUniformf("iGlobalTime", vtime+=Gdx.graphics.getDeltaTime());
+			//shader.setUniformf("iGlobalTime", vtime+=Gdx.graphics.getDeltaTime());
 			//currentFrame.getTexture().bind(1);
 			
-			//batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
+			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
 			//batch.draw(tex0,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
 			//batch.draw(tex0,pos.x,pos.y);
 			
-			batch.flush();
+			//batch.flush();
 			
-			batch.setShader(defaultShader);
+			//batch.setShader(defaultShader);
 			//batch.draw( currentFrame, pos.x - size.x / 2, pos.y - size.y /2, 0, 0, size.x, size.y, 1, 1, angle);
 			
 		}
