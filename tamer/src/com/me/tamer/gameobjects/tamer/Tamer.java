@@ -127,6 +127,7 @@ public class Tamer extends DynamicObject{
 	public void draw(SpriteBatch batch){
 		super.draw(batch);
 		shadow.draw(batch);
+		scream.draw(batch);
 	}
 	
 	/**

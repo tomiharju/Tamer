@@ -22,6 +22,7 @@ public interface Renderer {
 	 */
 	public void loadGraphics(String objectName);
 	public void loadGraphics(String animName,int FRAME_COLS,int FRAME_ROWS);
+	public void loadEffect(String animName,int FRAME_COLS,int FRAME_ROWS);
 	/**
 	 * @param w width
 	 * @param h	 height
