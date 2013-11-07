@@ -69,6 +69,11 @@ public class StaticRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

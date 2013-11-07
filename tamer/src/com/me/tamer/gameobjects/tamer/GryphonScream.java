@@ -4,6 +4,7 @@ package com.me.tamer.gameobjects.tamer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +12,7 @@ import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
+import com.me.tamer.gameobjects.renders.EffectRenderer;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
@@ -99,15 +101,25 @@ public class GryphonScream extends DynamicObject {
 	}
 	
 	public void setGraphics(){
-		Renderer render = RenderPool.addRendererToPool("animated","scream");
-		render.loadGraphics("scream_ph",4,1);
-		setSize(new Vector2(0,0)); // set to 0 to hide this
+		Renderer render = RenderPool.addRendererToPool("effect","scream");
+		render.loadEffect("screamSheet",6,4);
+		setSize(Helper.TILESIZE.tmp().mul(6)); // set to 0 to hide this
 		setRenderType("scream");
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream graphics are set");
 	}
 	
 	@Override
 	public void update(float dt) {
+	}
+	public void draw(SpriteBatch batch){
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		if(isActive && !((EffectRenderer) renderer).effectFinished()){
+			renderer.setSize(getSize());
+			renderer.setPosition(Helper.worldToScreen(tamerPos));
+			renderer.draw(batch);	
+		}else{
+			
+		}
 	}
 
 	public void wakeUp(Environment environment){
@@ -116,6 +128,9 @@ public class GryphonScream extends DynamicObject {
 	}
 	
 	public void activate(){
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		((EffectRenderer) renderer).resetEffect();
+		isActive = true;
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream activated");
 		//isActive = true;
 		//tTimer timer = new tTimer(this,"deactivateScream",1);
@@ -187,8 +202,6 @@ public class GryphonScream extends DynamicObject {
 				}	
 			}
 			*/
-			markAsCarbage();
-			RuntimeObjectFactory.addToObjectPool("scream",this);
 		}	
 	}
 
@@ -202,14 +215,12 @@ public class GryphonScream extends DynamicObject {
 	//Debug is on
 	@Override
 	public boolean getDebug(){
-		return true;
+		return false;
 	}
 	
 	public Vector2 getPosition(){
 		return position;
 	}
 
-	public Vector2 getSize(){
-		return size;
-	}
+	
 }
