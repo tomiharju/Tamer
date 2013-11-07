@@ -44,6 +44,7 @@ public class Spear extends DynamicObject{
 	public void update(float dt){
 
 		if ( currentWayPoint == 0) {
+			
 			//falling spear has zIndex 0
 			setzIndex(0);
 			targetReached = true;

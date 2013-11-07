@@ -8,6 +8,8 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.physics.RigidBodyBox;
+import com.me.tamer.ui.ControlContainer;
+import com.me.tamer.utils.tTimer;
 
 public class Worm extends DynamicObject implements Creature{
 	
@@ -18,9 +20,16 @@ public class Worm extends DynamicObject implements Creature{
 	private WormPart head = null;
 	private WormPart tail = null;
 	
+	//for effects
+	private ControlContainer controls;
+	private boolean colorChanged;
+	private tTimer screamTimer;
+	
 	public Worm(){
 		parts = new ArrayList<WormPart>();
 		setBorderOffset(BORDER_OFFSET);
+		
+		controls = ControlContainer.instance();
 	}
 	
 	public void setup(){
@@ -70,11 +79,27 @@ public class Worm extends DynamicObject implements Creature{
 	public void update(float dt){
 		head.solveJoints(dt);
 		head.updateChild(dt);
-		head.getVelocity().add(head.getForce());
+		head.getVelocity().set(head.getForce());
+		solveEffects();
 	}
 	
 	public void draw(SpriteBatch batch){
 		//No action
+	}
+	
+	public void solveEffects(){
+		for(int i = 0 ; i < parts.size() ; i++){
+			if (parts.get(i).getPosition().dst(controls.getEnvironment().getTamer().getShadow().getPosition()) < controls.getSpearButton().getThrowDistance() / 2){
+				parts.get(i).setOnSpearRange(true);
+			}else{
+				parts.get(i).setOnSpearRange(false);
+			}
+		}
+	}
+	
+	public void doScreamEffect(){
+		if(!head.isBlinking())head.setBlinking(true);
+		else head.setBlinking(false);	
 	}
 
 	public void setHead(WormPart part){
@@ -176,4 +201,5 @@ public class Worm extends DynamicObject implements Creature{
 	public RigidBodyBox getCollider() {
 		return head.getCollider();
 	}
+	
 }

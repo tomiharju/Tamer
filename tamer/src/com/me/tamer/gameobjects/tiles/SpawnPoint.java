@@ -138,9 +138,7 @@ public class SpawnPoint extends StaticObject{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}	
-			
 			}		
-		
 		});
 		spawn_thread.start();
 	}

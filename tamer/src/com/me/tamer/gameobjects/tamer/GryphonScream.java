@@ -18,6 +18,7 @@ import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
+import com.me.tamer.utils.tTimer;
 
 public class GryphonScream extends DynamicObject {
 	private final float SCREAM_AREA_WIDTH = 8.0f;
@@ -50,6 +51,9 @@ public class GryphonScream extends DynamicObject {
 	
 	private SoundManager sound			= null;
 	//ShapeRenderer shapeRenderer = new ShapeRenderer();
+	
+	//effect
+	private tTimer screamTimer;
 	
 	public GryphonScream(Environment environment){
 		//Z-index for drawing order
@@ -136,7 +140,10 @@ public class GryphonScream extends DynamicObject {
 					newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
 					newHeading.nor();
 					worm.setHeading(newHeading);
-					worm.getHead().intimidate();
+					//worm.getHead().intimidate();
+					worm.doScreamEffect();
+					screamTimer = new tTimer(worm,"doScreamEffect",(long)500,3);
+					screamTimer.start();
 				}
 			}
 		

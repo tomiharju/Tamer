@@ -4,9 +4,9 @@ package com.me.tamer.gameobjects.tamer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
-import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -24,13 +24,16 @@ public class Tamer extends DynamicObject{
 	private final float AIM_SPEED 	= 0.001f; //heading interpolating coefficient
 	private final float MAX_POWER 	= 1.2f;
 	private final float BORDER_OFFSET = -5.0f;
-	private int numSpears 			= 3;
-	private ArrayList<Spear> spears = null;
 	private TamerShadow shadow		=null;
 	private GryphonScream scream 	= null;
 	private Environment environment;
 	private Vector2 help 			= new Vector2();
 	private Vector2 movementAxis 	= new Vector2();
+	
+	//spear related variables
+	private int numSpears 			= 3;
+	private ArrayList<Spear> spears = null;
+	private boolean targetFound = false;
 	
 	//Variables for entering the field
 	private Vector2 spawnPosition 	= new Vector2();
@@ -63,7 +66,6 @@ public class Tamer extends DynamicObject{
 		
 		//Shadow
 		shadow = new TamerShadow(this);
-		environment.addObject(shadow);
 		
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Tamer has woken up! " + this.toString());
 		
@@ -116,6 +118,15 @@ public class Tamer extends DynamicObject{
 				}
 			}
 		}	
+		
+		//Update shadow
+		shadow.update(dt);
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch){
+		super.draw(batch);
+		shadow.draw(batch);
 	}
 	
 	/**
@@ -162,27 +173,40 @@ public class Tamer extends DynamicObject{
 		getHeading().nor();
 	}
 	
-	public void throwSpear(Spear spear,ArrayList<Vector2> waypoints){
+	public void tryThrowSpear(ArrayList<Vector2> waypoints){
+		targetFound = false;
 		
-		//Switch to SPEAR_CAM if spear is going to hit
 		ArrayList<Creature> creatures = environment.getCreatures();
 		int size = creatures.size();
 		for(int i = 0 ; i < size ; i ++){
 				Creature targetCreature = creatures.get(i).affectedCreature(waypoints.get(0), 0.5f);
 				if(targetCreature != null){
 					
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched to SPEAR_CAMERA");
-					environment.getStage().setCameraHolder(TamerStage.SPEAR_CAMERA);
-				}
+					waypoints.set(0,((DynamicObject)targetCreature).getPosition());
+					targetFound = true;
+				}	
+		}	
+		
+		//Switch to SPEAR_CAM if spear is going to hit
+		/*
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched to SPEAR_CAMERA");
+		environment.getStage().setCameraHolder(TamerStage.SPEAR_CAMERA);*/
+		
+		if(targetFound){
+			Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
+			if(spear != null){
+				spear.setPosition(getPosition());
+				spear.throwAt(waypoints);
+				spears.add(spear);	
+			}	
+			else
+				System.err.println("No spears remaining");
+			
+			
+			Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing throwing sound");
+			sound.setVolume(0.8f);
+			sound.play(TamerSound.THROW);
 		}
-		
-		spears.add(spear);
-		spear.setPosition(getPosition());
-		spear.throwAt(waypoints);
-		
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing throwing sound");
-		sound.setVolume(0.8f);
-		sound.play(TamerSound.THROW);
 	}
 	
 	public void setSpawnDirection(Vector2 spawnDirection){

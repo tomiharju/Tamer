@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -20,14 +21,12 @@ import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.gameobjects.tiles.TileMap;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
-import com.me.tamer.physics.Contact;
-import com.me.tamer.physics.RigidBody;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
-import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.Helper;
+import com.me.tamer.utils.RuntimeObjectFactory;
 
 
 public class Environment extends Actor{
@@ -52,15 +51,10 @@ public class Environment extends Actor{
 	private DynamicObject tamer 				= null;
 	private ArrayList<Obstacle> obstacles 		= null;
 	private ArrayList<Creature> creatures		= null;
-	
-	//Physical contact list
-	private ArrayList<Contact> contacts;
-	private ArrayList<RigidBody> rigidbodies;
-	
+
 	//Optimization variables
 	Vector2 tamerpos = new Vector2();
 
-	
 	//Drawing-order
 	private int loopCount = 0;
 	private int sortRate = 6;
@@ -71,12 +65,8 @@ public class Environment extends Actor{
 	public static final int SPEAR_TIME = 2;
 	private int state = 0;
 	
-	
 	//SoundManager
 	SoundManager sound;
-	
-	//inputs for aiming
-	private boolean aimMode = false;
 		
 	public Environment(){	
 		gameobjects 	= new ArrayList<GameObject>();
@@ -91,9 +81,6 @@ public class Environment extends Actor{
 		
 		sound = SoundManager.instance();
 		RenderPool.createAtlas();
-		//Create listener for aim-mode
-		setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		createInputListener();
 	}
 	
 	public void setStage(TamerStage stage){
@@ -176,53 +163,6 @@ public class Environment extends Actor{
 		} loopCount++;
 	}
 	
-	public void setAimMode(boolean b){
-		aimMode = b;
-	}
-	
-	public void createInputListener(){
-		this.addListener(new InputListener(){
-			Vector2 input = new Vector2();
-			Vector2 waypoint1 = new Vector2(),waypoint2 = new Vector2(),waypoint3 = new Vector2(),targetPoint = new Vector2();
-			private ArrayList<Vector2> waypoints = new ArrayList<Vector2>();
-			
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-		
-				if (aimMode){
-					input.set(x - Gdx.graphics.getWidth() / 2,y - Gdx.graphics.getHeight() / 2);
-					targetPoint.set(input);
-					targetPoint = Helper.screenToWorld(targetPoint);
-					//this is where spear ends up
-					help.set( ((Tamer)tamer).getShadow().getPosition() );
-					waypoint1.set(help.add(targetPoint));
-					
-					help.set( ((Tamer)tamer).getPosition() );
-					waypoint2.set(help.add(targetPoint));
-					//Set camera to follow way point 2
-					//cameraPoint.set(waypoint2);
-					
-					help.set( ((Tamer)tamer).getPosition().tmp().add(-3,3) );
-					waypoint3.set(help.add(targetPoint.tmp().mul(0.8f)));
-					
-					waypoints.clear();
-					waypoints.add(waypoint1);
-					waypoints.add(waypoint2);
-					waypoints.add(waypoint3);
-					
-					Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
-					if(spear != null)
-						((Tamer)tamer).throwSpear(spear, waypoints );
-					else
-						System.err.println("No spears remaining");
-				
-						
-					return true;
-				}else
-					return false;
-			}
-		});
-	}
-	
 	/**
 	 * @param dt
 	 * Uses rigidbodies to generate Contact objects
@@ -230,7 +170,6 @@ public class Environment extends Actor{
 	 * Resolves each collision by adding proper forces.
 	 */
 	public void resolveCollisions(float dt){
-		contacts.clear();
 		int numObjects = gameobjects.size();
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).resolveForces(dt);
@@ -294,9 +233,6 @@ public class Environment extends Actor{
 		gameobjects.add(obj);
 	}
 	
-	public void addRigidBody(RigidBody body){
-		rigidbodies.add(body);
-	}
 	public void addObstacle(Obstacle obstacle){
 		this.obstacles.add(obstacle);
 	}
@@ -344,10 +280,6 @@ public class Environment extends Actor{
 
 	public Vector2 getMapBounds(){
 		return mapBounds;
-	}
-
-	public ArrayList<RigidBody> getRigidBodies(){
-		return rigidbodies;
 	}
 	
 	public Vector2 getCamBounds(){

@@ -1,6 +1,8 @@
 package com.me.tamer.gameobjects.creatures;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -25,12 +27,17 @@ public class WormPart extends DynamicObject implements Creature {
 	private int ordinal;
 	private float invMass;
 	private float mass;
+	
+	//Effect variables
+	private boolean onSpearRange = false;
+	private boolean blinking = false;
 
 	//Chain related stuff
 	private WormPart parent 	= null;
 	private WormPart child 		= null;
 	private boolean isTail		= false;
 	private String partName 	= null;
+	
 	//Physics optimization variables;
 	private RigidBodyBox body	= null;
 	Vector2 impulseA 			= new Vector2();
@@ -76,6 +83,22 @@ public class WormPart extends DynamicObject implements Creature {
 
 	}
 	
+	@Override
+	public void draw(SpriteBatch batch) {
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		
+		if (onSpearRange)batch.setColor(0.1f, 1, 0.1f, 1.0f);
+		else if (blinking)batch.setColor(0.1f,0.1f,1.0f,1.0f);
+			
+		renderer.setSize(getSize());
+		renderer.setPosition(Helper.worldToScreen(getPosition()));
+		renderer.setOrientation( solveOrientation() );
+		renderer.setAngle(getAngle());
+		renderer.draw(batch);
+		
+		//reset to default color
+		batch.setColor(Color.WHITE);
+	}
 	
 	public void unBind(){
 		invMass = 1 / mass;
@@ -177,6 +200,14 @@ public class WormPart extends DynamicObject implements Creature {
 			else
 				return getPosition().tmp().sub(parent.getPosition());
 		}
+	}
+	
+	public void setOnSpearRange(boolean b){
+		onSpearRange = b;
+	}
+	
+	public void setBlinking(boolean b){
+		blinking = b;
 	}
 	
 	private float getInvMass() {
@@ -281,10 +312,11 @@ public class WormPart extends DynamicObject implements Creature {
 		if(getPosition().dst(point) < 0.15f)
 			moveToPoint(point);
 	}
-
-	public void intimidate(){
-		
+	
+	public boolean isBlinking(){
+		return blinking;
 	}
+	
 	@Override
 	public boolean isAffected(Vector2 point, float radius) {
 		// TODO Auto-generated method stub
