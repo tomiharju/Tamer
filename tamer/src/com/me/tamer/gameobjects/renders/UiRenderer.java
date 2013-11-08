@@ -69,6 +69,18 @@ public class UiRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setBounds(float x, float y, float width, float height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	

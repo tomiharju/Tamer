@@ -8,6 +8,7 @@ import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.physics.RigidBodyBox;
 
 
 public class AntOrc extends DynamicObject implements Creature{
@@ -144,6 +145,14 @@ public class AntOrc extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public RigidBodyBox getCollider() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 	
 }

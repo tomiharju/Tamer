@@ -1,0 +1,179 @@
+screamSheet.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+0016
+  rotate: false
+  xy: 450, 500
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0012
+  rotate: false
+  xy: 750, 250
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0006
+  rotate: false
+  xy: 750, 0
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0002
+  rotate: false
+  xy: 150, 0
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0023
+  rotate: false
+  xy: 600, 750
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0017
+  rotate: false
+  xy: 600, 500
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0013
+  rotate: false
+  xy: 0, 500
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0007
+  rotate: false
+  xy: 0, 250
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0003
+  rotate: false
+  xy: 300, 0
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0024
+  rotate: false
+  xy: 750, 750
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0020
+  rotate: false
+  xy: 150, 750
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0018
+  rotate: false
+  xy: 750, 500
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0014
+  rotate: false
+  xy: 150, 500
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0010
+  rotate: false
+  xy: 450, 250
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0008
+  rotate: false
+  xy: 150, 250
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0004
+  rotate: false
+  xy: 450, 0
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0025
+  rotate: false
+  xy: 750, 750
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0021
+  rotate: false
+  xy: 300, 750
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0019
+  rotate: false
+  xy: 0, 750
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0015
+  rotate: false
+  xy: 300, 500
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0011
+  rotate: false
+  xy: 600, 250
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0009
+  rotate: false
+  xy: 300, 250
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0005
+  rotate: false
+  xy: 600, 0
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0001
+  rotate: false
+  xy: 0, 0
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1
+0022
+  rotate: false
+  xy: 450, 750
+  size: 150, 250
+  orig: 150, 250
+  offset: 0, 0
+  index: -1

@@ -4,6 +4,7 @@ package com.me.tamer.gameobjects.tamer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -11,12 +12,13 @@ import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
+import com.me.tamer.gameobjects.renders.EffectRenderer;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.tTimer;
 
@@ -32,47 +34,35 @@ public class GryphonScream extends DynamicObject {
 	private Vector2 position			= new Vector2();
 	private Vector2 size				= new Vector2(0,0);
 	
-	private Vector2 screamVert1 		= null;
-	private Vector2 screamVert2 		= null;
-	private Vector2 screamVert3 		= null;
+	private Vector2 screamVert1 		= new Vector2();
+	private Vector2 screamVert2 		= new Vector2();
+	private Vector2 screamVert3 		= new Vector2();
 	
-	private Vector2 drawVert1			= null;
-	private Vector2 drawVert2			= null;
-	private Vector2 drawVert3			= null;
+	private Vector2 drawVert1			= new Vector2();
+	private Vector2 drawVert2			= new Vector2();
+	private Vector2 drawVert3			= new Vector2();
 	
-	private Vector2 wormPos1			= null;
-	private Vector2 wormPos2			= null;
-	private Vector2 wormPos3			= null;
+	private Vector2 wormPos1			= new Vector2();
+	private Vector2 wormPos2			= new Vector2();
+	private Vector2 wormPos3			= new Vector2();
 	
-	private Vector2 wormPos				= null;
-	private Vector2 tamerPos			= null;
-	private Vector2 tamerHead			= null;
-	private Vector2 newHeading			= null;
+	private Vector2 wormPos				= new Vector2();
+	private Vector2 tamerPos			= new Vector2();
+	private Vector2 tamerHead			= new Vector2();
+	private Vector2 newHeading			= new Vector2();
 	
 	private SoundManager sound			= null;
 	//ShapeRenderer shapeRenderer = new ShapeRenderer();
 	
+	//effect
+	private tTimer screamTimer;
+	
 	public GryphonScream(Environment environment){
-		screamVert1 = new Vector2();
-		screamVert2 = new Vector2();
-		screamVert3 = new Vector2();
-		
-		drawVert1 = new Vector2();
-		drawVert2 = new Vector2();
-		drawVert3 = new Vector2();
-		
-		wormPos1 = new Vector2();
-		wormPos2 = new Vector2();
-		wormPos3 = new Vector2();
-		
-		wormPos = new Vector2();
-		tamerPos = new Vector2();
-		tamerHead = new Vector2();
-		newHeading = new Vector2();
-		
 		//Z-index for drawing order
 		setZindex(-1);
 		setGraphics();
+		
+		this.environment = environment;
 		
 		sound = SoundManager.instance();
 	}
@@ -81,8 +71,7 @@ public class GryphonScream extends DynamicObject {
 		shapeRenderer.setProjectionMatrix(environment.getStage().getCamera().combined);
 		shapeRenderer.setColor(1, 1, 1, 0.9f);
 		
-		System.out.println(tamerPos);
-		drawVert1.set(IsoHelper.twoDToTileIso(tamerPos));
+		drawVert1.set(Helper.worldToScreen(tamerPos));
 		
 		shapeRenderer.begin(ShapeType.Circle);
 		shapeRenderer.translate(drawVert1.x, drawVert1.y, 0);
@@ -111,40 +100,68 @@ public class GryphonScream extends DynamicObject {
 		*/
 	}
 	
-	
 	public void setGraphics(){
-		Renderer render = RenderPool.addRendererToPool("animated","scream");
-		render.loadGraphics("scream_ph",4,1);
-		setSize(new Vector2(0,0)); // set to 0 to hide this
+		Renderer render = RenderPool.addRendererToPool("effect","scream");
+		render.loadEffect("screamSheet",6,4);
+		setSize(Helper.TILESIZE.tmp().mul(6)); // set to 0 to hide this
 		setRenderType("scream");
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream graphics are set");
-		
 	}
 	
 	@Override
 	public void update(float dt) {
+	}
+	public void draw(SpriteBatch batch){
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		if(isActive && !((EffectRenderer) renderer).effectFinished()){
+			renderer.setSize(getSize());
+			renderer.setPosition(Helper.worldToScreen(tamerPos));
+			renderer.draw(batch);	
+		}else{
+			
+		}
+	}
+
+	public void wakeUp(Environment environment){
+		//this.environment = environment;
+		//markAsActive();
+	}
+	
+	public void activate(){
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		((EffectRenderer) renderer).resetEffect();
+		isActive = true;
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream activated");
+		//isActive = true;
+		//tTimer timer = new tTimer(this,"deactivateScream",1);
+		//timer.start();
+		
+		sound.setVolume(0.7f);
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing scream sound");
+		sound.play(TamerSound.HAWK);
+		System.out.println(tamerPos +", "+environment);
 		tamerPos.set(environment.getTamer().getShadow().getPosition());
-		if(isActive){
-			
-			//Scream circle
-			
-			
-			
-			ArrayList<Creature> creatures = environment.getCreatures();
-			
-			for (int i = 0; i < creatures.size(); i++){	
-				if(creatures.get(i).getClass() == Worm.class){
-					
-					Worm worm = ((Worm)creatures.get(i));
-					wormPos.set(worm.getHead().getPosition());	
-					
-					if( wormPos.dst(tamerPos) < SCREAM_CIRCLE_RADIUS){
-						newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
-						newHeading.nor();
-						worm.setHeading(newHeading);
-					}
+	
+		//Scream circle
+		ArrayList<Creature> creatures = environment.getCreatures();
+		
+		for (int i = 0; i < creatures.size(); i++){	
+			if(creatures.get(i).getClass() == Worm.class){
+				
+				Worm worm = ((Worm)creatures.get(i));
+				wormPos.set(worm.getHead().getPosition());	
+				
+				if( wormPos.dst(tamerPos) < SCREAM_CIRCLE_RADIUS){
+					newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
+					newHeading.nor();
+					worm.setHeading(newHeading);
+					//worm.getHead().intimidate();
+					worm.doScreamEffect();
+					screamTimer = new tTimer(worm,"doScreamEffect",(long)500,3);
+					screamTimer.start();
 				}
 			}
+		
 			
 			
 			//Scream Triangle
@@ -184,24 +201,8 @@ public class GryphonScream extends DynamicObject {
 					}
 				}	
 			}
-			*/		
+			*/
 		}	
-	}
-
-	public void wakeUp(Environment level){
-		this.environment = level;
-		markAsActive();
-	}
-	
-	public void activate(){
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream activated");
-		isActive = true;
-		tTimer timer = new tTimer(this,"deactivateScream",1);
-		timer.start();
-		
-		sound.setVolume(0.7f);
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing scream sound");
-		sound.play(TamerSound.HAWK);
 	}
 
 	public void deactivateScream(){
@@ -214,14 +215,12 @@ public class GryphonScream extends DynamicObject {
 	//Debug is on
 	@Override
 	public boolean getDebug(){
-		return true;
+		return false;
 	}
 	
 	public Vector2 getPosition(){
 		return position;
 	}
 
-	public Vector2 getSize(){
-		return size;
-	}
+	
 }

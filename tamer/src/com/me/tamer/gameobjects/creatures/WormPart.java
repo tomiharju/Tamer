@@ -1,6 +1,10 @@
 package com.me.tamer.gameobjects.creatures;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -8,6 +12,8 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.physics.RigidBodyBox;
+import com.me.tamer.utils.Helper;
 
 public class WormPart extends DynamicObject implements Creature {
 	
@@ -21,18 +27,25 @@ public class WormPart extends DynamicObject implements Creature {
 	private int ordinal;
 	private float invMass;
 	private float mass;
+	
+	//Effect variables
+	private boolean onSpearRange = false;
+	private boolean blinking = false;
 
 	//Chain related stuff
 	private WormPart parent 	= null;
 	private WormPart child 		= null;
 	private boolean isTail		= false;
 	private String partName 	= null;
+	
 	//Physics optimization variables;
+	private RigidBodyBox body	= null;
 	Vector2 impulseA 			= new Vector2();
 	Vector2 impulseB 			= new Vector2();
 	Vector2 axis 				= new Vector2();
 	Vector2 relativeVelocity 	= new Vector2();
 	Vector2 orientationVector	= new Vector2();
+	Vector2 temp 				= new Vector2();
 	
 	public void createHead(Vector2 pos, Vector2 vel,Worm worm){
 		this.worm 			= worm;
@@ -44,6 +57,7 @@ public class WormPart extends DynamicObject implements Creature {
 		setVelocity(vel);
 		setForce(new Vector2(vel).mul(worm.getSPEED()));
 		setHeading(vel);
+		body = new RigidBodyBox(getPosition(),getVelocity(),10,1,1);
 		this.ordinal 		= 0;
 	}
 	
@@ -69,6 +83,22 @@ public class WormPart extends DynamicObject implements Creature {
 
 	}
 	
+	@Override
+	public void draw(SpriteBatch batch) {
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		
+		if (onSpearRange)batch.setColor(0.1f, 1, 0.1f, 1.0f);
+		else if (blinking)batch.setColor(0.1f,0.1f,1.0f,1.0f);
+			
+		renderer.setSize(getSize());
+		renderer.setPosition(Helper.worldToScreen(getPosition()));
+		renderer.setOrientation( solveOrientation() );
+		renderer.setAngle(getAngle());
+		renderer.draw(batch);
+		
+		//reset to default color
+		batch.setColor(Color.WHITE);
+	}
 	
 	public void unBind(){
 		invMass = 1 / mass;
@@ -99,8 +129,23 @@ public class WormPart extends DynamicObject implements Creature {
 			child.updateChild(dt);
 		
 		getPosition().add(getVelocity().tmp().mul(dt));
-		getVelocity().mul(0.9f * dt);
+		getVelocity().mul(0);
 	
+	}
+	
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+
+		shapeRndr.setColor(1, 1, 1, 1);
+		temp.set(Helper.worldToScreen(getPosition()));
+		shapeRndr.begin(ShapeType.Rectangle);
+		shapeRndr.rect(temp.x -0.1f,temp.y-0.1f, 0.2f ,0.2f);
+		shapeRndr.end();
+			
+	}
+	
+	public boolean getDebug(){
+		return false;
 	}
 	
 	public void solveJoint(float dt){
@@ -155,6 +200,14 @@ public class WormPart extends DynamicObject implements Creature {
 			else
 				return getPosition().tmp().sub(parent.getPosition());
 		}
+	}
+	
+	public void setOnSpearRange(boolean b){
+		onSpearRange = b;
+	}
+	
+	public void setBlinking(boolean b){
+		blinking = b;
 	}
 	
 	private float getInvMass() {
@@ -259,11 +312,20 @@ public class WormPart extends DynamicObject implements Creature {
 		if(getPosition().dst(point) < 0.15f)
 			moveToPoint(point);
 	}
-
+	
+	public boolean isBlinking(){
+		return blinking;
+	}
+	
 	@Override
 	public boolean isAffected(Vector2 point, float radius) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public RigidBodyBox getCollider() {
+		return body;
 	}
 
 	

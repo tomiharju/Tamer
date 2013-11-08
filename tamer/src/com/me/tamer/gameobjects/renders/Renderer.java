@@ -2,7 +2,6 @@ package com.me.tamer.gameobjects.renders;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public interface Renderer {
 	/**
@@ -22,6 +21,7 @@ public interface Renderer {
 	 */
 	public void loadGraphics(String objectName);
 	public void loadGraphics(String animName,int FRAME_COLS,int FRAME_ROWS);
+	public void loadEffect(String animName,int FRAME_COLS,int FRAME_ROWS);
 	/**
 	 * @param w width
 	 * @param h	 height
@@ -32,4 +32,5 @@ public interface Renderer {
 	public void setPosition(Vector2 pos);
 	public void setOrientation(int orientation);
 	public void setAngle(float angle);
+	public void setBounds(float x, float y, float width, float height);
 }

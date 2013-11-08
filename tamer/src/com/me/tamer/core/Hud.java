@@ -10,8 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -22,13 +20,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.SnapshotArray;
 
 public class Hud extends Group{
+	public static final int SIZE = Gdx.graphics.getHeight() / 5;
+	
 	private static Hud instance;
 	private TextButton menuButton;
 	private TextButtonStyle textButtonStyle;
 	private Skin skin;
 	private TamerStage stage;
 	
-	private Label remainingLabel, survivedLabel;
+	private Label remainingLabel, survivedLabel,fpsLabel;
+	public static final int LABEL_REMAINING = 0,LABEL_SURVIVED = 1, LABEL_FPS = 2;
 	private int remaining = 0, survived = 0;
 	
 	private Hud(){
@@ -86,7 +87,7 @@ public class Hud extends Group{
 		survivedLabel = new Label("Survived: ",labelStyle);
 		//survivedLabel.setPosition(280, Gdx.graphics.getHeight() - 35);
 		//this.addActor(survivedLabel);
-		
+		fpsLabel = new Label("FPS: ",labelStyle);
 		
 		FileHandle skinFile = Gdx.files.internal( "skin/uiskin.json" );
         skin = new Skin( skinFile );
@@ -98,9 +99,10 @@ public class Hud extends Group{
         
         table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 20.0f );
 		
-		table.add( menuButton ).size( Gdx.graphics.getWidth() / 3, 60 ).uniform().spaceBottom( 10 );
-		table.add( remainingLabel ).size( Gdx.graphics.getWidth() / 3, 60 ).uniform().spaceBottom( 10 );
-		table.add( survivedLabel ).size( Gdx.graphics.getWidth() / 3, 60 ).uniform().spaceBottom( 10 );
+		table.add( menuButton ).size( Gdx.graphics.getWidth() / 4, 60 ).uniform().spaceBottom( 10 );
+		table.add( remainingLabel ).size( Gdx.graphics.getWidth() / 4, 60 ).uniform().spaceBottom( 10 );
+		table.add( survivedLabel ).size( Gdx.graphics.getWidth() / 4, 60 ).uniform().spaceBottom( 10 );
+		table.add( fpsLabel ).size( Gdx.graphics.getWidth() / 4, 60 ).uniform().spaceBottom( 10 );
 	}
 	
 	public void draw(SpriteBatch batch, float parentAlpha){		
@@ -119,14 +121,23 @@ public class Hud extends Group{
 		survivedLabel.setText("Survived: " +survived);
 	}
 	
-	public void updateLabel(String type, int amount){
-		if (type.equals("remaining")){
+	public void updateLabel(int type, int amount){
+		switch(type){
+		case LABEL_REMAINING:{
 			remaining += amount;
 			remainingLabel.setText("Remaining: " +remaining);
+			break;
 		}
-		if (type.equals("survived")){
+		case LABEL_SURVIVED:{
 			survived += amount;
 			survivedLabel.setText("Survived: " +survived);
+			break;
 		}
+		case LABEL_FPS:{
+			fpsLabel.setText("FPS: " +amount);
+			break;
+		}
+		}
+		
 	}
 }

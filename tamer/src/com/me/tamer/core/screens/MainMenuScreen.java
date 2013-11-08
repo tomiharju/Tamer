@@ -1,7 +1,8 @@
-package com.me.tamer.core;
+package com.me.tamer.core.screens;
 
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.services.MusicManager.TamerMusic;
 
 public class MainMenuScreen extends AbstractMenu{
@@ -24,6 +25,8 @@ public class MainMenuScreen extends AbstractMenu{
 	    table.add( levelsButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
 	    table.row();
 	    table.add( optionsButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
+	    table.row();	
+	    table.add( exitButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
 	    table.row();	
 	}
 	

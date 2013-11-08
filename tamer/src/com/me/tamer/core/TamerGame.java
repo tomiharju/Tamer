@@ -3,10 +3,13 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.me.tamer.core.screens.LevelsScreen;
+import com.me.tamer.core.screens.MainMenuScreen;
+import com.me.tamer.core.screens.PauseScreen;
+import com.me.tamer.core.screens.PlayScreen;
 import com.me.tamer.services.LevelManager;
 import com.me.tamer.services.MusicManager;
 import com.me.tamer.services.PreferenceManager;
-import com.me.tamer.services.SoundManager;
 
 
 public class TamerGame extends Game{
@@ -38,7 +41,7 @@ public class TamerGame extends Game{
 	@Override
 	public void create() {
 		//Set log level
-		Gdx.app.setLogLevel(Application.LOG_INFO);
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
 		Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() +" :: Creating game on " + Gdx.app.getType() );
 		//Spritebatch is used for drawing sprites

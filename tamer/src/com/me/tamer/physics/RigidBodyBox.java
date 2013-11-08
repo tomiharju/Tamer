@@ -40,10 +40,10 @@ public class RigidBodyBox implements RigidBody{
 		this.width = width;
 		this.height = height;
 		vertices = new ArrayList<Vector2>(4);
-			Vector2 v1 = new Vector2((position.x - width / 2), (position.y - height / 2));
-	        Vector2 v2 = new Vector2((position.x - width / 2), (position.y + height / 2));
-	        Vector2 v3 = new Vector2((position.x + width / 2), (position.y + height / 2));
-	        Vector2 v4 = new Vector2((position.x + width / 2), (position.y - height / 2));
+			Vector2 v1 = new Vector2((position.x - width / 2), (position.y ));
+	        Vector2 v2 = new Vector2((position.x - width / 2), (position.y + height));
+	        Vector2 v3 = new Vector2((position.x + width / 2), (position.y + height));
+	        Vector2 v4 = new Vector2((position.x + width / 2), (position.y ));
 	        vertices.add(v1);
 	        vertices.add(v2);
 	        vertices.add(v3);

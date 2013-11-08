@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 
 public class TamerShadow extends DynamicObject{
 	private final float DISTANCE = 7.0f;
@@ -42,7 +42,7 @@ public class TamerShadow extends DynamicObject{
 		batch.setColor(0.1f, 0.1f, 0.1f, 0.7f);
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		renderer.setSize(getSize().x,getSize().y);
-		renderer.setPosition(IsoHelper.twoDToTileIso(getPosition()));
+		renderer.setPosition(Helper.worldToScreen(getPosition()));
 		renderer.setOrientation( solveOrientation() );
 		renderer.setAngle(getAngle());
 		renderer.draw(batch);

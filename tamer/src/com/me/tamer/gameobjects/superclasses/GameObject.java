@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.physics.RigidBody;
 
 
 /**
@@ -87,6 +86,8 @@ public interface GameObject{
 	public void setZindex(int z);
 
 	public void setPosition(Vector2 pos);
+
+	public void dispose();
 	
 }
 

@@ -5,20 +5,22 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
+import com.me.tamer.utils.Helper;
 
 public class Quicksand extends StaticObject implements Obstacle{
 	private ArrayList<SandPart> parts;
 	private ArrayList<Creature> creatures_entered;
 	private Vector2 bogHoleCenter;
+	private Vector2 temp = new Vector2();
 
 	private final float PULL_MAGNITUDE = 8;
-	private Vector2 temp;
 	private boolean activated;
 	
 	private ArrayList<Creature> deadCreatures = new ArrayList<Creature>();
@@ -39,6 +41,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 		environment.addObstacle(this);
 		setBogHole();
 	}
+	
 	public void addSandPart(SandPart p){
 		parts.add(p);
 	}
@@ -46,9 +49,11 @@ public class Quicksand extends StaticObject implements Obstacle{
 	public void setBogHole(){
 		for(SandPart s : parts)
 			bogHoleCenter.add(s.getCenterPosition());
+			//bogHoleCenter.add(Helper.screenToWorld(s.getScreenTileCenter()));
+
+			
 		bogHoleCenter.div(parts.size());
-		//Move center half tile size up so that its realy in the center of the tile
-		bogHoleCenter.set(bogHoleCenter.x,bogHoleCenter.y);
+		bogHoleCenter.set(bogHoleCenter.x - Helper.TILESIZE.x / 4,bogHoleCenter.y + Helper.TILESIZE.y / 2);
 	}
 	
 	public void resolve(ArrayList<Creature> creatures){
@@ -57,8 +62,8 @@ public class Quicksand extends StaticObject implements Obstacle{
 		for(int i = 0 ; i < size ; i ++){
 			
 			for(int k = 0; k < psize ; k ++){
-				//Check each section of this quicksand if any creature has entered one of them ( 1 = sand radius )
-				boolean entered = creatures.get(i).isAffected(parts.get(k).getCenterPosition(),1f);
+				//Check each section of this quicksand if any creature has entered one of them ( 0.5f = sand radius )
+				boolean entered = creatures.get(i).isAffected(parts.get(k).getPosition(),0.5f);
 				//If some creature is inside this cluster
 				if(entered){
 					//Check if creature is not already inside this cluster
@@ -68,12 +73,12 @@ public class Quicksand extends StaticObject implements Obstacle{
 						
 						alreadyDead = false;
 						for (int j = 0; j < deadCreatures.size(); j++){
-							if (creatures.get(i)==deadCreatures.get(j))alreadyDead = true;
+							if (creatures.get(i) == deadCreatures.get(j))alreadyDead = true;
 						}
 						if(!alreadyDead){
 							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 									+ " :: updating label remaining");
-							hud.updateLabel("remaining", -1);
+							hud.updateLabel(Hud.LABEL_REMAINING, -1);
 						}
 						
 						//Do a coinflip
@@ -92,7 +97,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 			boolean isUnderRadius = false;
 			for(int k = 0; k < psize ; k ++){
 				//Check if this creature is closer than 1 from any of this clusters parts
-				isUnderRadius = targetCreature.isAffected(parts.get(k).getCenterPosition(),1f);
+				isUnderRadius = targetCreature.isAffected(parts.get(k).getPosition(),0.5f);
 				if(isUnderRadius)
 					break;
 			}
@@ -110,21 +115,20 @@ public class Quicksand extends StaticObject implements Obstacle{
 			}		
 		}
 	}
-	
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
-		/*
+		
 		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(IsoHelper.twoDToTileIso(bogHoleCenter));
-		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x-0.2f,temp.y, 0.4f,0.4f);
+		temp.set(Helper.worldToScreen(bogHoleCenter));
+		shapeRndr.begin(ShapeType.Circle);
+		shapeRndr.circle(temp.x, temp.y, 0.1f,30);
 		shapeRndr.end();
-		*/		
 	}
 	
 	public boolean getDebug(){
-		return false;
+		return true;
 	}
+	
 	
 	public void draw(SpriteBatch batch){
 		//Override to avoid default action

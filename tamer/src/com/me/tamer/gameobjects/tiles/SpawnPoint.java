@@ -17,6 +17,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 /**
@@ -34,7 +35,7 @@ public class SpawnPoint extends StaticObject{
 	private boolean isTamerSpawn = false;
 	//IMPORTANT: spawn number is used to distinguish spawns from each other.
 	private int spawnId = 0;
-	
+	private Thread spawn_thread = null;
 	private Hud hud;
 		
 	//EXPERIMENTAL STUFF
@@ -59,7 +60,7 @@ public class SpawnPoint extends StaticObject{
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(new Vector2(1,0.5f));
+		setSize(Helper.TILESIZE);
 		this.setRenderType(graphics);
 	}
 	
@@ -85,12 +86,12 @@ public class SpawnPoint extends StaticObject{
 	public void addWorm(Worm worm){
 		//update hud when worm is added
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Updating label remaining");
-		hud.updateLabel("remaining",1);
+		hud.updateLabel(Hud.LABEL_REMAINING,1);
 		
 		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		creatures.add(worm);
-		worm.setPosition(getCenterPosition());
+		worm.setPosition(getPosition());
 		worm.setVelocity(spawnVelocity);
 	}
 	public void addAnt(AntOrc ant){
@@ -110,7 +111,7 @@ public class SpawnPoint extends StaticObject{
 	 */
 
 	public void startSpawning(){
-		new Thread(new Runnable(){
+		spawn_thread = new Thread(new Runnable(){
 			@Override
 			public void run() {
 				try {
@@ -135,11 +136,15 @@ public class SpawnPoint extends StaticObject{
 						}
 					}
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
 			}		
-		}).start();
+		});
+		spawn_thread.start();
+	}
+	
+	public void dispose(){
+		spawn_thread.interrupt();
 	}
 	
 	public void setSpawnId(String number){

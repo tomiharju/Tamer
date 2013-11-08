@@ -1,4 +1,4 @@
-package com.me.tamer.core;
+package com.me.tamer.core.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Array;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.services.SoundManager;
 
 public class AbstractScreen implements Screen{

@@ -7,25 +7,27 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.creatures.Creature;
+import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.gameobjects.tiles.TileMap;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
-import com.me.tamer.physics.Contact;
-import com.me.tamer.physics.ContactPool;
-import com.me.tamer.physics.RigidBody;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
-import com.me.tamer.utils.IsoHelper;
+import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
-import com.me.tamer.utils.VectorHelper;
+
 
 public class Environment extends Actor{
 
@@ -49,17 +51,10 @@ public class Environment extends Actor{
 	private DynamicObject tamer 				= null;
 	private ArrayList<Obstacle> obstacles 		= null;
 	private ArrayList<Creature> creatures		= null;
-	
-	//Physical contact list
-	private ArrayList<Contact> contacts;
-	private ArrayList<RigidBody> rigidbodies;
-	
-	//Physics optimization variables
-	Vector2 impulseA = new Vector2();
-	Vector2 impulseB = new Vector2();
-	Vector2 bVelocity = new Vector2();
-	Vector2 normal = new Vector2();
-	
+
+	//Optimization variables
+	Vector2 tamerpos = new Vector2();
+
 	//Drawing-order
 	private int loopCount = 0;
 	private int sortRate = 6;
@@ -69,7 +64,6 @@ public class Environment extends Actor{
 	public static final int TAMER_ENTER = 1;
 	public static final int SPEAR_TIME = 2;
 	private int state = 0;
-	
 	
 	//SoundManager
 	SoundManager sound;
@@ -85,9 +79,8 @@ public class Environment extends Actor{
 		
 		controls = ControlContainer.instance();
 		
-		ContactPool.createPool(100);
-		
 		sound = SoundManager.instance();
+		RenderPool.createAtlas();
 	}
 	
 	public void setStage(TamerStage stage){
@@ -102,49 +95,35 @@ public class Environment extends Actor{
 		runCarbageCollection();
 		addNewObjects();
 		resolveObstacles(dt);
+
 		int numObjects = gameobjects.size();
 		
 		switch (state){
 			case(NORMAL):
-				
-				//enable controls
-				controls.setInputDisabled(false);
-			
 				for(int k = 0 ; k < numObjects ; k++){
 					gameobjects.get(k).update(dt);
 				}
 				break;
 			case(TAMER_ENTER):
-							//disable controls
-				controls.setInputDisabled(true);
-			
-				for(int k = 0 ; k < numObjects ; k++){
-					//System.out.println(gameobjects.get(k));
-					if (gameobjects.get(k).getClass()==Tamer.class){
-						gameobjects.get(k).update(dt);
-						if (((Tamer)tamer).hasEnteredField()){
-							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-									+ " :: setting state to NORMAL");
-							state = NORMAL;
-							
-							Gdx.app.log(TamerGame.LOG, this.getClass()
-									.getSimpleName() + " :: Playing sound entering");
-							sound.play(TamerSound.OPENING);
-						}
-					}		
+				//disable controls
+				if(tamer != null)tamer.update(dt);
+				if(((Tamer) tamer).hasEnteredField()){
+					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: setting state to NORMAL");
+					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Playing sound entering");
+					controls.enableInput();
+					state = NORMAL;
+					sound.play(TamerSound.OPENING);
 				}
-				//System.out.println("-------------");
 				break;
 			case (SPEAR_TIME):
 				for(int k = 0 ; k < numObjects; k++){
-					if (gameobjects.get(k).getClass()==Spear.class)gameobjects.get(k).update(dt);
+					if (gameobjects.get(k).getClass() == Spear.class)gameobjects.get(k).update(dt);
 				}
 				break;
 			default:
-				Gdx.app.error(TamerGame.LOG, this.getClass().getSimpleName()
-						+ " :: state default case");
 				break;
 		}
+		
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha){
@@ -152,8 +131,16 @@ public class Environment extends Actor{
 		batch.setProjectionMatrix(stage.getCamera().combined); 
 		int numObjects = gameobjects.size();
 		sortDrawOrder(numObjects);
-		for(int k = 0 ; k < numObjects ; k++)
-			gameobjects.get(k).draw(batch);
+		for(int k = 0 ; k < numObjects ; k++){
+			Vector2 pos = gameobjects.get(k).getPosition();
+			if(gameobjects.get(k).getClass() == TileMap.class)
+				gameobjects.get(k).draw(batch);
+			else if(pos.x > tamerpos.x - Helper.VIRTUAL_SIZE_X *1.9 && pos.x < tamerpos.x + Helper.VIRTUAL_SIZE_X *1.9
+					&& pos.y > tamerpos.y - Helper.VIRTUAL_SIZE_Y *1.1 && pos.y < tamerpos.y + Helper.VIRTUAL_SIZE_Y *1.1){
+				
+				gameobjects.get(k).draw(batch);
+			}
+		}
 	}
 	
 	public void debugDraw(ShapeRenderer sr){
@@ -183,59 +170,11 @@ public class Environment extends Actor{
 	 * Resolves each collision by adding proper forces.
 	 */
 	public void resolveCollisions(float dt){
-		contacts.clear();
 		int numObjects = gameobjects.size();
-		int numBodies = rigidbodies.size();
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).resolveForces(dt);
 		
-		/*
-		for(int i = 0 ; i < numBodies ; i ++){
-			if(!rigidbodies.get(i).isDynamic())
-				continue;
-			RigidBody firstbody = rigidbodies.get(i);
-			for(int j = 0 ; j < numBodies ; j++){
-				RigidBody secondBody = rigidbodies.get(j);
-				if(secondBody != firstbody){
-					Contact c = firstbody.generateContact(secondBody);
-					if(c != null)
-						contacts.add(c);
-				}
-			}
-		}
-		
-		if(contacts.size() > 0){
-			int numContacts = contacts.size();
-			for(int i = 0 ; i < numContacts ; i++){
-				Contact c = contacts.get(i);
-				normal.set(c.getN());
-				RigidBody b = c.getObjB();
-				RigidBody a = c.getObjA();
-				float dist = c.getDist();
-				//Relative velocity ( vector )
-			
-				Vector2 rv = b.getVelocity().tmp().sub(a.getVelocity());
-				//Relative normal velocity ( scalar )
-				float relNv = rv.dot(normal);
-			
-				float remove = relNv + dist / dt;
-				float imp = remove / ( b.getInvMass() + a.getInvMass() );
-				imp = Math.min(imp, 0);
-				Vector2 impulse = normal.mul(imp);
-			
-				impulseA.set(impulse);
-				impulseB.set(impulse);
-				impulseA.mul(a.getInvMass());
-				impulseB.mul(b.getInvMass());
 	
-				a.getVelocity().add(impulseA);
-				b.getVelocity().sub(impulseB);
-	
-				//!!!PUT CONTACT BACK INTO POOL!!!
-				ContactPool.restore(c);
-			}	
-		}	
-		*/	
 	}
 	
 	public void resolveObstacles(float dt){
@@ -270,7 +209,7 @@ public class Environment extends Actor{
 			}	
 	}
 	
-	public void addNewObject(GameObject obj){
+	public synchronized void addNewObject(GameObject obj){
 		newobjects.add(obj);
 	}
 	
@@ -284,10 +223,7 @@ public class Environment extends Actor{
 		for(GameObject go : gameobjects){
 				go.setup(this);
 		}
-
-		//Create new contact pool
-		ContactPool.createPool(100);
-	}
+}
 	
 	/**
 	 * @param obj
@@ -297,9 +233,6 @@ public class Environment extends Actor{
 		gameobjects.add(obj);
 	}
 	
-	public void addRigidBody(RigidBody body){
-		rigidbodies.add(body);
-	}
 	public void addObstacle(Obstacle obstacle){
 		this.obstacles.add(obstacle);
 	}
@@ -321,19 +254,22 @@ public class Environment extends Actor{
 	 */
 	public void setTamer(Tamer tamer){
 		this.tamer = tamer;
+		tamerpos = tamer.getPosition();
 	}
 	
 	public void dispose(){
+		for(GameObject go : gameobjects){
+			go.dispose();
+		}
 		gameobjects.clear();
 		carbages.clear();
 		newobjects.clear();
-		rigidbodies.clear();
 		tamer = null;
 		obstacles.clear();
 	}
 	
 	public boolean checkInsideBounds(Vector2 pos, float offset){
-		help.set(IsoHelper.twoDToTileIso(pos));;
+		help.set(Helper.worldToScreen(pos));
 
 		if(help.x < mapBounds.x / 2 - offset && help.x > -mapBounds.x / 2 + offset && help.y < mapBounds.y / 2 - offset && help.y > -mapBounds.y / 2 + offset){
 			return true;
@@ -344,10 +280,6 @@ public class Environment extends Actor{
 
 	public Vector2 getMapBounds(){
 		return mapBounds;
-	}
-
-	public ArrayList<RigidBody> getRigidBodies(){
-		return rigidbodies;
 	}
 	
 	public Vector2 getCamBounds(){

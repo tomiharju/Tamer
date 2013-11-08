@@ -1,4 +1,4 @@
-package com.me.tamer.core;
+package com.me.tamer.core.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -13,11 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.services.SoundManager.TamerSound;
 
 
 public class AbstractMenu extends AbstractScreen{
-	TextButton continueButton, newGameButton, levelsButton, optionsButton, mainMenuButton;
+	TextButton continueButton, newGameButton, levelsButton, optionsButton, mainMenuButton, exitButton;
 	Skin skin;
     Table table;
 	TextButtonStyle textButtonStyle;
@@ -44,7 +45,7 @@ public class AbstractMenu extends AbstractScreen{
         skin.add("white", new Texture(pixmap));
  
         // Store the default libgdx font under the name "default".
-        BitmapFont bfont=new BitmapFont();
+        BitmapFont bfont = new BitmapFont();
         bfont.scale(1);
         skin.add("default",bfont);
  
@@ -54,12 +55,10 @@ public class AbstractMenu extends AbstractScreen{
         textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
         //textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
         textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
- 
         textButtonStyle.font = skin.getFont("default");
- 
         skin.add("default", textButtonStyle);
         
-        newGameButton=new TextButton("New Game",textButtonStyle);
+        newGameButton = new TextButton("New Game",textButtonStyle);
         newGameButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 game.setScreen( game.createNewPlayScreen() );
@@ -87,6 +86,12 @@ public class AbstractMenu extends AbstractScreen{
             	game.setScreen( game.getMainMenuScreen() );
             }
         }); 
+		  exitButton = new TextButton("Exit Game",textButtonStyle);
+		  exitButton.addListener(new ChangeListener() {
+	        public void changed (ChangeEvent event, Actor actor) {
+	        	Gdx.app.exit();
+	        }
+	        }); 
     }
 
     public void resize (int width, int height) {

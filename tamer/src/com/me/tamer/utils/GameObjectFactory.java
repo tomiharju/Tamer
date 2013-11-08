@@ -24,23 +24,23 @@ public class GameObjectFactory {
 			Constructor<?> constructor = objectClass.getConstructor();
 			GameObject object = (GameObject) constructor.newInstance(new Object[]{});
 			
-			Gdx.app.log(TamerGame.LOG, " :: Starting to create new gameobject {"+object.getClass().getSimpleName()+"}");
+			Gdx.app.debug(TamerGame.LOG, " :: Starting to create new gameobject {"+object.getClass().getSimpleName()+"}");
 			//--SET PROPERTIES--//
 			Iterator<Entry<String, String>> propertyIt = propertyConfig.entrySet().iterator();
 			while (propertyIt.hasNext()) {
 				Entry<String, String> entry = propertyIt.next();
 			  try{
 				  Method setter = objectClass.getMethod("set"+entry.getKey(),String.class);
-				  Gdx.app.log(TamerGame.LOG, " :: Setting value... ["+entry.getKey()+"] -> " + entry.getValue());
+				  Gdx.app.debug(TamerGame.LOG, " :: Setting value... ["+entry.getKey()+"] -> " + entry.getValue());
 				  setter.invoke(object, entry.getValue());
 			  }catch(NoSuchMethodException e){
-				  Gdx.app.log(TamerGame.LOG, " :: Trying to set invalid object property ["+entry.getKey()+"] " + e.getMessage());
+				  Gdx.app.debug(TamerGame.LOG, " :: Trying to set invalid object property ["+entry.getKey()+"] " + e.getMessage());
 			  }catch(InvocationTargetException i){
-				  Gdx.app.log(TamerGame.LOG, " :: set" + entry.getKey() +" Failed to run succesfully\n" + i.getMessage());
+				  Gdx.app.debug(TamerGame.LOG, " :: set" + entry.getKey() +" Failed to run succesfully\n" + i.getMessage());
 			  }
 			 
 			}
-			Gdx.app.log(TamerGame.LOG, " :: GameObject created {" + object.getClass().getSimpleName() + "} In memory as "+object.toString()+" \n");
+			Gdx.app.debug(TamerGame.LOG, " :: GameObject created {" + object.getClass().getSimpleName() + "} In memory as "+object.toString()+" \n");
 		
 			return object;
 			

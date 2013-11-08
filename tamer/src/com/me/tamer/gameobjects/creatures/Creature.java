@@ -2,6 +2,7 @@ package com.me.tamer.gameobjects.creatures;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.physics.RigidBodyBox;
 
 public interface Creature {
 
@@ -43,5 +44,6 @@ public interface Creature {
 	public void moveToPoint(Vector2 point);
 	public void setHeading(Vector2 rotate);
 	public Vector2 getHeading();
+	public RigidBodyBox getCollider();
 	
 }

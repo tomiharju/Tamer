@@ -14,8 +14,8 @@ public class LevelManager {
     	currentLevel = 0;
     	
     	
-    	 // create the level 2
-        Level level3 = new Level( 3 );
+    	 // create the level 3
+        Level level3 = new Level( 4 );
         level3.setName( "Episode 4" );
     	
     	
@@ -38,18 +38,16 @@ public class LevelManager {
 
         // register the levels
         levels = new ArrayList<Level>( 3 );
-        
-        
+
         
         levels.add( level0 );
+        
         levels.add( level1 );
         
-        
-        
-        
-        
-        
-        //levels.add( level2 );
+        levels.add( level2 );
+
+       
+
         //levels.add( level3 );
         
     }
