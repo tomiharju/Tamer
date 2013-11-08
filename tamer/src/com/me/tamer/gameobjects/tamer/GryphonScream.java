@@ -48,7 +48,7 @@ public class GryphonScream extends StaticObject {
 		setGraphics();
 		
 		this.environment = environment;
-		for(int i = 0 ;i < 40 ; i++)
+		for(int i = 0 ;i < 30 ; i++)
 			soundWaves.add(new Vector3(0,0,0));
 		sound = SoundManager.instance();
 	}
