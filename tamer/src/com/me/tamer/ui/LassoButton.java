@@ -7,12 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.UiRenderer;
-import com.me.tamer.gameobjects.tamer.GryphonScream;
 import com.me.tamer.gameobjects.tamer.Tamer;
-import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class LassoButton extends Actor{
 	

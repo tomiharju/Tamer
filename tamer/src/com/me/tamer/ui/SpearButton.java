@@ -12,9 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.renders.UiRenderer;
-import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.utils.Helper;
-import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class SpearButton extends Actor {
 

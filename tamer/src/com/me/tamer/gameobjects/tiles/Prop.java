@@ -16,11 +16,7 @@ import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.utils.Helper;
 
-/**
- * @author tomi Props are all the non-interactive gameobjects in the level,
- *         props are trees, rocks, stumps and all the other objects which only
- *         affect with their rigidbodies and graphical aspect.
- */
+
 public class Prop extends StaticObject implements Obstacle {
 	private float scale = 0;
 	private float bounds = 0;
@@ -80,15 +76,12 @@ public class Prop extends StaticObject implements Obstacle {
 						.getHeading(), collisionAxis));
 				newHeading.set(creatures.get(i).getHeading().tmp()
 						.sub(headingAdjust));
-				// System.out.println("Raw adjust " +headingAdjust.toString());
-				// System.out.println("new heading " +newHeading.toString());
 
 				closestVertice.set(getClosestVertice(((DynamicObject) creatures
 						.get(i)).getPosition()));
 				Vector2 headToClosest = closestVertice
 						.sub(((DynamicObject) creatures.get(i)).getPosition());
-				// System.out.print("Projecting  " +headToClosest.toString()
-				// +" on " + collisionAxis.toString() );
+
 				Vector2 positionAdjust = Helper.projection(headToClosest,
 						collisionAxis);
 
@@ -96,7 +89,7 @@ public class Prop extends StaticObject implements Obstacle {
 						.dot(collisionAxis);
 				float remove = relNv + positionAdjust.len()
 						/ Gdx.graphics.getDeltaTime();
-				impulse.set(collisionAxis.mul(5f * Gdx.graphics.getDeltaTime()));
+				impulse.set(collisionAxis.mul(((Worm) creatures.get(i)).getSpeed()* 2 * Gdx.graphics.getDeltaTime()));
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse.mul(1f));
 				creatures.get(i).setHeading(newHeading);

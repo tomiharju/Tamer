@@ -21,7 +21,7 @@ import com.me.tamer.utils.Helper;
 public class TamerStage extends Stage{
 	public static TamerStage instance;
 	
-	private final float VIRTUAL_WIDTH = 12 * (float)Math.sqrt(2);
+	private final float VIRTUAL_WIDTH = 12 * ((float)Math.sqrt(2));
 	private final float VIRTUAL_HEIGHT = 40 * (float)(Math.sqrt(2) / 2);
 	float ASPECT_RATIO = (float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
 	

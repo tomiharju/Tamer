@@ -95,13 +95,7 @@ public class DynamicObject implements GameObject{
 		this.velocity.set(x,y);
 		
 	}
-	
-	public void setForce(String force){
-		String[] values = force.split(":");
-		int x = Integer.parseInt(values[0]);
-		int y = Integer.parseInt(values[1]);
-		this.force.set(x,y);
-	}
+
 	
 	public void setRigidBody(String bodytype){
 		/*

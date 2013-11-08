@@ -1,19 +1,15 @@
 package com.me.tamer.gameobjects.tiles;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.utils.Helper;
-
+/**
+ * @author tomi Decor are all the non-interactive gameobjects in the level,
+ *         props are trees, rocks, stumps and all the other objects which only
+ *         affect with their rigidbodies and graphical aspect.
+ */
 public class Decor extends StaticObject{
 	
 	public void setup(Environment level){

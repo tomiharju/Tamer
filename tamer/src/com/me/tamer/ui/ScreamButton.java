@@ -2,17 +2,13 @@ package com.me.tamer.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.UiRenderer;
-import com.me.tamer.gameobjects.tamer.GryphonScream;
 import com.me.tamer.gameobjects.tamer.Tamer;
-import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class ScreamButton extends Actor{
 	private final float BUTTON_SIZE				= 110;

@@ -7,9 +7,7 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
-import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
-import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.utils.Helper;
 
@@ -26,17 +24,13 @@ public class TileMap extends StaticObject implements Obstacle{
 	private ArrayList<Vector2> terrain;
 	private Vector2 origo = new Vector2(0,0);
 	private Vector2 tamerpos = new Vector2();
-	private Vector2 mapBounds;
-	private Vector2 collisionHeading 	= new Vector2();
-	private Vector2 collisionAxis		= new Vector2();
-	private Vector2 collisionPos		= new Vector2();
+
 	private Environment env = null;
 
 	
 	public void setup(Environment env){
 		env.addNewObject(this);
 		env.getObstacles().add(this);
-		mapBounds = env.getMapBounds();
 		this.env = env;
 		setZindex(2);
 	}

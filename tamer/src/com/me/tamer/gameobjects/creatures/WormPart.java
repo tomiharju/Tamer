@@ -127,8 +127,8 @@ public class WormPart extends DynamicObject implements Creature {
 		
 		if(child != null && child.partName.equalsIgnoreCase("Joint"))
 			child.updateChild(dt);
-		
-		getPosition().add(getVelocity().tmp().mul(dt));
+		if(invMass  > 0)
+			getPosition().add(getVelocity().tmp().mul(dt));
 		getVelocity().mul(0);
 	
 	}

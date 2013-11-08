@@ -9,9 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.core.Hud;
-import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.utils.Helper;
-import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class TouchWrap extends Actor{
 	private ControlContainer controls;
