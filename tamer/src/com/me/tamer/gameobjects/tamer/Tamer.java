@@ -124,6 +124,7 @@ public class Tamer extends DynamicObject{
 		
 		//Update shadow
 		shadow.update(dt);
+		scream.update(dt);
 	}
 	
 	@Override

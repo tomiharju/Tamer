@@ -4,7 +4,6 @@ import com.me.tamer.gameobjects.renders.AnimatedRenderer;
 import com.me.tamer.gameobjects.renders.EffectRenderer;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.renders.StaticRenderer;
-import com.me.tamer.gameobjects.renders.Renderer.RenderType;
 
 public class RendererFactory {
 	

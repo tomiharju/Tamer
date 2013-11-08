@@ -114,6 +114,9 @@ public class Worm extends DynamicObject implements Creature{
 	public WormPart getTail(){
 		return parts.get(parts.size()-1);
 	}
+	public float getSpeed(){
+		return SPEED;
+	}
 	
 	public WormPart getHead(){
 		return head;

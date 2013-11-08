@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.GameObject;
 
 public class RigidBodyBox implements RigidBody{
 	

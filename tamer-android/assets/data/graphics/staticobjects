@@ -1,73 +1,80 @@
-staticObjects.png
+staticobjects.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 decor_rocks3
   rotate: false
-  xy: 492, 52
+  xy: 2, 408
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 dirt0
   rotate: false
-  xy: 688, 52
+  xy: 2, 358
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
+decor_crack
+  rotate: false
+  xy: 2, 938
+  size: 251, 201
+  orig: 251, 201
+  offset: 0, 0
+  index: -1
 sand9
   rotate: false
-  xy: 576, 2
+  xy: 100, 58
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 bush
   rotate: false
-  xy: 44, 2
+  xy: 128, 2
   size: 40, 44
   orig: 40, 44
   offset: 0, 0
   index: -1
 swamp31
   rotate: false
-  xy: 282, 2
+  xy: 170, 2
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 spawn
   rotate: false
-  xy: 714, 102
+  xy: 140, 653
   size: 136, 68
   orig: 136, 68
   offset: 0, 0
   index: -1
 swamp4
   rotate: false
-  xy: 296, 52
+  xy: 2, 258
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 sand3
   rotate: false
-  xy: 100, 102
+  xy: 2, 458
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 dirt1
   rotate: false
-  xy: 590, 52
+  xy: 100, 308
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 swamp1
   rotate: false
-  xy: 282, 2
+  xy: 170, 2
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
@@ -81,196 +88,210 @@ mountain1
   index: -1
 stump1
   rotate: false
-  xy: 492, 102
+  xy: 86, 2
   size: 40, 54
   orig: 40, 54
   offset: 0, 0
   index: -1
 swamp7
   rotate: false
-  xy: 1066, 2
+  xy: 2, 158
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 sand4
   rotate: false
-  xy: 2, 102
+  xy: 198, 458
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 dirt2
   rotate: false
-  xy: 884, 52
+  xy: 2, 308
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 decor_rocks1
   rotate: false
-  xy: 394, 102
+  xy: 198, 358
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 swamp10
   rotate: false
-  xy: 86, 2
+  xy: 198, 58
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 swamp2
   rotate: false
-  xy: 674, 2
+  xy: 198, 208
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 tree1
   rotate: false
-  xy: 1113, 102
+  xy: 124, 508
   size: 120, 143
   orig: 120, 143
   offset: 0, 0
   index: -1
+endpoint
+  rotate: false
+  xy: 2, 1141
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1
 sand5
   rotate: false
-  xy: 968, 2
+  xy: 198, 108
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 dirt3
   rotate: false
-  xy: 786, 52
+  xy: 198, 308
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 stump2
   rotate: false
-  xy: 534, 102
+  xy: 44, 2
   size: 40, 54
   orig: 40, 54
   offset: 0, 0
   index: -1
 swamp8
   rotate: false
-  xy: 870, 2
+  xy: 198, 158
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 swamp5
   rotate: false
-  xy: 198, 52
+  xy: 100, 208
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 decor_rocks2
   rotate: false
-  xy: 1080, 52
+  xy: 100, 358
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 sand6
   rotate: false
-  xy: 394, 52
+  xy: 198, 258
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 dirt4
   rotate: false
-  xy: 982, 52
+  xy: 100, 408
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 ending0
   rotate: false
-  xy: 688, 52
+  xy: 2, 358
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 sand7
   rotate: false
-  xy: 478, 2
-  size: 96, 48
-  orig: 96, 48
-  offset: 0, 0
-  index: -1
-swamp6
-  rotate: false
-  xy: 2, 52
+  xy: 2, 108
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 rock1
   rotate: false
-  xy: 991, 102
+  xy: 2, 508
   size: 120, 112
   orig: 120, 112
   offset: 0, 0
   index: -1
+swamp6
+  rotate: false
+  xy: 2, 208
+  size: 96, 48
+  orig: 96, 48
+  offset: 0, 0
+  index: -1
 ending0backup
   rotate: false
-  xy: 576, 102
+  xy: 2, 653
   size: 136, 68
   orig: 136, 68
   offset: 0, 0
   index: -1
 swamp11
   rotate: false
-  xy: 184, 2
+  xy: 100, 108
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 sand1
   rotate: false
-  xy: 198, 102
+  xy: 100, 458
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 swamp3
   rotate: false
-  xy: 100, 52
+  xy: 100, 258
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 sand8
   rotate: false
-  xy: 380, 2
+  xy: 2, 58
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 rock2
   rotate: false
-  xy: 852, 102
+  xy: 2, 723
   size: 137, 91
   orig: 137, 91
   offset: 0, 0
   index: -1
 swamp9
   rotate: false
-  xy: 772, 2
+  xy: 100, 158
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
+scream
+  rotate: false
+  xy: 2, 816
+  size: 240, 120
+  orig: 240, 120
+  offset: 0, 0
+  index: -1
 sand2
   rotate: false
-  xy: 296, 102
+  xy: 198, 408
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
