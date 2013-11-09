@@ -36,7 +36,7 @@ public class GryphonScream extends StaticObject {
 	private Vector2 newHeading			= new Vector2();
 	private Vector3 screamDirection		= new Vector3(1,-1,0);
 	private ArrayList<Vector3> soundWaves = new ArrayList<Vector3>();
-	private float screamSpeed			= 0.5f;
+	private float screamSpeed			= 1f;
 	private SoundManager sound			= null;
 	
 	//effect
@@ -116,13 +116,13 @@ public class GryphonScream extends StaticObject {
 	}
 	public void draw(SpriteBatch batch){
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		
 		for(int i = 0 ; i < soundWaves.size() ; i++){
 			if(soundWaves.get(i).z == 0){
-				renderer.setSize(soundWaves.get(i).x,soundWaves.get(i).x  /2);
+				renderer.setSize(soundWaves.get(i).x,soundWaves.get(i).x  / 2);
 				renderer.setPosition(Helper.worldToScreen(griffonHead.tmp().add(soundWaves.get(i).x,soundWaves.get(i).y)));
 				renderer.draw(batch);
 			}
+			
 		}
 	}
 
