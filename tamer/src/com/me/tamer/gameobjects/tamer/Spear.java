@@ -11,7 +11,6 @@ import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tiles.Prop;
-import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.utils.RuntimeObjectFactory;

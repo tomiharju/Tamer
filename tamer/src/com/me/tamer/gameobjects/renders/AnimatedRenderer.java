@@ -170,21 +170,7 @@ public class AnimatedRenderer implements Renderer {
 
 		stateTime = 0f;
 	}
-	public void loadEffect(String animName, int FRAME_COLS,int FRAME_ROWS){
-		 spriteSheet = new Texture(Gdx.files.internal("data/graphics/animations/"+animName+".png"));
-		 TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 
-					FRAME_COLS, spriteSheet.getHeight() / FRAME_ROWS);    
-		effectFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS]; 
-        int index = 0;
-         for (int i = 0; i < FRAME_COLS; i++) {
-                 for (int j = 0; j < FRAME_ROWS; j++) {
-                         effectFrames[index++] = tmp[i][j];
-
-                 }
-         }
-         animations.add(new Animation(0.033f, effectFrames));
- 
-	}
+	
 	
 	public void setAnimSpeed(float speed){
 		animationDuration = speed;
@@ -220,6 +206,16 @@ public class AnimatedRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS,
+			boolean looping,float speed) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
 
 	
 }

@@ -76,8 +76,12 @@ public class UiRenderer implements Renderer {
 		
 	}
 
+
+	
+
 	@Override
-	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS) {
+	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS,
+			boolean looping, float speed) {
 		// TODO Auto-generated method stub
 		
 	}

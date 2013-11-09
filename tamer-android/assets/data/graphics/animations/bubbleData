@@ -1,0 +1,109 @@
+bubbles.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+0010
+  rotate: false
+  xy: 160, 20
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0011
+  rotate: false
+  xy: 0, 40
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0001
+  rotate: false
+  xy: 0, 0
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0012
+  rotate: false
+  xy: 40, 40
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0002
+  rotate: false
+  xy: 40, 0
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0013
+  rotate: false
+  xy: 80, 40
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0003
+  rotate: false
+  xy: 80, 0
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0014
+  rotate: false
+  xy: 120, 40
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0004
+  rotate: false
+  xy: 120, 0
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0015
+  rotate: false
+  xy: 160, 40
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0005
+  rotate: false
+  xy: 160, 0
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0006
+  rotate: false
+  xy: 0, 20
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0007
+  rotate: false
+  xy: 40, 20
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0008
+  rotate: false
+  xy: 80, 20
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+0009
+  rotate: false
+  xy: 120, 20
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1

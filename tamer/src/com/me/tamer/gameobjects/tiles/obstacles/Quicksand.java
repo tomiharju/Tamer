@@ -11,6 +11,9 @@ import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
+import com.me.tamer.gameobjects.renders.EffectRenderer;
+import com.me.tamer.gameobjects.renders.RenderPool;
+import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.utils.Helper;
 
@@ -19,7 +22,8 @@ public class Quicksand extends StaticObject implements Obstacle{
 	private ArrayList<Creature> creatures_entered;
 	private Vector2 bogHoleCenter;
 	private Vector2 temp = new Vector2();
-
+	private EffectRenderer effectRenderer;
+	
 	private final float PULL_MAGNITUDE = 8;
 	private boolean activated;
 	
@@ -32,10 +36,17 @@ public class Quicksand extends StaticObject implements Obstacle{
 		creatures_entered = new ArrayList<Creature>();
 		bogHoleCenter 	= new Vector2();
 		activated		= false;
-		
+		loadEffectGraphics();
 		hud = Hud.instance();
 	}
 
+	public void loadEffectGraphics(){
+		Renderer render = RenderPool.addRendererToPool("effect", "bubbles");
+		render.loadEffect("bubbles",5,3,true,0.2f);
+		render.setSize(Helper.TILESIZE);
+	
+		setRenderType("bubbles");
+	}
 	public void setup(Environment environment){
 		environment.addNewObject(this);
 		environment.addObstacle(this);
@@ -55,6 +66,15 @@ public class Quicksand extends StaticObject implements Obstacle{
 		bogHoleCenter.div(parts.size());
 		bogHoleCenter.set(bogHoleCenter.x - Helper.TILESIZE.x / 4,bogHoleCenter.y + Helper.TILESIZE.y / 2);
 	}
+	public void draw(SpriteBatch batch){
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		for(int i = 0 ; i < parts.size() ; i ++){
+			renderer.setPosition(Helper.worldToScreen(parts.get(i).getPosition()));
+			((EffectRenderer) renderer).setAnimSeed( parts.get(i).stepAnimState());
+			renderer.draw(batch);
+		}
+	}
+	
 	
 	public void resolve(ArrayList<Creature> creatures){
 		int size = creatures.size();
@@ -126,13 +146,9 @@ public class Quicksand extends StaticObject implements Obstacle{
 	}
 	
 	public boolean getDebug(){
-		return true;
+		return false;
 	}
 	
-	
-	public void draw(SpriteBatch batch){
-		//Override to avoid default action
-	}
 	public void update(float dt){
 		//Override to avoid default action
 	}
