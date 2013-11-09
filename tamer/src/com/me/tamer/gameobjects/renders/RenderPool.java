@@ -13,7 +13,7 @@ public class RenderPool {
 	
 	public static TextureAtlas atlas;
 	public static void createAtlas(){
-		atlas = new TextureAtlas(Gdx.files.internal("data/graphics/staticobjects"));
+		atlas = new TextureAtlas(Gdx.files.internal("data/graphics/staticObjects"));
 		
 	}
 	public static HashMap<String,Renderer> getRenderpool(){

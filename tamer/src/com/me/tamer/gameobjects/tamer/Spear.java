@@ -71,7 +71,7 @@ public class Spear extends DynamicObject{
 			System.out.println("just dropped changed");
 		}
 		
-		if(!attached){
+		if(!attached && targetCreature != null){
 			direction.set(targetPoint.tmp().sub(getPosition()));
 			direction.nor();
 			getPosition().add( direction.x * (SPEED * dt), direction.y * (SPEED * dt));
@@ -125,18 +125,24 @@ public class Spear extends DynamicObject{
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched to SPEAR_CAMERA");
 		environment.getStage().setCameraHolder(TamerStage.SPEAR_CAMERA);*/
 		
+		/*
 		if(!targetFound){
 			targetPoint = new Vector2();
 			targetPoint.set(environment.getTamer().getShadow().getPosition());
 			targetPoint.x = (float) Math.floor(targetPoint.x);
 			targetPoint.y = (float) Math.floor(targetPoint.y);
 		}
+		*/
 		
-		setHeading(targetPoint.tmp().sub(getPosition()) );
-		direction.set(targetPoint.tmp().sub(getPosition()));
-		direction.nor();
+		System.out.println("target: " +targetCreature);
+		if(targetCreature != null){
+			setHeading(targetPoint.tmp().sub(getPosition()) );
+			direction.set(targetPoint.tmp().sub(getPosition()));
+			direction.nor();
+			
+			justDropped = true;
+		}
 		
-		justDropped = true;
 	}
 	
 	/**
