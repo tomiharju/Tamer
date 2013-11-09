@@ -56,7 +56,6 @@ public class Spear extends DynamicObject{
 	}
 	
 	public void update(float dt){
-		
 		/*
 		if ( currentWayPoint == 0) {
 			
@@ -71,11 +70,12 @@ public class Spear extends DynamicObject{
 			System.out.println("just dropped changed");
 		}
 		
-		if(!attached && targetCreature != null){
+		if(!attached){
 			direction.set(targetPoint.tmp().sub(getPosition()));
 			direction.nor();
 			getPosition().add( direction.x * (SPEED * dt), direction.y * (SPEED * dt));
-	
+			
+			
 			if (getPosition().dst( targetPoint ) < 0.5f){
 				if(targetCreature != null){
 					targetCreature.spearHit(this);
@@ -91,10 +91,13 @@ public class Spear extends DynamicObject{
 					environment.addNewObject(hitbox);
 					hitbox.markAsActive();
 					*/
-				}	
+					
+				}
+				
 				setPosition( targetPoint );
 				attached = true;		
 			}		
+
 		}
 	}
 	
@@ -102,14 +105,16 @@ public class Spear extends DynamicObject{
 
 		this.environment 	= environment;
 		attached 			= false;
-		targetReached	 	= false;
 		setzIndex(-1);
 		markAsActive();
 		throwAt();
 	}
 	
 	public void throwAt(){
+		setPosition(environment.getTamer().getPosition());
 		boolean targetFound = false;
+		
+		
 		ArrayList<Creature> creatures = environment.getCreatures();
 		int size = creatures.size();
 		for(int i = 0 ; i < size ; i ++){
@@ -125,23 +130,20 @@ public class Spear extends DynamicObject{
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched to SPEAR_CAMERA");
 		environment.getStage().setCameraHolder(TamerStage.SPEAR_CAMERA);*/
 		
-		/*
+		
 		if(!targetFound){
 			targetPoint = new Vector2();
 			targetPoint.set(environment.getTamer().getShadow().getPosition());
 			targetPoint.x = (float) Math.floor(targetPoint.x);
 			targetPoint.y = (float) Math.floor(targetPoint.y);
 		}
-		*/
 		
-		System.out.println("target: " +targetCreature);
-		if(targetCreature != null){
-			setHeading(targetPoint.tmp().sub(getPosition()) );
-			direction.set(targetPoint.tmp().sub(getPosition()));
-			direction.nor();
-			
-			justDropped = true;
-		}
+		setHeading(targetPoint.tmp().sub(getPosition()) );
+		direction.set(targetPoint.tmp().sub(getPosition()));
+		direction.nor();
+		
+		justDropped = true;
+	
 		
 	}
 	
