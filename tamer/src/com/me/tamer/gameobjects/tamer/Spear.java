@@ -143,8 +143,6 @@ public class Spear extends DynamicObject{
 		direction.nor();
 		
 		justDropped = true;
-	
-		
 	}
 	
 	/**
