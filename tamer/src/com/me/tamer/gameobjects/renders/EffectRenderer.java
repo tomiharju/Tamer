@@ -73,7 +73,7 @@ public class EffectRenderer implements Renderer{
 
 	@Override
 	public void setSize(float w, float h) {
-		// TODO Auto-generated method stub
+		this.size.set(w,h);
 		
 	}
 

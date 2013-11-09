@@ -42,8 +42,8 @@ public class Quicksand extends StaticObject implements Obstacle{
 
 	public void loadEffectGraphics(){
 		Renderer render = RenderPool.addRendererToPool("effect", "bubbles");
-		render.loadEffect("bubbles",5,3,true,0.2f);
-		render.setSize(Helper.TILESIZE);
+		render.loadEffect("bubbles",20,1,true,0.2f);
+		render.setSize(Helper.TILESIZE.x,Helper.TILESIZE.y*2);
 	
 		setRenderType("bubbles");
 	}
