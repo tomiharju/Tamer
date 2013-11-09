@@ -1,7 +1,5 @@
 package com.me.tamer.gameobjects.renders;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -44,8 +42,6 @@ public class StaticRenderer implements Renderer {
 	@Override
 	public void setPosition(Vector2 pos) {
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y );
-		
-		
 	}
 	
 	public void setBounds(float x, float y, float width, float height){
@@ -69,8 +65,11 @@ public class StaticRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 	@Override
-	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS) {
+	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS,
+			boolean looping, float speed) {
 		// TODO Auto-generated method stub
 		
 	}
