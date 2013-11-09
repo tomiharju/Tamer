@@ -89,7 +89,8 @@ public class Worm extends DynamicObject implements Creature{
 	
 	public void solveEffects(){
 		for(int i = 0 ; i < parts.size() ; i++){
-			if (parts.get(i).getPosition().dst(controls.getEnvironment().getTamer().getShadow().getPosition()) < controls.getSpearButton().getThrowDistance() / 2){
+			//if (parts.get(i).getPosition().dst(controls.getEnvironment().getTamer().getShadow().getPosition()) < controls.getSpearButton().getThrowDistance() / 2){
+			if (parts.get(i).getPosition().dst(controls.getEnvironment().getTamer().getShadow().getPosition()) < 1){
 				parts.get(i).setOnSpearRange(true);
 			}else{
 				parts.get(i).setOnSpearRange(false);

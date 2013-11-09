@@ -14,6 +14,7 @@ public class RenderPool {
 	public static TextureAtlas atlas;
 	public static void createAtlas(){
 		atlas = new TextureAtlas(Gdx.files.internal("data/graphics/sheetData"));
+
 		
 	}
 	public static HashMap<String,Renderer> getRenderpool(){

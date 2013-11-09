@@ -95,7 +95,6 @@ public class Prop extends StaticObject implements Obstacle {
 				creatures.get(i).setHeading(newHeading);
 
 			}
-
 		}
 	}
 
@@ -180,6 +179,10 @@ public class Prop extends StaticObject implements Obstacle {
 			}
 		}
 		return vertice;
+	}
+	
+	public void dispose(Environment environment){
+		environment.getObstacles().remove(this);
 	}
 
 }

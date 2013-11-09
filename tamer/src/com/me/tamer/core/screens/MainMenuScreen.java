@@ -3,6 +3,7 @@ package com.me.tamer.core.screens;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.services.MusicManager.TamerMusic;
 
 public class MainMenuScreen extends AbstractMenu{
 
@@ -33,6 +34,6 @@ public class MainMenuScreen extends AbstractMenu{
 	public void show(){
 		super.show();
 		game.getMusicManager().setVolume(0.3f);
-	//	game.getMusicManager().play( TamerMusic.MENU );      
+		game.getMusicManager().play( TamerMusic.MENU );      
 	}
 }

@@ -60,7 +60,7 @@ public class SpearButton extends Actor {
 		
 		pointRender.loadGraphics("joystick");
 		pointRender.setSize(1.0f,1.0f);
-		//pointRender.setPosition(new Vector2(0,0));
+		pointRender.setPosition(new Vector2(0,0));
 		
 		pointRender2.loadGraphics("joystick");
 		pointRender2.setSize(1f,1f);
@@ -86,9 +86,9 @@ public class SpearButton extends Actor {
 			batch.setProjectionMatrix(cam.combined);
 			
 			//pointRender.setPosition(IsoHelper.twoDToTileIso(waypoint1));
-			pointRender.setPosition(Helper.worldToScreen(controlContainer.getEnvironment().getTamer().getShadow().getPosition()));
-			pointRender.setSize(throwDistance, throwDistance / 2);
-			pointRender.draw(batch);
+			//pointRender.setPosition(Helper.worldToScreen(controlContainer.getEnvironment().getTamer().getShadow().getPosition()));
+			//pointRender.setSize(throwDistance, throwDistance / 2);
+			//pointRender.draw(batch);
 
 			//pointRender2.setPosition(IsoHelper.twoDToTileIso(waypoint2));
 			//pointRender2.draw(batch);
@@ -99,12 +99,13 @@ public class SpearButton extends Actor {
 
 	public void act(float dt) {
 		
+		/*
 		if(isVisible() && buttonPressed){
 			if(throwDistance <= MAX_DISTANCE ){
 				throwDistance += SPEED*dt;
 				controlContainer.getTouchWrap().setThrowDistance(throwDistance);
 			}
-			
+			*/
 			/*
 			if(throwDistance <= MAX_DISTANCE ){
 				help.set( controlContainer.getEnvironment().getTamer().getShadow().getPosition() );
@@ -132,8 +133,8 @@ public class SpearButton extends Actor {
 			cameraPoint.set(waypoint2);
 			
 			help.set( controlContainer.getEnvironment().getTamer().getPosition().tmp().add(-3,3) );
-			waypoint3.set(help.add(targetPoint.tmp().mul(0.8f)));*/
-		}	
+			waypoint3.set(help.add(targetPoint.tmp().mul(0.8f)));
+		}	*/
 		
 	}
 	
@@ -146,6 +147,7 @@ public class SpearButton extends Actor {
 				if(input.dst(localCenter) < BUTTON_SIZE / 2 ){
 					
 					//set to AIM Camera
+					/*
 					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 							+ " :: switched to AIM_CAMERA");
 					controlContainer.getStage().setCameraHolder(TamerStage.AIM_CAMERA);
@@ -153,6 +155,10 @@ public class SpearButton extends Actor {
 					controlContainer.getJoystick().disableMovement();
 					buttonPressed = true;		
 					controlContainer.getTouchWrap().setAimMode(true);
+					*/
+					
+					//controlContainer.getEnvironment().getTamer().tryThrowSpear(waypoints );
+					controlContainer.getEnvironment().getTamer().throwSpear();
 					
 					return true;
 					
@@ -161,7 +167,7 @@ public class SpearButton extends Actor {
 	        }
 			 
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				stopAim();		
+				//stopAim();		
 			}
 			
 			public void touchDragged(InputEvent event, float x, float y, int pointer){

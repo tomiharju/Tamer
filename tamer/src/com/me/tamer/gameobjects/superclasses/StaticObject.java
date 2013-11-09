@@ -28,11 +28,15 @@ public class StaticObject implements GameObject{
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		renderer.setSize(getSize());
-		renderer.setPosition(Helper.worldToScreen(position));
-		renderer.setOrientation(0);
-		renderer.draw(batch);
+		//Don't draw if this is dummy object
+		if(renderType != null){
+			Renderer renderer = RenderPool.getRenderer(getRenderType());
+			renderer.setSize(getSize());
+			renderer.setPosition(Helper.worldToScreen(position));
+			renderer.setOrientation(0);
+			renderer.draw(batch);
+		}
+		
 	}
 	
 	@Override

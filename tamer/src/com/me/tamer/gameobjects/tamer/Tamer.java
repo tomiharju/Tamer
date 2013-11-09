@@ -34,6 +34,7 @@ public class Tamer extends DynamicObject{
 	private int numSpears 			= 3;
 	private ArrayList<Spear> spears = null;
 	private boolean targetFound = false;
+	private Vector2 targetPoint = new Vector2();
 	
 	//Variables for entering the field
 	private Vector2 spawnPosition 	= new Vector2();
@@ -45,6 +46,8 @@ public class Tamer extends DynamicObject{
 	private final float DISTANCE_BOUNDS = 5.0f;
 	private final float MIN_SPAWN_DISTANCE = 5.0f;
 	private final float SPAWN_SPEED = 5.0f;
+	
+	
 	
 	private SoundManager sound;
 
@@ -110,7 +113,7 @@ public class Tamer extends DynamicObject{
 			SPEED = 0;
 			
 			for(int i = 0 ; i < spears.size() ; i ++){
-				if(shadow.getPosition().dst(spears.get(i).getPosition()) < 1 ){
+				if(!spears.get(i).isJustDropped() && shadow.getPosition().dst(spears.get(i).getPosition()) < 1 ){
 					if(spears.get(i).isAttached()){
 						spears.get(i).pickUp();
 						spears.remove(i);
@@ -175,40 +178,19 @@ public class Tamer extends DynamicObject{
 		getHeading().nor();
 	}
 	
-	public void tryThrowSpear(ArrayList<Vector2> waypoints){
-		targetFound = false;
-		
-		ArrayList<Creature> creatures = environment.getCreatures();
-		int size = creatures.size();
-		for(int i = 0 ; i < size ; i ++){
-				Creature targetCreature = creatures.get(i).affectedCreature(waypoints.get(0), 0.5f);
-				if(targetCreature != null){
-					
-					waypoints.set(0,((DynamicObject)targetCreature).getPosition());
-					targetFound = true;
-				}	
+	public void throwSpear(){
+		Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
+		if(spear != null){
+			spear.setPosition(getPosition());
+			spears.add(spear);	
 		}	
+		else
+			System.err.println("No spears remaining");
 		
-		//Switch to SPEAR_CAM if spear is going to hit
-		/*
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switched to SPEAR_CAMERA");
-		environment.getStage().setCameraHolder(TamerStage.SPEAR_CAMERA);*/
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing throwing sound");
+		sound.setVolume(0.8f);
+		sound.play(TamerSound.THROW);
 		
-		if(targetFound){
-			Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
-			if(spear != null){
-				spear.setPosition(getPosition());
-				spear.throwAt(waypoints);
-				spears.add(spear);	
-			}	
-			else
-				System.err.println("No spears remaining");
-			
-			
-			Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing throwing sound");
-			sound.setVolume(0.8f);
-			sound.play(TamerSound.THROW);
-		}
 	}
 	
 	public void setSpawnDirection(Vector2 spawnDirection){

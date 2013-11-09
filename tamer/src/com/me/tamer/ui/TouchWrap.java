@@ -60,8 +60,7 @@ public class TouchWrap extends Actor{
 
 						//Stop aiming after spear has been thrown
 						controls.getSpearButton().stopAim();
-						
-						controls.getEnvironment().getTamer().tryThrowSpear(waypoints );
+						//controls.getEnvironment().getTamer().tryThrowSpear(waypoints );
 					}
 					
 						

@@ -65,7 +65,6 @@ public class Joystick extends Actor{
 		if(delta.len() >= (BUTTON_SIZE - pointersize / 2) / 2 ){
 			delta = delta.nor().mul((BUTTON_SIZE - pointersize / 2 ) / 2 );
 			joystickPoint.set(restingpoint.tmp().add(delta));
-
 		}
 		
 		//Zoom out camera when accelerating and in when braking
