@@ -132,7 +132,8 @@ public class AnimatedRenderer implements Renderer {
 			
 			//currentFrame.getTexture().bind(1);
 			
-			batch.draw(currentFrame,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
+			batch.draw(currentFrame,pos.x - size.x / 2,pos.y, size.x, size.y);
+
 			//batch.draw(tex0,pos.x - size.x / 2,pos.y - size.y /2, size.x, size.y);
 			//batch.draw(tex0,100,100);
 			
@@ -187,7 +188,7 @@ public class AnimatedRenderer implements Renderer {
 	}
 	@Override
 	public void setPosition(Vector2 pos) {
-		this.pos.set(pos);	
+		this.pos.set(pos.x, pos.y);	
 	}
 
 	

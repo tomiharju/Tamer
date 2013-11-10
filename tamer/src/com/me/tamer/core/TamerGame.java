@@ -78,9 +78,6 @@ public class TamerGame extends Game{
 		//dispose old before making new one
 		if (playScreen != null) playScreen.dispose();
 		playScreen = new PlayScreen(this);
-		
-		
-	
 		return playScreen;
 	}
 
