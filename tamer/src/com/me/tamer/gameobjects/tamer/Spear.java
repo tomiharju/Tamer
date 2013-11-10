@@ -108,7 +108,7 @@ public class Spear extends DynamicObject{
 		int size = creatures.size();
 		for(int i = 0 ; i < size ; i ++){
 			//Check if there is creature inside the shadow
-			creature = creatures.get(i).affectedCreature(environment.getTamer().getShadow().getPosition(), environment.getTamer().getShadow().getSize().x);
+			creature = creatures.get(i).affectedCreature(environment.getTamer().getShadow().getPosition(), environment.getTamer().getShadow().getSize().x / 2);
 			if(creature != null){
 				if(targetCreature==null){
 					targetFound = true;
