@@ -181,6 +181,13 @@ public class StaticObject implements GameObject{
 		
 	}
 
+	@Override
+	public void setzIndex(String index) {
+		int zIndex = Integer.parseInt(index);
+		setZindex(-zIndex);
+		
+	}
+
 	
 
 }

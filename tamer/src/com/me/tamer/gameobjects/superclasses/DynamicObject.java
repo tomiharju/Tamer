@@ -266,4 +266,10 @@ public class DynamicObject implements GameObject{
 		
 	}
 
+	@Override
+	public void setzIndex(String index) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

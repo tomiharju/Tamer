@@ -12,11 +12,12 @@ public class SandPart extends StaticObject{
 	//Used to separate animation phase from another
 	//15 is the number of frames in bubble animation
 	
-	private float animState = (float) (Math.random() * 15);
-	
+	private float animState = 0;
+
 	public void setup(Environment environment){
 		environment.addNewObject(this);
 		setZindex(1);
+		setAnimState(20);
 	}
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);

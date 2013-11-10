@@ -73,7 +73,7 @@ public class Tamer extends DynamicObject{
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Tamer has woken up! " + this.toString());
 		
 		//Z-index for drawing order
-		setZindex(-1);
+		setZindex(-10);
 		setGraphics("tamer");
 		this.environment = environment;
 		this.environment.setTamer(this);

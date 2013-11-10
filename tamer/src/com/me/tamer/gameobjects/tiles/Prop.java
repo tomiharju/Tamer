@@ -32,7 +32,6 @@ public class Prop extends StaticObject implements Obstacle {
 	public void setup(Environment level) {
 		level.addNewObject(this);
 		level.getObstacles().add(this);
-		setZindex(0);
 		createVertices();
 	}
 
@@ -62,6 +61,9 @@ public class Prop extends StaticObject implements Obstacle {
 
 	@Override
 	public void resolve(ArrayList<Creature> creatures) {
+		//Only collide with ground level obstacles
+		if(!(getZIndex() == -1))
+			return;
 		int size = creatures.size();
 		for (int i = 0; i < size; i++) {
 
@@ -87,15 +89,15 @@ public class Prop extends StaticObject implements Obstacle {
 
 				float relNv = ((DynamicObject) creatures.get(i)).getForce()
 						.dot(collisionAxis);
-				float remove = relNv + positionAdjust.len()
-						/ Gdx.graphics.getDeltaTime();
-				impulse.set(collisionAxis.mul(((Worm) creatures.get(i)).getSpeed()* 2 * Gdx.graphics.getDeltaTime()));
+			//	float remove = relNv + positionAdjust.len() / Gdx.graphics.getDeltaTime();
+				impulse.set(collisionAxis.mul(((Worm) creatures.get(i)).getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse.mul(1f));
 				creatures.get(i).setHeading(newHeading);
 
 			}
 		}
+		
 	}
 
 	@Override
@@ -119,12 +121,19 @@ public class Prop extends StaticObject implements Obstacle {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.me.tamer.gameobjects.superclasses.StaticObject#getCenterPosition()
+	 * Do we need this?
+	 */
 	public Vector2 getCenterPosition() {
 		return getPosition().tmp().set(getPosition().x - bounds,
 				getPosition().y + bounds);
 
 	}
 
+	/**
+	 * Create corner points and normals for the hitbox
+	 */
 	public void createVertices() {
 		vertices = new ArrayList<Vector2>(4);
 		Vector2 v1 = new Vector2((getPosition().x - bounds / 2),

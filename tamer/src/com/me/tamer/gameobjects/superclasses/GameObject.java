@@ -84,7 +84,7 @@ public interface GameObject{
 	
 	public int getZIndex();
 	public void setZindex(int z);
-
+	public void setzIndex(String index);
 	public void setPosition(Vector2 pos);
 
 	public void dispose();

@@ -45,7 +45,7 @@ public class Worm extends DynamicObject implements Creature{
 		
 		for(WormPart part : parts){
 			environment.addObject(part);
-			part.setZindex(0);
+			part.setZindex(-1);
 		}
 		
 		head = parts.get(0);

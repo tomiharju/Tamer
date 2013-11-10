@@ -14,7 +14,6 @@ public class Decor extends StaticObject{
 	
 	public void setup(Environment level){
 		level.addNewObject(this);
-		setZindex(1);	
 	}
 
 	public void setPixelsX(String pixels){
