@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="tamer-android/gen"/>
+	<classpathentry kind="src" path="tamer-android/src"/>
+	<classpathentry kind="src" path="tamer-desktop/src"/>
+	<classpathentry kind="src" path="tamer/src"/>
+	<classpathentry kind="lib" path="tamer-android/bin/dexedLibs/annotations-0d7a1212dca6896f35fbba20731b3c16.jar"/>
+	<classpathentry kind="lib" path="tamer-android/bin/dexedLibs/gdx-5b612fb4401d029caf1d667a9a787f8c.jar"/>
+	<classpathentry kind="lib" path="tamer-android/bin/dexedLibs/gdx-backend-android-b6ae935b70b1d5d6b46416120f8f1b93.jar"/>
+	<classpathentry kind="lib" path="tamer-android/bin/dexedLibs/gdx-backend-android-sources-870f4a65f4d17796860f376a38eab3bf.jar"/>
+	<classpathentry kind="lib" path="tamer-android/libs/gdx-backend-android-sources.jar"/>
+	<classpathentry kind="lib" path="tamer-android/libs/gdx-backend-android.jar"/>
+	<classpathentry kind="lib" path="tamer-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="tamer-desktop/libs/gdx-backend-lwjgl-sources.jar"/>
+	<classpathentry kind="lib" path="tamer-desktop/libs/gdx-backend-lwjgl.jar"/>
+	<classpathentry kind="lib" path="tamer-desktop/libs/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="tamer/libs/gdx-sources.jar"/>
+	<classpathentry kind="lib" path="tamer/libs/gdx.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="tamer-android/bin/classes"/>
+</classpath>
