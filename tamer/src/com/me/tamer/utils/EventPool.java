@@ -28,7 +28,7 @@ public class EventPool {
 		}
 		//For now, lets just delete all old events...
 		events.removeAll(oldEvents);
-		
+		oldEvents.clear();
 			
 		
 	}

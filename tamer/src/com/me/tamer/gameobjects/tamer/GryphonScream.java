@@ -19,7 +19,6 @@ import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
-import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.tEvent;
 
 public class GryphonScream extends StaticObject {
@@ -37,7 +36,7 @@ public class GryphonScream extends StaticObject {
 	private Vector2 newHeading			= new Vector2();
 	private Vector3 screamDirection		= new Vector3(1,-1,0);
 	private ArrayList<Vector3> soundWaves = new ArrayList<Vector3>();
-	private float screamSpeed			= 1f;
+	private float screamSpeed			= 2f;
 	private SoundManager sound			= null;
 	
 	private boolean isOnCooldown = false;
@@ -48,7 +47,7 @@ public class GryphonScream extends StaticObject {
 		setGraphics();
 		
 		this.environment = environment;
-		for(int i = 0 ;i < 30 ; i++)
+		for(int i = 0 ;i < 8 ; i++)
 			soundWaves.add(new Vector3(0,0,0));
 		sound = SoundManager.instance();
 	}
@@ -101,7 +100,7 @@ public class GryphonScream extends StaticObject {
 			if(soundWaves.get(i).len() < 10)
 				soundWaves.get(i).add(screamDirection.tmp().mul(screamSpeed*i*dt));
 			if(soundWaves.get(i).len() > 10){
-				if(i == 16 ){
+				if(i == soundWaves.size() - 1  ){
 					isActive = false;
 					for(int k = 0 ; k < soundWaves.size() ; k++)
 						soundWaves.get(k).set(0,0,1);
@@ -126,11 +125,6 @@ public class GryphonScream extends StaticObject {
 		}
 	}
 
-
-	public void wakeUp(Environment environment){
-		//this.environment = environment;
-		//markAsActive();
-	}
 	
 	public void activate(){
 		if(isOnCooldown)
@@ -142,9 +136,7 @@ public class GryphonScream extends StaticObject {
 		}
 		griffonHead.set(environment.getTamer().getCenterPosition().tmp().add(environment.getTamer().getHeading().mul(environment.getTamer().getSize().x/5)));
 		isActive = true;
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream activated");	
 		sound.setVolume(0.7f);
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing scream sound");
 		sound.play(TamerSound.HAWK);
 		tamerPos.set(environment.getTamer().getShadow().getPosition());
 	

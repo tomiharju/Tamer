@@ -21,8 +21,8 @@ import com.me.tamer.utils.Helper;
 public class TamerStage extends Stage{
 	public static TamerStage instance;
 	
-	private final float VIRTUAL_WIDTH = 12 * ((float)Math.sqrt(2));
-	private final float VIRTUAL_HEIGHT = 40 * (float)(Math.sqrt(2) / 2);
+	private final float VIRTUAL_WIDTH = 12 * ((float)Math.sqrt(2)) - 0.1f;
+	private final float VIRTUAL_HEIGHT = 40 * (float)(Math.sqrt(2) / 2) - 0.05f;
 	float ASPECT_RATIO = (float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
 	
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
@@ -199,8 +199,8 @@ public class TamerStage extends Stage{
 		super.getSpriteBatch().begin();
 		
 		super.getRoot().draw(super.getSpriteBatch(), 1);
-		debugDraw();
-		environment.debugDraw(debugRender);
+		//debugDraw();
+		//environment.debugDraw(debugRender);
 		super.getSpriteBatch().end();
 	}
 	
