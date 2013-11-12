@@ -354,9 +354,9 @@ swamp9
   index: -1
 scream
   rotate: false
-  xy: 1434, 190
-  size: 239, 95
-  orig: 239, 95
+  xy: 1676, 190
+  size: 240, 120
+  orig: 240, 120
   offset: 0, 0
   index: -1
 vRocks_size2
@@ -543,7 +543,7 @@ decor_rocks3
   index: -1
 tamershadow
   rotate: false
-  xy: 1675, 190
+  xy: 1434, 190
   size: 240, 118
   orig: 240, 118
   offset: 0, 0
