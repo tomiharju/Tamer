@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
-import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -14,11 +13,11 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tiles.Prop;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
 public class Spear extends DynamicObject{
 	
+	private final float SPEED 			= 25.0f;
 	private Environment environment;
 	private SoundManager sound;
 	
@@ -26,11 +25,8 @@ public class Spear extends DynamicObject{
 	private Creature creature			= null;
 	private boolean attached 			= false;
 	private Vector2 targetPoint			= new Vector2();
-	
 	private boolean justDropped			= false;
-	
 	private Vector2 direction 			= new Vector2();
-	private final float SPEED 			= 25.0f;
 	private Prop hitbox					= new Prop();
 	
 	
@@ -39,11 +35,14 @@ public class Spear extends DynamicObject{
 		sound = SoundManager.instance();
 		
 		//hitbox
-		hitbox.setGraphics("vRocks1.png");
+		hitbox.setGraphics("swamp10.png");
 		hitbox.setPixelsX("40");
 		hitbox.setPixelsY("40");
-		//hitbox.setRenderType("joystick");
+		hitbox.setSize(40,40);
 		hitbox.setHitBox("1");
+		//hitbox.setZindex(-3);
+		//hitbox.setRenderType("joystick");
+		
 	}
 	
 	public void setGraphics(){
@@ -73,17 +72,17 @@ public class Spear extends DynamicObject{
 					sound.setVolume(0.3f);
 					Gdx.app.log(TamerGame.LOG, this.getClass()
 							.getSimpleName() + " :: playing sound HIT");
-					sound.play(TamerSound.HIT);
-					
-					//create hitbox
-					/*
-					hitbox.setPosition(getPosition());
-					environment.addNewObject(hitbox);
-					hitbox.markAsActive();
-					*/
+					sound.play(TamerSound.HIT);	
 				}
 				setPosition( targetPoint );
-				attached = true;		
+				attached = true;
+				
+				//create hitbox
+				hitbox.setPosition(getPosition());
+				hitbox.markAsActive();
+				
+				System.out.println(hitbox.getRenderType());
+								
 			}		
 
 		}

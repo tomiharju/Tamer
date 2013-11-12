@@ -248,6 +248,7 @@ public class TamerStage extends Stage{
 				help.set(Helper.worldToScreen(environment.getTamer().getPosition()));
 				help.y -= TAMER_OFFSET_ONSCREEN;
 				cameraPosition.set( help );	
+
 			}
 			break;	
 		case SPEAR_CAMERA:
