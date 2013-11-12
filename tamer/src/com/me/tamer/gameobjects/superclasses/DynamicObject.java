@@ -25,6 +25,7 @@ public class DynamicObject implements GameObject{
 	protected float borderOffset = 0;
 	private Vector2 zeroHeading = new Vector2(-0.5f,1);// -1 + (float)Math.sin(Math.PI/8),1 + (float)Math.cos(Math.PI/8));//-0.5f, 2.0f);//;
 	private float headingAngle = 0;
+	private float spriteNumber = 0;
 	
 	
 	@Override
@@ -37,26 +38,26 @@ public class DynamicObject implements GameObject{
 		renderer.setSize(getSize());
 		renderer.setPosition(Helper.worldToScreen(position));
 		renderer.setOrientation( solveOrientation() );
-		renderer.setAngle(getAngle());
 		renderer.draw(batch);	
 	}
 	
 	public int solveOrientation(){
 		if(getHeading() != null){
-			getZeroHeading().nor();
+			zeroHeading.nor();
 
-			setHeadingAngle((float) Math.acos(getHeading().dot(getZeroHeading()) / (getHeading().len() * getZeroHeading().len())));
+			headingAngle = ((float) Math.acos(heading.dot(zeroHeading) / (heading.len() * zeroHeading.len())));
 			
-			setHeadingAngle((float) (getHeadingAngle() / Math.PI * 180 / 45));
+			spriteNumber = ((float) (headingAngle / Math.PI * 180 / 45));
 			
-			if (getHeadingAngle() == 0) setHeadingAngle(0.001f);
-			if (heading.x > getZeroHeading().x && heading.y > 0) setHeadingAngle(8 - getHeadingAngle());
-			else if (heading.x > -getZeroHeading().x && heading.y < 0) setHeadingAngle(8 - getHeadingAngle());
+			//cannot be zero
+			if (spriteNumber == 0) spriteNumber = (0.001f);
+			if (heading.x > zeroHeading.x && heading.y > 0) spriteNumber = (8 - spriteNumber);
+			else if (heading.x > -zeroHeading.x && heading.y < 0) spriteNumber = (8 - spriteNumber);
 			
-			setHeadingAngle((float) Math.floor(getHeadingAngle()));
+			spriteNumber = ((float) Math.floor(spriteNumber));
 		}
 		
-		return (int)getHeadingAngle();
+		return (int)spriteNumber;
 	}
 	
 	@Override
@@ -242,22 +243,6 @@ public class DynamicObject implements GameObject{
 	public void setSize(float x, float y) {
 		this.size.set(x,y);
 		
-	}
-
-	public Vector2 getZeroHeading() {
-		return zeroHeading;
-	}
-
-	public void setZeroHeading(Vector2 zeroHeading) {
-		this.zeroHeading = zeroHeading;
-	}
-
-	public float getHeadingAngle() {
-		return headingAngle;
-	}
-
-	public void setHeadingAngle(float headingAngle) {
-		this.headingAngle = headingAngle;
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class PlayScreen extends AbstractScreen{
 	public void create(){
 		game.getMusicManager().stop();
 		game.getMusicManager().setVolume(0.8f);
-		game.getMusicManager().play( TamerMusic.LEVEL ); 
+		//game.getMusicManager().play( TamerMusic.LEVEL ); 
 
 		
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state to GAME_RUNNING");
