@@ -39,7 +39,7 @@ public class Spear extends DynamicObject{
 		sound = SoundManager.instance();
 		
 		//hitbox
-		hitbox.setGraphics("mountain1");
+		hitbox.setGraphics("vRocks1.png");
 		hitbox.setPixelsX("40");
 		hitbox.setPixelsY("40");
 		//hitbox.setRenderType("joystick");
@@ -55,13 +55,10 @@ public class Spear extends DynamicObject{
 	}
 	
 	public void update(float dt){
-		//falling spear has zIndex 0
-		setzIndex(0);
 		
 		//check that tamer has moved enough from spear when it has been dropped and spear has reached ground
 		if (justDropped && attached && environment.getTamer().getShadow().getPosition().dst(getPosition()) > 1){
 			justDropped = false;
-			System.out.println("just dropped changed");
 		}
 		
 		if(!attached){
@@ -136,8 +133,6 @@ public class Spear extends DynamicObject{
 		direction.nor();
 		
 		justDropped = true;
-		
-		TamerStage.addDebugLine(new Vector2(0,0), targetPoint);
 	}
 	
 	/**

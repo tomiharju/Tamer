@@ -22,6 +22,7 @@ import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
+import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 
@@ -30,17 +31,12 @@ public class Environment extends Actor{
 
 	private TamerStage stage;
 	private ControlContainer controls;
-	
 	private DrawOrderComparator comparator = null;
-	
 	//Help vectors
 	private Vector2 help = new Vector2();
-	private Vector2 movementAxis = new Vector2();
-	
 	//Settings
 	private Vector2 mapBounds = null;
 	private Vector2 cameraBounds = null;
-	
 	//Gameobject data
 	private ArrayList<GameObject> gameobjects 	= null;
 	private ArrayList<GameObject> carbages		= null;
@@ -75,8 +71,8 @@ public class Environment extends Actor{
 		RuntimeObjectFactory.createLinkToLevel(this);
 		
 		controls = ControlContainer.instance();
-		
 		sound = SoundManager.instance();
+		
 		RenderPool.createAtlas();
 	}
 	
@@ -91,6 +87,7 @@ public class Environment extends Actor{
 	public void act(float dt){
 		runCarbageCollection();
 		addNewObjects();
+		stepTimers(dt);
 		resolveObstacles(dt);
 
 		int numObjects = gameobjects.size();
@@ -102,11 +99,8 @@ public class Environment extends Actor{
 				}
 				break;
 			case(TAMER_ENTER):
-				//disable controls
 				if(tamer != null)tamer.update(dt);
 				if(((Tamer) tamer).hasEnteredField()){
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: setting state to NORMAL");
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Playing sound entering");
 					controls.enableInput();
 					state = NORMAL;
 					sound.play(TamerSound.OPENING);
@@ -162,18 +156,29 @@ public class Environment extends Actor{
 	
 	/**
 	 * @param dt
+	 * NOT IN USE, MAYBE DELETE PERMANENTLY
 	 * Uses rigidbodies to generate Contact objects
 	 * Uses contact objects to calculate collision responses
 	 * Resolves each collision by adding proper forces.
 	 */
 	public void resolveCollisions(float dt){
-		int numObjects = gameobjects.size();
+		/*int numObjects = gameobjects.size();
 		for(int k = 0 ; k < numObjects ; k++)
 			gameobjects.get(k).resolveForces(dt);
-		
-	
+		*/
 	}
 	
+	public void stepTimers(float dt){
+		EventPool.step(dt);
+	}
+	
+	/**
+	 * @param dt
+	 * "Resolves" each gamemeobject which impelent Obstalce interface
+	 * Resolve is currently used to detect and respond to collisions,
+	 * and quicksand uses it for worm pulling.
+	 * 
+	 */
 	public void resolveObstacles(float dt){
 		int size = obstacles.size();
 		for(int i = 0 ; i < size ; i++){

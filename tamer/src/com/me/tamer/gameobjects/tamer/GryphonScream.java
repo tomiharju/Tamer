@@ -17,9 +17,10 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
+import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
-import com.me.tamer.utils.tTimer;
+import com.me.tamer.utils.tEvent;
 
 public class GryphonScream extends StaticObject {
 	private final float SCREAM_AREA_WIDTH = 8.0f;
@@ -39,8 +40,7 @@ public class GryphonScream extends StaticObject {
 	private float screamSpeed			= 1f;
 	private SoundManager sound			= null;
 	
-	//effect
-	private tTimer screamTimer;
+	private boolean isOnCooldown = false;
 	
 	public GryphonScream(Environment environment){
 		//Z-index for drawing order
@@ -88,7 +88,7 @@ public class GryphonScream extends StaticObject {
 	
 	public void setGraphics(){
 		Renderer render = RenderPool.addRendererToPool("static", "scream");
-		render.loadGraphics("scream");
+		render.loadGraphics("scream.png");
 		setSize(getSize());
 		setRenderType("scream");
 	}
@@ -133,22 +133,19 @@ public class GryphonScream extends StaticObject {
 	}
 	
 	public void activate(){
-	//	Renderer renderer = RenderPool.getRenderer(getRenderType());
-		//((EffectRenderer) renderer).resetEffect();
+		if(isOnCooldown)
+			return;
+		
+		
 		for(int i = 0 ; i < soundWaves.size() ; i++){
 			soundWaves.get(i).set(0,0,0);
 		}
-		griffonHead.set(environment.getTamer().getPosition().tmp().add(environment.getTamer().getHeading().mul(environment.getTamer().getSize().x/5)));
+		griffonHead.set(environment.getTamer().getCenterPosition().tmp().add(environment.getTamer().getHeading().mul(environment.getTamer().getSize().x/5)));
 		isActive = true;
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream activated");
-		//isActive = true;
-		//tTimer timer = new tTimer(this,"deactivateScream",1);
-		//timer.start();
-		
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream activated");	
 		sound.setVolume(0.7f);
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: playing scream sound");
 		sound.play(TamerSound.HAWK);
-		System.out.println(tamerPos +", "+environment);
 		tamerPos.set(environment.getTamer().getShadow().getPosition());
 	
 		//Scream circle
@@ -165,8 +162,7 @@ public class GryphonScream extends StaticObject {
 					newHeading.nor();
 					worm.setHeading(newHeading);
 					worm.doScreamEffect();
-					screamTimer = new tTimer(worm,"doScreamEffect",(long)500,3);
-					screamTimer.start();
+					EventPool.addEvent(new tEvent(worm,"doScreamEffect",0.5f,3));
 				}
 			}
 		
@@ -174,16 +170,15 @@ public class GryphonScream extends StaticObject {
 			
 		
 		}	
+		isOnCooldown = true;
+		EventPool.addEvent(new tEvent(this,"enable",3.14f,1));
 	}
 
-	public void deactivateScream(){
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Scream timer completed. Returning to object pool.");
-		isActive = false;
-		markAsCarbage();
-		RuntimeObjectFactory.addToObjectPool("scream",this);
+	public void enable(){
+		isOnCooldown = false;
 	}
 	
-	//Debug is on
+	
 	@Override
 	public boolean getDebug(){
 		return false;

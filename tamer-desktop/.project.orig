@@ -18,6 +18,11 @@
 		<link>
 			<name>assets</name>
 			<type>2</type>
+<<<<<<< HEAD
+			<location>/home/tharju/Documents/MyStuff/tamer/tamer-android/assets</location>
+		</link>
+	</linkedResources>
+=======
 			<locationURI>PARENT-1-PROJECT_LOC/tamer-android/assets</locationURI>
 		</link>
 	</linkedResources>
@@ -27,4 +32,5 @@
 			<value>PARENT-1-PROJECT_LOC/tamer-android/assets</value>
 		</variable>
 	</variableList>
+>>>>>>> a4a8199ebdf85465fc9f090b0a1d23b6d9680891
 </projectDescription>

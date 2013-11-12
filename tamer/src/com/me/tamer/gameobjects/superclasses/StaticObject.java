@@ -75,11 +75,7 @@ public class StaticObject implements GameObject{
 		return position;
 	}
 	public Vector2 getCenterPosition(){
-		//this does not work. Use the getScreenTileCenter and translate back to world if needed
-		
 		this.centerPosition.set(position.x,position.y + Helper.TILESIZE.y / 4);
-		//this.centerPosition.set(position.x + 1 / 2,position.y + 1 / 2);
-		//this.centerPosition.set(position.x,position.y);
 		return centerPosition;
 	}
 	
@@ -110,11 +106,6 @@ public class StaticObject implements GameObject{
 		
 	}
 
-	@Override
-	public void resolveForces(float dt) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void wakeUp(Environment level) {

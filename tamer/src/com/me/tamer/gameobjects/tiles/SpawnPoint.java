@@ -16,8 +16,10 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
+import com.me.tamer.utils.tEvent;
 
 /**
  * @author tharju
@@ -51,7 +53,8 @@ public class SpawnPoint extends StaticObject{
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: started spawning");
 		environment.addNewObject(this);
 		this.environment = environment;
-		startSpawning();
+		//Add event which will spawn tamer in 2 seconds
+		EventPool.addEvent(new tEvent(this,"spawnTamer",2,1));
 		setZindex(1);
 		
 	}
@@ -75,11 +78,11 @@ public class SpawnPoint extends StaticObject{
 	}
 	
 	public void setSleepTime(String time){
-		this.sleepTime = Integer.parseInt(time)*1000;
+		this.sleepTime = Integer.parseInt(time);
 	}
 	
 	public void setInitialSleepTime(String time){
-		this.initialSleep = Integer.parseInt(time)*1000;
+		this.initialSleep = Integer.parseInt(time);
 	}
 	
 	public void addWorm(Worm worm){
@@ -90,7 +93,7 @@ public class SpawnPoint extends StaticObject{
 		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		creatures.add(worm);
-		worm.setPosition(getPosition());
+		worm.setPosition(getCenterPosition());
 		worm.setVelocity(spawnVelocity);
 	}
 	public void addAnt(AntOrc ant){
@@ -108,50 +111,51 @@ public class SpawnPoint extends StaticObject{
 	 * @param position grid number, which is turned into screen coordinate
 	 * @param spawn_type is the object type to spawn. Currently worm or ant
 	 */
-
-	public void startSpawning(){
-		spawn_thread = new Thread(new Runnable(){
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(initialSleep);
-					if (TamerStage.gameState == TamerStage.GAME_RUNNING){
-						if(isTamerSpawn){
-							RuntimeObjectFactory.getObjectFromPool("tamer");
-							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: set state to TAMER_ENTER");
-							environment.setState(Environment.TAMER_ENTER);
-						}
-						while(numCreated < spawnCount){
-							Thread.sleep(sleepTime);
-							numCreated++;
-							//Add newly created worm to main gameobject list
-							if(spawnType.equalsIgnoreCase("worm")){
-								Gdx.app.debug(TamerGame.LOG, this.getClass()
-										.getSimpleName() + " :: Worm entered");
-								RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
-							}else if(spawnType.equalsIgnoreCase("ant"))
-								RuntimeObjectFactory.getObjectFromPool("ant"+spawnId);
-							//Sleep for the actual spawn interval
-						}
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}	
-			}		
-		});
-		spawn_thread.start();
+	
+	
+	/**
+	 *	After initial sleep, this method is called every "sleepTime" interval 
+	 */
+	public void spawnCreature(){
+		if(spawnType.equalsIgnoreCase("worm")){
+			Gdx.app.debug(TamerGame.LOG, this.getClass()
+					.getSimpleName() + " :: Worm entered");
+			RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
+		}else if(spawnType.equalsIgnoreCase("ant"))
+			RuntimeObjectFactory.getObjectFromPool("ant"+spawnId);
+	}
+	/**
+	 * This method is called after "initialSleep"
+	 */
+	public void spawnFirstCreature(){
+		System.out.println("First creature spawned!");
+		
+		if(spawnType.equalsIgnoreCase("worm")){
+			Gdx.app.debug(TamerGame.LOG, this.getClass()
+					.getSimpleName() + " :: Worm entered");
+			RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
+		}else if(spawnType.equalsIgnoreCase("ant"))
+			RuntimeObjectFactory.getObjectFromPool("ant"+spawnId);
+		
+		//Add new event into pool which will spawn the rest of the worms ( -1 because this method already spawned one )
+				EventPool.addEvent(new tEvent(this,"spawnCreature",sleepTime,spawnCount-1));
+	}
+	public void spawnTamer(){
+		if(isTamerSpawn){
+			RuntimeObjectFactory.getObjectFromPool("tamer");
+			Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: set state to TAMER_ENTER");
+		}
+		//Once tamer has spawned, add new event which will sleep the "initial sleep" time
+		EventPool.addEvent(new tEvent(this,"spawnFirstCreature",initialSleep,1));
 	}
 	
-	public void dispose(){
-		spawn_thread.interrupt();
-	}
 	
 	public void setSpawnId(String number){
 		this.spawnId = Integer.parseInt(number);
 	}
 
 	public void setInitialSleep(String initialSleep) {
-		this.initialSleep = Integer.parseInt(initialSleep)*1000;
+		this.initialSleep = Integer.parseInt(initialSleep);
 	}
 
 	public void setTamerSpawn(String flag){

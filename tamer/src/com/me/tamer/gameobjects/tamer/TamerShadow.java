@@ -22,8 +22,8 @@ public class TamerShadow extends DynamicObject{
 	}
 	
 	public void setGraphics(String graphics){
-		Renderer renderer = RenderPool.addRendererToPool("animated",graphics);
-		renderer.loadGraphics("tamershadow");
+		Renderer renderer = RenderPool.addRendererToPool("static",graphics);
+		renderer.loadGraphics("tamershadow.png");
 		setSize(SIZE, SIZE / 2);
 		setRenderType(graphics);
 	}
@@ -44,7 +44,6 @@ public class TamerShadow extends DynamicObject{
 		renderer.setSize(getSize().x,getSize().y);
 		renderer.setPosition(Helper.worldToScreen(getPosition()));
 		renderer.setOrientation( solveOrientation() );
-		renderer.setAngle(getAngle());
 		renderer.draw(batch);
 		
 		//Reset to default

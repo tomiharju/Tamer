@@ -21,8 +21,7 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 public class Tamer extends DynamicObject{
 	
 	private float SPEED 		= 0f;
-	private final float AIM_SPEED 	= 0.001f; //heading interpolating coefficient
-	private final float MAX_POWER 	= 1.2f;
+	private final float AIM_SPEED 	= 0.001f; //heading interpolating coefficient (Ttu mikä sana XD)
 	private final float BORDER_OFFSET = -5.0f;
 	private TamerShadow shadow		=null;
 	private GryphonScream scream 	= null;
@@ -57,6 +56,7 @@ public class Tamer extends DynamicObject{
 	}
 	
 	public void wakeUp(Environment environment){
+		environment.setState(Environment.TAMER_ENTER);
 		//Spears
 		spears = new ArrayList<Spear>();
 		for( int i = 0 ; i < numSpears ; i++){
@@ -82,11 +82,10 @@ public class Tamer extends DynamicObject{
 		mapBounds.set(environment.getMapBounds());
 		mapBounds.x -= DISTANCE_BOUNDS;
 		mapBounds.y -= DISTANCE_BOUNDS;
-		spawnPosition.set(getPosition());
+		spawnPosition.set(shadow.getPosition());
 		
 		//sound
 		sound = SoundManager.instance();
-		
 	}
 	
 	public void setGraphics(String graphics){
@@ -99,11 +98,11 @@ public class Tamer extends DynamicObject{
 	@Override
 	public void update(float dt){
 		if(environment.getState() == Environment.TAMER_ENTER){
-			isoPosition.set(Helper.worldToScreen(getPosition()));
+			//isoPosition.set(Helper.worldToScreen(getPosition()));
 			//First Check when inside mapBounds
 	//		if(isoPosition.x > -mapBounds.x && isoPosition.x < mapBounds.x && isoPosition.y > -mapBounds.y && isoPosition.y < mapBounds.y){
 				//Then check that min distance is travelled
-				if (getPosition().dst(spawnPosition) > MIN_SPAWN_DISTANCE){
+				if (shadow.getPosition().dst(spawnPosition) > MIN_SPAWN_DISTANCE){
 					enteredField = true;
 				}
 			//}

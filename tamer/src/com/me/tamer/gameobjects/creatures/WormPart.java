@@ -16,13 +16,11 @@ import com.me.tamer.physics.RigidBodyBox;
 import com.me.tamer.utils.Helper;
 
 public class WormPart extends DynamicObject implements Creature {
-	
 	//Container worm
 	private Worm worm = null;
-	
 
-	private float JOINT_LENGTH = 0.7f;
-	private float MIN_LENGTH   = 0.7f;
+	private float JOINT_LENGTH = 0.3f;
+	private float MIN_LENGTH   = 0.3f;
 	private float lengthAngle  = 0;
 	private int ordinal;
 	private float invMass;
@@ -78,9 +76,8 @@ public class WormPart extends DynamicObject implements Creature {
 	public void setGraphics(String graphics){
 		Renderer render = RenderPool.addRendererToPool("animated",graphics);
 		render.loadGraphics(graphics,1,8);
-		setSize(1,1);
+		setSize(1,1f);
 		setRenderType(graphics);
-
 	}
 	
 	@Override
@@ -120,8 +117,27 @@ public class WormPart extends DynamicObject implements Creature {
 				child.solveJoints(dt);
 		}
 	}
+	
 	public void update(float dt){
-		//Overidde this to do nothing.
+		//Update headings
+		if (partName.equalsIgnoreCase("joint")){
+			if(child != null)
+				setHeading( child.getPosition().tmp().sub(getPosition()).nor() ); 
+			else
+				setHeading( getPosition().tmp().sub(parent.getPosition()).nor() );
+			
+			int spriteNumber = solveOrientation();
+			
+			setAngle(getHeading().angle() +45 + 180 - spriteNumber * 45);
+		}else{
+	
+			//this assumes that head always has child
+			setAngle(child.getAngle()); 
+
+		}
+		
+		
+		
 	}
 	public void updateChild(float dt){
 		
@@ -170,38 +186,6 @@ public class WormPart extends DynamicObject implements Creature {
 		}
 	}
 	
-	public int solveOrientation(){
-		
-			orientationVector.set(getOrientationDirection());
-			getZeroHeading().nor();
-			float angle = (float) Math.acos(orientationVector.dot(getZeroHeading().tmp().set(1,0)) / (orientationVector.len() * getZeroHeading().len()));
-			angle = (float) Math.toDegrees(angle);
-		//	setAngle(angle);
-			setHeadingAngle((float) Math.acos(orientationVector.dot(getZeroHeading()) / (orientationVector.len() * getZeroHeading().len())));
-			
-			setHeadingAngle((float) (getHeadingAngle() / Math.PI * 180 / 45));
-			
-			if (getHeadingAngle() == 0) setHeadingAngle(0.001f);
-			if (orientationVector.x > getZeroHeading().x && orientationVector.y > 0) setHeadingAngle(8 - getHeadingAngle());
-			else if (orientationVector.x > -getZeroHeading().x && orientationVector.y < 0) setHeadingAngle(8 - getHeadingAngle());
-			
-			setHeadingAngle((float) Math.floor(getHeadingAngle()));
-		
-		return (int)getHeadingAngle();
-		
-	}
-	
-	public Vector2 getOrientationDirection(){
-		if(this.partName.equalsIgnoreCase("head"))
-			return getForce();
-		else{
-			if(child != null)
-				return child.getPosition().tmp().sub(getPosition()); 
-			else
-				return getPosition().tmp().sub(parent.getPosition());
-		}
-	}
-	
 	public void setOnSpearRange(boolean b){
 		onSpearRange = b;
 	}
@@ -220,7 +204,6 @@ public class WormPart extends DynamicObject implements Creature {
 		Vector2 addB = impulse.tmp().mul(invMass);
 		getVelocity().add(addB);
 	}
-	
 	
 	public void setAsTail(){
 		isTail = true;
@@ -300,8 +283,7 @@ public class WormPart extends DynamicObject implements Creature {
 		if(getPosition().dst(point) < radius)
 			return this;
 		else
-			return null;
-		
+			return null;	
 	}
 
 	@Override
@@ -327,7 +309,4 @@ public class WormPart extends DynamicObject implements Creature {
 	public RigidBodyBox getCollider() {
 		return body;
 	}
-
-	
-
 }

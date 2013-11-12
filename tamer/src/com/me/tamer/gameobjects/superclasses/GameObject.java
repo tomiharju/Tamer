@@ -55,6 +55,7 @@ public interface GameObject{
 	public void setSize(float x,float y);
 	public boolean getDebug();
 	public Vector2 getPosition();
+	public Vector2 getCenterPosition();
 	public Vector2 getSize();
 	/**
 	 * Required for objects that are created in runtime with threads.
@@ -75,7 +76,6 @@ public interface GameObject{
 	 * @param level
 	 */
 	public void wakeUp(Environment level);
-	public void resolveForces(float dt);
 	
 	/**
 	 * Actions that needs to be taken when this object this object is removed from game.

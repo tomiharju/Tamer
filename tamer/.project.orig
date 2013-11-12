@@ -10,6 +10,11 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+<<<<<<< HEAD
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+=======
 		<buildCommand>
 			<name>com.stateofflow.eclipse.metrics.MetricsBuilder</name>
 			<arguments>
@@ -19,5 +24,6 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>com.stateofflow.eclipse.metrics.MetricsNature</nature>
+>>>>>>> a4a8199ebdf85465fc9f090b0a1d23b6d9680891
 	</natures>
 </projectDescription>

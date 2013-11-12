@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
+	<name>MainActivity</name>
+=======
 	<name>tamer-android</name>
+>>>>>>> a4a8199ebdf85465fc9f090b0a1d23b6d9680891
 	<comment></comment>
 	<projects>
 	</projects>
