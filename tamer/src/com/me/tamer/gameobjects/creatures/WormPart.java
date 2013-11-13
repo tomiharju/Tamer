@@ -155,7 +155,7 @@ public class WormPart extends DynamicObject implements Creature {
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x -0.1f,temp.y-0.1f, 0.2f ,0.2f);
+		shapeRndr.rect(temp.x - getSize().x/2,temp.y, getSize().x ,getSize().y);
 		shapeRndr.end();
 			
 	}

@@ -75,7 +75,7 @@ public class StaticObject implements GameObject{
 		return position;
 	}
 	public Vector2 getCenterPosition(){
-		this.centerPosition.set(position.x,position.y + Helper.TILESIZE.y / 4);
+		this.centerPosition.set(position.x - Helper.TILESIZE.x / 2,position.y + Helper.TILESIZE.y / 2);
 		return centerPosition;
 	}
 	
@@ -84,14 +84,7 @@ public class StaticObject implements GameObject{
 		return centerPosition;
 	}
 	
-	/*
-	public void setCenterPosition(Vector2 centerPosition) {
-		this.centerPosition.set(centerPosition);
-	}
-	public void setCenterPosition(float x,float y) {
-		this.centerPosition.set(x,y);
-	}
-	*/
+
 	@Override
 	public Vector2 getSize() {
 		return size;

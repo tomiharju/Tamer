@@ -201,7 +201,7 @@ public class Environment extends Actor{
 		}
 	}
 
-	public synchronized void addNewObjects(){
+	public void addNewObjects(){
 		if(newobjects.size() > 0){
 			for(GameObject go : newobjects){
 				go.wakeUp(this);
@@ -211,7 +211,7 @@ public class Environment extends Actor{
 			}	
 	}
 	
-	public synchronized void addNewObject(GameObject obj){
+	public void addNewObject(GameObject obj){
 		newobjects.add(obj);
 	}
 	

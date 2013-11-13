@@ -27,12 +27,12 @@ public class GryphonScream extends StaticObject {
 	
 	//circle scream area
 	private final float SCREAM_CIRCLE_RADIUS = 6.0f;
-	
-	private Environment environment 	= null;
+	private Tamer tamer					= null;
 	private boolean isActive			= false;
 	private Vector2 wormPos				= new Vector2();
 	private Vector2 tamerPos			= new Vector2();
 	private Vector2 griffonHead			= new Vector2();
+	private Vector2 headingHelp			= new Vector2();
 	private Vector2 newHeading			= new Vector2();
 	private Vector3 screamDirection		= new Vector3(1,-1,0);
 	private ArrayList<Vector3> soundWaves = new ArrayList<Vector3>();
@@ -41,12 +41,13 @@ public class GryphonScream extends StaticObject {
 	
 	private boolean isOnCooldown = false;
 	
-	public GryphonScream(Environment environment){
+	public GryphonScream(Tamer tamer){
+		this.tamer = tamer;
 		//Z-index for drawing order
 		setZindex(-1);
 		setGraphics();
 		
-		this.environment = environment;
+		
 		for(int i = 0 ;i < 8 ; i++)
 			soundWaves.add(new Vector3(0,0,0));
 		sound = SoundManager.instance();
@@ -134,14 +135,15 @@ public class GryphonScream extends StaticObject {
 		for(int i = 0 ; i < soundWaves.size() ; i++){
 			soundWaves.get(i).set(0,0,0);
 		}
-		griffonHead.set(environment.getTamer().getCenterPosition().tmp().add(environment.getTamer().getHeading().mul(environment.getTamer().getSize().x/5)));
+		headingHelp.set(tamer.getHeading().tmp().set(tamer.getHeading().x,tamer.getHeading().y*0.5f));
+		griffonHead.set(tamer.getCenterPosition().tmp().add(headingHelp.mul(2)));
 		isActive = true;
 		sound.setVolume(0.7f);
 		sound.play(TamerSound.HAWK);
-		tamerPos.set(environment.getTamer().getShadow().getPosition());
+		tamerPos.set(tamer.getShadow().getPosition());
 	
 		//Scream circle
-		ArrayList<Creature> creatures = environment.getCreatures();
+		ArrayList<Creature> creatures = tamer.getEnvironment().getCreatures();
 		
 		for (int i = 0; i < creatures.size(); i++){	
 			if(creatures.get(i).getClass() == Worm.class){
