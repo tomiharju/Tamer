@@ -75,7 +75,7 @@ public class TileMap extends StaticObject implements Obstacle{
 	public void setTerrain(String graphics){
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
-		setSize(Helper.TILESIZE);
+		setSize(Helper.TILESIZE.x,Helper.TILESIZE.y);
 		render.setSize(getSize());
 		setRenderType(graphics);
 

@@ -190,7 +190,9 @@
 		<property type="SpawnCount">2</property>
 		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
 		</SubObject>
-		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
 		</SubObject>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">

@@ -16,7 +16,6 @@ import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.utils.Helper;
 
-
 public class Prop extends StaticObject implements Obstacle {
 	private float scale = 0;
 	private float bounds = 0;
@@ -29,9 +28,9 @@ public class Prop extends StaticObject implements Obstacle {
 	private ArrayList<Vector2> vertices;
 	private ArrayList<Vector2> axes;
 
-	public void setup(Environment level) {
-		level.addNewObject(this);
-		level.getObstacles().add(this);
+	public void setup(Environment env) {
+		env.addNewObject(this);
+		env.addObstacle(this);
 		createVertices();
 	}
 
@@ -61,18 +60,20 @@ public class Prop extends StaticObject implements Obstacle {
 
 	@Override
 	public void resolve(ArrayList<Creature> creatures) {
-		//Only collide with ground level obstacles
-		if(!(getZIndex() == -1))
+		// Only collide with ground level obstacles
+		if (!(getZIndex() == -1))
 			return;
 		int size = creatures.size();
 		for (int i = 0; i < size; i++) {
 
 			temp.set(((DynamicObject) creatures.get(i)).getPosition());
-			//Creatures size
+			// Creatures size
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
 			Vector2 center = getPosition();
-			if (temp.x + s.x/2 > center.x - bounds && temp.x - s.x/2 < center.x
-					& temp.y + s.y/2 > center.y && temp.y - s.y/2 < center.y + bounds) {
+			if (temp.x + s.x / 2 > center.x - bounds
+					&& temp.x - s.x / 2 < center.x
+					&& temp.y + s.y  > center.y
+					&& temp.y  < center.y + bounds) {
 
 				collisionAxis.set(getCollisionNormal(creatures.get(i)
 						.getHeading()));
@@ -86,20 +87,22 @@ public class Prop extends StaticObject implements Obstacle {
 				Vector2 headToClosest = closestVertice
 						.sub(((DynamicObject) creatures.get(i)).getPosition());
 
-				Vector2 positionAdjust = Helper.projection(headToClosest,
-						collisionAxis);
+				// Vector2 positionAdjust = Helper.projection(headToClosest,
+				// collisionAxis);
 
 				float relNv = ((DynamicObject) creatures.get(i)).getForce()
 						.dot(collisionAxis);
-			//	float remove = relNv + positionAdjust.len() / Gdx.graphics.getDeltaTime();
-				impulse.set(collisionAxis.mul(((Worm) creatures.get(i)).getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
+				// float remove = relNv + positionAdjust.len() /
+				// Gdx.graphics.getDeltaTime();
+				impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
+						.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse.mul(1f));
 				creatures.get(i).setHeading(newHeading);
 
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -108,7 +111,10 @@ public class Prop extends StaticObject implements Obstacle {
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x - bounds, temp.y, bounds, bounds);
+		shapeRndr.rect(temp.x, temp.y,-bounds,bounds);
+		shapeRndr.end();
+		shapeRndr.begin(ShapeType.Rectangle);
+		shapeRndr.rect(temp.x-0.1f, temp.y-0.1f,.2f,.2f);
 		shapeRndr.end();
 		/*
 		 * shapeRndr.setColor(1, 1, 1, 1);
@@ -123,9 +129,12 @@ public class Prop extends StaticObject implements Obstacle {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.me.tamer.gameobjects.superclasses.StaticObject#getCenterPosition()
-	 * Do we need this?
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.me.tamer.gameobjects.superclasses.StaticObject#getCenterPosition() Do
+	 * we need this?
 	 */
 	public Vector2 getCenterPosition() {
 		return getPosition().tmp().set(getPosition().x - bounds,
@@ -191,8 +200,8 @@ public class Prop extends StaticObject implements Obstacle {
 		}
 		return vertice;
 	}
-	
-	public void dispose(Environment environment){
+
+	public void dispose(Environment environment) {
 		environment.getObstacles().remove(this);
 	}
 

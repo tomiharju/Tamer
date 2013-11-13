@@ -200,7 +200,7 @@ public class TamerStage extends Stage{
 		
 		super.getRoot().draw(super.getSpriteBatch(), 1);
 		//debugDraw();
-		//environment.debugDraw(debugRender);
+		environment.debugDraw(debugRender);
 		super.getSpriteBatch().end();
 	}
 	

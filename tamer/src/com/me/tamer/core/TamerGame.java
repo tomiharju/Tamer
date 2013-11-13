@@ -41,7 +41,7 @@ public class TamerGame extends Game{
 	@Override
 	public void create() {
 		//Set log level
-		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		Gdx.app.setLogLevel(Application.LOG_INFO);
 		
 		Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() +" :: Creating game on " + Gdx.app.getType() );
 		//Spritebatch is used for drawing sprites

@@ -59,12 +59,9 @@ public class Quicksand extends StaticObject implements Obstacle{
 	
 	public void setBogHole(){
 		for(SandPart s : parts)
-			bogHoleCenter.add(s.getCenterPosition());
-			//bogHoleCenter.add(Helper.screenToWorld(s.getScreenTileCenter()));
-
-			
+			bogHoleCenter.add(s.getCenterPosition());			
 		bogHoleCenter.div(parts.size());
-		bogHoleCenter.set(bogHoleCenter.x - Helper.TILESIZE.x / 4,bogHoleCenter.y + Helper.TILESIZE.y / 2);
+		//bogHoleCenter.set(bogHoleCenter.x - Helper.TILESIZE.x / 4,bogHoleCenter.y + Helper.TILESIZE.y / 2);
 	}
 	public void draw(SpriteBatch batch){
 		Renderer renderer = RenderPool.getRenderer(getRenderType());

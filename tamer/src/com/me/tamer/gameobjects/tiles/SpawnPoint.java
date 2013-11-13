@@ -32,11 +32,10 @@ public class SpawnPoint extends StaticObject{
 	private int initialSleep;
 	private int sleepTime;
 	private int spawnCount;
-	private int numCreated = 0;
 	private boolean isTamerSpawn = false;
 	//IMPORTANT: spawn number is used to distinguish spawns from each other.
 	private int spawnId = 0;
-	private Thread spawn_thread = null;
+	private final int TAMER_SPAWN_TIME = 3;
 	private Hud hud;
 		
 	//EXPERIMENTAL STUFF
@@ -53,8 +52,7 @@ public class SpawnPoint extends StaticObject{
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: started spawning");
 		environment.addNewObject(this);
 		this.environment = environment;
-		//Add event which will spawn tamer in 2 seconds
-		EventPool.addEvent(new tEvent(this,"spawnTamer",2,1));
+		EventPool.addEvent(new tEvent(this,"spawnTamer",TAMER_SPAWN_TIME,1));
 		setZindex(1);
 		
 	}
@@ -87,30 +85,24 @@ public class SpawnPoint extends StaticObject{
 	
 	public void addWorm(Worm worm){
 		//update hud when worm is added
-		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Updating label remaining");
 		hud.updateLabel(Hud.LABEL_REMAINING,1);
 		
 		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		creatures.add(worm);
-		worm.setPosition(getCenterPosition());
+		worm.setPosition(getPosition());
 		worm.setVelocity(spawnVelocity);
 	}
-	public void addAnt(AntOrc ant){
-		spawnType = "ant";
-		RuntimeObjectFactory.addToObjectPool("ant"+spawnId,(GameObject)ant);
+	
+	public void addAntOrc(AntOrc ant){
+		spawnType = "antorc";
+		RuntimeObjectFactory.addToObjectPool("antorc"+spawnId,(GameObject)ant);
 		creatures.add(ant);
-		ant.setPosition(getCenterPosition());
+		ant.setPosition(getPosition());
 		ant.setVelocity(spawnVelocity);
 	}
 
-	/**
-	 * @param init_sleep how long till the first spawn
-	 * @param interval interval between spawning
-	 * @param count how many spawns in total
-	 * @param position grid number, which is turned into screen coordinate
-	 * @param spawn_type is the object type to spawn. Currently worm or ant
-	 */
+
 	
 	
 	/**
@@ -121,24 +113,27 @@ public class SpawnPoint extends StaticObject{
 			Gdx.app.debug(TamerGame.LOG, this.getClass()
 					.getSimpleName() + " :: Worm entered");
 			RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
-		}else if(spawnType.equalsIgnoreCase("ant"))
-			RuntimeObjectFactory.getObjectFromPool("ant"+spawnId);
+		}else if(spawnType.equalsIgnoreCase("antorc")){
+			Gdx.app.debug(TamerGame.LOG, this.getClass()
+					.getSimpleName() + " :: Ant entered");
+			RuntimeObjectFactory.getObjectFromPool("antorc"+spawnId);
+		}
+			
 	}
 	/**
 	 * This method is called after "initialSleep"
 	 */
 	public void spawnFirstCreature(){
-		System.out.println("First creature spawned!");
 		
 		if(spawnType.equalsIgnoreCase("worm")){
 			Gdx.app.debug(TamerGame.LOG, this.getClass()
 					.getSimpleName() + " :: Worm entered");
 			RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
-		}else if(spawnType.equalsIgnoreCase("ant"))
-			RuntimeObjectFactory.getObjectFromPool("ant"+spawnId);
+		}else if(spawnType.equalsIgnoreCase("antorc"))
+			RuntimeObjectFactory.getObjectFromPool("antorc"+spawnId);
 		
 		//Add new event into pool which will spawn the rest of the worms ( -1 because this method already spawned one )
-				EventPool.addEvent(new tEvent(this,"spawnCreature",sleepTime,spawnCount-1));
+		EventPool.addEvent(new tEvent(this,"spawnCreature",sleepTime,spawnCount-1));
 	}
 	public void spawnTamer(){
 		if(isTamerSpawn){
@@ -161,14 +156,16 @@ public class SpawnPoint extends StaticObject{
 	public void setTamerSpawn(String flag){
 		int value = Integer.parseInt(flag);
 		if(value == 1){
+			
 			isTamerSpawn = true;
 			tamer = new Tamer();
 			
-			tamer.setPosition(getCenterPosition());
+			tamer.getShadow().setPosition(getCenterPosition());
 			tamer.setSpawnDirection(spawnVelocity);
 			tamer.setHeading(spawnVelocity.tmp().nor());
 
 			RuntimeObjectFactory.addToObjectPool("tamer",(GameObject)tamer);
+			
 		}
 	}
 

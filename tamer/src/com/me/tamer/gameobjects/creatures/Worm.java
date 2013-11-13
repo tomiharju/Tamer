@@ -28,7 +28,8 @@ public class Worm extends DynamicObject implements Creature{
 		parts = new ArrayList<WormPart>();
 		setBorderOffset(BORDER_OFFSET);
 		
-		controls = ControlContainer.instance();
+		//Not needed
+		//controls = ControlContainer.instance();
 	}
 	
 	public void setup(){
@@ -42,9 +43,9 @@ public class Worm extends DynamicObject implements Creature{
 			addPart("joint",i+1,super.getPosition(),super.getVelocity());
 		connectPieces();
 		
-		for(WormPart part : parts){
-			environment.addObject(part);
-			part.setZindex(-1);
+		for(int i = parts.size() - 1 ; i >= 0 ; i-- ){
+			environment.addObject(parts.get(i));
+			parts.get(i).setZindex(-1);
 		}
 		
 		head = parts.get(0);
@@ -87,6 +88,7 @@ public class Worm extends DynamicObject implements Creature{
 	}
 	
 	public void solveEffects(){
+		/*
 		for(int i = 0 ; i < parts.size() ; i++){
 			//if (parts.get(i).getPosition().dst(controls.getEnvironment().getTamer().getShadow().getPosition()) < controls.getSpearButton().getThrowDistance() / 2){
 			if (parts.get(i).getPosition().dst(controls.getEnvironment().getTamer().getShadow().getPosition()) < 1){
@@ -94,7 +96,7 @@ public class Worm extends DynamicObject implements Creature{
 			}else{
 				parts.get(i).setOnSpearRange(false);
 			}
-		}
+		}*/
 	}
 	
 	public void doScreamEffect(){
