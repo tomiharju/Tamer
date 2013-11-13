@@ -137,8 +137,8 @@ public class Spear extends DynamicObject {
 			// Subtract size of the shadow in world to get centerpoint
 			targetPoint.x -= 0.5;
 			targetPoint.y += 0.5;
-			// targetPoint.x = (float) Math.floor(targetPoint.x);
-			// targetPoint.y = (float) Math.floor(targetPoint.y);
+			targetPoint.x = (float) Math.floor(targetPoint.x) + 0.5f;
+			targetPoint.y = (float) Math.floor(targetPoint.y) + 0.5f;
 		}
 
 		setHeading(targetPoint.tmp().sub(getPosition()));

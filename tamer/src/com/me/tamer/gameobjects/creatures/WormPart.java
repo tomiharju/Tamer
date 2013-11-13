@@ -20,7 +20,7 @@ public class WormPart extends DynamicObject implements Creature {
 	private Worm worm = null;
 	private final float MIN_LENGTH   = 0.15f;
 	private final float STRETCH_AMOUNT = 0.20f;
-	private final float HEAD_POS_FIX = 0.05f;
+	private final float HEAD_POS_FIX = 0.01f;
 	private float joint_length = 0.4f;
 	private float lengthAngle  = 0;
 	private int ordinal;
@@ -143,6 +143,7 @@ public class WormPart extends DynamicObject implements Creature {
 			
 			int spriteNumber = solveOrientation();
 			
+			//solve difference between sprite angle and heading angle
 			setAngle(getHeading().angle() +45 + 180 - spriteNumber * 45);
 		}else{
 	
@@ -225,6 +226,9 @@ public class WormPart extends DynamicObject implements Creature {
 	
 	@Override
 	public void spearHit(Spear spear) {
+		//nail worm to center of a tile
+		getPosition().x = (float) Math.floor(getPosition().x) + 0.5f;
+		getPosition().y = (float) Math.floor(getPosition().y) + 0.5f;
 		invMass = 0;	
 	}
 	@Override
@@ -280,8 +284,7 @@ public class WormPart extends DynamicObject implements Creature {
 		}else
 			worm.markAsCarbage();
 		
-		markAsCarbage();
-		
+		markAsCarbage();	
 	}
 	
 	public String getPartName(){
