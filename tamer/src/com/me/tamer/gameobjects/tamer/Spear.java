@@ -56,7 +56,7 @@ public class Spear extends DynamicObject{
 	
 	public void update(float dt){
 		//falling spear has zIndex 0
-		setzIndex(0);
+		setzIndex(-1);
 		
 		//check that tamer has moved enough from spear when it has been dropped and spear has reached ground
 		if (justDropped && attached && environment.getTamer().getShadow().getPosition().dst(getPosition()) > 1){

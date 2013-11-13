@@ -25,9 +25,12 @@ import com.me.tamer.utils.RuntimeObjectFactory;
  * Knows how many worms to spawn, and the time interval to spawn them
  */
 public class SpawnPoint extends StaticObject{
+	
+	private final int TAMER_ENTER_DELAY = 2; 
 	private String spawnType;
 	private Vector2 spawnVelocity;
 	private int initialSleep;
+
 	private int sleepTime;
 	private int spawnCount;
 	private int numCreated = 0;
@@ -114,13 +117,15 @@ public class SpawnPoint extends StaticObject{
 			@Override
 			public void run() {
 				try {
-					Thread.sleep(initialSleep);
+					Thread.sleep(TAMER_ENTER_DELAY);
 					if (TamerStage.gameState == TamerStage.GAME_RUNNING){
 						if(isTamerSpawn){
 							RuntimeObjectFactory.getObjectFromPool("tamer");
 							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: set state to TAMER_ENTER");
 							environment.setState(Environment.TAMER_ENTER);
 						}
+					Thread.sleep(initialSleep);
+					
 						while(numCreated < spawnCount){
 							Thread.sleep(sleepTime);
 							numCreated++;

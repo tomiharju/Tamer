@@ -22,7 +22,6 @@ public class Tamer extends DynamicObject{
 	
 	private float SPEED 		= 0f;
 	private final float AIM_SPEED 	= 0.001f; //heading interpolating coefficient
-	private final float MAX_POWER 	= 1.2f;
 	private final float BORDER_OFFSET = -5.0f;
 	private TamerShadow shadow		=null;
 	private GryphonScream scream 	= null;
@@ -64,7 +63,6 @@ public class Tamer extends DynamicObject{
 		}
 		
 		//Scream
-		//RuntimeObjectFactory.addToObjectPool("scream", new GryphonScream(environment));
 		scream = new GryphonScream(environment);
 		
 		//Shadow
