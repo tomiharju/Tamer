@@ -106,7 +106,7 @@
 		<property type="SpawnDirection">251.5</property>
 		<property type="SpawnId">1</property>
 		<property type="InitialSleep">1</property>
-		<property type="SleepTime">15</property>
+		<property type="SleepTime">5</property>
 		<property type="TamerSpawn">0</property>
 		<property type="SpawnCount">2</property>
 		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">

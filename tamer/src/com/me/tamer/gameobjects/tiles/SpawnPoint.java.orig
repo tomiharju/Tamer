@@ -16,8 +16,10 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
+import com.me.tamer.utils.tEvent;
 
 /**
  * @author tharju
@@ -25,9 +27,12 @@ import com.me.tamer.utils.RuntimeObjectFactory;
  * Knows how many worms to spawn, and the time interval to spawn them
  */
 public class SpawnPoint extends StaticObject{
+	
+	private final int TAMER_ENTER_DELAY = 2; 
 	private String spawnType;
 	private Vector2 spawnVelocity;
 	private int initialSleep;
+
 	private int sleepTime;
 	private int spawnCount;
 	private int numCreated = 0;
@@ -51,7 +56,8 @@ public class SpawnPoint extends StaticObject{
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: started spawning");
 		environment.addNewObject(this);
 		this.environment = environment;
-		startSpawning();
+		//Add event which will spawn tamer in 2 seconds
+		EventPool.addEvent(new tEvent(this,"spawnTamer",2,1));
 		setZindex(1);
 		
 	}
@@ -75,11 +81,11 @@ public class SpawnPoint extends StaticObject{
 	}
 	
 	public void setSleepTime(String time){
-		this.sleepTime = Integer.parseInt(time)*1000;
+		this.sleepTime = Integer.parseInt(time);
 	}
 	
 	public void setInitialSleepTime(String time){
-		this.initialSleep = Integer.parseInt(time)*1000;
+		this.initialSleep = Integer.parseInt(time);
 	}
 	
 	public void addWorm(Worm worm){
@@ -90,7 +96,7 @@ public class SpawnPoint extends StaticObject{
 		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		creatures.add(worm);
-		worm.setPosition(getPosition());
+		worm.setPosition(getCenterPosition());
 		worm.setVelocity(spawnVelocity);
 	}
 	public void addAnt(AntOrc ant){
@@ -108,19 +114,22 @@ public class SpawnPoint extends StaticObject{
 	 * @param position grid number, which is turned into screen coordinate
 	 * @param spawn_type is the object type to spawn. Currently worm or ant
 	 */
+<<<<<<< HEAD
 
 	public void startSpawning(){
 		spawn_thread = new Thread(new Runnable(){
 			@Override
 			public void run() {
 				try {
-					Thread.sleep(initialSleep);
+					Thread.sleep(TAMER_ENTER_DELAY);
 					if (TamerStage.gameState == TamerStage.GAME_RUNNING){
 						if(isTamerSpawn){
 							RuntimeObjectFactory.getObjectFromPool("tamer");
 							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: set state to TAMER_ENTER");
 							environment.setState(Environment.TAMER_ENTER);
 						}
+					Thread.sleep(initialSleep);
+					
 						while(numCreated < spawnCount){
 							Thread.sleep(sleepTime);
 							numCreated++;
@@ -141,6 +150,8 @@ public class SpawnPoint extends StaticObject{
 		});
 		spawn_thread.start();
 	}
+=======
+>>>>>>> 68ca88d18613411bac7ee29418381d48ecd114e8
 	
 	
 	/**
@@ -185,7 +196,7 @@ public class SpawnPoint extends StaticObject{
 	}
 
 	public void setInitialSleep(String initialSleep) {
-		this.initialSleep = Integer.parseInt(initialSleep)*1000;
+		this.initialSleep = Integer.parseInt(initialSleep);
 	}
 
 	public void setTamerSpawn(String flag){

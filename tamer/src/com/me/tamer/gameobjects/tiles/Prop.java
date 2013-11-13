@@ -68,9 +68,11 @@ public class Prop extends StaticObject implements Obstacle {
 		for (int i = 0; i < size; i++) {
 
 			temp.set(((DynamicObject) creatures.get(i)).getPosition());
+			//Creatures size
+			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
 			Vector2 center = getPosition();
-			if (temp.x > center.x - bounds && temp.x < center.x
-					& temp.y > center.y && temp.y < center.y + bounds) {
+			if (temp.x + s.x/2 > center.x - bounds && temp.x - s.x/2 < center.x
+					& temp.y + s.y/2 > center.y && temp.y - s.y/2 < center.y + bounds) {
 
 				collisionAxis.set(getCollisionNormal(creatures.get(i)
 						.getHeading()));

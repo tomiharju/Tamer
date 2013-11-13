@@ -11,7 +11,7 @@ public class Helper {
 	public static float TILE_HEIGHT = TILE_WIDTH / 2;
 	public static float VIRTUAL_SIZE_X = (float) (12 * Math.sqrt(2));
 	public static float VIRTUAL_SIZE_Y = (float) (40 * Math.sqrt(2) / 2);
-	public static Vector2 TILESIZE = new Vector2((float)Math.sqrt(2),(float)Math.sqrt(2) / 2);
+	public static Vector2 TILESIZE = new Vector2((float)Math.sqrt(2),((float)Math.sqrt(2) / 2));
 	static Vector2 projection = new Vector2();
 	static Vector2 unit = new Vector2();
 	

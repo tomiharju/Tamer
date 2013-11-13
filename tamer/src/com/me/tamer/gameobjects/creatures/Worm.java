@@ -9,7 +9,6 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.physics.RigidBodyBox;
 import com.me.tamer.ui.ControlContainer;
-import com.me.tamer.utils.tTimer;
 
 public class Worm extends DynamicObject implements Creature{
 	
@@ -23,7 +22,6 @@ public class Worm extends DynamicObject implements Creature{
 	//for effects
 	private ControlContainer controls;
 	private boolean colorChanged;
-	private tTimer screamTimer;
 	
 	public Worm(){
 		parts = new ArrayList<WormPart>();
@@ -116,6 +114,9 @@ public class Worm extends DynamicObject implements Creature{
 	}
 	public float getSpeed(){
 		return SPEED;
+	}
+	public Vector2 getSize(){
+		return head.getSize();
 	}
 	
 	public WormPart getHead(){

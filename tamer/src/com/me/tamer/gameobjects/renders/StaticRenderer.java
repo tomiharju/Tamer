@@ -26,8 +26,6 @@ public class StaticRenderer implements Renderer {
 	public void loadGraphics(String graphicsName) {
 		String gfx = graphicsName.split("\\.")[0];
 		sprite = new Sprite(RenderPool.atlas.findRegion(gfx));
-		if(sprite == null)
-			throw new IllegalArgumentException("Graphics not found in atlas!");
 	}
 	@Override
 	public void setSize(float w, float h) {
