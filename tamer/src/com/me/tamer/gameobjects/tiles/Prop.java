@@ -65,7 +65,8 @@ public class Prop extends StaticObject implements Obstacle {
 			return;
 		int size = creatures.size();
 		for (int i = 0; i < size; i++) {
-
+			if(!creatures.get(i).collisionEnabled())
+				continue;
 			temp.set(((DynamicObject) creatures.get(i)).getPosition());
 			// Creatures size
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
@@ -84,20 +85,11 @@ public class Prop extends StaticObject implements Obstacle {
 
 				closestVertice.set(getClosestVertice(((DynamicObject) creatures
 						.get(i)).getPosition()));
-				Vector2 headToClosest = closestVertice
-						.sub(((DynamicObject) creatures.get(i)).getPosition());
 
-				// Vector2 positionAdjust = Helper.projection(headToClosest,
-				// collisionAxis);
-
-				float relNv = ((DynamicObject) creatures.get(i)).getForce()
-						.dot(collisionAxis);
-				// float remove = relNv + positionAdjust.len() /
-				// Gdx.graphics.getDeltaTime();
 				impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
 						.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
 				((Worm) creatures.get(i)).getHead().getPosition()
-						.add(impulse.mul(1f));
+						.add(impulse);
 				creatures.get(i).setHeading(newHeading);
 
 			}

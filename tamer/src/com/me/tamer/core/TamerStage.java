@@ -285,8 +285,12 @@ public class TamerStage extends Stage{
 	}
 	
 	public void dispose(){
+		System.out.println("Disposing...");
 		controlContainer.dispose();
 		environment.dispose();
+		environment = null;
+		this.getActors().clear();
+		
 	}
 	
 	public void setCameraHolder(int holder){

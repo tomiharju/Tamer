@@ -348,7 +348,7 @@ public class WormPart extends DynamicObject implements Creature {
 
 	}
 
-	private float getInvMass() {
+	public float getInvMass() {
 		return invMass;
 	}
 
@@ -359,6 +359,12 @@ public class WormPart extends DynamicObject implements Creature {
 	@Override
 	public int getType() {
 		return Creature.TYPE_WORMPART;
+	}
+
+	@Override
+	public boolean collisionEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
