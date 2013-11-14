@@ -32,7 +32,7 @@ public class Tamer extends DynamicObject {
 	private final float SPEAR_COOL_DOWN = 0.5f;
 	
 	private static boolean onSpearCoolDown = false;
-	
+
 	private TamerShadow shadow = null;
 	private GryphonScream scream = null;
 	private Environment environment;
@@ -132,7 +132,7 @@ public class Tamer extends DynamicObject {
 		shadow.draw(batch);
 		scream.draw(batch);
 		super.draw(batch);
-		
+
 	}
 
 	/**
@@ -154,21 +154,34 @@ public class Tamer extends DynamicObject {
 	public Vector2 checkBounds(Vector2 movement) {
 		Vector2 mapBounds = environment.getMapBounds();
 		help.set(shadow.getCenterPosition());
-
+		
 		help.set(Helper.worldToScreen(help));
-		help.add(movement.tmp().mul(Gdx.graphics.getDeltaTime()));
 
-		if (help.x > mapBounds.x   
-				|| help.x < -mapBounds.x ) {
-			System.out.println(help.x + " " +mapBounds.x);
-			
-			movementAxis.set(1, 0);
-			movement.sub(Helper.projection(movement, movementAxis));
+		if (help.x > mapBounds.x) {
+			float distance = help.x - mapBounds.x;
+			movementAxis.set(-1, 0);
+			movementAxis.rotate(45);
+			shadow.getPosition().add(movementAxis.mul(distance));
+
 		}
-		if (help.y > mapBounds.y
-				|| help.y < -mapBounds.y  ) {
-			movementAxis.set(0, 1);
-			movement.sub(Helper.projection(movement, movementAxis));
+		if (help.x < -mapBounds.x) {
+			float distance = help.x - -mapBounds.x;
+			movementAxis.set(-1, 0);
+			movementAxis.rotate(45);
+			shadow.getPosition().add(movementAxis.mul(distance));
+		}
+
+		if (help.y > mapBounds.y) {
+			float distance = help.y - mapBounds.y;
+			movementAxis.set(0, -1);
+			movementAxis.rotate(45);
+			shadow.getPosition().add(movementAxis.mul(distance));
+		}
+		if (help.y < -mapBounds.y) {
+			float distance = help.y - -mapBounds.y;
+			movementAxis.set(0, -1);
+			movementAxis.rotate(45);
+			shadow.getPosition().add(movementAxis.mul(distance));
 		}
 
 		return movement;
@@ -237,25 +250,23 @@ public class Tamer extends DynamicObject {
 		}
 		return null;
 	}
-	
-	
+
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
 		shadow.debugDraw(shapeRndr);
-		
+
 		Vector2 temp = new Vector2();
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(environment.getMapBounds());
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(-temp.x, -temp.y, temp.x*2, temp.y*2);
+		shapeRndr.rect(-temp.x, -temp.y, temp.x * 2, temp.y * 2);
 		shapeRndr.end();
-		
+
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(environment.getMapBounds());
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(-0.25f, -0.25f,.5f, .5f);
+		shapeRndr.rect(-0.25f, -0.25f, .5f, .5f);
 		shapeRndr.end();
-		 
 
 	}
 
@@ -266,13 +277,13 @@ public class Tamer extends DynamicObject {
 	@Override
 	public void setup(Environment level) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void dispose(Environment level) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

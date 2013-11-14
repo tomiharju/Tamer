@@ -135,6 +135,10 @@ public class Worm extends DynamicObject implements Creature{
 	public void applyPull(Vector2 point, float magnitue) {
 		head.applyPull(point,magnitue);
 	}
+	@Override
+	public boolean collisionEnabled() {
+		return head.getInvMass() > 0;
+	}
 	
 
 	@Override
@@ -231,5 +235,6 @@ public class Worm extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }

@@ -53,9 +53,10 @@ public class ControlContainer extends Group{
 		
 		spearButton = new SpearButton(this);
 		this.addActor(spearButton);
-		
+		SnapshotArray<Actor> actors = getChildren();
+		System.out.println("Controlcontainer has "+actors.size +" children");
 		//Hide all buttons in startup
-		setVisible(false);
+		disableInput();
 	}
 	
 	@Override

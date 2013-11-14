@@ -238,4 +238,10 @@ public class AntOrc extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean collisionEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
