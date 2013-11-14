@@ -27,7 +27,7 @@ public abstract class DynamicObject implements GameObject{
 	private Vector2 zeroHeading = new Vector2(-0.5f,1);// -1 + (float)Math.sin(Math.PI/8),1 + (float)Math.cos(Math.PI/8));//-0.5f, 2.0f);//;
 	private float headingAngle = 0;
 	private float spriteNumber = 0;
-	
+
 	
 	@Override
 	public void draw(SpriteBatch batch) {

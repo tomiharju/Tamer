@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
-import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
@@ -76,6 +75,7 @@ public class Spear extends DynamicObject {
 
 					targetCreature.spearHit(this);
 					sound.setVolume(0.3f);
+
 					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 							+ " :: playing sound HIT");
 					sound.play(TamerSound.HIT);
@@ -138,8 +138,8 @@ public class Spear extends DynamicObject {
 			// Subtract size of the shadow in world to get centerpoint
 			targetPoint.x -= 0.5;
 			targetPoint.y += 0.5;
-			// targetPoint.x = (float) Math.floor(targetPoint.x);
-			// targetPoint.y = (float) Math.floor(targetPoint.y);
+			targetPoint.x = (float) Math.floor(targetPoint.x) + 0.5f;
+			targetPoint.y = (float) Math.floor(targetPoint.y) + 0.5f;
 		}
 
 		setHeading(targetPoint.tmp().sub(getPosition()));

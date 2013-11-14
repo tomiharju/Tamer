@@ -213,7 +213,7 @@ public class Environment extends Actor{
 		for(GameObject go : gameobjects){
 				go.setup(this);
 		}
-}
+	}
 	
 	/**
 	 * @param obj

@@ -12,6 +12,8 @@ import com.me.tamer.ui.ControlContainer;
 
 public class Worm extends DynamicObject implements Creature{
 	
+	private final float BORDER_OFFSET = 0.0f;
+	private final int NUMBER_PARTS = 6;
 	int ordinal = 1;
 	private ArrayList<WormPart> parts;
 	private final float SPEED = 2.5f;
@@ -24,13 +26,13 @@ public class Worm extends DynamicObject implements Creature{
 	
 	public Worm(){
 		parts = new ArrayList<WormPart>();
-		controls = ControlContainer.instance();
+
 	}
 	
 	public void wakeUp(Environment environment){
 		environment.getCreatures().add(this);
 		addPart("head",0,super.getPosition(),super.getVelocity());
-		for(int i = 0 ; i < 3 ; i++)
+		for(int i = 0 ; i < NUMBER_PARTS ; i++)
 			addPart("joint",i+1,super.getPosition(),super.getVelocity());
 		connectPieces();
 		
@@ -78,6 +80,7 @@ public class Worm extends DynamicObject implements Creature{
 	}
 	
 	public void solveEffects(){
+		/*
 		for(int i = 0 ; i < parts.size() ; i++){
 			//if (parts.get(i).getPosition().dst(controls.getEnvironment().getTamer().getShadow().getPosition()) < controls.getSpearButton().getThrowDistance() / 2){
 			if (parts.get(i).getPosition().dst(controls.getEnvironment().getTamer().getShadow().getPosition()) < 1){
@@ -85,7 +88,7 @@ public class Worm extends DynamicObject implements Creature{
 			}else{
 				parts.get(i).setOnSpearRange(false);
 			}
-		}
+		}*/
 	}
 	
 	public void doScreamEffect(){

@@ -17,13 +17,15 @@ import com.me.tamer.utils.Helper;
 public class WormPart extends DynamicObject implements Creature {
 	//Container worm
 	private Worm worm = null;
-
-	private float JOINT_LENGTH = 0.3f;
-	private float MIN_LENGTH   = 0.3f;
+	private final float MIN_LENGTH   = 0.15f;
+	private final float STRETCH_AMOUNT = 0.20f;
+	private final float HEAD_POS_FIX = 0.01f;
+	private float joint_length = 0.4f;
 	private float lengthAngle  = 0;
 	private int ordinal;
 	private float invMass;
 	private float mass;
+	private Vector2 help 		= new Vector2();
 	
 	//Effect variables
 	private boolean onSpearRange = false;
@@ -63,7 +65,7 @@ public class WormPart extends DynamicObject implements Creature {
 		mass 				= 10;
 		invMass				= 1 / mass;
 		setPosition(pos);
-		getPosition().add(vel.tmp().nor().mul( -ordinal * JOINT_LENGTH));
+		getPosition().add(vel.tmp().nor().mul( -ordinal * joint_length));
 		setVelocity(new Vector2(0,0));
 		setForce(new Vector2(0,0));
 		this.ordinal 		= ordinal;
@@ -85,7 +87,16 @@ public class WormPart extends DynamicObject implements Creature {
 		else if (blinking)batch.setColor(0.1f,0.1f,1.0f,1.0f);
 			
 		renderer.setSize(getSize());
-		renderer.setPosition(Helper.worldToScreen(getPosition()));
+		
+		//Fix position of the headpart
+		if(partName.equalsIgnoreCase("head")){
+			help.set(Helper.worldToScreen(getPosition()));
+			help.y += HEAD_POS_FIX;
+			renderer.setPosition(help);
+		}
+		else renderer.setPosition(Helper.worldToScreen(getPosition()));
+		
+		
 		renderer.setOrientation( solveOrientation() );
 		renderer.setAngle(getAngle());
 		renderer.draw(batch);
@@ -108,12 +119,16 @@ public class WormPart extends DynamicObject implements Creature {
 		this.child = child;
 	}
 	public void solveJoints(float dt){
-		
-			if(child != null){
-				solveJoint(dt);
-				lengthAngle += dt;
-				JOINT_LENGTH = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle)) * 0.3f;
-				child.solveJoints(dt);
+		if(partName.equalsIgnoreCase("head")){
+			solveJoint(dt);
+			joint_length = 0.3f; //Math.abs((float) Math.sin(lengthAngle)) * STRETCH_AMOUNT;
+			child.solveJoints(dt);
+		}
+		else if(child != null){
+			solveJoint(dt);
+			lengthAngle += dt;
+			joint_length = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle)) * STRETCH_AMOUNT;
+			child.solveJoints(dt);
 		}
 	}
 	
@@ -127,13 +142,16 @@ public class WormPart extends DynamicObject implements Creature {
 			
 			int spriteNumber = solveOrientation();
 			
-			setAngle(getHeading().angle() + 45 + 180 - spriteNumber * 45);
+
+			//solve difference between sprite angle and heading angle
+			setAngle(getHeading().angle() +45 + 180 - spriteNumber * 45);
 		}else{
 	
-			//this assumes that head always has child
+			//this assumes that head always has a child
 			setAngle(child.getAngle()); 
 
 		}
+
 		
 		if(child != null)
 			child.update(dt);
@@ -161,14 +179,13 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 	
 	public void solveJoint(float dt){
-		
 		axis.set(child.getPosition().tmp().sub(getPosition()));
 		float currentDistance 	= axis.len();
 		Vector2 unitAxis 		= axis.nor();
 
 		relativeVelocity.set(child.getVelocity().tmp().sub(getVelocity()));
 		float relVelMagnitude 	= relativeVelocity.dot(unitAxis);
-		float relativeDistance 	= (currentDistance - JOINT_LENGTH);
+		float relativeDistance 	= (currentDistance - joint_length);
 		
 		if( relativeDistance > 0){
 			float impulse 	= 0;
@@ -210,6 +227,9 @@ public class WormPart extends DynamicObject implements Creature {
 	
 	@Override
 	public void spearHit(Spear spear) {
+		//nail worm to center of a tile
+		getPosition().x = (float) Math.floor(getPosition().x) + 0.5f;
+		getPosition().y = (float) Math.floor(getPosition().y) + 0.5f;
 		invMass = 0;	
 	}
 	@Override
@@ -265,8 +285,7 @@ public class WormPart extends DynamicObject implements Creature {
 		}else
 			worm.markAsCarbage();
 		
-		markAsCarbage();
-		
+		markAsCarbage();	
 	}
 	
 	public String getPartName(){

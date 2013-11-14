@@ -91,10 +91,12 @@ public class SpawnPoint extends StaticObject{
 		worm.setPosition(getPosition());
 		worm.setVelocity(spawnVelocity);
 	}
-	public void addAnt(AntOrc ant){
-		spawnType = "ant";
-		RuntimeObjectFactory.addToObjectPool("ant"+spawnId,(GameObject)ant);
-		ant.setPosition(getCenterPosition());
+
+	
+	public void addAntOrc(AntOrc ant){
+		spawnType = "antorc";
+		RuntimeObjectFactory.addToObjectPool("antorc"+spawnId,(GameObject)ant);
+		ant.setPosition(getPosition());
 		ant.setVelocity(spawnVelocity);
 	}
 
@@ -107,17 +109,22 @@ public class SpawnPoint extends StaticObject{
 	public void spawnCreature(){
 		if(spawnType.equalsIgnoreCase("worm")){
 			RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
-		}else if(spawnType.equalsIgnoreCase("ant"))
-			RuntimeObjectFactory.getObjectFromPool("ant"+spawnId);
+		}else if(spawnType.equalsIgnoreCase("antorc")){
+			Gdx.app.debug(TamerGame.LOG, this.getClass()
+					.getSimpleName() + " :: Ant entered");
+			RuntimeObjectFactory.getObjectFromPool("antorc"+spawnId);
+		}
+			
 	}
 	/**
 	 * This method is called after "initialSleep"
 	 */
 	public void spawnFirstCreature(){
+
 		if(spawnType.equalsIgnoreCase("worm")){
 			RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
-		}else if(spawnType.equalsIgnoreCase("ant"))
-			RuntimeObjectFactory.getObjectFromPool("ant"+spawnId);
+		}else if(spawnType.equalsIgnoreCase("antorc"))
+			RuntimeObjectFactory.getObjectFromPool("antorc"+spawnId);
 		
 		//Add new event into pool which will spawn the rest of the worms ( -1 because this method already spawned one )
 		EventPool.addEvent(new tEvent(this,"spawnCreature",sleepTime,spawnCount-1));
@@ -143,6 +150,7 @@ public class SpawnPoint extends StaticObject{
 	public void setTamerSpawn(String flag){
 		int value = Integer.parseInt(flag);
 		if(value == 1){
+			
 			isTamerSpawn = true;
 			tamer = new Tamer();
 			
@@ -151,6 +159,7 @@ public class SpawnPoint extends StaticObject{
 			tamer.setHeading(spawnVelocity.tmp().nor());
 
 			RuntimeObjectFactory.addToObjectPool("tamer",(GameObject)tamer);
+			
 		}
 	}
 

@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.creatures.Creature;
+import com.me.tamer.gameobjects.creatures.AntOrc;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
@@ -23,6 +22,12 @@ public class Tamer extends DynamicObject {
 	private float SPEED = 0f;
 	private final float FLYING_HEIGHT = 7.0f;
 	private final float AIM_SPEED = 0.001f; // heading interpolating coefficient
+
+	private final float BORDER_OFFSET = -5.0f;
+	private final float DISTANCE_BOUNDS = 5.0f;
+	private final float SPAWN_DISTANCE = 8.0f;
+	private final float SPAWN_SPEED = 5.0f;
+	
 	private TamerShadow shadow = null;
 	private GryphonScream scream = null;
 	private Environment environment;
@@ -40,9 +45,7 @@ public class Tamer extends DynamicObject {
 	private Vector2 mapBounds = new Vector2();
 	private boolean enteredField = false;
 
-	private final float DISTANCE_BOUNDS = 5.0f;
-	private final float MIN_SPAWN_DISTANCE = 5.0f;
-	private final float SPAWN_SPEED = 5.0f;
+	
 
 	private SoundManager sound;
 
@@ -64,6 +67,8 @@ public class Tamer extends DynamicObject {
 
 		// sound
 		sound = SoundManager.instance();
+		
+
 
 	}
 
@@ -93,7 +98,7 @@ public class Tamer extends DynamicObject {
 	@Override
 	public void update(float dt) {
 		if (environment.getState() == Environment.TAMER_ENTER) {
-			if (shadow.getPosition().dst(spawnPosition) > MIN_SPAWN_DISTANCE) {
+			if (shadow.getPosition().dst(spawnPosition) > SPAWN_DISTANCE) {
 				enteredField = true;
 			}
 

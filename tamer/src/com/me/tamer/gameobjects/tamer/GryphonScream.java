@@ -54,36 +54,7 @@ public class GryphonScream extends StaticObject {
 	}
 	
 	public void debugDraw(ShapeRenderer shapeRenderer){
-		/*shapeRenderer.setProjectionMatrix(environment.getStage().getCamera().combined);
-		shapeRenderer.setColor(1, 1, 1, 0.9f);
-		
-		drawVert1.set(Helper.worldToScreen(tamerPos));
-		
-		shapeRenderer.begin(ShapeType.Circle);
-		shapeRenderer.translate(drawVert1.x, drawVert1.y, 0);
-		shapeRenderer.scale(1f, 0.5f, 1f);
-		shapeRenderer.circle(0, 0, SCREAM_CIRCLE_RADIUS,30);
-		
-		shapeRenderer.identity();
-		shapeRenderer.end();
-		
-		/*
-		drawVert1.set(IsoHelper.twoDToTileIso(screamVert1));
-		drawVert2.set(IsoHelper.twoDToTileIso(screamVert2));
-		drawVert3.set(IsoHelper.twoDToTileIso(screamVert3));
-		
-		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert2.x, drawVert2.y );
-		shapeRenderer.end();
-		
-		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.line(drawVert1.x, drawVert1.y, drawVert3.x, drawVert3.y );
-		shapeRenderer.end();
-		
-		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.line(drawVert2.x, drawVert2.y, drawVert3.x, drawVert3.y );
-		shapeRenderer.end();
-		*/
+		//
 	}
 	
 	public void setGraphics(String graphics){
@@ -96,23 +67,22 @@ public class GryphonScream extends StaticObject {
 	@Override
 	public void update(float dt) {
 		if(isActive){
-		for(int i = 0 ; i < soundWaves.size() ; i++){
-
-			if(soundWaves.get(i).len() < 10)
-				soundWaves.get(i).add(screamDirection.tmp().mul(screamSpeed*i*dt));
-			if(soundWaves.get(i).len() > 10){
-				if(i == soundWaves.size() - 1  ){
-					isActive = false;
-					for(int k = 0 ; k < soundWaves.size() ; k++)
-						soundWaves.get(k).set(0,0,1);
+			for(int i = 0 ; i < soundWaves.size() ; i++){
+				if(soundWaves.get(i).len() < 10)
+					soundWaves.get(i).add(screamDirection.tmp().mul(screamSpeed*i*dt));
+				if(soundWaves.get(i).len() > 10){
+					if(i == soundWaves.size() - 1  ){
+						isActive = false;
+						for(int k = 0 ; k < soundWaves.size() ; k++)
+							soundWaves.get(k).set(0,0,1);
+					}
+					else
+						soundWaves.get(i).set(0,0,1);
+					
 				}
-				else
-					soundWaves.get(i).set(0,0,1);
-				
 			}
-			
 		}
-	}
+
 	}
 	public void draw(SpriteBatch batch){
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
@@ -130,11 +100,11 @@ public class GryphonScream extends StaticObject {
 	public void activate(){
 		if(isOnCooldown)
 			return;
-		
-		
+
 		for(int i = 0 ; i < soundWaves.size() ; i++){
 			soundWaves.get(i).set(0,0,0);
 		}
+
 		headingHelp.set(tamer.getHeading().tmp().set(tamer.getHeading().x,tamer.getHeading().y*0.5f));
 		griffonHead.set(tamer.getCenterPosition().tmp().add(headingHelp.mul(2)));
 		isActive = true;
@@ -159,10 +129,6 @@ public class GryphonScream extends StaticObject {
 					EventPool.addEvent(new tEvent(worm,"doScreamEffect",0.5f,3));
 				}
 			}
-		
-			
-			
-		
 		}	
 		isOnCooldown = true;
 		EventPool.addEvent(new tEvent(this,"enable",3.14f,1));
@@ -177,6 +143,7 @@ public class GryphonScream extends StaticObject {
 	public boolean getDebug(){
 		return false;
 	}
+
 
 
 
@@ -199,6 +166,5 @@ public class GryphonScream extends StaticObject {
 		
 	}
 	
-	
-	
+
 }

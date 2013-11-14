@@ -10,8 +10,11 @@ import com.me.tamer.gameobjects.renders.UiRenderer;
 
 public class Joystick extends Actor{
 	private final float BUTTON_SIZE	= 250;
-	private final float ZOOM_SPEED = 0.01f;
+	private final float ZOOM_IN_SPEED = 0.015f;
+	private final float ZOOM_OUT_SPEED = 0.01f;
 	private final float ZOOM_MIN_AMOUNT = 0.05f;
+	private final float ZOOM_DEFAULT = 0.9f;
+	private final float ZOOM_MAX_COEFFIENT = 0.004f;
 	private ControlContainer controlContainer = null;
 	private Environment environment = null;
 	
@@ -68,10 +71,13 @@ public class Joystick extends Actor{
 		}
 		
 		//Zoom out camera when accelerating and in when braking
-		if (controlContainer.getStage().getCamera().zoom - ZOOM_MIN_AMOUNT > 1 + 0.003f * delta.len())
-			controlContainer.getStage().getCamera().zoom -= ZOOM_SPEED * 1.5f;
-		else if (controlContainer.getStage().getCamera().zoom + ZOOM_MIN_AMOUNT < 1 + 0.003f * delta.len())
-			controlContainer.getStage().getCamera().zoom += ZOOM_SPEED;
+		
+		//controlContainer.getStage().getCamera().zoom = 0.9f;
+		
+		if (controlContainer.getStage().getCamera().zoom - ZOOM_MIN_AMOUNT > ZOOM_DEFAULT + ZOOM_MAX_COEFFIENT * delta.len())
+			controlContainer.getStage().getCamera().zoom -= ZOOM_IN_SPEED;
+		else if (controlContainer.getStage().getCamera().zoom + ZOOM_MIN_AMOUNT < ZOOM_DEFAULT + ZOOM_MAX_COEFFIENT * delta.len())
+			controlContainer.getStage().getCamera().zoom += ZOOM_OUT_SPEED;
 		
 		if (pressed){
 			if(movementDisabled)
