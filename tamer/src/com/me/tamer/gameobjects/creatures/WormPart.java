@@ -94,7 +94,6 @@ public class WormPart extends DynamicObject implements Creature {
 		else if (blinking)
 			batch.setColor(0.1f, 0.1f, 1.0f, 1.0f);
 		if (decaying) {
-
 			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
 			batch.setColor(1, 1, 1, levelOfDecay);
 			if(levelOfDecay < 0)

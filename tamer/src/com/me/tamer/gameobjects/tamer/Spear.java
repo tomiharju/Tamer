@@ -49,7 +49,6 @@ public class Spear extends DynamicObject {
 		hitbox.setGraphics("vRocks1.png");
 		hitbox.setHitBox("1");
 		hitbox.setZindex(-10);
-
 	}
 
 	public void setGraphics(String graphics) {
@@ -100,7 +99,6 @@ public class Spear extends DynamicObject {
 				hitbox.markAsActive();
 				environment.addNewObject(hitbox);
 			}
-
 		}
 	}
 	
@@ -121,9 +119,6 @@ public class Spear extends DynamicObject {
 	}
 
 	public void wakeUp(Environment environment) {
-		
-		
-		
 		this.environment = environment;
 		attached = false;
 		setZindex(-1);
@@ -147,7 +142,8 @@ public class Spear extends DynamicObject {
 			if (creature != null) {
 				switch (creature.getType()){
 				case (Creature.TYPE_ANT):
-					((AntOrc)creature).breakJoint();
+					targetCreature = creature;
+					targetPoint = ((DynamicObject) targetCreature).getPosition();
 					break;
 				case (Creature.TYPE_WORMPART):
 					if (targetCreature == null) {
@@ -221,7 +217,6 @@ public class Spear extends DynamicObject {
 		
 	}
 
-
 	@Override
 	public void setup(Environment level) {
 		// TODO Auto-generated method stub
@@ -230,7 +225,6 @@ public class Spear extends DynamicObject {
 
 	@Override
 	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 }

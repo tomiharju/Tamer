@@ -42,11 +42,7 @@ public class GameObjectFactory {
 			}
 			Gdx.app.debug(TamerGame.LOG, " :: GameObject created {" + object.getClass().getSimpleName() + "} In memory as "+object.toString()+" \n");
 		
-			return object;
-			
-			
-			
-			
+			return object;	
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException c){
@@ -57,10 +53,6 @@ public class GameObjectFactory {
 		}
 		//If error
 		return null;
-	
-		
-		
-		
 	}
 
 }

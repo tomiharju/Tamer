@@ -14,6 +14,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.physics.RigidBodyBox;
 import com.me.tamer.utils.tEvent;
+import com.sun.corba.se.impl.resolver.SplitLocalResolverImpl;
 
 
 public class AntOrc extends DynamicObject implements Creature{
@@ -42,8 +43,8 @@ public class AntOrc extends DynamicObject implements Creature{
 	public AntOrc(){
 		waypoints = new ArrayList<Vector2>();
 		waypoints.add(new Vector2(0,0));//place holder for the first value
-		waypoints.add(new Vector2(-2,-2));
-		waypoints.add(new Vector2(10,15));
+		//waypoints.add(new Vector2(-2,-2));
+		//waypoints.add(new Vector2(10,15));
 	}
 	
 	public void wakeUp(Environment environment){
@@ -151,7 +152,11 @@ public class AntOrc extends DynamicObject implements Creature{
 			return null;
 	}
 
-	public void addWaypoint(Vector2 waypoint){
+	public void setWaypoint(String s){
+		String[] values = s.split(":");
+		int x = Integer.parseInt(values[0]);
+		int y = Integer.parseInt(values[1]);
+		Vector2 waypoint = new Vector2(x,y);
 		waypoints.add(waypoint);
 	}
 	
@@ -162,8 +167,13 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	@Override
 	public void spearHit(Spear spear) {
-		// TODO Auto-generated method stub
+		//just kill when spear hits for now
+
+		breakJoint();
 		
+		//move position to center of a tile
+		getPosition().x = (float) Math.floor(getPosition().x) + 1; //+ 0.5f;
+		getPosition().y = (float) Math.floor(getPosition().y);// + 0.5f;
 	}
 
 	@Override
@@ -196,8 +206,6 @@ public class AntOrc extends DynamicObject implements Creature{
 		return false;
 	}
 	
-
-
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
 		// TODO Auto-generated method stub

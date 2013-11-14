@@ -29,7 +29,7 @@ public class Tamer extends DynamicObject {
 	private final float DISTANCE_BOUNDS = 5.0f;
 	private final float SPAWN_DISTANCE = 8.0f;
 	private final float SPAWN_SPEED = 5.0f;
-	private final float SPEAR_COOL_DOWN = 0.5f;
+	private final float SPEAR_COOL_DOWN = 0.1f;
 	
 	private static boolean onSpearCoolDown = false;
 
