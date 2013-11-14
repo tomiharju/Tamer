@@ -137,6 +137,8 @@ public class Spear extends DynamicObject {
 			// Subtract size of the shadow in world to get centerpoint
 			targetPoint.x -= 0.5;
 			targetPoint.y += 0.5;
+			
+			//set spear to hit center of the tile
 			targetPoint.x = (float) Math.floor(targetPoint.x) + 0.5f;
 			targetPoint.y = (float) Math.floor(targetPoint.y) + 0.5f;
 		}

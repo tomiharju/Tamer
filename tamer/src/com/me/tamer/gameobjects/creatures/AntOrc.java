@@ -106,7 +106,6 @@ public class AntOrc extends DynamicObject implements Creature{
 		if (!markedDead){
 			setHeading( waypoints.get(nextWaypoint).tmp().sub(getPosition()).nor() );
 			if (nextWaypoint == waypoints.size() - 1) destinationReached = true;
-			//System.out.println("destinationreChed: " +waypoints.get(0));
 			//first check if waypoint is reached then set heading to next waypoint
 			if ( getPosition().dst( waypoints.get(nextWaypoint)) < WAYPOINT_SCAN_RADIUS ){	
 				if (!destinationReached){
