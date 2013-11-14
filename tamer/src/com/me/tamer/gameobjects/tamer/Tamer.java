@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
@@ -153,17 +154,19 @@ public class Tamer extends DynamicObject {
 
 	public Vector2 checkBounds(Vector2 movement) {
 		Vector2 mapBounds = environment.getMapBounds();
-		help.set(shadow.getPosition());
+		help.set(shadow.getCenterPosition());
 
 		help.set(Helper.worldToScreen(help));
 		help.add(movement.tmp().mul(Gdx.graphics.getDeltaTime()));
 
-		if (help.x > mapBounds.x  
+		if (help.x > mapBounds.x   
 				|| help.x < -mapBounds.x ) {
+			System.out.println(help.x + " " +mapBounds.x);
+			
 			movementAxis.set(1, 0);
 			movement.sub(Helper.projection(movement, movementAxis));
 		}
-		if (help.y > mapBounds.y 
+		if (help.y > mapBounds.y
 				|| help.y < -mapBounds.y  ) {
 			movementAxis.set(0, 1);
 			movement.sub(Helper.projection(movement, movementAxis));
@@ -231,18 +234,19 @@ public class Tamer extends DynamicObject {
 	public void debugDraw(ShapeRenderer shapeRndr) {
 		shadow.debugDraw(shapeRndr);
 		
-		/*Vector2 temp = new Vector2();
+		Vector2 temp = new Vector2();
 		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(Helper.worldToScreen(getCenterPosition()));
+		temp.set(environment.getMapBounds());
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x-0.25f, temp.y-0.25f, 0.5f, 0.5f);
+		shapeRndr.rect(-temp.x, -temp.y, temp.x*2, temp.y*2);
 		shapeRndr.end();
 		
-		 * shapeRndr.setColor(1, 1, 1, 1);
-		 * temp.set(Helper.worldToScreen(getPosition()));
-		 * shapeRndr.begin(ShapeType.Rectangle); shapeRndr.rect(temp.x
-		 * -0.1f,temp.y-0.1f, 0.2f ,0.2f); shapeRndr.end();
-		 */
+		shapeRndr.setColor(1, 1, 1, 1);
+		temp.set(environment.getMapBounds());
+		shapeRndr.begin(ShapeType.Rectangle);
+		shapeRndr.rect(-0.25f, -0.25f,.5f, .5f);
+		shapeRndr.end();
+		 
 
 	}
 

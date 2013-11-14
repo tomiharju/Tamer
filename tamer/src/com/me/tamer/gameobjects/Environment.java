@@ -236,7 +236,9 @@ public class Environment extends Actor{
 	
 	public void setMapBounds(String value){
 		String[] values = value.split(":");
-		mapBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+		//Bounds come as total width and total height from editor, so to make it "lenght from origin" we divide by 2
+		mapBounds = new Vector2(Float.parseFloat(values[0]) / 2, Float.parseFloat(values[1]) / 2 );
+		mapBounds.set(mapBounds.x *Helper.TILESIZE.x,mapBounds.y*Helper.TILESIZE.x  );
 	}
 	
 	/**

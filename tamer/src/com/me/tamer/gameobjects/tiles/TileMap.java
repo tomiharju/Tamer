@@ -50,8 +50,7 @@ public class TileMap extends StaticObject implements Obstacle{
 					&& tilepos.y > tamerpos.y - Helper.VIRTUAL_SIZE_Y *0.75 && tilepos.y < tamerpos.y + Helper.VIRTUAL_SIZE_Y *0.75){
 			renderer.setPosition(tilepos);
 
-			//renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
-			//renderer.setBounds(Helper.worldToScreen(terrain.get(i)).x,Helper.worldToScreen(terrain.get(i)).y, Helper.TILESIZE.x, Helper.TILESIZE.y);
+		
 			renderer.draw(batch);
 			}
 		}	
@@ -67,7 +66,7 @@ public class TileMap extends StaticObject implements Obstacle{
 			String[] coords = s.split("\\:");
 			float x = Float.parseFloat(coords[0]);
 			float y = Float.parseFloat(coords[1]);
-			tile.set(x,y);
+			tile.set(x , y );
 			terrain.add(tile);
 		}
 		

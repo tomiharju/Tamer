@@ -21,7 +21,7 @@ public class Helper {
 	
 	public static Vector2 worldToScreen(Vector2 point){
 	
-		temp.set(point);
+		temp.set(point.x + Helper.TILESIZE.x / 2, point.y );
 		temp.mul(worldMatrix);
 		return temp;
 	}

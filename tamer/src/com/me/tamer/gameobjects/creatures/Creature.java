@@ -6,6 +6,9 @@ import com.me.tamer.physics.RigidBodyBox;
 
 public interface Creature {
 
+	public static final int TYPE_WORM = 1;
+	public static final int TYPE_WORMPART = 2;
+	public static final int TYPE_ANT = 3;
 	/**
 	 * What happens when this object is hit by a spear
 	 */
@@ -21,8 +24,12 @@ public interface Creature {
 	/**
 	 * What needs to be done when specific creature is killed
 	 */
-	public void kill();
+	public void breakJoint();
 	
+	/**
+	 * Used to slowly fade away dead creatures
+	 */
+	public void decay();
 	/**
 	 * This method is used for checking if point is affecting the creature within given radius.
 	 * For example, when a spear is thrown, we check if that spears position has hit this creature.
@@ -44,5 +51,5 @@ public interface Creature {
 	public void moveToPoint(Vector2 point);
 	public void setHeading(Vector2 rotate);
 	public Vector2 getHeading();
-	
+	public int getType();
 }
