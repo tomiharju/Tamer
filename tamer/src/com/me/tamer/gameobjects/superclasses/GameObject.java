@@ -51,7 +51,6 @@ public interface GameObject{
 	 */
 	public void setSize(Vector2 size);
 	public void setPosition(String pos);
-	public void setDebug(boolean b);
 	public void setSize(float x,float y);
 	public boolean getDebug();
 	public Vector2 getPosition();
@@ -85,9 +84,6 @@ public interface GameObject{
 	public int getZIndex();
 	public void setZindex(int z);
 	public void setzIndex(String index);
-	public void setPosition(Vector2 pos);
-
-	public void dispose();
-	
+	public void setPosition(Vector2 pos);	
 }
 

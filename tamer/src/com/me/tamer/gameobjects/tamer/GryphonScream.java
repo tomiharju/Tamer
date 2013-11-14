@@ -45,7 +45,7 @@ public class GryphonScream extends StaticObject {
 		this.tamer = tamer;
 		//Z-index for drawing order
 		setZindex(-1);
-		setGraphics();
+		setGraphics("scream");
 		
 		
 		for(int i = 0 ;i < 8 ; i++)
@@ -57,11 +57,11 @@ public class GryphonScream extends StaticObject {
 		//
 	}
 	
-	public void setGraphics(){
-		Renderer render = RenderPool.addRendererToPool("static", "scream");
-		render.loadGraphics("scream.png");
+	public void setGraphics(String graphics){
+		Renderer render = RenderPool.addRendererToPool("static", graphics);
+		render.loadGraphics(graphics);
 		setSize(getSize());
-		setRenderType("scream");
+		setRenderType(graphics);
 	}
 	
 	@Override
@@ -143,4 +143,28 @@ public class GryphonScream extends StaticObject {
 	public boolean getDebug(){
 		return false;
 	}
+
+
+
+
+
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
 }

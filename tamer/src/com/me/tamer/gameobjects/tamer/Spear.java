@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.tamer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
@@ -32,7 +33,7 @@ public class Spear extends DynamicObject {
 	private Prop hitbox = new Prop();
 
 	public Spear() {
-		setGraphics();
+		setGraphics("spear");
 		sound = SoundManager.instance();
 
 		// hitbox
@@ -42,11 +43,11 @@ public class Spear extends DynamicObject {
 
 	}
 
-	public void setGraphics() {
-		Renderer render = RenderPool.addRendererToPool("animated", "spear");
-		render.loadGraphics("spear", 1, 8);
+	public void setGraphics(String graphics) {
+		Renderer render = RenderPool.addRendererToPool("animated", graphics);
+		render.loadGraphics(graphics, 1, 8);
 		setSize(new Vector2(2.4f, 1.5f));
-		setRenderType("spear");
+		setRenderType(graphics);
 
 	}
 
@@ -97,7 +98,7 @@ public class Spear extends DynamicObject {
 	public void wakeUp(Environment environment) {
 		this.environment = environment;
 		attached = false;
-		setzIndex(-1);
+		setZindex(-1);
 		markAsActive();
 		throwSpear();
 	}
@@ -157,7 +158,7 @@ public class Spear extends DynamicObject {
 	 */
 	public void pickUp() {
 		attached = false;
-		setzIndex(-1); // not sure if needed here
+		setZindex(-1); // not sure if needed here
 
 		if (targetCreature != null) {
 			targetCreature.unBind();
@@ -180,4 +181,24 @@ public class Spear extends DynamicObject {
 	public boolean isJustDropped() {
 		return justDropped;
 	}
+
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -3,18 +3,18 @@ package com.me.tamer.gameobjects.creatures;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
-import com.me.tamer.physics.RigidBodyBox;
 import com.me.tamer.ui.ControlContainer;
 
 public class Worm extends DynamicObject implements Creature{
 	
 	private final float BORDER_OFFSET = 0.0f;
 	private final int NUMBER_PARTS = 6;
-	int ordinal = 1;
+	
 	private ArrayList<WormPart> parts;
 	private final float SPEED = 2.5f;
 	private WormPart head = null;
@@ -26,14 +26,7 @@ public class Worm extends DynamicObject implements Creature{
 	
 	public Worm(){
 		parts = new ArrayList<WormPart>();
-		setBorderOffset(BORDER_OFFSET);
-		
-		//Not needed
-		//controls = ControlContainer.instance();
-	}
-	
-	public void setup(){
-		//No action because this object is not ment to be on game right away
+
 	}
 	
 	public void wakeUp(Environment environment){
@@ -44,7 +37,6 @@ public class Worm extends DynamicObject implements Creature{
 		connectPieces();
 		
 		for(int i = parts.size() - 1 ; i >= 0 ; i-- ){
-			environment.addObject(parts.get(i));
 			parts.get(i).setZindex(-1);
 		}
 		
@@ -66,6 +58,9 @@ public class Worm extends DynamicObject implements Creature{
 		parts.add(part);
 		
 	}
+	public void removePart(WormPart part){
+		parts.remove(part);
+	}
 	
 	public void connectPieces(){
 		for(int i = 0 ; i < parts.size() ; i++){
@@ -78,13 +73,13 @@ public class Worm extends DynamicObject implements Creature{
 	
 	public void update(float dt){
 		head.solveJoints(dt);
-		head.updateChild(dt);
+		head.update(dt);
 		head.getVelocity().set(head.getForce());
 		solveEffects();
 	}
 	
 	public void draw(SpriteBatch batch){
-		//No action
+		parts.get(parts.size()-1).draw(batch);
 	}
 	
 	public void solveEffects(){
@@ -104,62 +99,12 @@ public class Worm extends DynamicObject implements Creature{
 		else head.setBlinking(false);	
 	}
 
-	public void setHead(WormPart part){
-		head = part;
-	}
+	
 	public void dispose(){
 		parts = null;
 		head = null;
 	}
 	
-	public WormPart getTail(){
-		return parts.get(parts.size()-1);
-	}
-	public float getSpeed(){
-		return SPEED;
-	}
-	public Vector2 getSize(){
-		return head.getSize();
-	}
-	
-	public WormPart getHead(){
-		return head;
-	}
-	public Vector2 getPosition(){
-		return head.getPosition();
-	}
-	public Vector2 getHeading(){
-		return head.getHeading();
-	}
-	
-	public ArrayList<WormPart> getParts(){
-		return parts;
-	}
-
-	@Override
-	public void spearHit(Spear spear) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void unBind() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void lassoHit(String lasso) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void kill() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void moveToPoint(Vector2 point) {
 		head.moveToPoint(point);
@@ -188,26 +133,103 @@ public class Worm extends DynamicObject implements Creature{
 
 	@Override
 	public void applyPull(Vector2 point, float magnitue) {
-		//float distToHead = point.dst(head.getPosition());
-		//float distToTail = point.dst(tail.getPosition());
-		//if(distToHead < distToTail)
-			head.applyPull(point,magnitue);
-		//else
-			//tail.applyPull(point,magnitue);
+		head.applyPull(point,magnitue);
 	}
 	
+
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void unBind() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lassoHit(String lasso) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void breakJoint() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void spearHit(Spear spear) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setTail(WormPart part){
+		tail = part;
+	}
 	public void setHeading(Vector2 newHeading){
 		head.setHeading(newHeading);
 		head.setForce(getHeading().mul(SPEED));
 	}
-	
+
+	public void setHead(WormPart part){
+		head = part;
+	}
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public ArrayList<WormPart> getParts(){
+		return parts;
+	}
+
 	public float getSPEED() {
 		return SPEED;
 	}
+	@Override
+	public int getType() {
+		return Creature.TYPE_WORM;
+	}
+	public WormPart getTail(){
+		return parts.get(parts.size()-1);
+	}
+	public float getSpeed(){
+		return SPEED;
+	}
+	public Vector2 getSize(){
+		return head.getSize();
+	}
+	
+	public WormPart getHead(){
+		return head;
+	}
+	public Vector2 getPosition(){
+		return head.getPosition();
+	}
+	public Vector2 getHeading(){
+		return head.getHeading();
+	}
 
 	@Override
-	public RigidBodyBox getCollider() {
-		return head.getCollider();
+	public void decay() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

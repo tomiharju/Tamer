@@ -205,4 +205,10 @@ public class Prop extends StaticObject implements Obstacle {
 		environment.getObstacles().remove(this);
 	}
 
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

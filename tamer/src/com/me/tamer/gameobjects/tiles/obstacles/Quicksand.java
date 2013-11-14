@@ -61,7 +61,6 @@ public class Quicksand extends StaticObject implements Obstacle{
 		for(SandPart s : parts)
 			bogHoleCenter.add(s.getCenterPosition());			
 		bogHoleCenter.div(parts.size());
-		//bogHoleCenter.set(bogHoleCenter.x - Helper.TILESIZE.x / 4,bogHoleCenter.y + Helper.TILESIZE.y / 2);
 	}
 	public void draw(SpriteBatch batch){
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
@@ -143,10 +142,25 @@ public class Quicksand extends StaticObject implements Obstacle{
 	}
 	
 	public boolean getDebug(){
-		return false;
+		return true;
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
 	}
 	
-	public void update(float dt){
-		//Override to avoid default action
-	}
 }

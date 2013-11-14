@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.tiles;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
@@ -39,12 +40,10 @@ public class SpawnPoint extends StaticObject{
 	private Hud hud;
 		
 	//EXPERIMENTAL STUFF
-	private ArrayList<Creature> creatures;
 	private Tamer tamer;
 	private Environment environment;
 	
 	public SpawnPoint(){
-		creatures = new ArrayList<Creature>();
 		hud = Hud.instance();
 	}
 	
@@ -89,15 +88,14 @@ public class SpawnPoint extends StaticObject{
 		
 		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
-		creatures.add(worm);
 		worm.setPosition(getPosition());
 		worm.setVelocity(spawnVelocity);
 	}
+
 	
 	public void addAntOrc(AntOrc ant){
 		spawnType = "antorc";
 		RuntimeObjectFactory.addToObjectPool("antorc"+spawnId,(GameObject)ant);
-		creatures.add(ant);
 		ant.setPosition(getPosition());
 		ant.setVelocity(spawnVelocity);
 	}
@@ -110,8 +108,6 @@ public class SpawnPoint extends StaticObject{
 	 */
 	public void spawnCreature(){
 		if(spawnType.equalsIgnoreCase("worm")){
-			Gdx.app.debug(TamerGame.LOG, this.getClass()
-					.getSimpleName() + " :: Worm entered");
 			RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
 		}else if(spawnType.equalsIgnoreCase("antorc")){
 			Gdx.app.debug(TamerGame.LOG, this.getClass()
@@ -124,10 +120,8 @@ public class SpawnPoint extends StaticObject{
 	 * This method is called after "initialSleep"
 	 */
 	public void spawnFirstCreature(){
-		
+
 		if(spawnType.equalsIgnoreCase("worm")){
-			Gdx.app.debug(TamerGame.LOG, this.getClass()
-					.getSimpleName() + " :: Worm entered");
 			RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
 		}else if(spawnType.equalsIgnoreCase("antorc"))
 			RuntimeObjectFactory.getObjectFromPool("antorc"+spawnId);
@@ -171,5 +165,29 @@ public class SpawnPoint extends StaticObject{
 
 	public Vector2 getSpawnVelocity(){
 		return spawnVelocity;
+	}
+
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean getDebug() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
 	}
 }

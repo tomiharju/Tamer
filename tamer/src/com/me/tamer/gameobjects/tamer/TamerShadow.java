@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
@@ -51,7 +52,7 @@ public class TamerShadow extends DynamicObject{
 	public void debugDraw(ShapeRenderer shapeRndr) {
 		Vector2 temp = new Vector2();
 		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(Helper.worldToScreen(getPosition()));
+		temp.set(Helper.worldToScreen(getCenterPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
 		shapeRndr.rect(temp.x-0.25f, temp.y-0.25f, 0.5f, 0.5f);
 		shapeRndr.end();
@@ -67,6 +68,25 @@ public class TamerShadow extends DynamicObject{
 	public boolean getDebug() {
 		return true;
 	}
+
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

@@ -154,19 +154,7 @@ public class Environment extends Actor{
 		} loopCount++;
 	}
 	
-	/**
-	 * @param dt
-	 * NOT IN USE, MAYBE DELETE PERMANENTLY
-	 * Uses rigidbodies to generate Contact objects
-	 * Uses contact objects to calculate collision responses
-	 * Resolves each collision by adding proper forces.
-	 */
-	public void resolveCollisions(float dt){
-		/*int numObjects = gameobjects.size();
-		for(int k = 0 ; k < numObjects ; k++)
-			gameobjects.get(k).resolveForces(dt);
-		*/
-	}
+	
 	
 	public void stepTimers(float dt){
 		EventPool.step(dt);
@@ -248,7 +236,9 @@ public class Environment extends Actor{
 	
 	public void setMapBounds(String value){
 		String[] values = value.split(":");
-		mapBounds = new Vector2(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+		//Bounds come as total width and total height from editor, so to make it "lenght from origin" we divide by 2
+		mapBounds = new Vector2(Float.parseFloat(values[0]) / 2, Float.parseFloat(values[1]) / 2 );
+		mapBounds.set(mapBounds.x *Helper.TILESIZE.x,mapBounds.y*Helper.TILESIZE.x  );
 	}
 	
 	/**
@@ -261,7 +251,7 @@ public class Environment extends Actor{
 	
 	public void dispose(){
 		for(GameObject go : gameobjects){
-			go.dispose();
+			go.dispose(this);
 		}
 		gameobjects.clear();
 		carbages.clear();

@@ -8,7 +8,7 @@ import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.utils.Helper;
 
-public class StaticObject implements GameObject{
+public abstract class StaticObject implements GameObject{
 	private Vector2 position		= new Vector2();
 	private Vector2 size 			= new Vector2();
 	private Vector2 centerPosition 	= new Vector2();
@@ -19,12 +19,6 @@ public class StaticObject implements GameObject{
 	private boolean debug 			= false;
 	private int zIndex 				= 0;
 	
-	@Override
-	public void update(float dt) {
-		// TODO Auto-generated method stub
-		
-		
-	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
@@ -83,55 +77,20 @@ public class StaticObject implements GameObject{
 		this.centerPosition.set(Helper.worldToScreen(position).x + Helper.TILESIZE.x / 2, Helper.worldToScreen(position).y + Helper.TILESIZE.y / 2);
 		return centerPosition;
 	}
+	public void update(float dt){
+		
+	}
 	
 
 	@Override
 	public Vector2 getSize() {
 		return size;
 	}
-	
-
-	
-
-	@Override
-	public void setup(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setDebug(boolean b) {
-		debug = b;	
-	}
-	
-	@Override
-	public boolean getDebug(){
-		return debug;
-	}
 
 	public void markAsActive() {
 		isCarbage = false;
 	}
 
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	@Override
 	public int getZIndex() {
 		return zIndex;
@@ -142,13 +101,6 @@ public class StaticObject implements GameObject{
 		zIndex = z;
 		
 	}
-
-	@Override
-	public void setGraphics(String graphics) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 
 	public String getRenderType() {
@@ -157,12 +109,6 @@ public class StaticObject implements GameObject{
 
 	public void setRenderType(String renderType) {
 		this.renderType = renderType;
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.creatures;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.me.tamer.core.TamerGame;
@@ -67,13 +68,14 @@ public class AntOrc extends DynamicObject implements Creature{
 		if(!returning && target==null)scanWorms();
 		if (attached){
 			//Needs to invMass to keep worm in place
+			//Here you go :)
+			target.bind();
 			getPosition().set( target.getPosition() );
 			if(!eatingTimer.isFinished())eatingTimer.step(dt);
 		}else if(target != null) followTarget();
 		else followPath();
 		
 		setVelocity(getHeading().tmp().mul(SPEED));
-		System.out.println(getVelocity());
 		getPosition().add(getVelocity().tmp().mul(dt));	
 	}
 	
@@ -85,6 +87,8 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public void detach(){
 		System.out.println("detached");
+		target.unBind();
+		target.breakJoint();
 		returning = true;
 		attached = false;
 		destinationReached = true;
@@ -115,7 +119,7 @@ public class AntOrc extends DynamicObject implements Creature{
 			
 			if (nextWaypoint < 0 ){
 				markedDead = true;
-				kill();
+				breakJoint();
 			}	
 		}
 	}
@@ -124,10 +128,10 @@ public class AntOrc extends DynamicObject implements Creature{
 		//lock to wormpart that is scanned first
 		creatures = environment.getCreatures();
 		for (int i = 0; i < creatures.size(); i++){			
-			if ( creatures.get(i).getClass().getSimpleName().equalsIgnoreCase("worm")){
+			if ( creatures.get(i).getType() == Creature.TYPE_WORM ){
 				ArrayList<WormPart> wormParts = ((Worm)creatures.get(i)).getParts();
 				for (int j = 0; j < wormParts.size(); j++){
-					if ( wormParts.get(j).getPosition().dst( getPosition() ) < WORM_SCAN_RADIUS){
+					if (wormParts.get(j).getOrdinal() > 2 &&  wormParts.get(j).getPosition().dst( getPosition() ) < WORM_SCAN_RADIUS){
 						lockToTarget( wormParts.get(j));
 					}
 				}		
@@ -149,7 +153,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	}
 	
 	@Override
-	public void kill() {
+	public void breakJoint() {
 		markAsCarbage();	
 	}
 	
@@ -188,10 +192,47 @@ public class AntOrc extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+
 
 	@Override
-	public RigidBodyBox getCollider() {
+	public void debugDraw(ShapeRenderer shapeRndr) {
 		// TODO Auto-generated method stub
-		return null;
+		
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setzIndex(String index) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getType() {
+		return Creature.TYPE_ANT;
+	}
+
+	@Override
+	public void decay() {
+		// TODO Auto-generated method stub
+		
 	}
 }

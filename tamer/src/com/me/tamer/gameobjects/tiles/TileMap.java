@@ -1,7 +1,9 @@
 package com.me.tamer.gameobjects.tiles;
 
 import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
@@ -48,8 +50,7 @@ public class TileMap extends StaticObject implements Obstacle{
 					&& tilepos.y > tamerpos.y - Helper.VIRTUAL_SIZE_Y *0.75 && tilepos.y < tamerpos.y + Helper.VIRTUAL_SIZE_Y *0.75){
 			renderer.setPosition(tilepos);
 
-			//renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
-			//renderer.setBounds(Helper.worldToScreen(terrain.get(i)).x,Helper.worldToScreen(terrain.get(i)).y, Helper.TILESIZE.x, Helper.TILESIZE.y);
+		
 			renderer.draw(batch);
 			}
 		}	
@@ -65,7 +66,7 @@ public class TileMap extends StaticObject implements Obstacle{
 			String[] coords = s.split("\\:");
 			float x = Float.parseFloat(coords[0]);
 			float y = Float.parseFloat(coords[1]);
-			tile.set(x,y);
+			tile.set(x , y );
 			terrain.add(tile);
 		}
 		
@@ -107,5 +108,35 @@ public class TileMap extends StaticObject implements Obstacle{
 			}
 			
 		}*/
+	}
+
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean getDebug() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
 	}	
 }

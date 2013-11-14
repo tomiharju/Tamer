@@ -1,6 +1,7 @@
 package com.me.tamer.gameobjects.tiles.obstacles;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
@@ -39,5 +40,25 @@ public class SandPart extends StaticObject{
 	 */
 	public void setAnimState(int framecount){
 		animState = (float) (Math.random()*framecount);
+	}
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean getDebug() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
 	}
 }
