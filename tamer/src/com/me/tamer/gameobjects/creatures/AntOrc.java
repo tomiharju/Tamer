@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.creatures;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
@@ -36,7 +37,7 @@ public class AntOrc extends DynamicObject implements Creature{
 		markAsActive();
 	}
 	
-	public void update(){
+	public void update(float dt){
 		//how often should this scan
 		scanWorms();
 		
@@ -145,11 +146,37 @@ public class AntOrc extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+
 
 	@Override
-	public RigidBodyBox getCollider() {
+	public void debugDraw(ShapeRenderer shapeRndr) {
 		// TODO Auto-generated method stub
-		return null;
+		
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setzIndex(String index) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

@@ -1,7 +1,9 @@
 package com.me.tamer.gameobjects.tiles;
 
 import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
@@ -107,5 +109,35 @@ public class TileMap extends StaticObject implements Obstacle{
 			}
 			
 		}*/
+	}
+
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean getDebug() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
 	}	
 }

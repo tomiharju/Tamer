@@ -1,6 +1,5 @@
 package com.me.tamer.gameobjects.creatures;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -37,7 +36,6 @@ public class WormPart extends DynamicObject implements Creature {
 	private String partName 	= null;
 	
 	//Physics optimization variables;
-	private RigidBodyBox body	= null;
 	Vector2 impulseA 			= new Vector2();
 	Vector2 impulseB 			= new Vector2();
 	Vector2 axis 				= new Vector2();
@@ -55,7 +53,6 @@ public class WormPart extends DynamicObject implements Creature {
 		setVelocity(vel);
 		setForce(new Vector2(vel).mul(worm.getSPEED()));
 		setHeading(vel);
-		body = new RigidBodyBox(getPosition(),getVelocity(),10,1,1);
 		this.ordinal 		= 0;
 	}
 	
@@ -95,6 +92,8 @@ public class WormPart extends DynamicObject implements Creature {
 		
 		//reset to default color
 		batch.setColor(Color.WHITE);
+		if(parent != null)
+			parent.draw(batch);
 	}
 	
 	public void unBind(){
@@ -128,7 +127,7 @@ public class WormPart extends DynamicObject implements Creature {
 			
 			int spriteNumber = solveOrientation();
 			
-			setAngle(getHeading().angle() +45 + 180 - spriteNumber * 45);
+			setAngle(getHeading().angle() + 45 + 180 - spriteNumber * 45);
 		}else{
 	
 			//this assumes that head always has child
@@ -136,18 +135,15 @@ public class WormPart extends DynamicObject implements Creature {
 
 		}
 		
-		
-		
-	}
-	public void updateChild(float dt){
-		
-		if(child != null && child.partName.equalsIgnoreCase("Joint"))
-			child.updateChild(dt);
+		if(child != null)
+			child.update(dt);
 		if(invMass  > 0)
 			getPosition().add(getVelocity().tmp().mul(dt));
 		getVelocity().mul(0);
-	
+		
+		
 	}
+
 	
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
@@ -306,7 +302,20 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 
 	@Override
-	public RigidBodyBox getCollider() {
-		return body;
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setzIndex(String index) {
+		// TODO Auto-generated method stub
+		
 	}
 }

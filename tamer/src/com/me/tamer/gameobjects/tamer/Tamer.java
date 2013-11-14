@@ -23,7 +23,6 @@ public class Tamer extends DynamicObject {
 	private float SPEED = 0f;
 	private final float FLYING_HEIGHT = 7.0f;
 	private final float AIM_SPEED = 0.001f; // heading interpolating coefficient
-	private final float BORDER_OFFSET = -5.0f;
 	private TamerShadow shadow = null;
 	private GryphonScream scream = null;
 	private Environment environment;
@@ -66,10 +65,6 @@ public class Tamer extends DynamicObject {
 		// sound
 		sound = SoundManager.instance();
 
-	}
-
-	public void setup() {
-		// NO-ACTION
 	}
 
 	public void wakeUp(Environment environment) {
@@ -249,4 +244,17 @@ public class Tamer extends DynamicObject {
 	public boolean getDebug() {
 		return true;
 	}
+
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

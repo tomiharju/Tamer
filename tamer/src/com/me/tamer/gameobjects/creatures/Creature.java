@@ -44,6 +44,5 @@ public interface Creature {
 	public void moveToPoint(Vector2 point);
 	public void setHeading(Vector2 rotate);
 	public Vector2 getHeading();
-	public RigidBodyBox getCollider();
 	
 }

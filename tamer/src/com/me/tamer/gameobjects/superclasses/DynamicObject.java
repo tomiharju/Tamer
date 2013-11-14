@@ -8,7 +8,7 @@ import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.utils.Helper;
 
-public class DynamicObject implements GameObject{
+public abstract class DynamicObject implements GameObject{
 	
 	//Someone has to fix these to private
 	private Vector2 position 	= new Vector2();		// "World position"
@@ -28,10 +28,6 @@ public class DynamicObject implements GameObject{
 	private float headingAngle = 0;
 	private float spriteNumber = 0;
 	
-	
-	@Override
-	public void update(float dt) {
-	}
 	
 	@Override
 	public void draw(SpriteBatch batch) {
@@ -97,23 +93,7 @@ public class DynamicObject implements GameObject{
 		this.velocity.set(x,y);
 		
 	}
-
-	
-	public void setRigidBody(String bodytype){
-		/*
-		if(bodytype.equalsIgnoreCase("box"))
-			body = new RigidBodyBox(position,new Vector2(0,0),0,size.x,size.y); //Position, speed, mass, width,height ( speed and mass are 0 cause its static object )
-		else if(bodytype.equalsIgnoreCase("circle"))
-			body = new RigidBodyCircle(position,velocity,mass,size.x/2);//Position, velocity, mass, radii
-		else if(bodytype.equalsIgnoreCase("no-body"))
-			body = null;
-		if(body != null)
-			body.setOwner(this);
-			*/
-	}
-	
-	
-	
+		
 	@Override
 	public Vector2 getPosition() {
 		return position;
@@ -126,19 +106,6 @@ public class DynamicObject implements GameObject{
 	
 	public Vector2 getHeading(){
 		return heading;
-	}
-	
-	
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void setup(Environment level) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public void setHeading(Vector2 heading){
@@ -155,28 +122,11 @@ public class DynamicObject implements GameObject{
 		this.velocity.set(velocity);
 	}
 	
-	
-	@Override
-	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
 	@Override
 	public void markAsActive() {
 		isCarbage = false;
 		
 	}
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setDebug(boolean b) {
-		debug = b;	
-	}
-	
 	@Override
 	public boolean getDebug(){
 		return debug;
@@ -186,33 +136,17 @@ public class DynamicObject implements GameObject{
 	public int getZIndex() {
 		return zIndex;
 	}
-
+	public void setzIndex(String index){
+		
+	}
 	@Override
 	public void setZindex(int z) {
 		zIndex = z;
 		
 	}
-
-	@Override
-	public void setGraphics(String graphics) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public Vector2 getForce(){
 		return force;
-	}
-	
-	public float getBorderOffset() {
-		return borderOffset;
-	}
-
-	public void setBorderOffset(float borderOffset) {
-		this.borderOffset = borderOffset;
-	}
-
-	public void setzIndex(int zIndex) {
-		this.zIndex = zIndex;
 	}
 
 	public void setForce(Vector2 force) {
@@ -238,18 +172,6 @@ public class DynamicObject implements GameObject{
 	@Override
 	public void setSize(float x, float y) {
 		this.size.set(x,y);
-		
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setzIndex(String index) {
-		// TODO Auto-generated method stub
 		
 	}
 

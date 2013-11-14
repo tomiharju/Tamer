@@ -45,7 +45,7 @@ public class GryphonScream extends StaticObject {
 		this.tamer = tamer;
 		//Z-index for drawing order
 		setZindex(-1);
-		setGraphics();
+		setGraphics("scream");
 		
 		
 		for(int i = 0 ;i < 8 ; i++)
@@ -86,11 +86,11 @@ public class GryphonScream extends StaticObject {
 		*/
 	}
 	
-	public void setGraphics(){
-		Renderer render = RenderPool.addRendererToPool("static", "scream");
-		render.loadGraphics("scream.png");
+	public void setGraphics(String graphics){
+		Renderer render = RenderPool.addRendererToPool("static", graphics);
+		render.loadGraphics(graphics);
 		setSize(getSize());
-		setRenderType("scream");
+		setRenderType(graphics);
 	}
 	
 	@Override
@@ -177,46 +177,28 @@ public class GryphonScream extends StaticObject {
 	public boolean getDebug(){
 		return false;
 	}
-	
-	
-	//Scream Triangle
-	/*
-	tamerPos.set(environment.getTamer().getShadow().getPosition());
-	tamerHead.set(environment.getTamer().getHeading());
-	screamVert1.set(tamerPos);
-	screamVert2.set(tamerPos);
-	screamVert2.x += tamerHead.x * SCREAM_AREA_LENGTH - tamerHead.y * SCREAM_AREA_WIDTH;
-	screamVert2.y += tamerHead.y * SCREAM_AREA_LENGTH + tamerHead.x * SCREAM_AREA_WIDTH;
-	
-	screamVert3.set(tamerPos);
-	screamVert3.x += tamerHead.x * SCREAM_AREA_LENGTH + tamerHead.y * SCREAM_AREA_WIDTH;
-	screamVert3.y += tamerHead.y * SCREAM_AREA_LENGTH - tamerHead.x * SCREAM_AREA_WIDTH;
-	
-	ArrayList<Creature> creatures = environment.getCreatures();
-	
-	for (int i = 0; i < creatures.size(); i++){	
-		if(creatures.get(i).getClass() == Worm.class){
-			
-			Worm worm = ((Worm)creatures.get(i));
 
-			wormPos.set(worm.getHead().getPosition());		
-			wormPos1.set(wormPos.x - screamVert1.x, wormPos.y - screamVert1.y);
-			wormPos2.set(wormPos.x - screamVert2.x, wormPos.y - screamVert2.y);
-			wormPos3.set(wormPos.x - screamVert3.x, wormPos.y - screamVert3.y);
-			
-			float cross1 = wormPos1.crs(screamVert2.x - screamVert1.x, screamVert2.y - screamVert1.y);
-			float cross2 = wormPos2.crs(screamVert3.x - screamVert2.x, screamVert3.y - screamVert2.y);
-			float cross3 = wormPos3.crs(screamVert1.x - screamVert3.x, screamVert1.y - screamVert3.y);
-			
-			//Check with cross-product if WormHead is inside scream-area;
-			if( cross1 > 0 && cross2 > 0 && cross3 > 0){
-				newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
-				newHeading.nor();
-				worm.setHeading(newHeading);
-			}
-		}	
+
+
+
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+		
 	}
-	*/
 
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 	
 }

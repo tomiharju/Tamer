@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.tiles;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
@@ -72,5 +73,29 @@ public class Endingpoint extends StaticObject implements Obstacle{
 				}
 			}	
 		}	
+	}
+
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean getDebug() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
 	}
 }

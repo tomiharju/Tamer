@@ -154,19 +154,7 @@ public class Environment extends Actor{
 		} loopCount++;
 	}
 	
-	/**
-	 * @param dt
-	 * NOT IN USE, MAYBE DELETE PERMANENTLY
-	 * Uses rigidbodies to generate Contact objects
-	 * Uses contact objects to calculate collision responses
-	 * Resolves each collision by adding proper forces.
-	 */
-	public void resolveCollisions(float dt){
-		/*int numObjects = gameobjects.size();
-		for(int k = 0 ; k < numObjects ; k++)
-			gameobjects.get(k).resolveForces(dt);
-		*/
-	}
+	
 	
 	public void stepTimers(float dt){
 		EventPool.step(dt);
@@ -261,7 +249,7 @@ public class Environment extends Actor{
 	
 	public void dispose(){
 		for(GameObject go : gameobjects){
-			go.dispose();
+			go.dispose(this);
 		}
 		gameobjects.clear();
 		carbages.clear();
