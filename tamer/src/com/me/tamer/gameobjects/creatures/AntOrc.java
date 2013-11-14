@@ -22,7 +22,8 @@ public class AntOrc extends DynamicObject implements Creature{
 	private final float WAYPOINT_SCAN_RADIUS = 0.5f;
 	private final float ATTACK_DISTANCE = 0.3f;
 	private final float SPEED_INCREASE = 1.1f; //A number on which the velocity is multiplied with
-	private final float SPEED = 8.0f;
+	private final float SPEED = 2.0f;
+	private final int WORM_MIN_LENGTH = 4;
 	
 	private Environment environment;
 	private ArrayList<Vector2> waypoints;
@@ -41,7 +42,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	public AntOrc(){
 		waypoints = new ArrayList<Vector2>();
 		waypoints.add(new Vector2(0,0));//place holder for the first value
-		waypoints.add(new Vector2(-2,10));
+		waypoints.add(new Vector2(-2,-2));
 		waypoints.add(new Vector2(10,15));
 	}
 	
@@ -53,6 +54,8 @@ public class AntOrc extends DynamicObject implements Creature{
 		
 		help.set(getPosition());
 		waypoints.set(0, help);
+		
+		environment.getCreatures().add(this);
 		
 	}
 	
@@ -131,8 +134,9 @@ public class AntOrc extends DynamicObject implements Creature{
 			if ( creatures.get(i).getType() == Creature.TYPE_WORM ){
 				ArrayList<WormPart> wormParts = ((Worm)creatures.get(i)).getParts();
 				for (int j = 0; j < wormParts.size(); j++){
-					if (wormParts.get(j).getOrdinal() > 2 &&  wormParts.get(j).getPosition().dst( getPosition() ) < WORM_SCAN_RADIUS){
-						lockToTarget( wormParts.get(j));
+					if ( wormParts.get(j).getPosition().dst( getPosition() ) < WORM_SCAN_RADIUS){
+						if( wormParts.get(j).getOrdinal() < WORM_MIN_LENGTH)
+							lockToTarget( wormParts.get(WORM_MIN_LENGTH));
 					}
 				}		
 			}
@@ -145,7 +149,6 @@ public class AntOrc extends DynamicObject implements Creature{
 			return this;
 		else
 			return null;
-		
 	}
 
 	public void addWaypoint(Vector2 waypoint){

@@ -15,8 +15,10 @@ import com.me.tamer.gameobjects.renders.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
+import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
+import com.me.tamer.utils.tEvent;
 
 public class Tamer extends DynamicObject {
 
@@ -24,10 +26,12 @@ public class Tamer extends DynamicObject {
 	private final float FLYING_HEIGHT = 7.0f;
 	private final float AIM_SPEED = 0.001f; // heading interpolating coefficient
 
-	private final float BORDER_OFFSET = -5.0f;
 	private final float DISTANCE_BOUNDS = 5.0f;
 	private final float SPAWN_DISTANCE = 8.0f;
 	private final float SPAWN_SPEED = 5.0f;
+	private final float SPEAR_COOL_DOWN = 0.5f;
+	
+	private static boolean onSpearCoolDown = false;
 	
 	private TamerShadow shadow = null;
 	private GryphonScream scream = null;
@@ -45,8 +49,6 @@ public class Tamer extends DynamicObject {
 	private Vector2 isoPosition = new Vector2();
 	private Vector2 mapBounds = new Vector2();
 	private boolean enteredField = false;
-
-	
 
 	private SoundManager sound;
 
@@ -68,9 +70,6 @@ public class Tamer extends DynamicObject {
 
 		// sound
 		sound = SoundManager.instance();
-		
-
-
 	}
 
 	public void wakeUp(Environment environment) {
@@ -187,10 +186,16 @@ public class Tamer extends DynamicObject {
 	}
 
 	public void throwSpear() {
+		if(onSpearCoolDown) return;
+		
 		Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
 		if (spear != null) {
 			spear.setPosition(getPosition());
 			spears.add(spear);
+			
+			//Cool down
+			onSpearCoolDown = true;
+			EventPool.addEvent(new tEvent(this,"enable",SPEAR_COOL_DOWN,1));
 		} else
 			System.err.println("No spears remaining");
 
@@ -199,6 +204,10 @@ public class Tamer extends DynamicObject {
 		sound.setVolume(0.8f);
 		sound.play(TamerSound.THROW);
 
+	}
+	
+	public void enable(){
+		onSpearCoolDown = false;
 	}
 
 	public void setSpawnDirection(Vector2 spawnDirection) {

@@ -16,14 +16,17 @@ import com.me.tamer.physics.RigidBodyBox;
 import com.me.tamer.utils.Helper;
 
 public class WormPart extends DynamicObject implements Creature {
+	
+	private final float DECAY_SPEED = 0.1f;
+	private final float MIN_LENGTH = 0.15f;
+	private final float STRETCH_AMOUNT = 0.20f;
+	private final float HEAD_POS_FIX = 0.01f;
+	
 	// Container worm
 	private Worm worm = null;
 	private boolean decaying = false;
 	private float levelOfDecay = 1;
-	private float decaySpeed = 0.1f;
-	private final float MIN_LENGTH = 0.15f;
-	private final float STRETCH_AMOUNT = 0.20f;
-	private final float HEAD_POS_FIX = 0.01f;
+	
 	private float joint_length = 0.4f;
 	private float lengthAngle = 0;
 	private int ordinal;
@@ -92,7 +95,7 @@ public class WormPart extends DynamicObject implements Creature {
 			batch.setColor(0.1f, 0.1f, 1.0f, 1.0f);
 		if (decaying) {
 
-			levelOfDecay -= decaySpeed * Gdx.graphics.getDeltaTime();
+			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
 			batch.setColor(1, 1, 1, levelOfDecay);
 			if(levelOfDecay < 0)
 				worm.removePart(this);
@@ -239,8 +242,8 @@ public class WormPart extends DynamicObject implements Creature {
 	@Override
 	public void spearHit(Spear spear) {
 		// nail worm to center of a tile
-		getPosition().x = (float) Math.floor(getPosition().x) + 0.5f;
-		getPosition().y = (float) Math.floor(getPosition().y) + 0.5f;
+		getPosition().x = (float) Math.floor(getPosition().x) + 1; //+ 0.5f;
+		getPosition().y = (float) Math.floor(getPosition().y);// + 0.5f;
 		invMass = 0;
 	}
 
@@ -323,7 +326,6 @@ public class WormPart extends DynamicObject implements Creature {
 		decaying = true;
 		if(child != null)
 			child.decay();
-
 	}
 
 	public boolean isBlinking() {

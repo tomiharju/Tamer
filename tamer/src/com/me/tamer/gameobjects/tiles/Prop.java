@@ -99,10 +99,8 @@ public class Prop extends StaticObject implements Obstacle {
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse.mul(1f));
 				creatures.get(i).setHeading(newHeading);
-
 			}
 		}
-
 	}
 
 	@Override

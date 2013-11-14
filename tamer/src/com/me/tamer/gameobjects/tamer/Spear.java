@@ -3,10 +3,12 @@ package com.me.tamer.gameobjects.tamer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.creatures.AntOrc;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renders.RenderPool;
 import com.me.tamer.gameobjects.renders.Renderer;
@@ -14,9 +16,13 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tiles.Prop;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
+import com.me.tamer.utils.EventPool;
+import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
+import com.me.tamer.utils.tEvent;
 
 public class Spear extends DynamicObject {
+	
 
 	private Environment environment;
 	private SoundManager sound;
@@ -24,6 +30,7 @@ public class Spear extends DynamicObject {
 	private Creature targetCreature = null;
 	private Creature creature = null;
 	private boolean attached = false;
+
 	private Vector2 targetPoint = new Vector2();
 
 	private boolean justDropped = false;
@@ -31,6 +38,8 @@ public class Spear extends DynamicObject {
 	private Vector2 direction = new Vector2();
 	private final float SPEED = 25.0f;
 	private Prop hitbox = new Prop();
+	
+	private Vector2 help = new Vector2();
 
 	public Spear() {
 		setGraphics("spear");
@@ -94,16 +103,37 @@ public class Spear extends DynamicObject {
 
 		}
 	}
+	
+	@Override
+	public void draw(SpriteBatch batch) {
+		//overrided to adjust spear draw position
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		renderer.setSize(getSize());
+		
+		help.set(getPosition());
+		help.x -= 0.5f;
+		help.y += 0.5;
+		help = Helper.worldToScreen(help);
+		
+		renderer.setPosition(help);
+		renderer.setOrientation( solveOrientation() );
+		renderer.draw(batch);	
+	}
 
 	public void wakeUp(Environment environment) {
+		
+		
+		
 		this.environment = environment;
 		attached = false;
 		setZindex(-1);
-		markAsActive();
+		
 		throwSpear();
 	}
 
 	public void throwSpear() {
+		
+		markAsActive();
 		setPosition(environment.getTamer().getPosition());
 		boolean targetFound = false;
 
@@ -115,39 +145,42 @@ public class Spear extends DynamicObject {
 					environment.getTamer().getShadow().getPosition(),
 					environment.getTamer().getShadow().getSize().x / 2);
 			if (creature != null) {
-				if (targetCreature == null) {
-					targetFound = true;
-					targetCreature = creature;
-					targetPoint = ((DynamicObject) targetCreature)
-							.getPosition();
-				} else if (((DynamicObject) creature).getPosition().dst(
-						environment.getTamer().getShadow().getPosition()) < ((DynamicObject) targetCreature)
-						.getPosition().dst(
-								environment.getTamer().getShadow()
-										.getPosition())) {
-					targetCreature = creature;
-					targetPoint = ((DynamicObject) targetCreature)
-							.getPosition();
-				}
+				switch (creature.getType()){
+				case (Creature.TYPE_ANT):
+					((AntOrc)creature).breakJoint();
+					break;
+				case (Creature.TYPE_WORMPART):
+					if (targetCreature == null) {
+						targetCreature = creature;
+						targetPoint = ((DynamicObject) targetCreature).getPosition();
+					} else if (((DynamicObject) creature).getPosition().dst(environment.getTamer().getShadow().getPosition()) < ((DynamicObject) targetCreature).getPosition().dst(environment.getTamer().getShadow().getPosition())) {
+						targetCreature = creature;
+						targetPoint = ((DynamicObject) targetCreature)
+								.getPosition();
+					}
+					break;
+				default:
+					break;
+				}	
+			} else{
+				//if target is not found, aim to center of a tile
+				targetPoint = new Vector2();
+				targetPoint.set(environment.getTamer().getShadow().getPosition());
+				// Subtract size of the shadow in world to get centerpoint
+				targetPoint.x -= 0.5;
+				targetPoint.y += 0.5;
+				
+				//set spear to hit center of the tile
+				targetPoint.x = (float) Math.floor(targetPoint.x) + 1;//0.5f;
+				targetPoint.y = (float) Math.floor(targetPoint.y);// + 0.5f;
 			}
-		}
-
-		if (!targetFound) {
-			targetPoint = new Vector2();
-			targetPoint.set(environment.getTamer().getShadow().getPosition());
-			// Subtract size of the shadow in world to get centerpoint
-			targetPoint.x -= 0.5;
-			targetPoint.y += 0.5;
-			
-			//set spear to hit center of the tile
-			targetPoint.x = (float) Math.floor(targetPoint.x) + 0.5f;
-			targetPoint.y = (float) Math.floor(targetPoint.y) + 0.5f;
 		}
 
 		setHeading(targetPoint.tmp().sub(getPosition()));
 		direction.set(targetPoint.tmp().sub(getPosition()));
 		direction.nor();
-
+		
+		//boolean to prevent tamer from picking up spear right after it has been dropped
 		justDropped = true;
 
 		//TamerStage.addDebugLine(new Vector2(0, 0), targetPoint);
@@ -200,5 +233,4 @@ public class Spear extends DynamicObject {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

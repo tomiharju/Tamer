@@ -24,6 +24,7 @@ import com.me.tamer.utils.tEvent;
 public class GryphonScream extends StaticObject {
 	private final float SCREAM_AREA_WIDTH = 8.0f;
 	private final float SCREAM_AREA_LENGTH = 8.0f;
+	private final float COOL_DOWN = 2.0f;
 	
 	//circle scream area
 	private final float SCREAM_CIRCLE_RADIUS = 6.0f;
@@ -84,6 +85,7 @@ public class GryphonScream extends StaticObject {
 		}
 
 	}
+	
 	public void draw(SpriteBatch batch){
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		for(int i = 0 ; i < soundWaves.size() ; i++){
@@ -131,7 +133,7 @@ public class GryphonScream extends StaticObject {
 			}
 		}	
 		isOnCooldown = true;
-		EventPool.addEvent(new tEvent(this,"enable",3.14f,1));
+		EventPool.addEvent(new tEvent(this,"enable",COOL_DOWN,1));
 	}
 
 	public void enable(){
