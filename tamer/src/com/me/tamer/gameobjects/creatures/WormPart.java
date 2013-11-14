@@ -165,10 +165,8 @@ public class WormPart extends DynamicObject implements Creature {
 			// solve difference between sprite angle and heading angle
 			setAngle(getHeading().angle() + 45 + 180 - spriteNumber * 45);
 		} else {
-
 			// this assumes that head always has a child
 			setAngle(child.getAngle());
-
 		}
 
 		if (child != null)
@@ -185,8 +183,7 @@ public class WormPart extends DynamicObject implements Creature {
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x - getSize().x / 2, temp.y, getSize().x,
-				getSize().y);
+		shapeRndr.rect(temp.x - getSize().x / 2, temp.y, getSize().x,getSize().y);
 		shapeRndr.end();
 
 	}
