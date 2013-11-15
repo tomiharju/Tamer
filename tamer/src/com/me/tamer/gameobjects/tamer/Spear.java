@@ -140,6 +140,7 @@ public class Spear extends DynamicObject {
 					environment.getTamer().getShadow().getPosition(),
 					environment.getTamer().getShadow().getSize().x / 2);
 			if (creature != null) {
+				targetFound = true;
 				switch (creature.getType()){
 				case (Creature.TYPE_ANT):
 					targetCreature = creature;
@@ -158,18 +159,21 @@ public class Spear extends DynamicObject {
 				default:
 					break;
 				}	
-			} else{
-				//if target is not found, aim to center of a tile
-				targetPoint = new Vector2();
-				targetPoint.set(environment.getTamer().getShadow().getPosition());
-				// Subtract size of the shadow in world to get centerpoint
-				targetPoint.x -= 0.5;
-				targetPoint.y += 0.5;
-				
-				//set spear to hit center of the tile
-				targetPoint.x = (float) Math.floor(targetPoint.x) + 1;//0.5f;
-				targetPoint.y = (float) Math.floor(targetPoint.y);// + 0.5f;
-			}
+			} 
+		}
+		//This had to be moved here, because if you throw a spear and if there are no creatures in the arraylist
+		//The spear will be thrown onto (0,0)
+		if(!targetFound){
+			//if target is not found, aim to center of a tile
+			targetPoint = new Vector2();
+			targetPoint.set(environment.getTamer().getShadow().getPosition());
+			// Subtract size of the shadow in world to get centerpoint
+			targetPoint.x -= 0.5;
+			targetPoint.y += 0.5;
+			
+			//set spear to hit center of the tile
+			targetPoint.x = (float) Math.floor(targetPoint.x) + 1;//0.5f;
+			targetPoint.y = (float) Math.floor(targetPoint.y);// + 0.5f;
 		}
 
 		setHeading(targetPoint.tmp().sub(getPosition()));

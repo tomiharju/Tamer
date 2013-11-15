@@ -44,15 +44,12 @@ public class TileMap extends StaticObject implements Obstacle{
 			tamerpos.set(Helper.worldToScreen(env.getTamer().getShadow().getPosition()));
 		else
 			tamerpos.set(origo);
+	
 		for(int i = 0 ; i < numTiles ; i++){
-			Vector2 tilepos = Helper.worldToScreen(terrain.get(i));
-			if(tilepos.x > tamerpos.x - Helper.VIRTUAL_SIZE_X * 0.75 && tilepos.x < tamerpos.x + Helper.VIRTUAL_SIZE_X *0.75
-					&& tilepos.y > tamerpos.y - Helper.VIRTUAL_SIZE_Y *0.75 && tilepos.y < tamerpos.y + Helper.VIRTUAL_SIZE_Y *0.75){
-			renderer.setPosition(tilepos);
-
-		
+			if(env.isVisible(terrain.get(i)))
+				renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
 			renderer.draw(batch);
-			}
+			
 		}	
 	}
 	

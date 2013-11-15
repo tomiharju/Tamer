@@ -156,7 +156,7 @@ public class WormPart extends DynamicObject implements Creature {
 		if (partName.equalsIgnoreCase("joint")) {
 			if (child != null)
 				setHeading(child.getPosition().tmp().sub(getPosition()).nor());
-			else
+			else if(parent != null)
 				setHeading(getPosition().tmp().sub(parent.getPosition()).nor());
 
 			int spriteNumber = solveOrientation();
@@ -165,6 +165,7 @@ public class WormPart extends DynamicObject implements Creature {
 			setAngle(getHeading().angle() + 45 + 180 - spriteNumber * 45);
 		} else {
 			// this assumes that head always has a child
+			if(child != null)
 			setAngle(child.getAngle());
 		}
 
@@ -293,11 +294,12 @@ public class WormPart extends DynamicObject implements Creature {
 		if (child != null) {
 			child.setForce(getForce());
 			child.setHeading(getForce());
+			child.parent = null;
 			worm.setHead(child);
 		} else
 			worm.markAsCarbage();
 
-		markAsCarbage();
+		worm.removePart(this);
 	}
 
 	@Override
@@ -363,6 +365,11 @@ public class WormPart extends DynamicObject implements Creature {
 	public boolean collisionEnabled() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean isDecaying() {
+		return decaying;
 	}
 
 }

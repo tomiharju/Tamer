@@ -39,4 +39,5 @@ public class Helper {
 		projection.set(unit.mul(dot));
 		return projection;	
 	}
+	
 }

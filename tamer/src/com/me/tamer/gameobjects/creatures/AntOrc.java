@@ -136,7 +136,7 @@ public class AntOrc extends DynamicObject implements Creature{
 				ArrayList<WormPart> wormParts = ((Worm)creatures.get(i)).getParts();
 				for (int j = 0; j < wormParts.size(); j++){
 					if ( wormParts.get(j).getPosition().dst( getPosition() ) < WORM_SCAN_RADIUS){
-						if( wormParts.get(j).getOrdinal() < WORM_MIN_LENGTH)
+						if( wormParts.get(j).getOrdinal() < WORM_MIN_LENGTH && !wormParts.get(j).isDecaying())
 							lockToTarget( wormParts.get(WORM_MIN_LENGTH));
 					}
 				}		
@@ -249,6 +249,12 @@ public class AntOrc extends DynamicObject implements Creature{
 
 	@Override
 	public boolean collisionEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isDecaying() {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -60,6 +60,8 @@ public class Worm extends DynamicObject implements Creature{
 	}
 	public void removePart(WormPart part){
 		parts.remove(part);
+		if(parts.size() > 0)
+			tail = parts.get(parts.size()-1);
 	}
 	
 	public void connectPieces(){
@@ -79,7 +81,7 @@ public class Worm extends DynamicObject implements Creature{
 	}
 	
 	public void draw(SpriteBatch batch){
-		parts.get(parts.size()-1).draw(batch);
+		tail.draw(batch);
 	}
 	
 	public void solveEffects(){
@@ -234,6 +236,12 @@ public class Worm extends DynamicObject implements Creature{
 	public void decay() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isDecaying() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	

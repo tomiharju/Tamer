@@ -32,8 +32,9 @@ public class Environment extends Actor{
 	private TamerStage stage;
 	private ControlContainer controls;
 	private DrawOrderComparator comparator = null;
-	//Help vectors
-	private Vector2 help = new Vector2();
+	//Help vectors used in "isVisible function"
+	private Vector2 isoPoint = new Vector2();
+	private Vector2 isoTamer = new Vector2();
 	//Settings
 	private Vector2 mapBounds = null;
 	private Vector2 cameraBounds = null;
@@ -46,7 +47,7 @@ public class Environment extends Actor{
 	private ArrayList<Creature> creatures		= null;
 
 	//Optimization variables
-	Vector2 tamerpos = new Vector2();
+	Vector2 tamerShadowPosition = new Vector2();
 
 	//Drawing-order
 	private int loopCount = 0;
@@ -126,11 +127,8 @@ public class Environment extends Actor{
 			Vector2 pos = gameobjects.get(k).getPosition();
 			if(gameobjects.get(k).getClass() == TileMap.class)
 				gameobjects.get(k).draw(batch);
-			else if(pos.x > tamerpos.x - Helper.VIRTUAL_SIZE_X *1.9 && pos.x < tamerpos.x + Helper.VIRTUAL_SIZE_X *1.9
-					&& pos.y > tamerpos.y - Helper.VIRTUAL_SIZE_Y *1.1 && pos.y < tamerpos.y + Helper.VIRTUAL_SIZE_Y *1.1){
-				
+			else if(isVisible(pos))
 				gameobjects.get(k).draw(batch);
-			}
 		}
 	}
 	
@@ -154,6 +152,14 @@ public class Environment extends Actor{
 		} loopCount++;
 	}
 	
+	public boolean isVisible(Vector2 point){
+		float zoom = getStage().getCamera().zoom;
+		isoPoint.set(Helper.worldToScreen(point));
+		isoTamer.set(Helper.worldToScreen(tamerShadowPosition));
+		return (isoPoint.x > isoTamer.x - Helper.TILESIZE.x * 7 * zoom && isoPoint.x < isoTamer.x + Helper.TILESIZE.x * 7 * zoom
+				&& isoPoint.y > isoTamer.y - Helper.TILESIZE.y * 21 * zoom && isoPoint.y < isoTamer.y + Helper.TILESIZE.y * 21 * zoom);
+			
+	}
 	
 	
 	public void stepTimers(float dt){
@@ -227,12 +233,6 @@ public class Environment extends Actor{
 		this.obstacles.add(obstacle);
 	}
 	
-	/**
-	 * LevelCreator calls this to set Camera borders, could be expanded later if more settings needed
-	 */
-	public void setMapSize(String value){
-		//DO WE NEED THIS?
-	}
 	
 	public void setMapBounds(String value){
 		String[] values = value.split(":");
@@ -240,13 +240,15 @@ public class Environment extends Actor{
 		mapBounds = new Vector2(Float.parseFloat(values[0]) / 2, Float.parseFloat(values[1]) / 2 );
 		mapBounds.set(mapBounds.x *Helper.TILESIZE.x,mapBounds.y*Helper.TILESIZE.x  );
 	}
-	
+	public void setMapSize(String size){
+		
+	}
 	/**
 	 * 
 	 */
 	public void setTamer(Tamer tamer){
 		this.tamer = tamer;
-		tamerpos = tamer.getPosition();
+		tamerShadowPosition = tamer.getShadow().getCenterPosition();
 	}
 	
 	public void dispose(){
@@ -259,16 +261,7 @@ public class Environment extends Actor{
 		tamer = null;
 		obstacles.clear();
 	}
-	
-	public boolean checkInsideBounds(Vector2 pos, float offset){
-		help.set(Helper.worldToScreen(pos));
 
-		if(help.x < mapBounds.x / 2 - offset && help.x > -mapBounds.x / 2 + offset && help.y < mapBounds.y / 2 - offset && help.y > -mapBounds.y / 2 + offset){
-			return true;
-		}
-		
-		return false;	
-	}
 
 	public Vector2 getMapBounds(){
 		return mapBounds;

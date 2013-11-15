@@ -30,6 +30,7 @@ public interface Creature {
 	 * Used to slowly fade away dead creatures
 	 */
 	public void decay();
+	public boolean isDecaying();
 	/**
 	 * This method is used for checking if point is affecting the creature within given radius.
 	 * For example, when a spear is thrown, we check if that spears position has hit this creature.
