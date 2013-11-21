@@ -1,8 +1,15 @@
 package com.me.tamer.core;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.me.tamer.core.screens.AbstractScreen;
+import com.me.tamer.core.screens.LevelCompleteScreen;
 import com.me.tamer.core.screens.LevelsScreen;
 import com.me.tamer.core.screens.MainMenuScreen;
 import com.me.tamer.core.screens.PauseScreen;
@@ -10,6 +17,7 @@ import com.me.tamer.core.screens.PlayScreen;
 import com.me.tamer.services.LevelManager;
 import com.me.tamer.services.MusicManager;
 import com.me.tamer.services.PreferenceManager;
+import com.me.tamer.utils.ScreenAccessor;
 
 
 public class TamerGame extends Game{
@@ -32,16 +40,21 @@ public class TamerGame extends Game{
     private MainMenuScreen mainMenuScreen;
     private PauseScreen pauseScreen;
     private LevelsScreen levelsScreen;
+    private LevelCompleteScreen levelCompleteScreen;
+    private Screen fadingScreen;
     
 	//Main drawing batch
 	private SpriteBatch batch 		= null;
 	
 	Hud hud;
+	
+	protected TweenManager tweenManager;
+	
 
 	@Override
 	public void create() {
 		//Set log level
-		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		Gdx.app.setLogLevel(Application.LOG_INFO);
 		
 		Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() +" :: Creating game on " + Gdx.app.getType() );
 		//Spritebatch is used for drawing sprites
@@ -62,13 +75,13 @@ public class TamerGame extends Game{
         mainMenuScreen = new MainMenuScreen(this);
         pauseScreen = new PauseScreen(this);
         levelsScreen = new LevelsScreen(this);
+        levelCompleteScreen = new LevelCompleteScreen(this);
+        levelCompleteScreen.create();
         
+        hud = Hud.instance();
         
         //start the game with main menu screen
-		setScreen(mainMenuScreen);	
-		
-		//Hud
-		hud = Hud.instance();
+ 		setScreen(mainMenuScreen);	
 	}
 	
 	public PlayScreen createNewPlayScreen(){
@@ -84,8 +97,26 @@ public class TamerGame extends Game{
 	@Override
 	public void render(){
 		batch.begin();
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		if (fadingScreen != null) {	
+			fadingScreen.render(Gdx.graphics.getDeltaTime());
+			if ( ((LevelCompleteScreen)getScreen()).getFadingDone() )  {
+				fadingScreen = null;
+				tweenManager = null;
+			}
+		}
 		if (getScreen() != null) getScreen().render(Gdx.graphics.getDeltaTime());
+		if (tweenManager != null) tweenManager.update(Gdx.graphics.getDeltaTime());
 		batch.end();
+	}
+	
+	public void changeLevelCompleteScreen () {
+		fadingScreen = getScreen();
+		setScreen(levelCompleteScreen);
+		tweenManager = new TweenManager();
+        Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
+		Tween.to(levelCompleteScreen, ScreenAccessor.ALPHA, 5.0f).target(1).delay(0.0f).start(tweenManager);
 	}
 	
 	@Override
@@ -129,6 +160,10 @@ public class TamerGame extends Game{
 
 	public LevelsScreen getLevelsScreen() {
 		return levelsScreen;
+	}
+	
+	public LevelCompleteScreen getLevelCompleteScreen(){
+		return levelCompleteScreen;
 	}
 
 	public LevelManager getLevelManager() {

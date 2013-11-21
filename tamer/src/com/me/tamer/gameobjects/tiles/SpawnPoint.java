@@ -12,8 +12,8 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.AntOrc;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
-import com.me.tamer.gameobjects.renders.RenderPool;
-import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.renderers.RenderPool;
+import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
@@ -129,10 +129,10 @@ public class SpawnPoint extends StaticObject{
 		//Add new event into pool which will spawn the rest of the worms ( -1 because this method already spawned one )
 		EventPool.addEvent(new tEvent(this,"spawnCreature",sleepTime,spawnCount-1));
 	}
+	
 	public void spawnTamer(){
 		if(isTamerSpawn){
 			RuntimeObjectFactory.getObjectFromPool("tamer");
-			Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: set state to TAMER_ENTER");
 		}
 		//Once tamer has spawned, add new event which will sleep the "initial sleep" time
 		EventPool.addEvent(new tEvent(this,"spawnFirstCreature",initialSleep,1));

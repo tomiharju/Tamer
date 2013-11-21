@@ -24,7 +24,7 @@ public interface Creature {
 	/**
 	 * What needs to be done when specific creature is killed
 	 */
-	public void breakJoint();
+	public void kill();
 	
 	/**
 	 * Used to slowly fade away dead creatures
@@ -51,7 +51,7 @@ public interface Creature {
 	/**
 	 * @return wether this object should react to collision
 	 */
-	public boolean collisionEnabled();
+	public boolean isCollisionDisabled();
 	public void applyPull(Vector2 point,float magnitude);
 	public void moveToPoint(Vector2 point);
 	public void setHeading(Vector2 rotate);

@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
-import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.renderers.UiRenderer;
 import com.me.tamer.utils.Helper;
 
 public class SpearButton extends Actor {

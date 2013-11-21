@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.renderers.UiRenderer;
 
 public class Joystick extends Actor{
 	private final float BUTTON_SIZE	= 250;

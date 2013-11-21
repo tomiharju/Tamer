@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
-import com.me.tamer.gameobjects.renders.RenderPool;
-import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.renderers.RenderPool;
+import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.utils.Helper;
@@ -39,7 +39,9 @@ public class TileMap extends StaticObject implements Obstacle{
 	
 	@Override
 	public void draw(SpriteBatch batch){
-		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		//Renderer renderer = RenderPool.getRenderer(getRenderType());
+		Renderer renderer = RenderPool.getRenderer("vTile");
+		
 		if(env.getTamer() != null)
 			tamerpos.set(Helper.worldToScreen(env.getTamer().getShadow().getPosition()));
 		else
@@ -71,11 +73,20 @@ public class TileMap extends StaticObject implements Obstacle{
 	}
 	
 	public void setTerrain(String graphics){
+		/*
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setSize(Helper.TILESIZE.x,Helper.TILESIZE.y);
 		render.setSize(getSize());
 		setRenderType(graphics);
+		*/
+		
+		//just to test
+		Renderer render = RenderPool.addRendererToPool("animated", "vTile");
+		render.loadGraphics("vTile", 1, 1);
+		setSize(Helper.TILESIZE.x,Helper.TILESIZE.y);
+		render.setSize(getSize());
+		setRenderType("vTile");
 
 	}
 

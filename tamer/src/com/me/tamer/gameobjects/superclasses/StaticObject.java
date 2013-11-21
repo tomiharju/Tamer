@@ -1,12 +1,17 @@
 package com.me.tamer.gameobjects.superclasses;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renders.RenderPool;
-import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.renderers.RenderPool;
+import com.me.tamer.gameobjects.renderers.Renderer;
+import com.me.tamer.gameobjects.renderers.StaticRenderer;
 import com.me.tamer.utils.Helper;
+import com.me.tamer.utils.RendererAccessor;
+import com.me.tamer.utils.StaticRendererAccessor;
 
 public abstract class StaticObject implements GameObject{
 	private Vector2 position		= new Vector2();
@@ -19,24 +24,27 @@ public abstract class StaticObject implements GameObject{
 	private boolean debug 			= false;
 	private int zIndex 				= 0;
 	
+	private boolean fading = false;
+	
+	TweenManager tweenManager;
 
 	@Override
 	public void draw(SpriteBatch batch) {
 		//Don't draw if this is dummy object
 		if(renderType != null){
+			
 			Renderer renderer = RenderPool.getRenderer(getRenderType());
 			renderer.setSize(getSize());
 			renderer.setPosition(Helper.worldToScreen(position));
 			renderer.setOrientation(0);
 			renderer.draw(batch);
-		}
-		
+			
+		}	
 	}
 	
 	@Override
 	public void markAsCarbage() {
 		isCarbage = true;
-		
 	}
 
 	@Override
@@ -64,6 +72,7 @@ public abstract class StaticObject implements GameObject{
 	public void setPosition(Vector2 pos){
 		this.position.set(pos);
 	}
+	
 	@Override
 	public Vector2 getPosition() {
 		return position;
@@ -77,8 +86,9 @@ public abstract class StaticObject implements GameObject{
 		this.centerPosition.set(Helper.worldToScreen(position).x + Helper.TILESIZE.x / 2, Helper.worldToScreen(position).y + Helper.TILESIZE.y / 2);
 		return centerPosition;
 	}
+	
 	public void update(float dt){
-		
+		if (fading)tweenManager.update(dt);
 	}
 	
 
@@ -102,7 +112,6 @@ public abstract class StaticObject implements GameObject{
 		
 	}
 	
-
 	public String getRenderType() {
 		return renderType;
 	}
@@ -117,7 +126,4 @@ public abstract class StaticObject implements GameObject{
 		setZindex(-zIndex);
 		
 	}
-
-	
-
 }

@@ -575,25 +575,43 @@
 		<property type="SpawnDirection">205.5</property>
 		<property type="SpawnId">10</property>
 		<property type="InitialSleep">5</property>
-		<property type="SleepTime">5</property>
+		<property type="SleepTime">3</property>
 		<property type="TamerSpawn">0</property>
-		<property type="SpawnCount">5</property>
+		<property type="SpawnCount">11</property>
 		<property type="zIndex">1</property>
 		<property type="Graphics">spawn.png</property>
 		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
-		    <property type="Waypoint">10:10</property>
+		    <property type="Waypoint">-10:10</property>
 		</SubObject>
 		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
-		    <property type="Waypoint">10:10</property>
+		    <property type="Waypoint">-10:10</property>
 		</SubObject>
 		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
-		    <property type="Waypoint">10:10</property>
+		    <property type="Waypoint">-10:10</property>
 		</SubObject>
 		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
-		    <property type="Waypoint">10:10</property>
+		    <property type="Waypoint">-10:10</property>
 		</SubObject>
 		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
-		    <property type="Waypoint">10:10</property>
+		    <property type="Waypoint">-10:10</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
+		    <property type="Waypoint">0:0</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
+		    <property type="Waypoint">0:0</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
+		    <property type="Waypoint">0:0</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
+		    <property type="Waypoint">0:0</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
+		    <property type="Waypoint">0:0</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
+		    <property type="Waypoint">0:0</property>
 		</SubObject>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
@@ -1758,7 +1776,7 @@
 		<property type="zIndex">1</property>
 		<property type="Graphics">spawn.png</property>
 		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
-		    <property type="Waypoint">1</property>
+		    <property type="Waypoint">10:10</property>
 		</SubObject>
 		<SubObject type="com.me.tamer.gameobjects.creatures.AntOrc">
 		    <property type="Waypoint">10:10</property>

@@ -9,12 +9,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.creatures.AntOrc;
-import com.me.tamer.gameobjects.renders.RenderPool;
-import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.Environment.RunningState;
+import com.me.tamer.gameobjects.creatures.Creature;
+import com.me.tamer.gameobjects.renderers.RenderPool;
+import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
+import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.services.SoundManager;
-import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
@@ -29,7 +30,7 @@ public class Tamer extends DynamicObject {
 	private final float DISTANCE_BOUNDS = 5.0f;
 	private final float SPAWN_DISTANCE = 8.0f;
 	private final float SPAWN_SPEED = 5.0f;
-	private final float SPEAR_COOL_DOWN = 0.1f;
+	private final float SPEAR_COOL_DOWN = 0.5f;
 	
 	private static boolean onSpearCoolDown = false;
 
@@ -73,10 +74,12 @@ public class Tamer extends DynamicObject {
 	}
 
 	public void wakeUp(Environment environment) {
-		environment.setState(Environment.TAMER_ENTER);
-		// Spears
+		//set the first state
+//		environment.setState(Environment.TAMER_ENTER);
+		
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
 				+ " :: Tamer has woken up! " + this.toString());
+		
 		this.environment = environment;
 		this.environment.setTamer(this);
 
@@ -97,7 +100,8 @@ public class Tamer extends DynamicObject {
 
 	@Override
 	public void update(float dt) {
-		if (environment.getState() == Environment.TAMER_ENTER) {
+		super.update(dt);
+		if (environment.getState() == RunningState.TAMER_ENTER) {
 			if (shadow.getPosition().dst(spawnPosition) > SPAWN_DISTANCE) {
 				enteredField = true;
 			}
@@ -123,16 +127,14 @@ public class Tamer extends DynamicObject {
 				}
 			}
 		}
-
 		scream.update(dt);
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		super.draw(batch);
 		shadow.draw(batch);
 		scream.draw(batch);
-		super.draw(batch);
-
 	}
 
 	/**
@@ -211,11 +213,12 @@ public class Tamer extends DynamicObject {
 			EventPool.addEvent(new tEvent(this,"enable",SPEAR_COOL_DOWN,1));
 		} else
 			System.err.println("No spears remaining");
-
+		
+		/*
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 				+ " :: playing throwing sound");
 		sound.setVolume(0.8f);
-		sound.play(TamerSound.THROW);
+		sound.play(TamerSound.THROW);*/
 
 	}
 	
@@ -271,7 +274,7 @@ public class Tamer extends DynamicObject {
 	}
 
 	public boolean getDebug() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -285,5 +288,4 @@ public class Tamer extends DynamicObject {
 		// TODO Auto-generated method stub
 
 	}
-
 }
