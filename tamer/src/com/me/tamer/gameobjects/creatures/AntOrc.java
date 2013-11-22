@@ -43,8 +43,8 @@ public class AntOrc extends DynamicObject implements Creature{
 	public AntOrc(){
 		waypoints = new ArrayList<Vector2>();
 		waypoints.add(new Vector2(0,0));//place holder for the first value
-		//waypoints.add(new Vector2(-2,-2));
-		//waypoints.add(new Vector2(10,15));
+		waypoints.add(new Vector2(-2,-2));
+		waypoints.add(new Vector2(10,15));
 	}
 	
 	public void wakeUp(Environment environment){
