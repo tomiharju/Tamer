@@ -3,8 +3,8 @@ package com.me.tamer.gameobjects.tiles.obstacles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renders.RenderPool;
-import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.renderers.RenderPool;
+import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.utils.Helper;
 

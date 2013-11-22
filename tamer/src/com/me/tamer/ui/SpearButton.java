@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
-import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.renderers.UiRenderer;
 import com.me.tamer.utils.Helper;
 
 public class SpearButton extends Actor {
@@ -27,7 +27,7 @@ public class SpearButton extends Actor {
 	private Vector2 localCenter = new Vector2();
 	
 	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 165,100);
-	final float BUTTON_SIZE = 110;
+	final float BUTTON_SIZE = 180;
 	final float MIN_DISTANCE = 2;
 	final float SPEED = 12; // for increasing the throwing distance
 	final float MAX_DISTANCE = 15;
@@ -41,22 +41,28 @@ public class SpearButton extends Actor {
 	float throwDistance = 0; 
 	boolean buttonPressed = false;
 	boolean inputDisabled = false;
-	UiRenderer buttonRender = null;
-	UiRenderer pointRender = null;
-	UiRenderer pointRender2 = null;
+	UiRenderer renderer = new UiRenderer();
+	UiRenderer renderer2 = new UiRenderer();
+	UiRenderer pointRender = new UiRenderer();
+	UiRenderer pointRender2 = new UiRenderer();
+	UiRenderer currentRenderer;
+	private boolean onCooldown = false;
 	
 	private Joystick joystick;
 	
 	public SpearButton(ControlContainer controlContainer) {
 		this.controlContainer = controlContainer;
 		
-		buttonRender = new UiRenderer();
-		pointRender = new UiRenderer();
-		pointRender2 = new UiRenderer();
+		renderer.loadGraphics("button_spear");
+		renderer.setSize(BUTTON_SIZE,BUTTON_SIZE);
+		renderer.setPosition(restingpoint);
 		
-		buttonRender.loadGraphics("button_spear");
-		buttonRender.setSize(BUTTON_SIZE,BUTTON_SIZE);
-		buttonRender.setPosition(restingpoint);	
+		renderer2.loadGraphics("button_spear_glow");
+		renderer2.setSize(BUTTON_SIZE,BUTTON_SIZE);
+		renderer2.setPosition(restingpoint);
+		
+		currentRenderer = renderer;
+		
 		
 		pointRender.loadGraphics("joystick");
 		pointRender.setSize(1.0f,1.0f);
@@ -80,21 +86,24 @@ public class SpearButton extends Actor {
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		buttonRender.draw(batch);
+		if (onCooldown)currentRenderer = renderer;
+		else currentRenderer = renderer2;
+			
+		currentRenderer.draw(batch);
 		
-		if (buttonPressed){
-			batch.setProjectionMatrix(cam.combined);
-			
-			//pointRender.setPosition(IsoHelper.twoDToTileIso(waypoint1));
-			//pointRender.setPosition(Helper.worldToScreen(controlContainer.getEnvironment().getTamer().getShadow().getPosition()));
-			//pointRender.setSize(throwDistance, throwDistance / 2);
-			//pointRender.draw(batch);
-
-			//pointRender2.setPosition(IsoHelper.twoDToTileIso(waypoint2));
-			//pointRender2.draw(batch);
-			
-			batch.setProjectionMatrix(uiCam.combined);
-		}
+//		if (buttonPressed){
+//			batch.setProjectionMatrix(cam.combined);
+//			
+//			//pointRender.setPosition(IsoHelper.twoDToTileIso(waypoint1));
+//			//pointRender.setPosition(Helper.worldToScreen(controlContainer.getEnvironment().getTamer().getShadow().getPosition()));
+//			//pointRender.setSize(throwDistance, throwDistance / 2);
+//			//pointRender.draw(batch);
+//
+//			//pointRender2.setPosition(IsoHelper.twoDToTileIso(waypoint2));
+//			//pointRender2.draw(batch);
+//			
+//			batch.setProjectionMatrix(uiCam.combined);
+//		}
 	}
 
 	public void act(float dt) {
@@ -200,5 +209,12 @@ public class SpearButton extends Actor {
 		return cameraPoint;
 	}
 	
+	public void setOnCooldown(boolean b){
+		onCooldown = b;
+	}
+	
+	public boolean isOnCooldown(){
+		return onCooldown;
+	}
 	
 }

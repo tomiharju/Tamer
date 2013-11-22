@@ -18,24 +18,24 @@ public class PlayScreen extends AbstractScreen{
 	
 	public void create(){
 		game.getMusicManager().stop();
-		game.getMusicManager().setVolume(0.8f);
+		//game.getMusicManager().setVolume(0.8f);
 		//game.getMusicManager().play( TamerMusic.LEVEL ); 
 
-		
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state to GAME_RUNNING");
-		TamerStage.gameState = TamerStage.GAME_RUNNING;
-		
 		//stage has to be created after state is set to GAME_RUNNING because of the threads
 		stage = TamerStage.instance();
 		((TamerStage)stage).setup(game);
+		
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state to GAME_RUNNING");
+//		TamerStage.gameState = TamerStage.GAME_READY;
+		((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
 	}
 	
 	@Override
 	public void show() {
 		super.show();
-		if(TamerStage.gameState == TamerStage.GAME_PAUSED){
+		if(((TamerStage)stage).getGameState() == TamerStage.GAME_PAUSED){
 				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state from GAME_PAUSED to GAME_RUNNING");
-				TamerStage.gameState = TamerStage.GAME_RUNNING;
+				((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
 		}	
 		Gdx.input.setInputProcessor( stage );
 	}
@@ -48,14 +48,14 @@ public class PlayScreen extends AbstractScreen{
 	public void hide(){
 		super.hide();
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switching gameState to GAME_PAUSED");
-		TamerStage.gameState = TamerStage.GAME_PAUSED;
+		((TamerStage)stage).setGameState(TamerStage.GAME_PAUSED);
 	}
 	
 	@Override
     public void render( float delta ){
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl.glClearColor(bgColor.r,bgColor.g,bgColor.b,bgColor.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		((TamerStage)stage).updateCamera();
+		((TamerStage)stage).updateCamera(delta);
 		stage.act( delta );
 		stage.draw();
     }

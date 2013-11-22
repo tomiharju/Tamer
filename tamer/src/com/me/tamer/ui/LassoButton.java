@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.renderers.UiRenderer;
 import com.me.tamer.gameobjects.tamer.Tamer;
 
 public class LassoButton extends Actor{

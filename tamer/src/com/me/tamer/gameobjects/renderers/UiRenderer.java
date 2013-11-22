@@ -1,4 +1,4 @@
-package com.me.tamer.gameobjects.renders;
+package com.me.tamer.gameobjects.renderers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -48,9 +48,7 @@ public class UiRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
-
 	
-
 	public void setColor(float r, float g, float b,float a){
 		sprite.setColor(r, g, b,a);
 	}
@@ -76,17 +74,16 @@ public class UiRenderer implements Renderer {
 		
 	}
 
-
-	
-
 	@Override
 	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS,
 			boolean looping, float speed) {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
-	
-
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

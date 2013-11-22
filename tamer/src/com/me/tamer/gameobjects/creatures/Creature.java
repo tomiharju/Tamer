@@ -24,12 +24,13 @@ public interface Creature {
 	/**
 	 * What needs to be done when specific creature is killed
 	 */
-	public void breakJoint();
+	public void kill();
 	
 	/**
 	 * Used to slowly fade away dead creatures
 	 */
 	public void decay();
+	public boolean isDecaying();
 	/**
 	 * This method is used for checking if point is affecting the creature within given radius.
 	 * For example, when a spear is thrown, we check if that spears position has hit this creature.
@@ -50,7 +51,7 @@ public interface Creature {
 	/**
 	 * @return wether this object should react to collision
 	 */
-	public boolean collisionEnabled();
+	public boolean isCollisionDisabled();
 	public void applyPull(Vector2 point,float magnitude);
 	public void moveToPoint(Vector2 point);
 	public void setHeading(Vector2 rotate);

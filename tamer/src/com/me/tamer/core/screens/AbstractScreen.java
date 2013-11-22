@@ -3,6 +3,7 @@ package com.me.tamer.core.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,6 +21,7 @@ public class AbstractScreen implements Screen{
     private SpriteBatch batch;
     private Skin skin;
     private Table table;
+    protected Color bgColor = new Color(Color.BLACK);
     SoundManager soundManager;
 
     public AbstractScreen(final TamerGame game)
@@ -69,6 +71,14 @@ public class AbstractScreen implements Screen{
         }
         return table;
     }
+    
+	public void setColor(float r, float g, float b, float a){
+		bgColor.set(r,g,b,a);
+	}
+	
+	public Color getColor(){
+		return bgColor;
+	}
 
     //Screen implementation
 
@@ -84,8 +94,8 @@ public class AbstractScreen implements Screen{
 
     @Override
     public void render( float delta ){
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        //Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		stage.act( delta );
         stage.draw();
     }

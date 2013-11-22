@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
-import com.me.tamer.gameobjects.renders.RenderPool;
-import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.renderers.RenderPool;
+import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
@@ -65,12 +65,15 @@ public class Prop extends StaticObject implements Obstacle {
 			return;
 		int size = creatures.size();
 		for (int i = 0; i < size; i++) {
-			if(!creatures.get(i).collisionEnabled())
+			if(creatures.get(i).isCollisionDisabled()){
 				continue;
+			}
+				
 			temp.set(((DynamicObject) creatures.get(i)).getPosition());
 			// Creatures size
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
 			Vector2 center = getPosition();
+			
 			if (temp.x + s.x / 2 > center.x - bounds
 					&& temp.x - s.x / 2 < center.x
 					&& temp.y + s.y  > center.y

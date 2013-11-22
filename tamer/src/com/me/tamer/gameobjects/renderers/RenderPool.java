@@ -1,4 +1,4 @@
-package com.me.tamer.gameobjects.renders;
+package com.me.tamer.gameobjects.renderers;
 
 import java.util.HashMap;
 

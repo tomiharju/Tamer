@@ -1,5 +1,6 @@
-package com.me.tamer.gameobjects.renders;
+package com.me.tamer.gameobjects.renderers;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -29,8 +30,11 @@ public interface Renderer {
 	 */
 	public void setSize(float w, float h);
 	public void setSize(Vector2 size);
+	public void setColor(float r, float g, float b, float a);
 	public void setPosition(Vector2 pos);
 	public void setOrientation(int orientation);
 	public void setAngle(float angle);
 	public void setBounds(float x, float y, float width, float height);
+	
+	public Color getColor();
 }

@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renders.RenderPool;
-import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.renderers.RenderPool;
+import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.tamer.Spear;
@@ -17,15 +17,16 @@ import com.me.tamer.utils.Helper;
 
 public class WormPart extends DynamicObject implements Creature {
 	
-	private final float DECAY_SPEED = 0.1f;
+	private final float DECAY_SPEED = 0.5f;
 	private final float MIN_LENGTH = 0.15f;
-	private final float STRETCH_AMOUNT = 0.20f;
-	private final float HEAD_POS_FIX = 0.01f;
+	private final float STRETCH_AMOUNT = 0.07f;
+	private final float HEAD_POS_FIX = 0.005f;
 	
 	// Container worm
 	private Worm worm = null;
 	private boolean decaying = false;
 	private float levelOfDecay = 1;
+	private boolean attacked = false;
 	
 	private float joint_length = 0.4f;
 	private float lengthAngle = 0;
@@ -67,7 +68,7 @@ public class WormPart extends DynamicObject implements Creature {
 
 	public void createBodyPart(int ordinal, Vector2 pos, Vector2 vel, Worm worm) {
 		this.worm = worm;
-		setGraphics("wormpart");
+		setGraphics("vwormpart2");
 		partName = "Joint";
 		mass = 10;
 		invMass = 1 / mass;
@@ -92,13 +93,15 @@ public class WormPart extends DynamicObject implements Creature {
 		if (onSpearRange)
 			batch.setColor(0.1f, 1, 0.1f, 1.0f);
 		else if (blinking)
-			batch.setColor(0.1f, 0.1f, 1.0f, 1.0f);
+			batch.setColor(0.8f, 0.8f, 1.0f, 1.0f);
 		if (decaying) {
 			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
 			batch.setColor(1, 1, 1, levelOfDecay);
 			if(levelOfDecay < 0)
 				worm.removePart(this);
 		}
+		
+		
 		renderer.setSize(getSize());
 
 		// Fix position of the headpart
@@ -115,8 +118,6 @@ public class WormPart extends DynamicObject implements Creature {
 
 		// reset to default color
 		batch.setColor(Color.WHITE);
-		if (parent != null)
-			parent.draw(batch);
 	}
 
 	public void unBind() {
@@ -152,20 +153,22 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 
 	public void update(float dt) {
+		super.update(dt);
 		// Update headings
 		if (partName.equalsIgnoreCase("joint")) {
 			if (child != null)
 				setHeading(child.getPosition().tmp().sub(getPosition()).nor());
-			else
+			else if(parent != null)
 				setHeading(getPosition().tmp().sub(parent.getPosition()).nor());
 
 			int spriteNumber = solveOrientation();
 
 			// solve difference between sprite angle and heading angle
-			setAngle(getHeading().angle() + 45 + 180 - spriteNumber * 45);
+			setAngle(getHeading().angle() + 46f + 180 - spriteNumber * 45);
 		} else {
 			// this assumes that head always has a child
-			setAngle(child.getAngle());
+			if(child != null){}
+			//setAngle(child.getAngle());
 		}
 
 		if (child != null)
@@ -174,21 +177,6 @@ public class WormPart extends DynamicObject implements Creature {
 			getPosition().add(getVelocity().tmp().mul(dt));
 		getVelocity().mul(0);
 
-	}
-
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-
-		shapeRndr.setColor(1, 1, 1, 1);
-		temp.set(Helper.worldToScreen(getPosition()));
-		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x - getSize().x / 2, temp.y, getSize().x,getSize().y);
-		shapeRndr.end();
-
-	}
-
-	public boolean getDebug() {
-		return false;
 	}
 
 	public void solveJoint(float dt) {
@@ -219,6 +207,14 @@ public class WormPart extends DynamicObject implements Creature {
 	public void setBlinking(boolean b) {
 		blinking = b;
 	}
+	
+	public void setAttacked(boolean b){
+		attacked = b;
+	}
+	
+	public boolean isAttacked(){
+		return attacked;
+	}
 
 	public void applyImpulse(Vector2 impulse) {
 		Vector2 addA = impulse.tmp().mul(child.getInvMass());
@@ -238,8 +234,8 @@ public class WormPart extends DynamicObject implements Creature {
 	@Override
 	public void spearHit(Spear spear) {
 		// nail worm to center of a tile
-		getPosition().x = (float) Math.floor(getPosition().x) + 1; //+ 0.5f;
-		getPosition().y = (float) Math.floor(getPosition().y);// + 0.5f;
+		getPosition().x = (float) Math.floor(getPosition().x) + 1;
+		getPosition().y = (float) Math.floor(getPosition().y);
 		invMass = 0;
 	}
 
@@ -278,12 +274,9 @@ public class WormPart extends DynamicObject implements Creature {
 	 */
 
 	@Override
-	public void breakJoint() {
-		if (parent != null) {
-			parent.child = null;
-			decay();
-		}
+	public void kill() {
 		markAsCarbage();
+		//if (child==null) worm.markAsCarbage();	
 	}
 
 	@Override
@@ -293,15 +286,17 @@ public class WormPart extends DynamicObject implements Creature {
 		if (child != null) {
 			child.setForce(getForce());
 			child.setHeading(getForce());
+			child.parent = null;
 			worm.setHead(child);
 		} else
 			worm.markAsCarbage();
 
-		markAsCarbage();
+		worm.removePart(this);
 	}
 
 	@Override
 	public Creature affectedCreature(Vector2 point, float radius) {
+		
 		if (getPosition().dst(point) < radius)
 			return this;
 		else
@@ -320,8 +315,6 @@ public class WormPart extends DynamicObject implements Creature {
 	@Override
 	public void decay() {
 		decaying = true;
-		if(child != null)
-			child.decay();
 	}
 
 	public boolean isBlinking() {
@@ -360,9 +353,29 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 
 	@Override
-	public boolean collisionEnabled() {
-		// TODO Auto-generated method stub
+	public boolean isCollisionDisabled() {
 		return false;
 	}
 
+	@Override
+	public boolean isDecaying() {
+		return decaying;
+	}
+	
+	public float getLevelOfDecay(){
+		return levelOfDecay;
+	}
+	
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		shapeRndr.setColor(1, 1, 1, 1);
+		temp.set(Helper.worldToScreen(getPosition()));
+		shapeRndr.begin(ShapeType.Rectangle);
+		shapeRndr.rect(temp.x - getSize().x / 2, temp.y, getSize().x,getSize().y);
+		shapeRndr.end();
+	}
+
+	public boolean getDebug() {
+		return false;
+	}
 }

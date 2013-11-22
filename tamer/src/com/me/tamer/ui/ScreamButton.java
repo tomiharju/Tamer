@@ -7,24 +7,26 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.renderers.UiRenderer;
 import com.me.tamer.gameobjects.tamer.Tamer;
 
 public class ScreamButton extends Actor{
-	private final float BUTTON_SIZE				= 110;
-	
-
+	private final float BUTTON_SIZE						= 180;
 	private ControlContainer controlContainer 			= null;
 	private UiRenderer renderer 						= null;
+	private UiRenderer renderer2 						= null;
+	private UiRenderer currentRenderer					= null;
 	private Tamer tamer 								= null;
 	private Environment environment 					= null;
 	
 	//Button variables
-	Vector2 restingpoint 	= new Vector2(Gdx.graphics.getWidth() - 110,200);
+//	Vector2 restingpoint 	= new Vector2(Gdx.graphics.getWidth() - 110,200);
+	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 55,200);
 	Vector2 delta			= new Vector2(0,0);
 	private Vector2 input			= new Vector2(0,0);
 	private Vector2 localCenter 	= new Vector2(BUTTON_SIZE / 2, BUTTON_SIZE / 2);
 	boolean pressed		= false;
+	private boolean onCooldown = false;
 	
 
 	public ScreamButton(ControlContainer controls) {
@@ -36,6 +38,15 @@ public class ScreamButton extends Actor{
 		renderer.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer.setPosition(restingpoint);
 		
+		//2nd renderer
+		renderer2 		= new UiRenderer();
+		renderer2.loadGraphics("button_scream_glow");
+		renderer2.setSize(BUTTON_SIZE,BUTTON_SIZE);
+		renderer2.setPosition(restingpoint);
+		
+		//set current renderer
+		currentRenderer = renderer;
+		
 		//Actor variables
 		setPosition(restingpoint.x - BUTTON_SIZE/2, restingpoint.y - BUTTON_SIZE/2);
 		setSize(BUTTON_SIZE, BUTTON_SIZE);
@@ -44,9 +55,20 @@ public class ScreamButton extends Actor{
 	}
 	
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		renderer.setSize(BUTTON_SIZE, BUTTON_SIZE);
-		renderer.setPosition(restingpoint);
-		renderer.draw(batch);
+		if (onCooldown) currentRenderer = renderer;
+		else currentRenderer = renderer2;
+				
+		currentRenderer.setSize(BUTTON_SIZE, BUTTON_SIZE);
+		currentRenderer.setPosition(restingpoint);
+		currentRenderer.draw(batch);
+	}
+	
+	public void setOnCooldown(boolean b){
+		onCooldown = b;
+	}
+	
+	public boolean isOnCooldown(){
+		return onCooldown;
 	}
 	
 	public void createListener(){
@@ -63,7 +85,6 @@ public class ScreamButton extends Actor{
 				else return false;
 	        }
 		});
-	}
-	
+	}	
 }
 

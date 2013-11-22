@@ -6,7 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renders.UiRenderer;
+import com.me.tamer.gameobjects.Environment.RunningState;
+import com.me.tamer.gameobjects.renderers.UiRenderer;
 
 public class Joystick extends Actor{
 	private final float BUTTON_SIZE	= 250;
@@ -74,17 +75,19 @@ public class Joystick extends Actor{
 		
 		//controlContainer.getStage().getCamera().zoom = 0.9f;
 		
-		if (controlContainer.getStage().getCamera().zoom - ZOOM_MIN_AMOUNT > ZOOM_DEFAULT + ZOOM_MAX_COEFFIENT * delta.len())
-			controlContainer.getStage().getCamera().zoom -= ZOOM_IN_SPEED;
-		else if (controlContainer.getStage().getCamera().zoom + ZOOM_MIN_AMOUNT < ZOOM_DEFAULT + ZOOM_MAX_COEFFIENT * delta.len())
-			controlContainer.getStage().getCamera().zoom += ZOOM_OUT_SPEED;
-		
-		if (pressed){
-			if(movementDisabled)
-				environment.getTamer().turn(delta);
-			else{			
-				environment.getTamer().manouver(delta);
-			}	
+		if (environment.getState() == RunningState.NORMAL){
+			if (controlContainer.getStage().getCamera().zoom - ZOOM_MIN_AMOUNT > ZOOM_DEFAULT + ZOOM_MAX_COEFFIENT * delta.len())
+				controlContainer.getStage().getCamera().zoom -= ZOOM_IN_SPEED;
+			else if (controlContainer.getStage().getCamera().zoom + ZOOM_MIN_AMOUNT < ZOOM_DEFAULT + ZOOM_MAX_COEFFIENT * delta.len())
+				controlContainer.getStage().getCamera().zoom += ZOOM_OUT_SPEED;
+			
+			if (pressed){
+				if(movementDisabled)
+					environment.getTamer().turn(delta);
+				else{			
+					environment.getTamer().manouver(delta);
+				}	
+			}
 		}		
 	}
 	

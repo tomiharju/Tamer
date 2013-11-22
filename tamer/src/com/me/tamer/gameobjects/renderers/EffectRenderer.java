@@ -1,6 +1,7 @@
-package com.me.tamer.gameobjects.renders;
+package com.me.tamer.gameobjects.renderers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -105,6 +106,16 @@ public class EffectRenderer implements Renderer{
 	public void setBounds(float x, float y, float width, float height) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void setColor(float r, float g, float b, float a) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

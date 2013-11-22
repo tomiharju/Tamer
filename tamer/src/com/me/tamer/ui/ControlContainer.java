@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.tamer.GryphonScream;
 
 public class ControlContainer extends Group{
 	private static ControlContainer instance = null;
@@ -54,7 +55,7 @@ public class ControlContainer extends Group{
 		spearButton = new SpearButton(this);
 		this.addActor(spearButton);
 		SnapshotArray<Actor> actors = getChildren();
-		System.out.println("Controlcontainer has "+actors.size +" children");
+//		System.out.println("Controlcontainer has "+actors.size +" children");
 		//Hide all buttons in startup
 		disableInput();
 	}
@@ -74,6 +75,22 @@ public class ControlContainer extends Group{
 		for (int i = 0; i < actors.size; i++){
 			actors.get(i).draw(batch, parentAlpha);
 		}
+	}
+	
+	public void setScreamCooldown(boolean b){
+		screamButton.setOnCooldown(b);
+	}
+	
+	public boolean isScreamCooldown(){
+		return screamButton.isOnCooldown();
+	}
+	
+	public void setSpearCooldown(boolean b){
+		spearButton.setOnCooldown(b);
+	}
+	
+	public boolean isSpearCooldown(){
+		return spearButton.isOnCooldown();
 	}
 	
 	public Environment getEnvironment() {

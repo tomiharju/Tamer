@@ -11,9 +11,9 @@ import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
-import com.me.tamer.gameobjects.renders.EffectRenderer;
-import com.me.tamer.gameobjects.renders.RenderPool;
-import com.me.tamer.gameobjects.renders.Renderer;
+import com.me.tamer.gameobjects.renderers.EffectRenderer;
+import com.me.tamer.gameobjects.renderers.RenderPool;
+import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.utils.Helper;
 
@@ -71,7 +71,6 @@ public class Quicksand extends StaticObject implements Obstacle{
 		}
 	}
 	
-	
 	public void resolve(ArrayList<Creature> creatures){
 		int size = creatures.size();
 		int psize = parts.size();
@@ -87,15 +86,16 @@ public class Quicksand extends StaticObject implements Obstacle{
 						//Add creature to this cluster
 						creatures_entered.add(creatures.get(i));
 						
-						alreadyDead = false;
-						for (int j = 0; j < deadCreatures.size(); j++){
-							if (creatures.get(i) == deadCreatures.get(j))alreadyDead = true;
-						}
-						if(!alreadyDead){
-							Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-									+ " :: updating label remaining");
-							hud.updateLabel(Hud.LABEL_REMAINING, -1);
-						}
+//						alreadyDead = false;
+//						for (int j = 0; j < deadCreatures.size(); j++){
+//							if (creatures.get(i) == deadCreatures.get(j))alreadyDead = true;
+//						}
+//						if(!alreadyDead){
+//							
+////							Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
+////									+ " :: updating label remaining");
+////							hud.updateLabel(Hud.LABEL_REMAINING, -1);
+//						}
 						
 						//Do a coinflip
 						/*int head = (int) Math.round(Math.random());
@@ -131,9 +131,9 @@ public class Quicksand extends StaticObject implements Obstacle{
 			}		
 		}
 	}
+	
 	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		
+	public void debugDraw(ShapeRenderer shapeRndr) {	
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(bogHoleCenter));
 		shapeRndr.begin(ShapeType.Circle);
@@ -142,7 +142,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 	}
 	
 	public boolean getDebug(){
-		return true;
+		return false;
 	}
 
 	@Override

@@ -15,7 +15,6 @@ import com.me.tamer.gameobjects.Environment;
 
 public interface GameObject{
 	
-	
 	/**
 	 * Generic object update method, used to iterate positions, velocities etc.
 	 */
@@ -84,6 +83,6 @@ public interface GameObject{
 	public int getZIndex();
 	public void setZindex(int z);
 	public void setzIndex(String index);
-	public void setPosition(Vector2 pos);	
+	public void setPosition(Vector2 pos);
 }
 

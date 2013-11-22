@@ -1,9 +1,10 @@
-package com.me.tamer.gameobjects.renders;
+package com.me.tamer.gameobjects.renderers;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -37,6 +38,8 @@ public class AnimatedRenderer implements Renderer {
 	private Vector2 pos = new Vector2();
 	private float angle = 0;
 	
+	private Color batchColor = new Color(Color.WHITE);
+	
 	//Shader test
 	private ShaderProgram shader;
 	private ShaderProgram defaultShader;
@@ -66,7 +69,44 @@ public class AnimatedRenderer implements Renderer {
 		animations = new ArrayList<Animation>();
 		stage = TamerStage.instance();	
 	}
+	
+	@Override
+	public void draw(SpriteBatch batch) {	
+		if (!animations.isEmpty()){
+			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
+			
+			if(angle!=0){	
+				batch.draw( currentFrame, pos.x - size.x / 2, pos.y, size.x / 2, size.y /2, size.x, size.y, 1, 1, angle);
+			}else{
+				batch.draw(currentFrame,pos.x - size.x / 2,pos.y, size.x, size.y);
+			}
 
+		}
+	}
+
+	@Override
+	public void loadGraphics(String graphicsName) {
+		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
+		if(sprite == null)
+			throw new IllegalArgumentException("Could not load sprite!");
+		
+		animations.add(new Animation(animationDuration,sprite));
+	}
+	
+	@Override
+	public void loadGraphics( String animName,int FRAME_COLS,int FRAME_ROWS ){
+		//loadGraphics from spritesheet
+		spriteSheet = new Texture(Gdx.files.internal("data/graphics/animations/"+animName+".png"));
+		frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 
+				FRAME_COLS, spriteSheet.getHeight() / FRAME_ROWS);          
+		
+		for (int i = 0; i < FRAME_ROWS; i++) {
+			animations.add(new Animation(animationDuration,frames[i]));
+		}
+
+		stateTime = 0f;
+	}
+	
 	public void createShader(){
 		//SHADER STUFF
 		FileHandle handle = Gdx.files.classpath("com/me/tamer/utils/VertexShader");
@@ -127,44 +167,6 @@ public class AnimatedRenderer implements Renderer {
 		//batch.setShader(defaultShader);
 	}
 	
-	@Override
-	public void draw(SpriteBatch batch) {	
-		
-		if (!animations.isEmpty()){
-			currentFrame = animations.get(currentAnimation).getKeyFrame(stateTime,true);
-			if(angle!=0){	
-				batch.draw( currentFrame, pos.x - size.x / 2, pos.y, size.x / 2, size.y /2, size.x, size.y, 1, 1, angle);
-			}else{
-				batch.draw(currentFrame,pos.x - size.x / 2,pos.y, size.x, size.y);
-			}
-
-		}
-	}
-
-	@Override
-	public void loadGraphics(String graphicsName) {
-		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
-		if(sprite == null)
-			throw new IllegalArgumentException("Could not load sprite!");
-		
-		animations.add(new Animation(animationDuration,sprite));
-	}
-	
-	@Override
-	public void loadGraphics( String animName,int FRAME_COLS,int FRAME_ROWS ){
-		//loadGraphics from spritesheet
-		spriteSheet = new Texture(Gdx.files.internal("data/graphics/animations/"+animName+".png"));
-		frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 
-				FRAME_COLS, spriteSheet.getHeight() / FRAME_ROWS);          
-		
-		for (int i = 0; i < FRAME_ROWS; i++) {
-			animations.add(new Animation(animationDuration,frames[i]));
-		}
-
-		stateTime = 0f;
-	}
-	
-	
 	public void setAnimSpeed(float speed){
 		animationDuration = speed;
 	}
@@ -205,5 +207,15 @@ public class AnimatedRenderer implements Renderer {
 			boolean looping,float speed) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void setColor(float r, float g, float b, float a) {
+		batchColor.set(r, g, b, a);	
+	}
+
+	@Override
+	public Color getColor() {
+		return batchColor;
 	}
 }

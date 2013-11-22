@@ -1,5 +1,6 @@
-package com.me.tamer.gameobjects.renders;
+package com.me.tamer.gameobjects.renderers;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -14,18 +15,19 @@ public class StaticRenderer implements Renderer {
 	
 	private Sprite sprite;
 	public StaticRenderer(){
-	
+		
 	}
 	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
-
 	}
 	
 	@Override
 	public void loadGraphics(String graphicsName) {
 		String gfx = graphicsName.split("\\.")[0];
 		sprite = new Sprite(RenderPool.atlas.findRegion(gfx));
+		
+		sprite.setColor(Color.WHITE);
 	}
 	@Override
 	public void setSize(float w, float h) {
@@ -70,6 +72,16 @@ public class StaticRenderer implements Renderer {
 			boolean looping, float speed) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void setColor(float r, float g, float b, float a) {
+		if(sprite!=null)sprite.setColor(r, g, b, a);	
+	}
+	
+	@Override
+	public Color getColor() {	
+		if(sprite!=null)return sprite.getColor();
+		else return Color.WHITE;
 	}
 	
 
