@@ -40,7 +40,6 @@ public class TileMap extends StaticObject{
 	@Override
 	public void draw(SpriteBatch batch){
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		
 		if(env.getTamer() != null)
 			tamerpos.set(Helper.worldToScreen(env.getTamer().getShadow().getPosition()));
 		else

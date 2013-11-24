@@ -15,7 +15,7 @@ public class Joystick extends Actor{
 	private final float ZOOM_IN_SPEED = 0.015f;
 	private final float ZOOM_OUT_SPEED = 0.01f;
 	private final float ZOOM_MIN_AMOUNT = 0.05f;
-	private final float ZOOM_DEFAULT = 0.9f;
+	private final float ZOOM_DEFAULT = 1.05f;
 	private final float ZOOM_MAX_COEFFIENT = 0.004f;
 	private ControlContainer controlContainer = null;
 	private Environment environment = null;

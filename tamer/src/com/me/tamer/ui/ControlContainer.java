@@ -69,10 +69,10 @@ public class ControlContainer extends Group {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setProjectionMatrix(uiCam.combined);
 
-		SnapshotArray<Actor> actors = getChildren();
-		for (int i = 0; i < actors.size; i++) {
-			actors.get(i).draw(batch, parentAlpha);
-		}
+//		SnapshotArray<Actor> actors = getChildren();
+//		for (int i = 0; i < actors.size; i++) {
+//			actors.get(i).draw(batch, parentAlpha);
+//		}
 	}
 
 	public void setScreamCooldown(boolean b) {

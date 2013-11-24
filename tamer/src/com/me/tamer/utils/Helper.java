@@ -15,8 +15,8 @@ public class Helper {
 	//ELI SQRT(2) JOTTA SAADAAN TILEN LEVEYS PIXELEISSÄ, SIITÄKU LASKEE NIIN TULEE 40 PIXELIÄ.
 	
 	
-//	public static float TILE_WIDTH =  Gdx.graphics.getWidth() / (float) (12 * Math.sqrt(2)); //(float) (12 * Math.sqrt(2));
-	public static float TILE_WIDTH =  480 / (float) (12 * Math.sqrt(2));
+	public static float TILE_WIDTH =  Gdx.graphics.getWidth() / (float) (12 * Math.sqrt(2)); //(float) (12 * Math.sqrt(2));
+//	public static float TILE_WIDTH =  480 / (float) (12 * Math.sqrt(2));
 	
 	public static float TILE_HEIGHT = TILE_WIDTH / 2;
 	public static float VIRTUAL_SIZE_X = (float) (12 * Math.sqrt(2));

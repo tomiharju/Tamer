@@ -104,6 +104,7 @@ public class Tamer extends DynamicObject {
 	@Override
 	public void update(float dt) {
 		super.update(dt);
+		
 		if (environment.getState() == RunningState.TAMER_ENTER) {
 			if (shadow.getPosition().dst(spawnPosition) > SPAWN_DISTANCE) {
 				enteredField = true;
@@ -113,7 +114,9 @@ public class Tamer extends DynamicObject {
 					.add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
 			getPosition().set(shadow.getPosition().x - FLYING_HEIGHT,
 					shadow.getPosition().y + FLYING_HEIGHT);
-		} else {
+		} 
+		
+		else {
 			shadow.getPosition().add(getHeading().tmp().mul(SPEED * dt));
 			getPosition().set(shadow.getPosition().x - FLYING_HEIGHT,
 					shadow.getPosition().y + FLYING_HEIGHT);
@@ -132,20 +135,7 @@ public class Tamer extends DynamicObject {
 			
 			controls.setSpearOnRange( spearOnRange );
 			scream.update(dt);
-		}	
-			
-//			for (int i = 0; i < spears.size(); i++) {
-//				if (!spears.get(i).isJustDropped()
-//						&& shadow.getPosition()
-//								.dst(spears.get(i).getPosition()) < 1) {
-//					if (spears.get(i).isAttached()) {
-//						spears.get(i).pickUp();
-//						spears.remove(i);
-//					}
-//				}
-//			}
-//		}
-		
+		}			
 	}
 
 	@Override
@@ -313,7 +303,6 @@ public class Tamer extends DynamicObject {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	@Override
 	public void setGraphics(String graphics) {

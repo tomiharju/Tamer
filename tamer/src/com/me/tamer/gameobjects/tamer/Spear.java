@@ -38,8 +38,6 @@ public class Spear extends DynamicObject {
 
 	private Vector2 targetPoint = new Vector2();
 
-	private boolean justDropped = false;
-
 	private Vector2 direction = new Vector2();
 	private final float SPEED = 25.0f;
 	private Prop hitbox = new Prop();
@@ -65,15 +63,6 @@ public class Spear extends DynamicObject {
 
 	public void update(float dt) {
 		
-		// check that tamer has moved enough from spear when it has been dropped
-		// and spear has reached ground
-		if (justDropped
-				&& attached
-				&& environment.getTamer().getShadow().getPosition()
-						.dst(getPosition()) > 1) {
-			justDropped = false;
-		}
-
 		if (!attached) {
 			// adjust direction when worm moves
 			direction.set(targetPoint.tmp().sub(getPosition()));
@@ -83,11 +72,9 @@ public class Spear extends DynamicObject {
 			if (getPosition().dst(targetPoint) < 0.5f) {
 				//not sure if really needed, but null pointer happened
 				if (targetCreature != null) {
-					targetCreature.spearHit(this);
+//					targetCreature.spearHit(this);
+					targetWorm.spearHit(this);
 					
-					//start timer to stop adjusting
-					EventPool.addEvent(new tEvent(this,"stopAdjusting", ADJUST_TIME,1));
-							
 					//play sound
 					/*
 					sound.setVolume(0.3f);
@@ -104,13 +91,8 @@ public class Spear extends DynamicObject {
 				hitbox.setZindex(-1);
 				hitbox.setPosition(getPosition());
 				hitbox.markAsActive();
-				environment.addNewObject(hitbox);
 			}
 		}
-	}
-	
-	public void stopAdjusting(){
-		targetWorm.bind();
 	}
 	
 	@Override
@@ -168,14 +150,21 @@ public class Spear extends DynamicObject {
 					break;
 				case (Creature.TYPE_WORM):
 					if (targetCreature == null) {
+						//If ant is not on the aim try finding worm
+						//Hit always the tail of the worm
 						targetWorm = ((Worm)creatures.get(i));
-						targetCreature = creature;
+						targetCreature = targetWorm.getParts().get( targetWorm.getParts().size() - 1);
 						targetPoint = ((DynamicObject) targetCreature).getPosition();
-					} else if (((DynamicObject) creature).getPosition().dst(tamer.getShadow().getPosition()) < ((DynamicObject) targetCreature).getPosition().dst(tamer.getShadow().getPosition())) {
-						targetCreature = creature;
-						targetPoint = ((DynamicObject) targetCreature)
-								.getPosition();
-					}
+						
+//						targetCreature = creature;
+					} 
+					
+//					else if (((DynamicObject) creature).getPosition().dst(tamer.getShadow().getPosition()) < ((DynamicObject) targetCreature).getPosition().dst(tamer.getShadow().getPosition())) {
+//						targetCreature = creature;
+//						targetPoint = ((DynamicObject) targetCreature)
+//								.getPosition();>p
+				
+//					}
 					break;
 				default:
 					break;
@@ -203,7 +192,6 @@ public class Spear extends DynamicObject {
 		direction.nor();
 		
 		//boolean to prevent tamer from picking up spear right after it has been dropped
-		justDropped = true;
 
 		//TamerStage.addDebugLine(new Vector2(0, 0), targetPoint);
 	}
@@ -224,6 +212,7 @@ public class Spear extends DynamicObject {
 			
 			targetWorm = null;
 			targetCreature = null;
+			creature = null;
 		}
 
 		// remove hitbox
@@ -237,10 +226,6 @@ public class Spear extends DynamicObject {
 
 	public boolean isAttached() {
 		return attached;
-	}
-
-	public boolean isJustDropped() {
-		return justDropped;
 	}
 
 	@Override

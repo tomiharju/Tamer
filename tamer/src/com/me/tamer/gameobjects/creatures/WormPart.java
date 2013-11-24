@@ -17,8 +17,8 @@ import com.me.tamer.utils.Helper;
 public class WormPart extends DynamicObject implements Creature{
 	
 	private final float DECAY_SPEED = 0.5f;
-	private final float MIN_LENGTH = 0.10f;
-	private final float STRETCH_AMOUNT = 0.8f;
+	private final float MIN_LENGTH = 0.15f;
+	private final float STRETCH_AMOUNT = 0.13f;
 	private final float HEAD_POS_FIX = 0.000f;
 	
 	// Container worm
@@ -31,6 +31,8 @@ public class WormPart extends DynamicObject implements Creature{
 	private float lengthAngle = 0;
 	private int ordinal;
 	private float invMass;
+
+
 	private float mass;
 	private Vector2 help = new Vector2();
 
@@ -92,7 +94,7 @@ public class WormPart extends DynamicObject implements Creature{
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 
 		if (onSpearRange)
-			batch.setColor(0.1f, 1, 0.1f, 1.0f);
+			batch.setColor(0.8f, 1, 0.8f, 1.0f);
 		else if (blinking)
 			batch.setColor(0.8f, 0.8f, 1.0f, 1.0f);
 		if (decaying) {
@@ -140,6 +142,7 @@ public class WormPart extends DynamicObject implements Creature{
 
 	public void solveJoints(float dt) {
 		if (partType == TYPE_HEAD) {
+
 			solveJoint(dt);
 			joint_length = 0.3f;
 		} else if (partType == TYPE_BODY) {
@@ -147,6 +150,8 @@ public class WormPart extends DynamicObject implements Creature{
 			lengthAngle += dt;
 			joint_length = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle))
 					* STRETCH_AMOUNT;
+		
+
 		}
 	}
 
@@ -334,4 +339,18 @@ public class WormPart extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setInvMass(float invMass) {
+		this.invMass = invMass;
+	}
+
+	public float getMass() {
+		return mass;
+	}
+
+	public void setMass(float mass) {
+		this.mass = mass;
+	}
+	
+	
 }

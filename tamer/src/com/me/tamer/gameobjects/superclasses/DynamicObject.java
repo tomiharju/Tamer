@@ -68,7 +68,7 @@ public abstract class DynamicObject implements GameObject {
 			spriteNumber = (8 - spriteNumber);
 		else if (heading.x > -zeroHeading.x && heading.y < 0)
 			spriteNumber = (8 - spriteNumber);
-		if(heading.x == 1)
+
 		spriteNumber = ((float) Math.floor(spriteNumber));
 		return (int)(spriteNumber);
 	}
