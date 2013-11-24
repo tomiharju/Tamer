@@ -14,6 +14,7 @@ import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renderers.EffectRenderer;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
@@ -79,7 +80,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 			
 			for(int k = 0; k < psize ; k ++){
 				//Check each section of this quicksand if any creature has entered one of them ( 0.5f = sand radius )
-				boolean entered = creatures.get(i).isAffected(parts.get(k).getPosition(),0.5f);
+				boolean entered = ((DynamicObject) creatures.get(i)).isWithinRange(parts.get(k).getPosition(),0.5f);
 				//If some creature is inside this cluster
 				if(entered){
 					//Check if creature is not already inside this cluster
@@ -103,7 +104,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 			boolean isUnderRadius = false;
 			for(int k = 0; k < psize ; k ++){
 				//Check if this creature is closer than 1 from any of this clusters parts
-				isUnderRadius = targetCreature.isAffected(parts.get(k).getPosition(),0.5f);
+				isUnderRadius = ((DynamicObject) targetCreature).isWithinRange(parts.get(k).getPosition(),0.5f);
 				if(isUnderRadius)
 					break;
 			}

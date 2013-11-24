@@ -21,7 +21,7 @@ import com.me.tamer.utils.Helper;
  * Is also the lowest lvl layer, under which objects are drawn if they fall underground.
  *
  */
-public class TileMap extends StaticObject implements Obstacle{
+public class TileMap extends StaticObject{
 	
 	private int numTiles	= 0;
 	private ArrayList<Vector2> terrain;
@@ -33,15 +33,13 @@ public class TileMap extends StaticObject implements Obstacle{
 	
 	public void setup(Environment env){
 		env.addNewObject(this);
-		env.getObstacles().add(this);
 		this.env = env;
 		setZindex(2);
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch){
-		//Renderer renderer = RenderPool.getRenderer(getRenderType());
-		Renderer renderer = RenderPool.getRenderer("vTile");
+		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		
 		if(env.getTamer() != null)
 			tamerpos.set(Helper.worldToScreen(env.getTamer().getShadow().getPosition()));
@@ -91,33 +89,6 @@ public class TileMap extends StaticObject implements Obstacle{
 
 	}
 
-	@Override
-	public void resolve(ArrayList<Creature> creatures) {
-		/*int size = creatures.size();
-		*
-		for( int i = 0 ; i < size ; i ++){
-			collisionPos.set(Helper.worldToScreen(((DynamicObject) creatures.get(i)).getPosition()));
-			
-			float offset = ((DynamicObject)creatures.get(i)).getBorderOffset();
-			
-			if(collisionPos.x > mapBounds.x / 2 - offset || collisionPos.x < -mapBounds.x / 2 + offset){
-				collisionAxis.set(0,-1);//.mul(collisionPos.x).nor();
-				collisionHeading.set(creatures.get(i).getHeading());
-				collisionHeading.set(0,collisionHeading.y);
-				collisionHeading.rotate(45);
-				creatures.get(i).setHeading(collisionHeading);
-			}
-			if(collisionPos.y > mapBounds.y / 2 - offset|| collisionPos.y < -mapBounds.y / 2 + offset){
-				collisionAxis.set(1,0);
-				collisionHeading.set(creatures.get(i).getHeading());
-				collisionHeading.set(collisionHeading.x,0);
-
-				collisionHeading.rotate(45);				
-				creatures.get(i).setHeading(collisionHeading);
-			}
-			
-		}*/
-	}
 
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {

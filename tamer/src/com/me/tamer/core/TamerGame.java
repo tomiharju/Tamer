@@ -75,6 +75,7 @@ public class TamerGame extends Game {
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 				+ " :: Creating game on " + Gdx.app.getType());
 		// Spritebatch is used for drawing sprites
+
 		batch = new SpriteBatch();
 
 		// create the preference manager

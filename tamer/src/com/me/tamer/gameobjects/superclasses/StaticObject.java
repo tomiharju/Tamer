@@ -35,6 +35,9 @@ public abstract class StaticObject implements GameObject{
 			renderer.draw(batch);
 		}	
 	}
+	public boolean isWithinRange(Vector2 poitn, float radius){
+		return false;
+	}
 	
 	public void update(float dt){
 		//
@@ -65,7 +68,7 @@ public abstract class StaticObject implements GameObject{
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
 		this.position.set(x,y);
-		}
+	}
 	
 	public void setPosition(Vector2 pos){
 		this.position.set(pos);

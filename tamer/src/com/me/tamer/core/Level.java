@@ -4,7 +4,7 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
 import com.me.tamer.utils.EnvironmentCreator;
 
-public class Level{
+public class Level {
 	
 	private TamerStage stage;
 	private final int id;

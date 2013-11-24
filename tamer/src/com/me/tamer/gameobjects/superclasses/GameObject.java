@@ -81,7 +81,7 @@ public interface GameObject{
 	 * Actions that needs to be taken when this object this object is removed from game.
 	 */
 	public void dispose(Environment level);
-	
+	public boolean isWithinRange(Vector2 poitn, float radius);
 	public int getZIndex();
 	public void setZindex(int z);
 	public void setzIndex(String index);

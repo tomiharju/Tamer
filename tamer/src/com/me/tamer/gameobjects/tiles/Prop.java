@@ -66,7 +66,7 @@ public class Prop extends StaticObject implements Obstacle {
 			return;
 		int size = creatures.size();
 		for (int i = 0; i < size; i++) {
-			if(creatures.get(i).isCollisionDisabled()){
+			if(((DynamicObject) creatures.get(i)).isCollisionDisabled()){
 				continue;
 			}
 				
@@ -94,7 +94,8 @@ public class Prop extends StaticObject implements Obstacle {
 						.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse);
-				creatures.get(i).setHeading(newHeading);
+				((DynamicObject)creatures.get(i)).setHeading(newHeading);
+//				System.out.println("New heading after collision "+newHeading.toString());
 			}
 		}
 	}

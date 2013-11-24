@@ -14,7 +14,7 @@ import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
-public class WormPart extends DynamicObject implements Creature {
+public class WormPart extends DynamicObject implements Creature{
 	
 	private final float DECAY_SPEED = 0.5f;
 	private final float MIN_LENGTH = 0.15f;
@@ -42,7 +42,9 @@ public class WormPart extends DynamicObject implements Creature {
 	private WormPart parent = null;
 	private WormPart child = null;
 	private boolean isTail = false;
-	private String partName = null;
+	private int partType = 0;
+	private final int TYPE_HEAD = 1;
+	private final int TYPE_BODY = 2;
 
 	// Physics optimization variables;
 	Vector2 impulseA = new Vector2();
@@ -55,7 +57,8 @@ public class WormPart extends DynamicObject implements Creature {
 	public void createHead(Vector2 pos, Vector2 vel, Worm worm) {
 		this.worm = worm;
 		setGraphics(TamerTexture.WORMHEAD);
-		partName = "Head";
+//		setGraphics("wormhead");
+		partType = TYPE_HEAD;
 		mass = 30;
 		invMass = 1 / mass;
 		setPosition(pos);
@@ -68,7 +71,8 @@ public class WormPart extends DynamicObject implements Creature {
 	public void createBodyPart(int ordinal, Vector2 pos, Vector2 vel, Worm worm) {
 		this.worm = worm;
 		setGraphics(TamerTexture.WORMPART);
-		partName = "Joint";
+//		setGraphics("vwormpart2");
+		partType = TYPE_BODY;
 		mass = 10;
 		invMass = 1 / mass;
 		setPosition(pos);
@@ -104,7 +108,7 @@ public class WormPart extends DynamicObject implements Creature {
 		renderer.setSize(getSize());
 
 		// Fix position of the headpart
-		if (partName.equalsIgnoreCase("head")) {
+		if (partType == TYPE_HEAD ) {
 			help.set(Helper.worldToScreen(getPosition()));
 			help.y += HEAD_POS_FIX;
 			renderer.setPosition(help);
@@ -137,24 +141,21 @@ public class WormPart extends DynamicObject implements Creature {
 	}
 
 	public void solveJoints(float dt) {
-		if (partName.equalsIgnoreCase("head")) {
+		if (partType == TYPE_HEAD) {
 			solveJoint(dt);
-			joint_length = 0.3f; // Math.abs((float) Math.sin(lengthAngle)) *
-									// STRETCH_AMOUNT;
-			child.solveJoints(dt);
-		} else if (child != null) {
+			joint_length = 0.3f;
+		} else if (partType == TYPE_BODY) {
 			solveJoint(dt);
 			lengthAngle += dt;
 			joint_length = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle))
 					* STRETCH_AMOUNT;
-			child.solveJoints(dt);
 		}
 	}
 
 	public void update(float dt) {
-		super.update(dt);
 		// Update headings
-		if (partName.equalsIgnoreCase("joint")) {
+		// And iterate positions
+		if (partType == TYPE_BODY) {
 			if (child != null)
 				setHeading(child.getPosition().tmp().sub(getPosition()).nor());
 			else if(parent != null)
@@ -164,21 +165,17 @@ public class WormPart extends DynamicObject implements Creature {
 
 			// solve difference between sprite angle and heading angle
 			setAngle(getHeading().angle() + 46f + 180 - spriteNumber * 45);
-		} else {
-			// this assumes that head always has a child
-			if(child != null){}
-			//setAngle(child.getAngle());
-		}
-
-		if (child != null)
-			child.update(dt);
-		if (invMass > 0)
-			getPosition().add(getVelocity().tmp().mul(dt));
+	
+		} 
+	
+		getPosition().add(getVelocity().tmp().mul(dt));
 		getVelocity().mul(0);
 
 	}
 
 	public void solveJoint(float dt) {
+		if(child == null)return;
+		
 		axis.set(child.getPosition().tmp().sub(getPosition()));
 		float currentDistance = axis.len();
 		Vector2 unitAxis = axis.nor();
@@ -230,20 +227,6 @@ public class WormPart extends DynamicObject implements Creature {
 		return isTail;
 	}
 
-	@Override
-	public void spearHit(Spear spear) {
-		// nail worm to center of a tile
-		getPosition().x = (float) Math.floor(getPosition().x) + 1;
-		getPosition().y = (float) Math.floor(getPosition().y);
-		invMass = 0;
-	}
-
-	@Override
-	public void lassoHit(String lasso) {
-		// TODO Auto-generated method stub
-
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -261,57 +244,8 @@ public class WormPart extends DynamicObject implements Creature {
 	 * When a spear hits the worm in the head, use this recursive function to
 	 * remove all the body parts.
 	 */
-	public void killPart() {
-		if (child != null)
-			child.killPart();
-		markAsCarbage();
-	}
+	
 
-	/*
-	 * This method is called by quicksandAction after timer fires. Its used to
-	 * kill the current tail part, and set the next part in chain as tail.
-	 */
-
-	@Override
-	public void kill() {
-		markAsCarbage();
-		//if (child==null) worm.markAsCarbage();	
-	}
-
-	@Override
-	public void moveToPoint(Vector2 point) {
-		setHeading(point.tmp().sub(getPosition()));
-
-		if (child != null) {
-			child.setForce(getForce());
-			child.setHeading(getForce());
-			child.parent = null;
-			worm.setHead(child);
-		} else
-			worm.markAsCarbage();
-
-		worm.removePart(this);
-	}
-
-	@Override
-	public Creature affectedCreature(Vector2 point, float radius) {
-		
-		if (getPosition().dst(point) < radius)
-			return this;
-		else
-			return null;
-	}
-
-	@Override
-	public void applyPull(Vector2 point, float magnitude) {
-		Vector2 pullVector = point.tmp().sub(getPosition());
-		pullVector.nor().mul(magnitude);
-		getVelocity().add(pullVector);
-		if (getPosition().dst(point) < 0.15f)
-			moveToPoint(point);
-	}
-
-	@Override
 	public void decay() {
 		decaying = true;
 	}
@@ -320,11 +254,6 @@ public class WormPart extends DynamicObject implements Creature {
 		return blinking;
 	}
 
-	@Override
-	public boolean isAffected(Vector2 point, float radius) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public void setup(Environment level) {
@@ -346,17 +275,8 @@ public class WormPart extends DynamicObject implements Creature {
 		return ordinal;
 	}
 
-	@Override
-	public int getType() {
-		return Creature.TYPE_WORMPART;
-	}
 
-	@Override
-	public boolean isCollisionDisabled() {
-		return false;
-	}
-
-	@Override
+	
 	public boolean isDecaying() {
 		return decaying;
 	}
@@ -376,6 +296,39 @@ public class WormPart extends DynamicObject implements Creature {
 
 	public boolean getDebug() {
 		return false;
+	}
+
+	public void spearHit(Spear spear) {
+		worm.spearHit(spear);		
+	}
+
+	@Override
+	public void lassoHit(String lasso) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void kill() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void applyPull(Vector2 point, float magnitude) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Creature affectedCreature(Vector2 poitn, float radius) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getType() {
+		return Creature.TYPE_WORM;
 	}
 
 	@Override
