@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
 import com.me.tamer.gameobjects.renderers.UiRenderer;
+import com.me.tamer.services.TextureManager.TamerTexture;
 
 public class Joystick extends Actor{
 	private final float BUTTON_SIZE	= 250;
@@ -30,23 +31,23 @@ public class Joystick extends Actor{
 	private Vector2 input			= new Vector2(0,0);
 	private Vector2 localCenter 	= new Vector2(BUTTON_SIZE/2,BUTTON_SIZE/2);
 	
-	float pointersize				= 180f;
+	final float POINTER_SIZE				= 180f;
 	boolean pressed					= false;
 	boolean movementDisabled 		= false;
 	boolean inputDisabled			= false;
 	
 	
-	public Joystick(ControlContainer inputController) {
-		this.controlContainer = inputController;
+	public Joystick(ControlContainer controls) {
+		this.controlContainer = controls;
 		
 		environment		= controlContainer.getEnvironment();
 		
-		renderer_outer.loadGraphics("joystick");
+		renderer_outer.loadGraphics(TamerTexture.JOYSTICK);
 		renderer_outer.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer_outer.setPosition(restingpoint);
 		
-		renderer_inner.loadGraphics("joystick_inner");
-		renderer_inner.setSize(pointersize,pointersize);
+		renderer_inner.loadGraphics(TamerTexture.JOYSTICK_INNER);
+		renderer_inner.setSize(POINTER_SIZE,POINTER_SIZE);
 		renderer_inner.setPosition(joystickPoint);
 		
 		//Actor variables
@@ -59,22 +60,18 @@ public class Joystick extends Actor{
 			renderer_outer.draw(batch);
 			renderer_inner.setPosition(joystickPoint);
 			renderer_inner.draw(batch);		
-		
 	}
 	
 	@Override
 	public void act(float dt) {
 		delta.set(joystickPoint.tmp().sub(restingpoint));
 		
-		if(delta.len() >= (BUTTON_SIZE - pointersize / 2) / 2 ){
-			delta = delta.nor().mul((BUTTON_SIZE - pointersize / 2 ) / 2 );
+		if(delta.len() >= (BUTTON_SIZE - POINTER_SIZE / 2) / 2 ){
+			delta = delta.nor().mul((BUTTON_SIZE - POINTER_SIZE / 2 ) / 2 );
 			joystickPoint.set(restingpoint.tmp().add(delta));
 		}
 		
-		//Zoom out camera when accelerating and in when braking
-		
-		//controlContainer.getStage().getCamera().zoom = 0.9f;
-		
+		//Zoom out camera when accelerating and in when braking		
 		if (environment.getState() == RunningState.NORMAL){
 			if (controlContainer.getStage().getCamera().zoom - ZOOM_MIN_AMOUNT > ZOOM_DEFAULT + ZOOM_MAX_COEFFIENT * delta.len())
 				controlContainer.getStage().getCamera().zoom -= ZOOM_IN_SPEED;
@@ -123,7 +120,6 @@ public class Joystick extends Actor{
 	public void enableMovement(){
 		movementDisabled = false;
 	}
-	
 	
 	public Vector2 getDelta(){
 		return delta;

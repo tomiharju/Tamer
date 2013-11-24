@@ -13,15 +13,17 @@ import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
+import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.tEvent;
 
-public class GryphonScream extends StaticObject {
+public class GryphonScream extends DynamicObject {
 	private final float SCREAM_AREA_SIZE = 10.0f;
 	private final float COOL_DOWN = 2.0f;
 	private final float SCREAM_SPEED			= 18f;
@@ -51,18 +53,22 @@ public class GryphonScream extends StaticObject {
 		this.tamer = tamer;
 		//Z-index for drawing order
 		setZindex(-1);
-		setGraphics("scream");
+		setGraphics(TamerTexture.SCREAM);
 		
 		sound = SoundManager.instance();
 		controls = ControlContainer.instance();
 	}
 	
-	public void setGraphics(String graphics){
-		Renderer render = RenderPool.addRendererToPool("static", graphics);
-		render.loadGraphics(graphics);
-		//render.setColor(1, 0.2f, 0.5f, 1);
+	public void setGraphics(TamerTexture graphics){
+		//Renderer render = RenderPool.addRendererToPool("static", graphics);
+		//render.loadGraphics(graphics);
+//		renderer.setColor(1, 0.2f, 0.5f, 1);
+		
+		Renderer renderer = RenderPool.addRendererToPool("animated",graphics.name());
+
+		renderer.loadGraphics(graphics,1,1);
 		setSize(getSize());
-		setRenderType(graphics);
+		setRenderType(graphics.name());
 	}
 	
 	@Override
@@ -175,6 +181,10 @@ public class GryphonScream extends StaticObject {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
 }

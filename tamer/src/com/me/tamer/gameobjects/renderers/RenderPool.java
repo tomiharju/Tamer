@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.RendererFactory;
 
 public class RenderPool {
@@ -13,7 +14,7 @@ public class RenderPool {
 	
 	public static TextureAtlas atlas;
 	public static void createAtlas(){
-		atlas = new TextureAtlas(Gdx.files.internal("data/graphics/sheetData"));
+		//atlas = new TextureAtlas(Gdx.files.internal("data/graphics/sheetData"));
 
 		
 	}

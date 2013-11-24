@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.core.TamerGame.ScreenType;
 
 public class PauseScreen extends AbstractMenu{
 	//Pause menu spesific buttons
@@ -22,7 +23,7 @@ public class PauseScreen extends AbstractMenu{
 		continueButton = new TextButton("Continue",textButtonStyle);
 		continueButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                game.setScreen(game.getPlayScreen());
+                game.setScreen( ScreenType.RESUME_PLAY);
             }
         });
 		

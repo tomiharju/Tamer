@@ -14,6 +14,7 @@ import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public class Prop extends StaticObject implements Obstacle {
@@ -94,6 +95,7 @@ public class Prop extends StaticObject implements Obstacle {
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse);
 				((DynamicObject)creatures.get(i)).setHeading(newHeading);
+
 			}
 		}
 	}
@@ -200,6 +202,12 @@ public class Prop extends StaticObject implements Obstacle {
 
 	@Override
 	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGraphics(TamerTexture tex) {
 		// TODO Auto-generated method stub
 		
 	}

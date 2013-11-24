@@ -5,6 +5,7 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 /**
  * @author tomi Decor are all the non-interactive gameobjects in the level,
@@ -29,9 +30,19 @@ public class Decor extends StaticObject{
 	
 	
 	public void setGraphics(String graphics){
-		Renderer render = RenderPool.addRendererToPool("static",graphics);
-		render.loadGraphics(graphics);
+//		Renderer render = RenderPool.addRendererToPool("static",graphics);
+//		render.loadGraphics(graphics);
+//		setSize(getSize());
+//		render.setSize(getSize());
+//		setRenderType(graphics);
+		
+		//Temporary solution because the one above does not work
+		graphics = graphics.split("\\.")[0];
+		
+		Renderer render = RenderPool.addRendererToPool("animated", graphics);
+		render.loadGraphics(graphics, 1, 1);
 		setSize(getSize());
+		render.setSize(getSize());
 		setRenderType(graphics);
 	}
 
@@ -57,6 +68,12 @@ public class Decor extends StaticObject{
 
 	@Override
 	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGraphics(TamerTexture tex) {
 		// TODO Auto-generated method stub
 		
 	}

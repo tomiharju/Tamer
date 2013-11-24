@@ -1,21 +1,26 @@
 package com.me.tamer.services;
 
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
+import com.badlogic.gdx.assets.loaders.SoundLoader.SoundParameter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Disposable;
 import com.me.tamer.core.TamerGame;
-import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.utils.LRUCache;
-import com.me.tamer.utils.LRUCache.CacheEntryRemovedListener;
 
 /**
  * A service that manages the sound effects.
  */
-public class SoundManager implements
-		CacheEntryRemovedListener<TamerSound, Sound>, Disposable {
+/**
+ * @author ville
+ *
+ */
+public class SoundManager  {
 	//sound manager is a singleton
 	private static SoundManager singleton;
+	private AssetManager assetManager;
 	
 	public static SoundManager instance(){
 		if (singleton==null)singleton = new SoundManager();
@@ -23,10 +28,9 @@ public class SoundManager implements
 	}
 	
 	/**
-	 * The available sound files.
+	 * Available sound files
 	 */
 	public enum TamerSound {
-		
 		CLICK("sound/click.wav"),
 		OPENING("sound/01taunt00a.wav"),
 		HIT("sound/06kill03.wav"),
@@ -47,7 +51,7 @@ public class SoundManager implements
 	/**
 	 * The volume to be set on the sound.
 	 */
-	private float volume = 0.8f;
+	private float volume = 1.0f;
 
 	/**
 	 * Whether the sound is enabled.
@@ -55,38 +59,35 @@ public class SoundManager implements
 	private boolean enabled = true;
 
 	/**
-	 * The sound cache.
-	 */
-	private final LRUCache<TamerSound, Sound> soundCache;
-
-	/**
 	 * Creates the sound manager.
 	 * constructor is private because this is a singleton
 	 */
 	private SoundManager() {
-		soundCache = new LRUCache<SoundManager.TamerSound, Sound>(10);
-		soundCache.setEntryRemovedListener(this);
 	}
 
-	/**
-	 * Plays the specified sound.
-	 */
+	public void loadSounds(){
+		for (TamerSound sound : TamerSound.values()){
+			assetManager.load(sound.getFileName(), Sound.class);
+			Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Started loading asset: " +sound.name());
+		}
+		
+	}
+	
+	public void setAssetManager(AssetManager assetManager){
+		this.assetManager = assetManager;
+	}
+	
 	public void play(TamerSound sound) {
 		// check if the sound is enabled
 		if (!enabled)
 			return;
-
-		// try and get the sound from the cache
-		Sound soundToPlay = soundCache.get(sound);
-		if (soundToPlay == null) {
-			FileHandle soundFile = Gdx.files.internal(sound.getFileName());
-			soundToPlay = Gdx.audio.newSound(soundFile);
-			soundCache.add(sound, soundToPlay);
-		}
-
-		// play the sound
-		Gdx.app.log(TamerGame.LOG, "Playing sound: " + sound.name());
-		soundToPlay.play(volume);
+		if ( assetManager.isLoaded(sound.getFileName(),Sound.class) ){
+			Sound soundToPlay = assetManager.get( sound.getFileName(), Sound.class );
+			Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Playing sound: " + sound.name());
+			soundToPlay.play(volume);
+		} else {
+			Gdx.app.error(TamerGame.LOG, this.getClass().getSimpleName() + " :: Sound is not loaded: " + sound.name());
+		}		
 	}
 
 	/**
@@ -110,22 +111,15 @@ public class SoundManager implements
 		this.enabled = enabled;
 	}
 
-	// EntryRemovedListener implementation
-
-	@Override
-	public void notifyEntryRemoved(TamerSound key, Sound value) {
-		Gdx.app.log(TamerGame.LOG, "Disposing sound: " + key.name());
-		value.dispose();
-	}
-
 	/**
 	 * Disposes the sound manager.
+	 * TODO
 	 */
 	public void dispose() {
-		Gdx.app.log(TamerGame.LOG, "Disposing sound manager");
-		for (Sound sound : soundCache.retrieveAll()) {
-			sound.stop();
-			sound.dispose();
-		}
+//		Gdx.app.log(TamerGame.LOG, "Disposing sound manager");
+//		for (Sound sound : soundCache.retrieveAll()) {
+//			sound.stop();
+//			sound.dispose();
+//		}
 	}
 }

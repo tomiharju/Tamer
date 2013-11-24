@@ -14,6 +14,7 @@ import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public class Endingpoint extends StaticObject implements Obstacle {
@@ -99,5 +100,11 @@ public class Endingpoint extends StaticObject implements Obstacle {
 	public void dispose(Environment level) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void setGraphics(TamerTexture tex) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -17,6 +17,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tiles.Prop;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
@@ -46,7 +47,7 @@ public class Spear extends DynamicObject {
 	private Vector2 help = new Vector2();
 
 	public Spear() {
-		setGraphics("spear");
+		setGraphics(TamerTexture.SPEAR);
 		sound = SoundManager.instance();
 
 		// hitbox
@@ -55,12 +56,11 @@ public class Spear extends DynamicObject {
 		hitbox.setZindex(-10);
 	}
 
-	public void setGraphics(String graphics) {
-		Renderer render = RenderPool.addRendererToPool("animated", graphics);
+	public void setGraphics(TamerTexture graphics) {
+		Renderer render = RenderPool.addRendererToPool("animated", graphics.name());
 		render.loadGraphics(graphics, 1, 8);
 		setSize(new Vector2(2.4f, 1.5f));
-		setRenderType(graphics);
-
+		setRenderType(graphics.name());
 	}
 
 	public void update(float dt) {
@@ -258,5 +258,11 @@ public class Spear extends DynamicObject {
 	@Override
 	public void dispose(Environment level) {
 		// TODO Auto-generated method stub	
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 }

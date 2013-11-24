@@ -15,8 +15,8 @@ public class Helper {
 	//ELI SQRT(2) JOTTA SAADAAN TILEN LEVEYS PIXELEISSÄ, SIITÄKU LASKEE NIIN TULEE 40 PIXELIÄ.
 	
 	
-	public static float TILE_WIDTH =  Gdx.graphics.getWidth() / (float) (12 * Math.sqrt(2)); //(float) (12 * Math.sqrt(2));
-	//public static float TILE_WIDTH =  480 / (float) (12 * Math.sqrt(2));
+//	public static float TILE_WIDTH =  Gdx.graphics.getWidth() / (float) (12 * Math.sqrt(2)); //(float) (12 * Math.sqrt(2));
+	public static float TILE_WIDTH =  480 / (float) (12 * Math.sqrt(2));
 	
 	public static float TILE_HEIGHT = TILE_WIDTH / 2;
 	public static float VIRTUAL_SIZE_X = (float) (12 * Math.sqrt(2));
@@ -30,7 +30,7 @@ public class Helper {
 	
 	
 	private static Matrix3 worldMatrix = new Matrix3().scale(1f,0.5f).rotate(-45);
-	private static Matrix3 screenMatrix = new Matrix3().scale(1.1f,(float) 0.55f).rotate(-45).inv();
+	private static Matrix3 screenMatrix = new Matrix3().scale(1f,(float) 0.5f).rotate(-45).inv();
 	//private static Matrix3 worldMatrix = new Matrix3().scale(1,0.5f).rotate(-45);
 	//private static Matrix3 screenMatrix = new Matrix3().scale(1,0.5f).rotate(-45).inv();
 	private static Vector2 temp = new Vector2(0,0), temp1 = new Vector2(0,0);

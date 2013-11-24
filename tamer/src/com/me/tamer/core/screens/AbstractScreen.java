@@ -22,12 +22,10 @@ public class AbstractScreen implements Screen{
     private Skin skin;
     private Table table;
     protected Color bgColor = new Color(Color.BLACK);
-    SoundManager soundManager;
 
     public AbstractScreen(final TamerGame game)
     {
         this.game = game;
-        soundManager = SoundManager.instance();
     }
 
     protected String getName()

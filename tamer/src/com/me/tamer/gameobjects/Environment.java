@@ -73,7 +73,7 @@ public class Environment extends Actor {
 		RenderPool.createAtlas();
 		
 		//create fence
-		fence = new Fence(0,0,0,0);
+//		fence = new Fence(0,0,0,0);
 	}
 
 	public void act(float dt) {

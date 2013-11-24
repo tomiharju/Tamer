@@ -16,6 +16,7 @@ import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.services.SoundManager;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
@@ -33,7 +34,8 @@ public class Tamer extends DynamicObject {
 	private final float SPAWN_SPEED = 5.0f;
 	private final float SPEAR_COOL_DOWN = 0.5f;
 	
-	private static boolean onSpearCoolDown = false;
+	private boolean onSpearCoolDown = false;
+	private boolean spearOnRange = false;
 
 	private TamerShadow shadow = null;
 	private GryphonScream scream = null;
@@ -44,6 +46,7 @@ public class Tamer extends DynamicObject {
 	// spear related variables
 	private int numSpears = 30;
 	private ArrayList<Spear> spears = null;
+	private Spear spearToBePicked = null;
 
 	// Variables for entering the field
 	private Vector2 spawnPosition = new Vector2();
@@ -67,9 +70,10 @@ public class Tamer extends DynamicObject {
 
 		// Shadow
 		shadow = new TamerShadow(this);
+		
 		// Z-index for drawing order
 		setZindex(-10);
-		setGraphics("tamer");
+		setGraphics(TamerTexture.TAMER);
 
 		// sound
 		sound = SoundManager.instance();
@@ -77,10 +81,7 @@ public class Tamer extends DynamicObject {
 	}
 	
 
-	public void wakeUp(Environment environment) {
-		//set the first state
-//		environment.setState(Environment.TAMER_ENTER);
-		
+	public void wakeUp(Environment environment) {		
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
 				+ " :: Tamer has woken up! " + this.toString());
 		
@@ -95,11 +96,11 @@ public class Tamer extends DynamicObject {
 		spawnPosition.set(shadow.getPosition());
 	}
 
-	public void setGraphics(String graphics) {
-		Renderer render = RenderPool.addRendererToPool("animated", graphics);
+	public void setGraphics(TamerTexture graphics) {
+		Renderer render = RenderPool.addRendererToPool("animated", graphics.name());
 		render.loadGraphics(graphics, 1, 8);
 		setSize(5, 3.1f);
-		setRenderType(graphics);
+		setRenderType(graphics.name());
 	}
 
 	@Override
@@ -120,18 +121,33 @@ public class Tamer extends DynamicObject {
 					shadow.getPosition().y + FLYING_HEIGHT);
 			SPEED = 0;
 
+			spearToBePicked = null;
+			spearOnRange = false;
 			for (int i = 0; i < spears.size(); i++) {
-				if (!spears.get(i).isJustDropped()
-						&& shadow.getPosition()
-								.dst(spears.get(i).getPosition()) < 1) {
+				if (shadow.getPosition().dst(spears.get(i).getPosition()) < 1) {
 					if (spears.get(i).isAttached()) {
-						spears.get(i).pickUp();
-						spears.remove(i);
+						spearToBePicked = spears.get(i);
+						spearOnRange = true;
 					}
 				}
 			}
-		}
-		scream.update(dt);
+			
+			controls.setSpearOnRange( spearOnRange );
+			scream.update(dt);
+		}	
+			
+//			for (int i = 0; i < spears.size(); i++) {
+//				if (!spears.get(i).isJustDropped()
+//						&& shadow.getPosition()
+//								.dst(spears.get(i).getPosition()) < 1) {
+//					if (spears.get(i).isAttached()) {
+//						spears.get(i).pickUp();
+//						spears.remove(i);
+//					}
+//				}
+//			}
+//		}
+		
 	}
 
 	@Override
@@ -227,6 +243,11 @@ public class Tamer extends DynamicObject {
 
 	}
 	
+	public void pickUpSpear(){
+		spearToBePicked.pickUp();
+		spears.remove( spearToBePicked );
+	}
+	
 	public void enable(){
 		onSpearCoolDown = false;
 		controls.setSpearCooldown(false);
@@ -293,5 +314,12 @@ public class Tamer extends DynamicObject {
 	public void dispose(Environment level) {
 		// TODO Auto-generated method stub
 
+	}
+
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 }
