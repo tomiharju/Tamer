@@ -17,9 +17,9 @@ import com.me.tamer.utils.Helper;
 public class WormPart extends DynamicObject implements Creature{
 	
 	private final float DECAY_SPEED = 0.5f;
-	private final float MIN_LENGTH = 0.15f;
-	private final float STRETCH_AMOUNT = 0.07f;
-	private final float HEAD_POS_FIX = 0.005f;
+	private final float MIN_LENGTH = 0.10f;
+	private final float STRETCH_AMOUNT = 0.8f;
+	private final float HEAD_POS_FIX = 0.000f;
 	
 	// Container worm
 	private Worm worm = null;
@@ -57,7 +57,6 @@ public class WormPart extends DynamicObject implements Creature{
 	public void createHead(Vector2 pos, Vector2 vel, Worm worm) {
 		this.worm = worm;
 		setGraphics(TamerTexture.WORMHEAD);
-//		setGraphics("wormhead");
 		partType = TYPE_HEAD;
 		mass = 30;
 		invMass = 1 / mass;
@@ -71,7 +70,6 @@ public class WormPart extends DynamicObject implements Creature{
 	public void createBodyPart(int ordinal, Vector2 pos, Vector2 vel, Worm worm) {
 		this.worm = worm;
 		setGraphics(TamerTexture.WORMPART);
-//		setGraphics("vwormpart2");
 		partType = TYPE_BODY;
 		mass = 10;
 		invMass = 1 / mass;

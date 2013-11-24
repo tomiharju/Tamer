@@ -10,130 +10,133 @@ import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.tamer.GryphonScream;
 
-public class ControlContainer extends Group{
+public class ControlContainer extends Group {
 	private static ControlContainer instance = null;
 	private TamerStage stage;
 	private OrthographicCamera cam, uiCam;
 	private Environment environment;
 	Vector2 testVector = new Vector2();
-	
-	//Actors
+
+	// Actors
 	Joystick joystick;
 	SpearButton spearButton;
 	ScreamButton screamButton;
-	
+
 	private ControlContainer() {
-		//constructor should not be accessible
+		// constructor should not be accessible
 	}
-	
-	public static ControlContainer instance(){
-		if (instance == null) instance = new ControlContainer();
-			return instance;
+
+	public static ControlContainer instance() {
+		if (instance == null)
+			instance = new ControlContainer();
+		return instance;
 	}
-	
-	public void initialize(TamerStage stage){
-		//has to be initialized when first created
+
+	public void initialize(TamerStage stage) {
+		// has to be initialized when first created
 		this.stage = stage;
 		this.environment = stage.getEnvironment();
 		cam = stage.getCamera();
 		uiCam = stage.getUiCamera();
 		create();
 	}
-	
-	public void create(){
-		
+
+	public void create() {
 		joystick = new Joystick(this);
-		this.addActor( joystick);
-		
+		this.addActor(joystick);
+
 		screamButton = new ScreamButton(this);
 		this.addActor(screamButton);
-		
+
 		spearButton = new SpearButton(this);
 		this.addActor(spearButton);
 		SnapshotArray<Actor> actors = getChildren();
-		
-		//Hide all buttons in startup
+
+		// Hide all buttons in startup
 		disableInput();
 	}
-	
+
 	@Override
-	public void act(float dt){
+	public void act(float dt) {
 		SnapshotArray<Actor> actors = getChildren();
-		for (int i = 0; i < actors.size; i++){
+		for (int i = 0; i < actors.size; i++) {
 			actors.get(i).act(dt);
 		}
-		
+
 	}
+
 	@Override
-	public void draw (SpriteBatch batch, float parentAlpha) {
+	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setProjectionMatrix(uiCam.combined);
-		
-		
+
 		SnapshotArray<Actor> actors = getChildren();
-		for (int i = 0; i < actors.size; i++){
+		for (int i = 0; i < actors.size; i++) {
 			actors.get(i).draw(batch, parentAlpha);
 		}
 	}
-	
-	public void setScreamCooldown(boolean b){
+
+	public void setScreamCooldown(boolean b) {
 		screamButton.setOnCooldown(b);
 	}
-	
-	public boolean isScreamCooldown(){
+
+	public boolean isScreamCooldown() {
 		return screamButton.isOnCooldown();
 	}
-	
-	public void setSpearCooldown(boolean b){
+
+	public void setSpearCooldown(boolean b) {
 		spearButton.setOnCooldown(b);
 	}
-	
-	public boolean isSpearCooldown(){
+
+	public boolean isSpearCooldown() {
 		return spearButton.isOnCooldown();
 	}
-	
-	public void setSpearOnRange(boolean b){
+
+	public void setSpearOnRange(boolean b) {
 		spearButton.setSpearOnRange(b);
 	}
-	
-	public boolean isSpearOnRange(){
+
+	public boolean isSpearOnRange() {
 		return spearButton.isSpearOnRange();
 	}
-	
+
 	public Environment getEnvironment() {
 		return environment;
 	}
-	
-	public OrthographicCamera getCam(){
+
+	public OrthographicCamera getCam() {
 		return cam;
 	}
-	public OrthographicCamera getUiCam(){
+
+	public OrthographicCamera getUiCam() {
 		return uiCam;
 	}
-	
-	public Joystick getJoystick(){
+
+	public Joystick getJoystick() {
 		return joystick;
 	}
-	
-	public SpearButton getSpearButton(){
+
+	public SpearButton getSpearButton() {
 		return spearButton;
 	}
-	
-	public TamerStage getStage(){
+
+	public TamerStage getStage() {
 		return stage;
-		
+
 	}
-	
-	public void setStage(TamerStage stage){
+
+	public void setStage(TamerStage stage) {
 		this.stage = stage;
 	}
-	
-	public void enableInput(){
+
+	public void enableInput() {
 		setVisible(true);
 	}
-	public void disableInput(){
+
+	public void disableInput() {
 		setVisible(false);
 	}
-	public void dispose(){
+
+	public void dispose() {
 		instance = null;
 	}
 }
