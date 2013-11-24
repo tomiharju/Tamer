@@ -79,8 +79,6 @@ public class Spear extends DynamicObject {
 			direction.set(targetPoint.tmp().sub(getPosition()));
 			direction.nor();
 			getPosition().add(direction.tmp().mul(SPEED * dt));
-			//getPosition().add(direction.x * (SPEED * dt),
-				//	direction.y * (SPEED * dt));
 
 			if (getPosition().dst(targetPoint) < 0.5f) {
 				//not sure if really needed, but null pointer happened
@@ -89,8 +87,6 @@ public class Spear extends DynamicObject {
 					
 					//start timer to stop adjusting
 					EventPool.addEvent(new tEvent(this,"stopAdjusting", ADJUST_TIME,1));
-					
-					if(targetWorm != null)targetWorm.setCollisionDisabled(true);
 							
 					//play sound
 					/*
@@ -157,7 +153,7 @@ public class Spear extends DynamicObject {
 					tamer.getShadow().getSize().x / 2);
 			
 			//remove target if it is worm that is being eaten
-			if(creatures.get(i).getClass().getSimpleName().equalsIgnoreCase("worm")){
+			if(creatures.get(i).getType() == Creature.TYPE_WORM){
 				if(((Worm)creatures.get(i)).isBeingEaten())creature = null;
 				else if (((Worm)creatures.get(i)).isBound())creature = null;
 			}
@@ -170,7 +166,7 @@ public class Spear extends DynamicObject {
 					if (((AntOrc)targetCreature).getTargetWorm() != null) targetWorm = ((AntOrc)targetCreature).getTargetWorm();
 					targetPoint = ((DynamicObject) targetCreature).getPosition();
 					break;
-				case (Creature.TYPE_WORMPART):
+				case (Creature.TYPE_WORM):
 					if (targetCreature == null) {
 						targetWorm = ((Worm)creatures.get(i));
 						targetCreature = creature;

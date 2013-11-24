@@ -81,15 +81,13 @@ public class AntOrc extends DynamicObject implements Creature{
 	}
 	
 	public void update(float dt){
-		super.update(dt);
 		//how often should this scan
 		if (!decaying){
 			if(!returning && targetPart==null)scanWorms();
 			if (attached){	
 				if(loopCount % shakeRate == 0){
 					//shake that booty
-					getHeading().set(-1,1);
-					getHeading().nor();
+					setHeading(-1,1);
 					shakeSpeed = shakeSpeed * -1;
 					
 				}loopCount++;
@@ -109,6 +107,8 @@ public class AntOrc extends DynamicObject implements Creature{
 		}
 	}
 	
+	
+
 	public void lockToTarget(WormPart wp){
 		//Increase speed and set target
 		targetPart = wp;
@@ -163,7 +163,7 @@ public class AntOrc extends DynamicObject implements Creature{
 			eatingTimer = new tEvent(this, "detach", EATING_TIME, 1);
 			
 			//set
-			getPosition().set( targetPart.getPosition().tmp().add(EATING_OFFSET));
+			setPosition( targetPart.getPosition().tmp().add(EATING_OFFSET));
 			
 			//eating ant has higher z-index
 			setZindex(-1);
@@ -240,14 +240,14 @@ public class AntOrc extends DynamicObject implements Creature{
 	@Override
 	public void spearHit(Spear spear) {
 		
-		//System.out.println("mulkku lävistetty");
+		//System.out.println("mulkku lï¿½vistetty");
 		//move position to center of a tile
 		getPosition().x = (float) Math.floor(getPosition().x) + 1; //+ 0.5f;
 		getPosition().y = (float) Math.floor(getPosition().y);// + 0.5f;
 		
-		if(targetPart!=null){
+		if(targetPart != null){
 			targetWorm.unBind();
-			targetPart.spearHit(spear);
+		//	targetPart.spearHit(spear);
 			targetWorm.setBeingEaten(false);
 			
 			EventPool.addEvent(new tEvent(spear,"stopAdjusting", 0.5f,1));
@@ -263,11 +263,7 @@ public class AntOrc extends DynamicObject implements Creature{
 		
 	}
 
-	@Override
-	public void moveToPoint(Vector2 point) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void unBind() {
@@ -282,7 +278,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	}
 
 	@Override
-	public boolean isAffected(Vector2 point, float radius) {
+	public boolean isWithinRange(Vector2 point, float radius) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -347,5 +343,17 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public Worm getTargetWorm(){
 		return targetWorm;
+	}
+
+	@Override
+	public void disableCollision() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void enableCollision() {
+		// TODO Auto-generated method stub
+		
 	}
 }

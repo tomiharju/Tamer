@@ -17,30 +17,38 @@ import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RendererAccessor;
 import com.me.tamer.utils.StaticRendererAccessor;
 
-public abstract class DynamicObject implements GameObject{
+public abstract class DynamicObject implements GameObject {
 
-	//Someone has to fix these to private
-	private Vector2 position 	= new Vector2();		// "World position"
-	private Vector2 centerPosition	= new Vector2();
-	private Vector2 velocity 	= new Vector2();		// "World velocity"
-	private Vector2 heading 	= new Vector2();		// Unit vector of current velocity
-	private Vector2 force 		= new Vector2();		// Magnitude and direction of per loop velocity increment
-	private Vector2 size		= new Vector2();		// Graphics sprite size
-	private float angle 		= 0;	
-	private String renderType	= null;					// Graphics name, used for fetching correct renderer for object
-	private boolean isCarbage 	= false;				// Setting to true, causes carbage collection loop to remove this object from game
-	private boolean debug	 	= false;
-	private int zIndex 			= 0;					// Forced drawing order 
-	private Vector2 isoHeading 	= new Vector2();		//Used for determining the sprite
+	// Someone has to fix these to private
+	private Vector2 position = new Vector2(); // "World position"
+	private Vector2 centerPosition = new Vector2();
+	private Vector2 velocity = new Vector2(); // "World velocity"
+	private Vector2 heading = new Vector2(); // Unit vector of current velocity
+	private Vector2 force = new Vector2(); // Magnitude and direction of per
+											// loop velocity increment
+	private Vector2 size = new Vector2(); // Graphics sprite size
+	private float angle = 0;
+	private String renderType = null; // Graphics name, used for fetching
+										// correct renderer for object
+	private boolean isCarbage = false; // Setting to true, causes carbage
+										// collection loop to remove this object
+										// from game
+	private boolean debug = false;
+	private int zIndex = 0; // Forced drawing order
+	private Vector2 isoHeading = new Vector2(); // Used for determining the
+												// sprite
 	protected float borderOffset = 0;
-	private Vector2 zeroHeading = new Vector2(-0.5f,1);// -1 + (float)Math.sin(Math.PI/8),1 + (float)Math.cos(Math.PI/8));//-0.5f, 2.0f);//;
+	private Vector2 zeroHeading = new Vector2(-0.5f, 1);// -1 +
+														// (float)Math.sin(Math.PI/8),1
+														// +
+														// (float)Math.cos(Math.PI/8));//-0.5f,
+														// 2.0f);//;
 	private float headingAngle = 0;
 	private float spriteNumber = 0;
-
+	private boolean collisionDisabled = false;
 	protected boolean fading = false;
 
 	protected TweenManager tweenManager;
-
 
 	@Override
 	public void draw(SpriteBatch batch) {
@@ -48,40 +56,32 @@ public abstract class DynamicObject implements GameObject{
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		renderer.setSize(getSize());
 		renderer.setPosition(Helper.worldToScreen(position));
-		renderer.setOrientation( solveOrientation() );
-//		if(this.getClass().getSimpleName().equalsIgnoreCase("wormpart"))System.out.println(renderer.getColor().a);
-		renderer.draw(batch);	
+		renderer.setOrientation(solveOrientation());
+		// if(this.getClass().getSimpleName().equalsIgnoreCase("wormpart"))System.out.println(renderer.getColor().a);
+		renderer.draw(batch);
 	}
 
-	public void update(float dt){
+	public void update(float dt) {
 	}
 
-	public int solveOrientation(){
-		if(getHeading() != null){
-			zeroHeading.nor();
-			headingAngle = ((float) Math.acos(heading.dot(zeroHeading) / (heading.len() * zeroHeading.len())));
-			spriteNumber = ((float) (headingAngle / Math.PI * 180 / 45));
+	public int solveOrientation() {
 
-			//cannot be zero
-			if (spriteNumber == 0) spriteNumber = (0.001f);
-			if (heading.x > zeroHeading.x && heading.y > 0) spriteNumber = (8 - spriteNumber);
-			else if (heading.x > -zeroHeading.x && heading.y < 0) spriteNumber = (8 - spriteNumber);
+		zeroHeading.nor();
+		headingAngle = ((float) Math.acos(heading.dot(zeroHeading)
+				/ (heading.len() * zeroHeading.len())));
+		spriteNumber = ((float) (headingAngle / Math.PI * 180 / 45));
 
-			spriteNumber = ((float) Math.floor(spriteNumber));
-		}
-
-		return (int)spriteNumber;
-	}
-
-	@Override
-	public void markAsCarbage() {
-		isCarbage = true;
-
-	}
-
-	@Override
-	public boolean isCarbage() {
-		return isCarbage;
+		// cannot be zero
+		//if (spriteNumber == 0)
+			//spriteNumber = (0.001f);
+		if (heading.x > zeroHeading.x && heading.y > 0)
+			spriteNumber = (8 - spriteNumber);
+		else if (heading.x > -zeroHeading.x && heading.y < 0)
+			spriteNumber = (8 - spriteNumber);
+		if(heading.x == 1)
+			System.out.println("Bääm  " +(int)spriteNumber);
+		spriteNumber = ((float) Math.floor(spriteNumber));
+		return (int)(spriteNumber);
 	}
 
 	@Override
@@ -94,19 +94,19 @@ public abstract class DynamicObject implements GameObject{
 		String[] values = pos.split(":");
 		int x = Integer.parseInt(values[0]);
 		int y = Integer.parseInt(values[1]);
-		this.position.set(x,y);
+		this.position.set(x, y);
 	}
 
 	@Override
-	public void setPosition(Vector2 pos){
+	public void setPosition(Vector2 pos) {
 		this.position.set(pos);
 	}
 
-	public void setVelocity(String vel){
+	public void setVelocity(String vel) {
 		String[] values = vel.split(":");
 		float x = Float.parseFloat(values[0]);
 		float y = Float.parseFloat(values[1]);
-		this.velocity.set(x,y);
+		this.velocity.set(x, y);
 
 	}
 
@@ -120,14 +120,18 @@ public abstract class DynamicObject implements GameObject{
 		return size;
 	}
 
-	public Vector2 getHeading(){
+	public Vector2 getHeading() {
 		return heading;
 	}
 
-	public void setHeading(Vector2 heading){
+	public void setHeading(Vector2 heading) {
 		heading.nor();
 		this.heading.set(heading);
+	}
 
+	public void setHeading(float x, float y) {
+		heading.set(x, y);
+		heading.nor();
 	}
 
 	public Vector2 getVelocity() {
@@ -143,9 +147,20 @@ public abstract class DynamicObject implements GameObject{
 		isCarbage = false;
 
 	}
-	
+
 	@Override
-	public boolean getDebug(){
+	public void markAsCarbage() {
+		isCarbage = true;
+
+	}
+
+	@Override
+	public boolean isCarbage() {
+		return isCarbage;
+	}
+
+	@Override
+	public boolean getDebug() {
 		return debug;
 	}
 
@@ -154,22 +169,26 @@ public abstract class DynamicObject implements GameObject{
 		return zIndex;
 	}
 
-	public void setzIndex(String index){
+	public void setzIndex(String index) {
 
 	}
-	
+
 	@Override
 	public void setZindex(int z) {
 		zIndex = z;
 
 	}
 
-	public Vector2 getForce(){
+	public Vector2 getForce() {
 		return force;
 	}
 
 	public void setForce(Vector2 force) {
 		this.force.set(force);
+	}
+
+	public void setForce(float x, float y) {
+		this.force.set(x, y);
 	}
 
 	public String getRenderType() {
@@ -190,14 +209,31 @@ public abstract class DynamicObject implements GameObject{
 
 	@Override
 	public void setSize(float x, float y) {
-		this.size.set(x,y);
+		this.size.set(x, y);
 
+	}
+
+	public boolean isWithinRange(Vector2 poitn, float radius) {
+		return false;
 	}
 
 	@Override
 	public Vector2 getCenterPosition() {
-		this.centerPosition.set(position.x - getSize().x / 4 ,position.y + getSize().y / 2);
+		this.centerPosition.set(position.x - getSize().x / 4, position.y
+				+ getSize().y / 2);
 		return centerPosition;
+	}
+
+	public boolean isCollisionDisabled() {
+		return collisionDisabled;
+	}
+
+	public void disableCollision() {
+		collisionDisabled = true;
+	}
+
+	public void enableCollision() {
+		collisionDisabled = false;
 	}
 
 }
