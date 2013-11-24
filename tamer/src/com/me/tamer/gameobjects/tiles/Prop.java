@@ -94,7 +94,6 @@ public class Prop extends StaticObject implements Obstacle {
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse);
 				((DynamicObject)creatures.get(i)).setHeading(newHeading);
-				System.out.println("New heading after collision "+newHeading.toString());
 			}
 		}
 	}
