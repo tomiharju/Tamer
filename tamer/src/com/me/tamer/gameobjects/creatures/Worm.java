@@ -108,35 +108,11 @@ public class Worm extends DynamicObject implements Creature {
 				parts.get(i).setAsTail();
 		}
 	}
-//<<<<<<< HEAD
-//
-//	public void update(float dt) {
-//		head.solveJoints(dt);
-//		head.update(dt);
-//		head.getVelocity().set(head.getForce());
-//
-//		// kill worm when head has decayed
-//		if (head.getLevelOfDecay() < 0.1) {
-//			markAsCarbage();
-//		}
-//		
-//		//Not ready yet
-////		if (fence.checkIfInside(this) || !insideFence) {
-////			hud.updateLabel(Hud.LABEL_SURVIVED, 1);
-////		} else if (!fence.checkIfInside(this) || insideFence) {
-////			hud.updateLabel(Hud.LABEL_SURVIVED, -1);
-////		}
-//	}
-//
-//	public void draw(SpriteBatch batch) {
-//		Collections.sort(gameobjects, comparator);
-//		for (int i = 0; i < gameobjects.size(); i++) {
-//			gameobjects.get(i).draw(batch);
-//=======
+
 	
 	public void update(float dt){
 		for(int i = 0 ; i < parts.size() ; i++)
-			parts.get(i).solveJoint(dt);
+			parts.get(i).solveJoints(dt);
 		for(int i = 0 ; i < parts.size() ; i++)
 			parts.get(i).update(dt);
 		

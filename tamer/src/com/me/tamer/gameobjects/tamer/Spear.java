@@ -104,7 +104,6 @@ public class Spear extends DynamicObject {
 				hitbox.setZindex(-1);
 				hitbox.setPosition(getPosition());
 				hitbox.markAsActive();
-				environment.addNewObject(hitbox);
 			}
 		}
 	}
@@ -224,6 +223,7 @@ public class Spear extends DynamicObject {
 			
 			targetWorm = null;
 			targetCreature = null;
+			creature = null;
 		}
 
 		// remove hitbox

@@ -17,8 +17,8 @@ import com.me.tamer.utils.Helper;
 public class WormPart extends DynamicObject implements Creature{
 	
 	private final float DECAY_SPEED = 0.5f;
-	private final float MIN_LENGTH = 0.15f;
-	private final float STRETCH_AMOUNT = 0.07f;
+	private final float MIN_LENGTH = 0.2f;
+	private final float STRETCH_AMOUNT = 0.17f;
 	private final float HEAD_POS_FIX = 0.005f;
 	
 	// Container worm
@@ -142,6 +142,7 @@ public class WormPart extends DynamicObject implements Creature{
 
 	public void solveJoints(float dt) {
 		if (partType == TYPE_HEAD) {
+
 			solveJoint(dt);
 			joint_length = 0.3f;
 		} else if (partType == TYPE_BODY) {
@@ -149,6 +150,8 @@ public class WormPart extends DynamicObject implements Creature{
 			lengthAngle += dt;
 			joint_length = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle))
 					* STRETCH_AMOUNT;
+		
+
 		}
 	}
 
