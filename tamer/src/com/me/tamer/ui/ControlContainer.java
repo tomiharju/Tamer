@@ -21,7 +21,6 @@ public class ControlContainer extends Group{
 	Joystick joystick;
 	SpearButton spearButton;
 	ScreamButton screamButton;
-	TouchWrap touchWrap;
 	
 	private ControlContainer() {
 		//constructor should not be accessible
@@ -42,9 +41,6 @@ public class ControlContainer extends Group{
 	}
 	
 	public void create(){
-		//touch wrap is added first so it under other controls
-		touchWrap = new TouchWrap();
-		this.addActor(touchWrap);
 		
 		joystick = new Joystick(this);
 		this.addActor( joystick);
@@ -55,7 +51,7 @@ public class ControlContainer extends Group{
 		spearButton = new SpearButton(this);
 		this.addActor(spearButton);
 		SnapshotArray<Actor> actors = getChildren();
-//		System.out.println("Controlcontainer has "+actors.size +" children");
+		
 		//Hide all buttons in startup
 		disableInput();
 	}
@@ -71,6 +67,8 @@ public class ControlContainer extends Group{
 	@Override
 	public void draw (SpriteBatch batch, float parentAlpha) {
 		batch.setProjectionMatrix(uiCam.combined);
+		
+		
 		SnapshotArray<Actor> actors = getChildren();
 		for (int i = 0; i < actors.size; i++){
 			actors.get(i).draw(batch, parentAlpha);
@@ -93,6 +91,14 @@ public class ControlContainer extends Group{
 		return spearButton.isOnCooldown();
 	}
 	
+	public void setSpearOnRange(boolean b){
+		spearButton.setSpearOnRange(b);
+	}
+	
+	public boolean isSpearOnRange(){
+		return spearButton.isSpearOnRange();
+	}
+	
 	public Environment getEnvironment() {
 		return environment;
 	}
@@ -106,10 +112,6 @@ public class ControlContainer extends Group{
 	
 	public Joystick getJoystick(){
 		return joystick;
-	}
-	
-	public TouchWrap getTouchWrap(){
-		return touchWrap;
 	}
 	
 	public SpearButton getSpearButton(){

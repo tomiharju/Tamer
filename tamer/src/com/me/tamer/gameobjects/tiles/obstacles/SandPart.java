@@ -6,6 +6,7 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public class SandPart extends StaticObject{
@@ -21,10 +22,20 @@ public class SandPart extends StaticObject{
 		setAnimState(20);
 	}
 	public void setGraphics(String graphics){
-		Renderer render = RenderPool.addRendererToPool("static",graphics);
-		render.loadGraphics(graphics);
-		setSize(Helper.TILESIZE);
-		this.setRenderType(graphics);	
+//		Renderer render = RenderPool.addRendererToPool("static",graphics);
+//		render.loadGraphics(graphics);
+//		setSize(Helper.TILESIZE.x, Helper.TILESIZE.y);
+//		render.setSize(getSize());
+//		this.setRenderType(graphics);
+		
+		//Temporary solution because the one above does not work
+		graphics = graphics.split("\\.")[0];
+		
+		Renderer render = RenderPool.addRendererToPool("animated", graphics);
+		render.loadGraphics(graphics, 1, 1);
+		setSize(Helper.TILESIZE.x,Helper.TILESIZE.y);
+		render.setSize(getSize());
+		setRenderType(graphics);
 	}
 	
 	public float stepAnimState(){
@@ -58,6 +69,11 @@ public class SandPart extends StaticObject{
 	}
 	@Override
 	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setGraphics(TamerTexture tex) {
 		// TODO Auto-generated method stub
 		
 	}

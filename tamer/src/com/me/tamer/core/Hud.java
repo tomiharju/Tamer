@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.me.tamer.core.TamerGame.ScreenType;
 
 public class Hud extends Group {
 	public static final int SIZE = Gdx.graphics.getHeight() / 5;
@@ -82,7 +83,7 @@ public class Hud extends Group {
 		menuButton = new TextButton("Menu", textButtonStyle);
 		menuButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				stage.getGame().setScreen(stage.getGame().getPauseScreen());
+				stage.getGame().setScreen(ScreenType.PAUSE);
 			}
 		});
 
@@ -112,7 +113,7 @@ public class Hud extends Group {
 		this.addActor(bgImage);
 		this.addActor(table);
 	}
-
+	
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setProjectionMatrix(stage.getUiCamera().combined);
 		SnapshotArray<Actor> actors = getChildren();

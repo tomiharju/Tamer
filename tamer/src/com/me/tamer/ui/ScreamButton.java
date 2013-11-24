@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.UiRenderer;
 import com.me.tamer.gameobjects.tamer.Tamer;
+import com.me.tamer.services.TextureManager.TamerTexture;
 
 public class ScreamButton extends Actor{
 	private final float BUTTON_SIZE						= 180;
@@ -34,13 +35,15 @@ public class ScreamButton extends Actor{
 		environment		= controlContainer.getEnvironment();
 		tamer 			= environment.getTamer();
 		renderer 		= new UiRenderer();
-		renderer.loadGraphics("button_scream");
+		
+		
+		renderer.loadGraphics(TamerTexture.BUTTON_SCREAM);
 		renderer.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer.setPosition(restingpoint);
 		
 		//2nd renderer
 		renderer2 		= new UiRenderer();
-		renderer2.loadGraphics("button_scream_glow");
+		renderer2.loadGraphics(TamerTexture.BUTTON_SCREAM_GLOW);
 		renderer2.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer2.setPosition(restingpoint);
 		

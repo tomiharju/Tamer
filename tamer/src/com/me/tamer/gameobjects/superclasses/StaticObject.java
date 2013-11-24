@@ -1,17 +1,12 @@
 package com.me.tamer.gameobjects.superclasses;
 
-import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
-import com.me.tamer.gameobjects.renderers.StaticRenderer;
 import com.me.tamer.utils.Helper;
-import com.me.tamer.utils.RendererAccessor;
-import com.me.tamer.utils.StaticRendererAccessor;
 
 public abstract class StaticObject implements GameObject{
 	private Vector2 position		= new Vector2();
@@ -38,8 +33,11 @@ public abstract class StaticObject implements GameObject{
 			renderer.setPosition(Helper.worldToScreen(position));
 			renderer.setOrientation(0);
 			renderer.draw(batch);
-			
 		}	
+	}
+	
+	public void update(float dt){
+		//
 	}
 	
 	@Override
@@ -85,10 +83,6 @@ public abstract class StaticObject implements GameObject{
 	public Vector2 getScreenTileCenter(){
 		this.centerPosition.set(Helper.worldToScreen(position).x + Helper.TILESIZE.x / 2, Helper.worldToScreen(position).y + Helper.TILESIZE.y / 2);
 		return centerPosition;
-	}
-	
-	public void update(float dt){
-		if (fading)tweenManager.update(dt);
 	}
 	
 

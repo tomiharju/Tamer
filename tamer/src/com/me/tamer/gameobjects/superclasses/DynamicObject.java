@@ -1,21 +1,13 @@
 package com.me.tamer.gameobjects.superclasses;
 
-import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.renderers.AnimatedRenderer;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
-import com.me.tamer.gameobjects.renderers.StaticRenderer;
-import com.me.tamer.utils.AnimatedRendererAccessor;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
-import com.me.tamer.utils.RendererAccessor;
-import com.me.tamer.utils.StaticRendererAccessor;
 
 public abstract class DynamicObject implements GameObject{
 
@@ -44,12 +36,10 @@ public abstract class DynamicObject implements GameObject{
 
 	@Override
 	public void draw(SpriteBatch batch) {
-
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		renderer.setSize(getSize());
 		renderer.setPosition(Helper.worldToScreen(position));
 		renderer.setOrientation( solveOrientation() );
-//		if(this.getClass().getSimpleName().equalsIgnoreCase("wormpart"))System.out.println(renderer.getColor().a);
 		renderer.draw(batch);	
 	}
 
@@ -178,6 +168,10 @@ public abstract class DynamicObject implements GameObject{
 
 	public void setRenderType(String renderType) {
 		this.renderType = renderType;
+	}
+	
+	public void setRenderType(TamerTexture tex) {
+		
 	}
 
 	public float getAngle() {

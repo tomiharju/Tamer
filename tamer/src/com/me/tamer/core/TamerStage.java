@@ -33,6 +33,7 @@ public class TamerStage extends Stage{
 	private Hud hud;
 	private Environment environment;
 	private ControlContainer controlContainer;
+
 	
 	//GameStates
 	public static final int GAME_READY = 0; 
@@ -190,7 +191,7 @@ public class TamerStage extends Stage{
 			
 			camera.zoom -= BEGIN_ZOOM_SPEED;
 			
-			System.out.println(camera.zoom);
+//			System.out.println(camera.zoom);
 			if(camera.zoom <= 1.0f) {
 				setCameraHolder(TAMER_CAMERA);
 				environment.setState(RunningState.TAMER_ENTER);
@@ -244,8 +245,8 @@ public class TamerStage extends Stage{
 	public int getGameState() {
 		return gameState;
 	}
-	
-	
-	
-	
+
+	public Level getLevel() {
+		return level;
+	}
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.me.tamer.core.Level;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.core.TamerGame.ScreenType;
 
 
 public class LevelsScreen extends AbstractMenu{
@@ -33,10 +34,9 @@ public class LevelsScreen extends AbstractMenu{
 			TextButton newButton = new TextButton( levels.get(i).getName() ,textButtonStyle);		
 			newButton.addListener(new ChangeListener() {
 				final int button = levelId;
-	            public void changed (ChangeEvent event, Actor actor) {
-	            	
+	            public void changed (ChangeEvent event, Actor actor) {  	
 	            	game.getLevelManager().setCurrentLevel( levels.get(button).getId() );
-	            	game.setScreen( game.createNewPlayScreen() );
+	            	game.setScreen( ScreenType.NEW_PLAY );
 	            }
 	        });
 			

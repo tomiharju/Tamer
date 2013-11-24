@@ -15,6 +15,7 @@ import com.me.tamer.gameobjects.renderers.EffectRenderer;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public class Quicksand extends StaticObject implements Obstacle{
@@ -36,7 +37,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 		creatures_entered = new ArrayList<Creature>();
 		bogHoleCenter 	= new Vector2();
 		activated		= false;
-		loadEffectGraphics();
+//		loadEffectGraphics();
 		hud = Hud.instance();
 	}
 
@@ -63,12 +64,12 @@ public class Quicksand extends StaticObject implements Obstacle{
 		bogHoleCenter.div(parts.size());
 	}
 	public void draw(SpriteBatch batch){
-		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		for(int i = 0 ; i < parts.size() ; i ++){
-			renderer.setPosition(Helper.worldToScreen(parts.get(i).getPosition()));
-			((EffectRenderer) renderer).setAnimSeed( parts.get(i).stepAnimState());
-			renderer.draw(batch);
-		}
+//		Renderer renderer = RenderPool.getRenderer(getRenderType());
+//		for(int i = 0 ; i < parts.size() ; i ++){
+//			renderer.setPosition(Helper.worldToScreen(parts.get(i).getPosition()));
+//			((EffectRenderer) renderer).setAnimSeed( parts.get(i).stepAnimState());
+//			renderer.draw(batch);
+//		}
 	}
 	
 	public void resolve(ArrayList<Creature> creatures){
@@ -85,17 +86,6 @@ public class Quicksand extends StaticObject implements Obstacle{
 					if(!creatures_entered.contains(creatures.get(i))){
 						//Add creature to this cluster
 						creatures_entered.add(creatures.get(i));
-						
-//						alreadyDead = false;
-//						for (int j = 0; j < deadCreatures.size(); j++){
-//							if (creatures.get(i) == deadCreatures.get(j))alreadyDead = true;
-//						}
-//						if(!alreadyDead){
-//							
-////							Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
-////									+ " :: updating label remaining");
-////							hud.updateLabel(Hud.LABEL_REMAINING, -1);
-//						}
 						
 						//Do a coinflip
 						/*int head = (int) Math.round(Math.random());
@@ -162,5 +152,12 @@ public class Quicksand extends StaticObject implements Obstacle{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setGraphics(TamerTexture tex) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

@@ -1,6 +1,7 @@
 package com.me.tamer.core;
 
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.Environment.RunningState;
 import com.me.tamer.utils.EnvironmentCreator;
 
 public class Level{
@@ -48,6 +49,7 @@ public class Level{
 	}
 
 	public void setCompleted(boolean completed) {
+		environment.setState(RunningState.END_FADE);
 		this.completed = completed;
 	}
 

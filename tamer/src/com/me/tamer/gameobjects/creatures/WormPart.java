@@ -10,9 +10,8 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.tamer.Spear;
-import com.me.tamer.physics.RigidBodyBox;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public class WormPart extends DynamicObject implements Creature {
@@ -55,7 +54,7 @@ public class WormPart extends DynamicObject implements Creature {
 
 	public void createHead(Vector2 pos, Vector2 vel, Worm worm) {
 		this.worm = worm;
-		setGraphics("wormhead");
+		setGraphics(TamerTexture.WORMHEAD);
 		partName = "Head";
 		mass = 30;
 		invMass = 1 / mass;
@@ -68,7 +67,7 @@ public class WormPart extends DynamicObject implements Creature {
 
 	public void createBodyPart(int ordinal, Vector2 pos, Vector2 vel, Worm worm) {
 		this.worm = worm;
-		setGraphics("vwormpart2");
+		setGraphics(TamerTexture.WORMPART);
 		partName = "Joint";
 		mass = 10;
 		invMass = 1 / mass;
@@ -79,11 +78,11 @@ public class WormPart extends DynamicObject implements Creature {
 		this.ordinal = ordinal;
 	}
 
-	public void setGraphics(String graphics) {
-		Renderer render = RenderPool.addRendererToPool("animated", graphics);
+	public void setGraphics(TamerTexture graphics) {
+		Renderer render = RenderPool.addRendererToPool("animated", graphics.name());
 		render.loadGraphics(graphics, 1, 8);
 		setSize(1, 1f);
-		setRenderType(graphics);
+		setRenderType(graphics.name());
 	}
 
 	@Override
@@ -377,5 +376,11 @@ public class WormPart extends DynamicObject implements Creature {
 
 	public boolean getDebug() {
 		return false;
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -11,6 +11,7 @@ import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 /**
@@ -73,17 +74,17 @@ public class TileMap extends StaticObject implements Obstacle{
 	}
 	
 	public void setTerrain(String graphics){
-		/*
-		Renderer render = RenderPool.addRendererToPool("static",graphics);
-		render.loadGraphics(graphics);
-		setSize(Helper.TILESIZE.x,Helper.TILESIZE.y);
-		render.setSize(getSize());
-		setRenderType(graphics);
-		*/
+		
+//		Renderer render = RenderPool.addRendererToPool("static",graphics);
+//		render.loadGraphics(graphics);
+//		setSize(Helper.TILESIZE.x,Helper.TILESIZE.y);
+//		render.setSize(getSize());
+//		setRenderType(graphics);
+		
 		
 		//just to test
 		Renderer render = RenderPool.addRendererToPool("animated", "vTile");
-		render.loadGraphics("vTile", 1, 1);
+		render.loadGraphics("dirt2", 1, 1);
 		setSize(Helper.TILESIZE.x,Helper.TILESIZE.y);
 		render.setSize(getSize());
 		setRenderType("vTile");
@@ -144,6 +145,12 @@ public class TileMap extends StaticObject implements Obstacle{
 
 	@Override
 	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGraphics(TamerTexture tex) {
 		// TODO Auto-generated method stub
 		
 	}	

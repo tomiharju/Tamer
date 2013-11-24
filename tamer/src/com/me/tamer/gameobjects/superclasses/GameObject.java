@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.services.TextureManager.TamerTexture;
 
 
 /**
@@ -33,6 +34,7 @@ public interface GameObject{
 	 * Causes the carbage collection cycle to remove this object
 	 */
 	public void setGraphics(String graphics);
+	public void setGraphics(TamerTexture tex);
 	
 	public void markAsCarbage();
 	/**
