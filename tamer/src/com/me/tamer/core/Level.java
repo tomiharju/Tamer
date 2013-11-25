@@ -81,7 +81,6 @@ public class Level {
 	}
 
 	public void addWorm(Worm w) {
-
 		worms++;
 		updateHud();
 	}
@@ -103,6 +102,8 @@ public class Level {
 		default:
 			break;
 		}
+		
+		if (worms<=0) setCompleted(true);
 		updateHud();
 	}
 

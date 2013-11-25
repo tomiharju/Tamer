@@ -79,11 +79,11 @@ public class Joystick extends Actor{
 				controlContainer.getStage().getCamera().zoom += ZOOM_OUT_SPEED;
 			
 			if (pressed){
-				if(movementDisabled)
-					environment.getTamer().turn(delta);
-				else{			
+//				if(movementDisabled)
+//					environment.getTamer().turn(delta);
+//				else{			
 					environment.getTamer().manouver(delta);
-				}	
+//				}	
 			}
 		}		
 	}

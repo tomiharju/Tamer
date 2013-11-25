@@ -116,7 +116,11 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public void solveEffects(){
 		onSpearRange = false;
-		if (getPosition().dst( environment.getTamer().getShadow().getPosition()) < SIZE) onSpearRange = true;		
+		if (getPosition().dst( environment.getTamer().getShadow().getPosition()) < SIZE){
+			onSpearRange = true;
+			environment.getTamer().setCreatureOnSpearRange( getCenterPosition() );
+		}
+		
 	}
 
 	public void lockToTarget(WormPart wp){
@@ -225,7 +229,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	@Override
 	public Creature affectedCreature(Vector2 point,float radius) {
-		if( this.getPosition().dst(point) < radius)
+		if( this.getPosition().dst(point) - SIZE /2 < radius)
 			return this;
 		else
 			return null;
@@ -241,7 +245,6 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	@Override
 	public void kill() {
-		
 		markAsCarbage();	
 	}
 	
@@ -257,7 +260,7 @@ public class AntOrc extends DynamicObject implements Creature{
 //			targetPart.spearHit(spear);
 			targetWorm.setBeingEaten(false);
 			
-			EventPool.addEvent(new tEvent(spear,"stopAdjusting", 0.5f,1));
+//			EventPool.addEvent(new tEvent(spear,"stopAdjusting", 0.5f,1));
 		}
 		
 		//just kill when spear hits for now
@@ -271,7 +274,6 @@ public class AntOrc extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		
 	}
-
 
 
 	@Override
@@ -294,24 +296,6 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setGraphics(String graphics) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setup(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -352,17 +336,5 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public Worm getTargetWorm(){
 		return targetWorm;
-	}
-
-	@Override
-	public void disableCollision() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void enableCollision() {
-		// TODO Auto-generated method stub
-		
 	}
 }

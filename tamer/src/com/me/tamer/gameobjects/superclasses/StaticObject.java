@@ -32,7 +32,6 @@ public abstract class StaticObject implements GameObject{
 			Renderer renderer = RenderPool.getRenderer(getRenderType());
 			renderer.setSize(getSize());
 			renderer.setPosition(Helper.worldToScreen(position));
-			renderer.setOrientation(0);
 			renderer.draw(batch);
 		}	
 	}
@@ -62,7 +61,12 @@ public abstract class StaticObject implements GameObject{
 	public void setSize(float x, float y){
 		this.size.set(x,y);
 	}
-	
+	public void setGraphics(String graphics){
+		graphics = graphics.split("\\.")[0];
+		Renderer render = RenderPool.addRendererToPool("static",graphics);
+		render.loadGraphics(graphics);
+		setRenderType(graphics);
+	}
 	@Override
 	public void setPosition(String pos) {
 		String[] values = pos.split(":");

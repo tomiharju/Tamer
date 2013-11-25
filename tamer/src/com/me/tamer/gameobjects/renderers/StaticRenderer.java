@@ -31,8 +31,7 @@ public class StaticRenderer implements Renderer {
 	}
 
 	@Override
-	public void loadGraphics(String graphicsName) {
-		String gfx = graphicsName.split("\\.")[0];
+	public void loadGraphics(String gfx) {
 		sprite = new Sprite( assetManager.get("data/graphics/sheetData", TextureAtlas.class).findRegion(gfx) );
 		sprite.setColor(Color.WHITE);
 	}

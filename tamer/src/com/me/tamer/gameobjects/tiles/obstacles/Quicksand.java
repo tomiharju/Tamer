@@ -11,6 +11,7 @@ import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
+import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.renderers.EffectRenderer;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
@@ -50,7 +51,6 @@ public class Quicksand extends StaticObject implements Obstacle{
 		setRenderType("bubbles");
 	}
 	public void setup(Environment environment){
-		environment.addNewObject(this);
 		environment.addObstacle(this);
 		setBogHole();
 	}
@@ -64,14 +64,7 @@ public class Quicksand extends StaticObject implements Obstacle{
 			bogHoleCenter.add(s.getCenterPosition());			
 		bogHoleCenter.div(parts.size());
 	}
-	public void draw(SpriteBatch batch){
-//		Renderer renderer = RenderPool.getRenderer(getRenderType());
-//		for(int i = 0 ; i < parts.size() ; i ++){
-//			renderer.setPosition(Helper.worldToScreen(parts.get(i).getPosition()));
-//			((EffectRenderer) renderer).setAnimSeed( parts.get(i).stepAnimState());
-//			renderer.draw(batch);
-//		}
-	}
+	
 	
 	public void resolve(ArrayList<Creature> creatures){
 		int size = creatures.size();
@@ -119,6 +112,14 @@ public class Quicksand extends StaticObject implements Obstacle{
 			//Start pulling all the worms that are within the cluster
 			for(int i = 0 ; i < size ; i ++){
 				creatures_entered.get(i).applyPull(bogHoleCenter,PULL_MAGNITUDE);
+				for(int k = 0; k < psize ; k ++){
+					//Check if this creature is closer than 1 from any of this clusters parts
+					Worm casultyWorm = (Worm) creatures_entered.get(i);
+					for(int j = 0 ; j < casultyWorm.getParts().size() ; j ++){
+						if(casultyWorm.getParts().get(j).isWithinRange(parts.get(k).getPosition(),0.5f))
+							casultyWorm.getParts().get(j).decay();
+					}
+				}
 			}		
 		}
 	}

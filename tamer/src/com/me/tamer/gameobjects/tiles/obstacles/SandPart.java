@@ -17,26 +17,11 @@ public class SandPart extends StaticObject{
 	private float animState = 0;
 
 	public void setup(Environment environment){
-		environment.addNewObject(this);
-		setZindex(1);
+		environment.addStaticObject(this);
+		setZindex(0);
 		setAnimState(20);
 	}
-	public void setGraphics(String graphics){
-//		Renderer render = RenderPool.addRendererToPool("static",graphics);
-//		render.loadGraphics(graphics);
-//		setSize(Helper.TILESIZE.x, Helper.TILESIZE.y);
-//		render.setSize(getSize());
-//		this.setRenderType(graphics);
-		
-		//Temporary solution because the one above does not work
-		graphics = graphics.split("\\.")[0];
-		
-		Renderer render = RenderPool.addRendererToPool("animated", graphics);
-		render.loadGraphics(graphics, 1, 1);
-		setSize(Helper.TILESIZE.x,Helper.TILESIZE.y);
-		render.setSize(getSize());
-		setRenderType(graphics);
-	}
+	
 	
 	public float stepAnimState(){
 		animState+= Gdx.graphics.getDeltaTime();
@@ -75,6 +60,12 @@ public class SandPart extends StaticObject{
 	@Override
 	public void setGraphics(TamerTexture tex) {
 		// TODO Auto-generated method stub
-		
+	}
+	public void setGraphics(String graphics){
+		graphics = graphics.split("\\.")[0];
+		Renderer render = RenderPool.addRendererToPool("static",graphics);
+		setSize(Helper.TILESIZE);
+		render.loadGraphics(graphics);
+		setRenderType(graphics);
 	}
 }

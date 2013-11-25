@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SoundLoader;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.tamer.core.screens.AbstractScreen;
@@ -63,7 +64,7 @@ public class TamerGame extends Game {
 	private Screen fadingScreen;
 
 	// Main drawing batch
-	private SpriteBatch batch = null;
+	//private SpriteBatch batch = null;
 
 	Hud hud;
 
@@ -76,7 +77,7 @@ public class TamerGame extends Game {
 				+ " :: Creating game on " + Gdx.app.getType());
 		// Spritebatch is used for drawing sprites
 
-		batch = new SpriteBatch();
+		//batch = new SpriteBatch();
 
 		// create the preference manager
 		preferenceManager = new PreferenceManager();
@@ -124,10 +125,9 @@ public class TamerGame extends Game {
 
 	@Override
 	public void render() {
-		batch.begin();
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		
+		Gdx.gl.glEnable(GL10.GL_BLEND);
 
 		if (fadingScreen != null) {
 			fadingScreen.render(Gdx.graphics.getDeltaTime());
@@ -142,7 +142,6 @@ public class TamerGame extends Game {
 			tweenManager.update(Gdx.graphics.getDeltaTime());
 		
 		
-		batch.end();
 	}
 
 	public void changeLevelCompleteScreen() {
@@ -202,8 +201,7 @@ public class TamerGame extends Game {
 		Gdx.app.log(TamerGame.LOG, "Disposing game");
 		musicManager.dispose();
 
-		// sprites
-		batch.dispose();
+		
 	}
 
 	public MusicManager getMusicManager() {

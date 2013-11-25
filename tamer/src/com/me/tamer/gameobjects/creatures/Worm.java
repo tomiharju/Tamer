@@ -25,7 +25,6 @@ public class Worm extends DynamicObject implements Creature {
 	private float SPEED = 12.0f;
 	private WormPart head = null;
 	private WormPart tail = null;
-
 	private boolean collisionDisabled = false;
 
 	// for effects
@@ -33,18 +32,20 @@ public class Worm extends DynamicObject implements Creature {
 
 	// for draw order
 	ArrayList<GameObject> gameobjects = new ArrayList<GameObject>();
-	
+
 	private boolean beingEaten = false;
 	private boolean bound = false;
 	private boolean insideFence = false;
-	
-	//for effects
+
+	// for effects
 	private DrawOrderComparator comparator;
 
-	//for draw order
+	// for draw order
 	ArrayList<GameObject> drawParts = new ArrayList<GameObject>();
+
+	private Environment environment;
 	private TamerStage stage;
-	
+
 	public Worm() {
 		parts = new ArrayList<WormPart>();
 		comparator = new DrawOrderComparator();
@@ -53,6 +54,7 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public void wakeUp(Environment environment) {
+		this.environment = environment;
 		environment.getCreatures().add(this);
 		addPart("head", 0, super.getPosition(), super.getVelocity());
 		for (int i = 0; i < NUMBER_PARTS; i++)
@@ -64,12 +66,12 @@ public class Worm extends DynamicObject implements Creature {
 		}
 
 		head = parts.get(0);
-		tail = parts.get(parts.size()-1);	
-			
-		//for drawing order
-		//is there better way to do this?
-		for(int i = 0 ; i < parts.size() ; i++){
-			drawParts.add(((GameObject)parts.get(i)));
+		tail = parts.get(parts.size() - 1);
+
+		// for drawing order
+		// is there better way to do this?
+		for (int i = 0; i < parts.size(); i++) {
+			drawParts.add(((GameObject) parts.get(i)));
 		}
 	}
 
@@ -85,7 +87,6 @@ public class Worm extends DynamicObject implements Creature {
 			throw new IllegalArgumentException("Wrong partname");
 
 		parts.add(part);
-
 	}
 
 	public void removePart(WormPart part) {
@@ -103,37 +104,36 @@ public class Worm extends DynamicObject implements Creature {
 		}
 	}
 
-	
-	public void update(float dt){
-		for(int i = 0 ; i < parts.size() ; i++)
+	public void update(float dt) {
+		for (int i = 0; i < parts.size(); i++)
 			parts.get(i).solveJoints(dt);
-		for(int i = 0 ; i < parts.size() ; i++)
+		for (int i = 0; i < parts.size(); i++)
 			parts.get(i).update(dt);
-		
+
 		head.getVelocity().set(head.getHeading().tmp().mul(SPEED));
-		
-		//kill worm when head has decayed
-		if (head.getLevelOfDecay() < 0.1){
+
+		// kill worm when head has decayed
+		if (head.getLevelOfDecay() < 0.1) {
 			markAsCarbage();
 		}
-		
+
 		solveEffects();
 	}
-	
-	public void draw(SpriteBatch batch){	
+
+	public void draw(SpriteBatch batch) {
 		Collections.sort(drawParts, comparator);
-		for(int i = 0 ; i < drawParts.size() ; i++){
+		for (int i = 0; i < drawParts.size(); i++) {
 			drawParts.get(i).draw(batch);
 		}
 	}
 
 	public void doScreamEffect() {
 		if (!head.isBlinking())
-			for(int i = 0 ; i < parts.size() ; i++){
+			for (int i = 0; i < parts.size(); i++) {
 				parts.get(i).setBlinking(true);
 			}
 		else
-			for(int i = 0 ; i < parts.size() ; i++){
+			for (int i = 0; i < parts.size(); i++) {
 				parts.get(i).setBlinking(false);
 			}
 	}
@@ -143,23 +143,26 @@ public class Worm extends DynamicObject implements Creature {
 		head = null;
 	}
 
-	public boolean isWithinRange(Vector2 point, float radius){
-//		for(int i = 0 ; i < parts.size() ; i ++){
-//			if(parts.get(i).getPosition().dst(point) < radius)
-//				return true;
-//		}
-		
-		if (head.getPosition().dst(point) < radius ) return true;
+	public boolean isWithinRange(Vector2 point, float radius) {
+		// for(int i = 0 ; i < parts.size() ; i ++){
+		// if(parts.get(i).getPosition().dst(point) < radius)
+		// return true;
+		// }
+
+		if (head.getPosition().dst(point) < radius)
+			return true;
 		return false;
 	}
-	
+
 	@Override
 	public void applyPull(Vector2 point, float magnitude) {
 		Vector2 direction = point.tmp().sub(head.getPosition());
-		head.setHeading(direction);
-		head.getVelocity().add(direction.mul(magnitude));
-	}
 
+		if (point.dst(head.getPosition()) > 0.5f) {
+			head.getVelocity().add(direction.mul(magnitude));
+			head.setHeading(direction);
+		}
+	}
 
 	@Override
 	public void setup(Environment level) {
@@ -187,15 +190,15 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void kill() {
-		//kill the whole fucker IT IS NOT A FUCKER
-		//Kill it by decaying each of the parts.
-		for(int i = 0; i < parts.size(); i++){
+
+		for (int i = 0; i < parts.size(); i++) {
 			parts.get(i).decay();
 		}
 	}
+
 	@Override
 	public Creature affectedCreature(Vector2 point, float radius) {
-		
+
 		float mindist = radius;
 		WormPart part = null;
 
@@ -208,46 +211,55 @@ public class Worm extends DynamicObject implements Creature {
 		}
 		return part;
 	}
-	
+
 	@Override
-	public void spearHit(Spear spear) {	
+	public void spearHit(Spear spear) {
 		// nail worm to center of a tile
 		getPosition().x = (float) Math.floor(getPosition().x) + 1;
 		getPosition().y = (float) Math.floor(getPosition().y);
 		bind();
-		
+
 		playSound(TamerSound.SPEAR_WORM);
-	
+
 	}
-	
-	public void bind(){
+
+	public void bind() {
 		bound = true;
 		disableCollision();
-		parts.get(parts.size()-1).setInvMass(0);
+		parts.get(parts.size() - 1).setInvMass(0);
 
 		SPEED = 0;
 	}
+
 	@Override
 	public void unBind() {
 		bound = false;
 		enableCollision();
 		SPEED = 5;
-		parts.get(parts.size()-1).setInvMass( 1 / parts.get(parts.size()-1).getMass() );
+		parts.get(parts.size() - 1).setInvMass(
+				1 / parts.get(parts.size() - 1).getMass());
 	}
-	
-	public void solveEffects(){
+
+	public void solveEffects() {
 		setOnSpearRange(false);
-		for(int i = 0 ; i < parts.size() ; i++){
-			if (parts.get(i).getPosition().dst( controls.getEnvironment().getTamer().getShadow().getPosition()) < 1){
+		for (int i = 0; i < parts.size(); i++) {
+			if (parts
+					.get(i)
+					.getPosition()
+					.dst(controls.getEnvironment().getTamer().getShadow()
+							.getPosition()) < 1) {
 				setOnSpearRange(true);
 			}
 		}
 	}
-	
-	public void setOnSpearRange(boolean b){
-		for(int i = 0 ; i < parts.size() ; i++){
-			parts.get(i).setOnSpearRange(b);
+
+	public void setOnSpearRange(boolean onRange) {
+		for (int i = 0; i < parts.size(); i++) {
+			parts.get(i).setOnSpearRange(onRange);
 		}
+
+		// Tell tamer that worm is on range and give the tail part as parameter
+		if (onRange)environment.getTamer().setCreatureOnSpearRange( parts.get(parts.size() - 1).getPosition());
 	}
 
 	public void setTail(WormPart part) {
@@ -265,7 +277,7 @@ public class Worm extends DynamicObject implements Creature {
 	@Override
 	public void markAsCarbage() {
 		stage.getLevel().setWormState(this, WormState.DEAD);
-		super.markAsCarbage();		
+		super.markAsCarbage();
 	}
 
 	@Override
@@ -314,7 +326,6 @@ public class Worm extends DynamicObject implements Creature {
 	public void decay() {
 	}
 
-	
 	@Override
 	public boolean isDecaying() {
 		// TODO Auto-generated method stub
@@ -346,17 +357,16 @@ public class Worm extends DynamicObject implements Creature {
 		if (!insideFence && b) {
 			insideFence = b;
 			stage.getLevel().setWormState(this, WormState.FENCE);
-		}
-		else if (insideFence && !b){
+		} else if (insideFence && !b) {
 			insideFence = b;
 			stage.getLevel().setWormState(this, WormState.DEFAULT);
 		}
-		
+
 	}
 
 	@Override
 	public void setGraphics(TamerTexture tex) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

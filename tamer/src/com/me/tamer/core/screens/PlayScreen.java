@@ -19,7 +19,7 @@ public class PlayScreen extends AbstractScreen{
 	public void create(){
 		game.getMusicManager().stop();
 		game.getMusicManager().setVolume(1.0f);
-		game.getMusicManager().play( TamerMusic.LEVEL ); 
+		//game.getMusicManager().play( TamerMusic.LEVEL ); 
 
 		//stage has to be created after state is set to GAME_RUNNING because of the threads
 		stage = TamerStage.instance();
@@ -53,8 +53,6 @@ public class PlayScreen extends AbstractScreen{
 	
 	@Override
     public void render( float delta ){
-		Gdx.gl.glClearColor(bgColor.r,bgColor.g,bgColor.b,bgColor.a);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		((TamerStage)stage).updateCamera(delta);
 		stage.act( delta );
 		stage.draw();

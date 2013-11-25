@@ -14,9 +14,13 @@ import com.me.tamer.utils.Helper;
  */
 public class Decor extends StaticObject{
 	
-	public void setup(Environment level){
-		level.addNewObject(this);
+	public void setup(Environment env) {
+		env.addStaticObject(this);
 	}
+	public void wakeup(Environment env){
+		env.addNewObject(this);
+	}
+
 
 	public void setPixelsX(String pixels){
 		float x = Float.parseFloat(pixels);
@@ -29,22 +33,7 @@ public class Decor extends StaticObject{
 	
 	
 	
-	public void setGraphics(String graphics){
-//		Renderer render = RenderPool.addRendererToPool("static",graphics);
-//		render.loadGraphics(graphics);
-//		setSize(getSize());
-//		render.setSize(getSize());
-//		setRenderType(graphics);
-		
-		//Temporary solution because the one above does not work
-		graphics = graphics.split("\\.")[0];
-		
-		Renderer render = RenderPool.addRendererToPool("animated", graphics);
-		render.loadGraphics(graphics, 1, 1);
-		setSize(getSize());
-		render.setSize(getSize());
-		setRenderType(graphics);
-	}
+	
 
 
 

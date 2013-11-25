@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.services.SoundManager;
@@ -69,8 +70,10 @@ public abstract class DynamicObject implements GameObject {
 		spriteNumber = ((float) (headingAngle / Math.PI * 180 / 45));
 
 		// cannot be zero
-		//if (spriteNumber == 0)
-			//spriteNumber = (0.001f);
+		if (spriteNumber == 0)
+			spriteNumber = 0.001f;
+		if(spriteNumber == 1)
+			spriteNumber = -0.001f;
 		if (heading.x > zeroHeading.x && heading.y > 0)
 			spriteNumber = (8 - spriteNumber);
 		else if (heading.x > -zeroHeading.x && heading.y < 0)
@@ -220,8 +223,13 @@ public abstract class DynamicObject implements GameObject {
 
 	}
 
-	public boolean isWithinRange(Vector2 poitn, float radius) {
-		return false;
+	public boolean isWithinRange(Vector2 point, float radius) {
+		if(position.dst(point) < radius)
+			return true;
+			
+		else
+			return false;
+		
 	}
 
 	@Override
@@ -242,5 +250,25 @@ public abstract class DynamicObject implements GameObject {
 	public void enableCollision() {
 		collisionDisabled = false;
 	}
+	
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }
