@@ -29,7 +29,6 @@ public class Spear extends DynamicObject {
 
 	private Environment environment;
 	private Tamer tamer;
-	private SoundManager sound;
 
 	private Creature targetCreature = null;
 	private Creature creature = null;
@@ -46,7 +45,6 @@ public class Spear extends DynamicObject {
 
 	public Spear() {
 		setGraphics(TamerTexture.SPEAR);
-		sound = SoundManager.instance();
 
 		// hitbox
 		//hitbox.setGraphics("vRocks1.png");
@@ -72,16 +70,9 @@ public class Spear extends DynamicObject {
 			if (getPosition().dst(targetPoint) < 0.5f) {
 				//not sure if really needed, but null pointer happened
 				if (targetCreature != null) {
-//					targetCreature.spearHit(this);
-					targetWorm.spearHit(this);
-					
-					//play sound
-					/*
-					sound.setVolume(0.3f);
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-							+ " :: playing sound HIT");
-					sound.play(TamerSound.HIT);*/
-					
+					targetCreature.spearHit(this);
+				} else{
+					playSound(TamerSound.SPEAR_GROUND);
 				}
 				setPosition(targetPoint);
 				attached = true;
@@ -144,6 +135,7 @@ public class Spear extends DynamicObject {
 				targetFound = true;
 				switch (creature.getType()){
 				case (Creature.TYPE_ANT):
+					System.out.println("MULKKU TAHDATTY");
 					targetCreature = creature;
 					if (((AntOrc)targetCreature).getTargetWorm() != null) targetWorm = ((AntOrc)targetCreature).getTargetWorm();
 					targetPoint = ((DynamicObject) targetCreature).getPosition();
@@ -155,10 +147,7 @@ public class Spear extends DynamicObject {
 						targetWorm = ((Worm)creatures.get(i));
 						targetCreature = targetWorm.getParts().get( targetWorm.getParts().size() - 1);
 						targetPoint = ((DynamicObject) targetCreature).getPosition();
-						
-//						targetCreature = creature;
 					} 
-					
 //					else if (((DynamicObject) creature).getPosition().dst(tamer.getShadow().getPosition()) < ((DynamicObject) targetCreature).getPosition().dst(tamer.getShadow().getPosition())) {
 //						targetCreature = creature;
 //						targetPoint = ((DynamicObject) targetCreature)
@@ -190,10 +179,6 @@ public class Spear extends DynamicObject {
 		setHeading(targetPoint.tmp().sub(getPosition()));
 		direction.set(targetPoint.tmp().sub(getPosition()));
 		direction.nor();
-		
-		//boolean to prevent tamer from picking up spear right after it has been dropped
-
-		//TamerStage.addDebugLine(new Vector2(0, 0), targetPoint);
 	}
 
 	/**

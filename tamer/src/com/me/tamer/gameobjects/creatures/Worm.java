@@ -12,6 +12,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.gameobjects.tiles.Fence;
+import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
@@ -216,6 +217,8 @@ public class Worm extends DynamicObject implements Creature {
 		getPosition().x = (float) Math.floor(getPosition().x) + 1;
 		getPosition().y = (float) Math.floor(getPosition().y);
 		bind();
+		
+		playSound(TamerSound.SPEAR_WORM);
 	
 	}
 	

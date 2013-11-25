@@ -31,20 +31,34 @@ public class SoundManager  {
 	 * Available sound files
 	 */
 	public enum TamerSound {
-		CLICK("sound/click.wav"),
-		OPENING("sound/01taunt00a.wav"),
-		HIT("sound/06kill03.wav"),
-		HAWK("sound/hawk.wav"),
-		THROW("sound/throw16.wav");
+		//Menu
+		MENU_CLICK("Menu_nappi01.ogg"),
+		
+		TAMER_SPEAR("heitto02.ogg"),
+		GRYPHON("hawk.wav"),
+		ANT_EAT("Murkku_syonti01.ogg"),
+		
+		//Spear
+		SPEAR_WORM("Keihas_mato03.ogg"),
+		SPEAR_ANT("Keihas_murkku08.ogg"),
+		SPEAR_SWAMP("Keihas_suo10.ogg"),
+		SPEAR_GROUND("Keihas_nurmi02.ogg"),
+		
+		//old
+		OPENING("01taunt00a.wav"),
+		HIT("06kill03.wav"),
+		HAWK("hawk.wav");
+		
 
 		private final String fileName;
+		private final String path = "sound/";
 
 		private TamerSound(String fileName) {
 			this.fileName = fileName;
 		}
 
 		public String getFileName() {
-			return fileName;
+			return path + fileName;
 		}
 	}
 

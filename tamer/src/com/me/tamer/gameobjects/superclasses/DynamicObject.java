@@ -2,10 +2,14 @@ package com.me.tamer.gameobjects.superclasses;
 
 import aurelienribon.tweenengine.TweenManager;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
+import com.me.tamer.services.SoundManager;
+import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
@@ -41,6 +45,9 @@ public abstract class DynamicObject implements GameObject {
 	protected boolean fading = false;
 
 	protected TweenManager tweenManager;
+	
+	//Sound
+	SoundManager sound;
 
 	@Override
 	public void draw(SpriteBatch batch) {
@@ -71,6 +78,13 @@ public abstract class DynamicObject implements GameObject {
 
 		spriteNumber = ((float) Math.floor(spriteNumber));
 		return (int)(spriteNumber);
+	}
+	
+	public void playSound(TamerSound s){
+		if (sound == null) sound = SoundManager.instance();
+		
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Playing sound: " +s.name());
+		sound.play(s);
 	}
 
 	@Override

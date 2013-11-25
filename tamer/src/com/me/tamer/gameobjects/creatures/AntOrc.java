@@ -13,6 +13,7 @@ import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
+import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
@@ -241,7 +242,6 @@ public class AntOrc extends DynamicObject implements Creature{
 	@Override
 	public void spearHit(Spear spear) {
 		
-		//System.out.println("mulkku l�vistetty");
 		//move position to center of a tile
 		getPosition().x = (float) Math.floor(getPosition().x) + 1; //+ 0.5f;
 		getPosition().y = (float) Math.floor(getPosition().y);// + 0.5f;
@@ -256,6 +256,8 @@ public class AntOrc extends DynamicObject implements Creature{
 		
 		//just kill when spear hits for now
 		decay();
+		
+		playSound(TamerSound.SPEAR_ANT);
 	}
 
 	@Override
