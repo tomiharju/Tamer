@@ -86,7 +86,7 @@ public class EnvironmentCreator {
 			
 			//Once xml file is completely read, and all objects are added, return new fresh level.
 			//Setup objects adds all obstacles to specific obstacle list, used later for sandpit resolution etc.
-			level.setupObjects();
+			level.setupGame();
 			
 			return level;	  
 		  

@@ -148,49 +148,7 @@ public class Worm extends DynamicObject implements Creature {
 		parts = null;
 		head = null;
 	}
-//<<<<<<< HEAD
-//
-//	@Override
-//	public void moveToPoint(Vector2 point) {
-//		head.moveToPoint(point);
-//
-//	}
-//
-//	@Override
-//	public Creature affectedCreature(Vector2 point, float radius) {
-//		for (int i = 0; i < parts.size(); i++) {
-//			if (parts.get(i).affectedCreature(point, radius) != null)
-//				return parts.get(i);
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public boolean isAffected(Vector2 point, float radius) {
-//		boolean partAffected = false;
-//		for (int i = 0; i < parts.size(); i++) {
-//			if (parts.get(i).getPosition().dst(point) < radius) {
-//				partAffected = true;
-//			}
-//		}
-//		return partAffected;
-//	}
-//
-//	@Override
-//	public void applyPull(Vector2 point, float magnitue) {
-//		head.applyPull(point, magnitue);
-//	}
-//
-//	@Override
-//	public boolean isCollisionDisabled() {
-//		return collisionDisabled;// !(head.getInvMass() > 0);
-//	}
-//
-//	public void setCollisionDisabled(boolean b) {
-//		collisionDisabled = b;
-//	}
-//=======
-	
+
 
 	public boolean isWithinRange(Vector2 point, float radius){
 		for(int i = 0 ; i < parts.size() ; i ++)
@@ -205,8 +163,11 @@ public class Worm extends DynamicObject implements Creature {
 	@Override
 	public void applyPull(Vector2 point, float magnitude) {
 		Vector2 direction = point.tmp().sub(head.getPosition());
-		head.setHeading(direction);
-		head.getVelocity().add(direction.mul(magnitude));
+	
+		if(point.dst(head.getPosition()) > 0.5f){
+			head.getVelocity().add(direction.mul(magnitude));
+			head.setHeading(direction);
+		}
 	}
 
 
@@ -247,25 +208,6 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void kill() {
-//<<<<<<< HEAD
-//		// kill the whole fucker
-//		for (int i = 0; i < parts.size(); i++) {
-//			parts.get(i).kill();
-//			parts.get(i).decay();
-//		}
-//	}
-//
-//	@Override
-//	public void spearHit(Spear spear) {
-//	}
-//
-//	public void bind() {
-//		for (int i = 0; i < parts.size(); i++) {
-//			parts.get(i).bind();
-//		}
-//=======
-		//kill the whole fucker IT IS NOT A FUCKER
-		//Kill it by decaying each of the parts.
 		for(int i = 0; i < parts.size(); i++){
 			parts.get(i).decay();
 		}

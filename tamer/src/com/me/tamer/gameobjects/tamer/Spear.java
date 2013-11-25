@@ -100,7 +100,7 @@ public class Spear extends DynamicObject {
 				attached = true;
 
 				// create hitbox
-				hitbox.setup(environment);
+				environment.addNewObject(hitbox);
 				hitbox.setZindex(-1);
 				hitbox.setPosition(getPosition());
 				hitbox.markAsActive();

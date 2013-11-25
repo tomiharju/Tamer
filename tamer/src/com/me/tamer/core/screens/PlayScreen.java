@@ -53,8 +53,6 @@ public class PlayScreen extends AbstractScreen{
 	
 	@Override
     public void render( float delta ){
-		Gdx.gl.glClearColor(bgColor.r,bgColor.g,bgColor.b,bgColor.a);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		((TamerStage)stage).updateCamera(delta);
 		stage.act( delta );
 		stage.draw();

@@ -30,6 +30,11 @@ public class Prop extends StaticObject implements Obstacle {
 	private ArrayList<Vector2> axes;
 
 	public void setup(Environment env) {
+		env.addObstacle(this);
+		env.addNewObject(this);
+		createVertices();
+	}
+	public void wakeup(Environment env){
 		env.addNewObject(this);
 		env.addObstacle(this);
 		createVertices();
@@ -52,12 +57,7 @@ public class Prop extends StaticObject implements Obstacle {
 
 	}
 
-	public void setGraphics(String graphics) {
-		Renderer render = RenderPool.addRendererToPool("static", graphics);
-		render.loadGraphics(graphics);
-		setSize(getSize());
-		setRenderType(graphics);
-	}
+	
 
 	@Override
 	public void resolve(ArrayList<Creature> creatures) {
@@ -89,9 +89,10 @@ public class Prop extends StaticObject implements Obstacle {
 
 				closestVertice.set(getClosestVertice(((DynamicObject) creatures
 						.get(i)).getPosition()));
-
-				impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
-						.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
+				float distance = closestVertice.dst(((Worm) creatures.get(i)).getHead().getPosition());
+				//impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
+					//	.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
+				impulse.set(collisionAxis.mul(distance));
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse);
 				((DynamicObject)creatures.get(i)).setHeading(newHeading);

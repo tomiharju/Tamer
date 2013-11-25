@@ -62,8 +62,10 @@ public abstract class DynamicObject implements GameObject {
 		spriteNumber = ((float) (headingAngle / Math.PI * 180 / 45));
 
 		// cannot be zero
-		//if (spriteNumber == 0)
-			//spriteNumber = (0.001f);
+		if (spriteNumber == 0)
+			spriteNumber = 0.001f;
+		if(spriteNumber == 1)
+			spriteNumber = -0.001f;
 		if (heading.x > zeroHeading.x && heading.y > 0)
 			spriteNumber = (8 - spriteNumber);
 		else if (heading.x > -zeroHeading.x && heading.y < 0)
@@ -206,8 +208,13 @@ public abstract class DynamicObject implements GameObject {
 
 	}
 
-	public boolean isWithinRange(Vector2 poitn, float radius) {
-		return false;
+	public boolean isWithinRange(Vector2 point, float radius) {
+		if(position.dst(point) < radius)
+			return true;
+			
+		else
+			return false;
+		
 	}
 
 	@Override

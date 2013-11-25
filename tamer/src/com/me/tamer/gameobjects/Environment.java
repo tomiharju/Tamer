@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.SpriteCache;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,6 +18,7 @@ import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
+import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.gameobjects.tiles.Fence;
 import com.me.tamer.gameobjects.tiles.TileMap;
@@ -34,7 +39,8 @@ public class Environment extends Actor {
 	// Settings
 	private Vector2 mapBounds = null;
 	private Vector2 cameraBounds = null;
-	
+	//TEst
+	private TileMap tilemap;
 	// Gameobject data
 	private ArrayList<GameObject> gameobjects = new ArrayList<GameObject>();
 	private ArrayList<GameObject> carbages = new ArrayList<GameObject>();
@@ -42,7 +48,10 @@ public class Environment extends Actor {
 	private DynamicObject tamer = null;
 	private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private ArrayList<Creature> creatures = new ArrayList<Creature>();
+	private ArrayList<StaticObject> staticObjects = new ArrayList<StaticObject>();
 
+	private SpriteCache environmentCache;
+	private int cacheID;
 	// Optimization variables
 	Vector2 tamerShadowPosition = new Vector2();
 
@@ -70,8 +79,7 @@ public class Environment extends Actor {
 		RuntimeObjectFactory.createLinkToLevel(this);
 		controls = ControlContainer.instance();
 		sound = SoundManager.instance();
-		RenderPool.createAtlas();
-		
+	
 		//create fence
 //		fence = new Fence(0,0,0,0);
 	}
@@ -116,11 +124,14 @@ public class Environment extends Actor {
 		batch.setProjectionMatrix(stage.getCamera().combined);
 		int numObjects = gameobjects.size();
 		sortDrawOrder(numObjects);
+		environmentCache.setProjectionMatrix(stage.getCamera().combined);
+		environmentCache.begin();
+		environmentCache.draw(cacheID);
+		environmentCache.end();
+		stage.getSpriteBatch().begin();
 		for (int k = 0; k < numObjects; k++) {
 			Vector2 pos = gameobjects.get(k).getPosition();
-			if (gameobjects.get(k).getClass() == TileMap.class)
-				gameobjects.get(k).draw(batch);
-			else if (isVisible(pos))
+			if (isVisible(pos))
 				gameobjects.get(k).draw(batch);
 		}
 	}
@@ -221,13 +232,42 @@ public class Environment extends Actor {
 	 * example we check if worms is inside quicksand tile, and then apply force
 	 * to it)
 	 */
-	public void setupObjects() {
-		// Call setup method which then adds that objects properties to level
-		// datastructures
-		// For example calling setup on worm, it creates all the parts.
-		for (GameObject go : gameobjects) {
-			go.setup(this);
-		}
+	public void setupGame() {
+		generateSpriteCache();
+		
+	}
+	/**
+	 * @param tilemap
+	 * This method is called from TileMap at setup()
+	 * It creates a link between TileMap and environment.
+	 * This link is used to call tilemap.drawTileMap which draws the cached terrain
+	 */
+	public void setTileMapObject(TileMap tilemap){
+		this.tilemap = tilemap;
+	}
+	
+	public void generateSpriteCache(){
+		environmentCache = new SpriteCache(staticObjects.size() + tilemap.getNumTiles(),false);
+		environmentCache.beginCache();
+		tilemap.generate(environmentCache);
+		Collections.sort(staticObjects, comparator);
+		TamerStage stage = TamerStage.instance();
+
+		AssetManager assetManager = stage.getGame().getAssetManager();
+	
+		Vector2 help = new Vector2();
+		
+			for (int i = 0; i < staticObjects.size(); i++) {
+				TextureRegion texture = assetManager.get("data/graphics/sheetData",
+						TextureAtlas.class).findRegion(staticObjects.get(i).getRenderType());
+				help.set(Helper.worldToScreen(staticObjects.get(i).getPosition()));
+				environmentCache.add(texture, help.x,
+						help.y, staticObjects.get(i).getSize().x,staticObjects.get(i).getSize().y);
+				
+			}
+		cacheID = environmentCache.endCache();
+		environmentCache.setProjectionMatrix(stage.getCamera().combined);
+		System.out.println("CAche created with "+staticObjects.size() + " objects");
 	}
 
 	/**
@@ -240,6 +280,9 @@ public class Environment extends Actor {
 
 	public void addObstacle(Obstacle obstacle) {
 		this.obstacles.add(obstacle);
+	}
+	public void addStaticObject(StaticObject obj){
+		staticObjects.add(obj);
 	}
 
 	public void setMapBounds(String value) {

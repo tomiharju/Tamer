@@ -18,8 +18,7 @@ import com.me.tamer.utils.Helper;
 public class TamerStage extends Stage{
 	public static TamerStage instance;
 	
-	//private final float VIRTUAL_WIDTH = 12 * ((float)Math.sqrt(2));// - 0.1f;
-	//private final float VIRTUAL_HEIGHT = 40 * (float)(Math.sqrt(2) / 2);// - 0.05f;
+	
 	float ASPECT_RATIO =(float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
 	private final float BEGIN_ZOOM_SPEED = 0.01F;
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
@@ -144,10 +143,8 @@ public class TamerStage extends Stage{
 		hud.updateLabel(Hud.LABEL_FPS, Gdx.graphics.getFramesPerSecond());
 		super.getCamera().update();
 		if (!super.getRoot().isVisible()) return;
-		super.getSpriteBatch().setProjectionMatrix(super.getCamera().combined);
-		super.getSpriteBatch().begin();
 		super.getRoot().draw(super.getSpriteBatch(), 1);
-		environment.debugDraw(debugRender);
+	//	environment.debugDraw(debugRender);
 		super.getSpriteBatch().end();
 	}
 	
@@ -165,8 +162,9 @@ public class TamerStage extends Stage{
 	//Think this through
 	public void updateCamera(float dt){
 		controlCamera(dt);
-		camera.update();
+		
 		camera.position.set(cameraPosition.x,cameraPosition.y,0);
+		camera.update();
 	}
 	
 	public void controlCamera(float dt){

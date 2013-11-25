@@ -51,18 +51,14 @@ public class SpawnPoint extends StaticObject{
 	public void setup(Environment environment){
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: started spawning");
 		environment.addNewObject(this);
+		environment.addStaticObject(this);
 		this.environment = environment;
 		EventPool.addEvent(new tEvent(this,"spawnTamer",TAMER_SPAWN_TIME,1));
 		setZindex(1);
 		
 	}
 	
-	public void setGraphics(String graphics){
-		Renderer render = RenderPool.addRendererToPool("static",graphics);
-		render.loadGraphics(graphics);
-		setSize(Helper.TILESIZE);
-		this.setRenderType(graphics);
-	}
+
 	
 	public void setSpawnCount(String count){
 		this.spawnCount = Integer.parseInt(count);
