@@ -69,16 +69,17 @@ public class AbstractMenu extends AbstractScreen {
 		newGameButton = new TextButton("New Game", textButtonStyle);
 		newGameButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen( ScreenType.NEW_PLAY );
 				sound.play(TamerSound.MENU_CLICK);
+				game.setScreen( ScreenType.NEW_PLAY );
 			}
 		});
 
 		levelsButton = new TextButton("Select Level", textButtonStyle);
 		levelsButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(ScreenType.LEVELS);
 				sound.play(TamerSound.MENU_CLICK);
+				game.setScreen(ScreenType.LEVELS);
+				
 			}
 		});
 
@@ -93,8 +94,8 @@ public class AbstractMenu extends AbstractScreen {
 		mainMenuButton = new TextButton("Main Menu", textButtonStyle);
 		mainMenuButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(ScreenType.MENU);
 				sound.play(TamerSound.MENU_CLICK);
+				game.setScreen(ScreenType.MENU);
 			}
 		});
 		

@@ -6,12 +6,13 @@ import java.util.Collections;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.core.Hud;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.me.tamer.core.Level.WormState;
+import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.tamer.Spear;
-import com.me.tamer.gameobjects.tiles.Fence;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.ui.ControlContainer;
@@ -20,9 +21,8 @@ import com.me.tamer.utils.DrawOrderComparator;
 public class Worm extends DynamicObject implements Creature {
 
 	private final int NUMBER_PARTS = 8;
-
 	private ArrayList<WormPart> parts;
-	private float SPEED = 5.0f;
+	private float SPEED = 12.0f;
 	private WormPart head = null;
 	private WormPart tail = null;
 
@@ -30,7 +30,6 @@ public class Worm extends DynamicObject implements Creature {
 
 	// for effects
 	private ControlContainer controls;
-	private boolean colorChanged;
 
 	// for draw order
 	ArrayList<GameObject> gameobjects = new ArrayList<GameObject>();
@@ -44,18 +43,13 @@ public class Worm extends DynamicObject implements Creature {
 
 	//for draw order
 	ArrayList<GameObject> drawParts = new ArrayList<GameObject>();
+	private TamerStage stage;
 	
-	//Hud
-	Hud hud;
-
-	// Fence
-	private Fence fence;
-
 	public Worm() {
 		parts = new ArrayList<WormPart>();
 		comparator = new DrawOrderComparator();
-		hud = Hud.instance();
 		controls = ControlContainer.instance();
+		stage = TamerStage.instance();
 	}
 
 	public void wakeUp(Environment environment) {
@@ -77,8 +71,6 @@ public class Worm extends DynamicObject implements Creature {
 		for(int i = 0 ; i < parts.size() ; i++){
 			drawParts.add(((GameObject)parts.get(i)));
 		}
-
-		fence = environment.getFence();
 	}
 
 	public void addPart(String type, int ordinal, Vector2 pos, Vector2 vel) {
@@ -137,9 +129,13 @@ public class Worm extends DynamicObject implements Creature {
 
 	public void doScreamEffect() {
 		if (!head.isBlinking())
-			head.setBlinking(true);
+			for(int i = 0 ; i < parts.size() ; i++){
+				parts.get(i).setBlinking(true);
+			}
 		else
-			head.setBlinking(false);
+			for(int i = 0 ; i < parts.size() ; i++){
+				parts.get(i).setBlinking(false);
+			}
 	}
 
 	public void dispose() {
@@ -148,10 +144,12 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public boolean isWithinRange(Vector2 point, float radius){
-		for(int i = 0 ; i < parts.size() ; i ++)
-			if(parts.get(i).getPosition().dst(point) < radius)
-				return true;
+//		for(int i = 0 ; i < parts.size() ; i ++){
+//			if(parts.get(i).getPosition().dst(point) < radius)
+//				return true;
+//		}
 		
+		if (head.getPosition().dst(point) < radius ) return true;
 		return false;
 	}
 	
@@ -266,8 +264,8 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void markAsCarbage() {
-		super.markAsCarbage();
-		hud.updateLabel(Hud.LABEL_REMAINING, -1);
+		stage.getLevel().setWormState(this, WormState.DEAD);
+		super.markAsCarbage();		
 	}
 
 	@Override
@@ -344,8 +342,16 @@ public class Worm extends DynamicObject implements Creature {
 		return insideFence;
 	}
 
-	public void setInsideFence(boolean insideFence) {
-		this.insideFence = insideFence;
+	public void setInsideFence(boolean b) {
+		if (!insideFence && b) {
+			insideFence = b;
+			stage.getLevel().setWormState(this, WormState.FENCE);
+		}
+		else if (insideFence && !b){
+			insideFence = b;
+			stage.getLevel().setWormState(this, WormState.DEFAULT);
+		}
+		
 	}
 
 	@Override

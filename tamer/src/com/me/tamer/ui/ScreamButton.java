@@ -22,7 +22,7 @@ public class ScreamButton extends Actor{
 	
 	//Button variables
 //	Vector2 restingpoint 	= new Vector2(Gdx.graphics.getWidth() - 110,200);
-	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 55,200);
+	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 65,200);
 	Vector2 delta			= new Vector2(0,0);
 	private Vector2 input			= new Vector2(0,0);
 	private Vector2 localCenter 	= new Vector2(BUTTON_SIZE / 2, BUTTON_SIZE / 2);
@@ -35,7 +35,6 @@ public class ScreamButton extends Actor{
 		environment		= controlContainer.getEnvironment();
 		tamer 			= environment.getTamer();
 		renderer 		= new UiRenderer();
-		
 		
 		renderer.loadGraphics(TamerTexture.BUTTON_SCREAM);
 		renderer.setSize(BUTTON_SIZE,BUTTON_SIZE);

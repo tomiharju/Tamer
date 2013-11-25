@@ -94,16 +94,15 @@ public class WormPart extends DynamicObject implements Creature{
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 
 		if (onSpearRange)
-			batch.setColor(0.8f, 1, 0.8f, 1.0f);
+			batch.setColor(0.7f, 1, 0.7f, 1.0f);
 		else if (blinking)
-			batch.setColor(0.8f, 0.8f, 1.0f, 1.0f);
+			batch.setColor(0.7f, 0.7f, 1.0f, 1.0f);
 		if (decaying) {
 			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
 			batch.setColor(1, 1, 1, levelOfDecay);
 			if(levelOfDecay < 0)
 				worm.removePart(this);
 		}
-		
 		
 		renderer.setSize(getSize());
 

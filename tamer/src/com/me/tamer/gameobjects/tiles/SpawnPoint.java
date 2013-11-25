@@ -38,14 +38,14 @@ public class SpawnPoint extends StaticObject{
 	//IMPORTANT: spawn number is used to distinguish spawns from each other.
 	private int spawnId = 0;
 	private final int TAMER_SPAWN_TIME = 3;
-	private Hud hud;
 		
 	//EXPERIMENTAL STUFF
 	private Tamer tamer;
 	private Environment environment;
 	
+	private TamerStage stage;
+	
 	public SpawnPoint(){
-		hud = Hud.instance();
 	}
 	
 	public void setup(Environment environment){
@@ -84,8 +84,9 @@ public class SpawnPoint extends StaticObject{
 	}
 	
 	public void addWorm(Worm worm){
-		//update hud when worm is added
-		hud.updateLabel(Hud.LABEL_REMAINING,1);
+		//update level when worm is added
+		if(stage == null ) stage = TamerStage.instance();
+		stage.getLevel().addWorm(worm);
 		
 		spawnType = "worm";
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);

@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.superclasses;
 import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
@@ -122,5 +123,16 @@ public abstract class StaticObject implements GameObject{
 		int zIndex = Integer.parseInt(index);
 		setZindex(-zIndex);
 		
+	}
+	
+	@Override
+	public void debugDraw(ShapeRenderer sr){
+		
+	}
+	
+	@Override
+	public boolean getDebug() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

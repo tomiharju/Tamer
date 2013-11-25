@@ -65,6 +65,8 @@ public class Environment extends Actor {
 	
 	//fence
 	private Fence fence;
+	private Vector2 fenceUpLeft = new Vector2();
+	private Vector2 fenceBottomRight = new Vector2();
 
 	public Environment() {
 		RuntimeObjectFactory.createLinkToLevel(this);
@@ -316,10 +318,4 @@ public class Environment extends Actor {
 	public Fence getFence() {
 		return fence;
 	}
-
-	public void setFence(Fence fence) {
-		this.fence = fence;
-	}
-	
-	
 }

@@ -18,16 +18,12 @@ import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public class Endingpoint extends StaticObject implements Obstacle {
-	private Hud hud;
-	private ArrayList<Creature> survivedWorms = new ArrayList<Creature>();
-	private boolean creatureOnList = false;
 
-	public void setup(Environment level) {
-		level.addNewObject(this);
-		level.getObstacles().add(this);
+	public void setup(Environment environment) {
+		environment.addNewObject(this);
+		environment.getObstacles().add(this);
 		setZindex(1);
 
-		hud = Hud.instance();
 	}
 
 	public void setPixelsX(String pixels) {
@@ -51,43 +47,13 @@ public class Endingpoint extends StaticObject implements Obstacle {
 	public void resolve(ArrayList<Creature> creatures) {
 		int size = creatures.size();
 		for (int i = 0; i < size; i++) {
-
-			if (((DynamicObject) creatures.get(i)).isWithinRange(getPosition(), 1f)) {
-				//creatures.get(i).moveToPoint(getPosition());
-
-				if (creatures.get(i).getType() == Creature.TYPE_WORM) {
-
-					for (int j = 0; j < survivedWorms.size(); j++) {
-						if (!survivedWorms.contains(creatures.get(i))) {
-							survivedWorms.add(creatures.get(i));
-							Gdx.app.log(TamerGame.LOG, this.getClass()
-									.getSimpleName()
-									+ " :: updating label survived");
-							hud.updateLabel(Hud.LABEL_SURVIVED, 1);
-
-							Gdx.app.log(TamerGame.LOG, this.getClass()
-									.getSimpleName()
-									+ " :: updating label remaining");
-							hud.updateLabel(Hud.LABEL_REMAINING, -1);
-						}
-
-					}
-
-				}
+			if (creatures.get(i).getType() == Creature.TYPE_WORM) {
+				Worm worm = (Worm)creatures.get(i);
+				if (worm.isWithinRange(getPosition(), 1f) ) {
+					worm.setInsideFence(true);
+				} else worm.setInsideFence(false);
 			}
 		}
-	}
-
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean getDebug() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

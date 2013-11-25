@@ -152,18 +152,22 @@ public class Tamer extends DynamicObject {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		super.draw(batch);
 		
-		//Draw targetTile
-		Renderer renderer2 = RenderPool.getRenderer( TamerTexture.TARGET_TILE.name() );
-		renderer2.setSize(Helper.TILESIZE);
-		renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
-		batch.setColor(1, 1, 1, 0.5f);
-		renderer2.draw(batch);	
-		batch.setColor(Color.WHITE);
-		
-		shadow.draw(batch);
-		scream.draw(batch);
+		//Quick fix to issue that tamer is drawn before his time
+		if (environment.getState() == RunningState.TAMER_ENTER || environment.getState() == RunningState.NORMAL){
+			super.draw(batch);
+			
+			//Draw targetTile
+			Renderer renderer2 = RenderPool.getRenderer( TamerTexture.TARGET_TILE.name() );
+			renderer2.setSize(Helper.TILESIZE);
+			renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
+			batch.setColor(1, 1, 1, 0.5f);
+			renderer2.draw(batch);	
+			batch.setColor(Color.WHITE);
+			
+			shadow.draw(batch);
+			scream.draw(batch);
+		}
 	}
 
 	/**
