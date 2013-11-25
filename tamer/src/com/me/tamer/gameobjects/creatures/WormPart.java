@@ -17,9 +17,9 @@ import com.me.tamer.utils.Helper;
 public class WormPart extends DynamicObject implements Creature{
 	
 	private final float DECAY_SPEED = 0.5f;
-	private final float MIN_LENGTH = 0.2f;
-	private final float STRETCH_AMOUNT = 0.17f;
-	private final float HEAD_POS_FIX = 0.005f;
+	private final float MIN_LENGTH = 0.15f;
+	private final float STRETCH_AMOUNT = 0.13f;
+	private final float HEAD_POS_FIX = 0.000f;
 	
 	// Container worm
 	private Worm worm = null;
@@ -31,6 +31,8 @@ public class WormPart extends DynamicObject implements Creature{
 	private float lengthAngle = 0;
 	private int ordinal;
 	private float invMass;
+
+
 	private float mass;
 	private Vector2 help = new Vector2();
 
@@ -57,7 +59,6 @@ public class WormPart extends DynamicObject implements Creature{
 	public void createHead(Vector2 pos, Vector2 vel, Worm worm) {
 		this.worm = worm;
 		setGraphics(TamerTexture.WORMHEAD);
-//		setGraphics("wormhead");
 		partType = TYPE_HEAD;
 		mass = 30;
 		invMass = 1 / mass;
@@ -71,7 +72,6 @@ public class WormPart extends DynamicObject implements Creature{
 	public void createBodyPart(int ordinal, Vector2 pos, Vector2 vel, Worm worm) {
 		this.worm = worm;
 		setGraphics(TamerTexture.WORMPART);
-//		setGraphics("vwormpart2");
 		partType = TYPE_BODY;
 		mass = 10;
 		invMass = 1 / mass;
@@ -94,7 +94,7 @@ public class WormPart extends DynamicObject implements Creature{
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 
 		if (onSpearRange)
-			batch.setColor(0.1f, 1, 0.1f, 1.0f);
+			batch.setColor(0.8f, 1, 0.8f, 1.0f);
 		else if (blinking)
 			batch.setColor(0.8f, 0.8f, 1.0f, 1.0f);
 		if (decaying) {
@@ -339,4 +339,18 @@ public class WormPart extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setInvMass(float invMass) {
+		this.invMass = invMass;
+	}
+
+	public float getMass() {
+		return mass;
+	}
+
+	public void setMass(float mass) {
+		this.mass = mass;
+	}
+	
+	
 }

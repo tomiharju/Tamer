@@ -70,6 +70,7 @@ public class AbstractMenu extends AbstractScreen {
 		newGameButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen( ScreenType.NEW_PLAY );
+				sound.play(TamerSound.MENU_CLICK);
 			}
 		});
 
@@ -77,7 +78,7 @@ public class AbstractMenu extends AbstractScreen {
 		levelsButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(ScreenType.LEVELS);
-				sound.play(TamerSound.CLICK);
+				sound.play(TamerSound.MENU_CLICK);
 			}
 		});
 
@@ -85,6 +86,7 @@ public class AbstractMenu extends AbstractScreen {
 		optionsButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				Gdx.app.debug(TamerGame.LOG, "Options button pressed");
+				sound.play(TamerSound.MENU_CLICK);
 			}
 		});
 
@@ -92,12 +94,14 @@ public class AbstractMenu extends AbstractScreen {
 		mainMenuButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				game.setScreen(ScreenType.MENU);
+				sound.play(TamerSound.MENU_CLICK);
 			}
 		});
 		
 		exitButton = new TextButton("Exit Game", textButtonStyle);
 		exitButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
+				sound.play(TamerSound.MENU_CLICK);
 				Gdx.app.exit();
 			}
 		});

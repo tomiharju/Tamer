@@ -1,10 +1,14 @@
 package com.me.tamer.core;
 
+
+import java.util.ArrayList;
+
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
+import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.utils.EnvironmentCreator;
 
-public class Level {
+public class Level{
 	
 	private TamerStage stage;
 	private final int id;
@@ -13,6 +17,7 @@ public class Level {
     private Level nextLevel;
 
 	Environment environment = null;
+	ArrayList<Worm> worms;
 
 	public Level(int id){
 		this.id = id;

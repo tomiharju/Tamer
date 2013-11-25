@@ -1,10 +1,10 @@
 package com.me.tamer.gameobjects.creatures;
 
+
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.tamer.Spear;
-import com.me.tamer.physics.RigidBodyBox;
 
-public interface Creature {
+public interface Creature{
 
 	public static final int TYPE_WORM = 1;
 	public static final int TYPE_ANT = 2;

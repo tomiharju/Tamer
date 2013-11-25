@@ -40,29 +40,6 @@ public class TileMap extends StaticObject {
 		setZindex(-20);
 	}
 
-	
-	@Override
-	public void draw(SpriteBatch batch) {
-		
-		/*
-		 * Renderer renderer = RenderPool.getRenderer(getRenderType()); if
-		 * (env.getTamer() != null) {
-		 * tamerpos.set(Helper.worldToScreen(env.getTamer().getShadow()
-		 * .getPosition()));
-		 * 
-		 * } else tamerpos.set(origo);
-		 * 
-		 * if (prevPos.dst(tamerpos) > 1) { visibleTiles.clear();
-		 * prevPos.set(tamerpos); for (int i = 0; i < numTiles; i++) { if
-		 * (env.isVisible(terrain.get(i))) { visibleTiles.add(terrain.get(i));
-		 * renderer.setPosition(Helper.worldToScreen(terrain.get(i)));
-		 * renderer.draw(batch); } } } else { for (int i = 0; i <
-		 * visibleTiles.size(); i++) {
-		 * renderer.setPosition(Helper.worldToScreen(visibleTiles.get(i)));
-		 * renderer.draw(batch); } }
-		 */
-	}
-
 	public void setTileMap(String data) {
 		String[] points = data.split("\\.");
 		terrain = new ArrayList<Vector2>();

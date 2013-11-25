@@ -12,6 +12,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.gameobjects.tiles.Fence;
+import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
@@ -54,6 +55,7 @@ public class Worm extends DynamicObject implements Creature {
 		parts = new ArrayList<WormPart>();
 		comparator = new DrawOrderComparator();
 		hud = Hud.instance();
+		controls = ControlContainer.instance();
 	}
 
 	public void wakeUp(Environment environment) {
@@ -123,11 +125,7 @@ public class Worm extends DynamicObject implements Creature {
 			markAsCarbage();
 		}
 		
-	/*	if (fence.checkIfInside(this) || !insideFence){
-			hud.updateLabel(Hud.LABEL_SURVIVED, 1);
-		} else if (!fence.checkIfInside(this) || insideFence){
-			hud.updateLabel(Hud.LABEL_SURVIVED, -1);
-		}*/
+		solveEffects();
 	}
 	
 	public void draw(SpriteBatch batch){	
@@ -158,8 +156,6 @@ public class Worm extends DynamicObject implements Creature {
 		return false;
 	}
 	
-	
-
 	@Override
 	public void applyPull(Vector2 point, float magnitude) {
 		Vector2 direction = point.tmp().sub(head.getPosition());
@@ -188,17 +184,6 @@ public class Worm extends DynamicObject implements Creature {
 		// TODO Auto-generated method stub
 
 	}
-//<<<<<<< HEAD
-//
-//	@Override
-//	public void unBind() {
-//		for (int i = 0; i < parts.size(); i++) {
-//			parts.get(i).unBind();
-//		}
-//		bound = false;
-//	}
-//=======
-	
 
 	@Override
 	public void lassoHit(String lasso) {
@@ -208,6 +193,7 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void kill() {
+
 		for(int i = 0; i < parts.size(); i++){
 			parts.get(i).decay();
 		}
@@ -233,14 +219,17 @@ public class Worm extends DynamicObject implements Creature {
 		// nail worm to center of a tile
 		getPosition().x = (float) Math.floor(getPosition().x) + 1;
 		getPosition().y = (float) Math.floor(getPosition().y);
-//		invMass = 0;
 		bind();
+		
+		playSound(TamerSound.SPEAR_WORM);
 	
 	}
 	
 	public void bind(){
 		bound = true;
 		disableCollision();
+		parts.get(parts.size()-1).setInvMass(0);
+
 		SPEED = 0;
 	}
 	@Override
@@ -248,7 +237,22 @@ public class Worm extends DynamicObject implements Creature {
 		bound = false;
 		enableCollision();
 		SPEED = 5;
-		
+		parts.get(parts.size()-1).setInvMass( 1 / parts.get(parts.size()-1).getMass() );
+	}
+	
+	public void solveEffects(){
+		setOnSpearRange(false);
+		for(int i = 0 ; i < parts.size() ; i++){
+			if (parts.get(i).getPosition().dst( controls.getEnvironment().getTamer().getShadow().getPosition()) < 1){
+				setOnSpearRange(true);
+			}
+		}
+	}
+	
+	public void setOnSpearRange(boolean b){
+		for(int i = 0 ; i < parts.size() ; i++){
+			parts.get(i).setOnSpearRange(b);
+		}
 	}
 
 	public void setTail(WormPart part) {

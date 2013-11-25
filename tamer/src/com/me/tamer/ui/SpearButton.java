@@ -1,19 +1,22 @@
 package com.me.tamer.ui;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.me.tamer.core.TamerGame;
-import com.me.tamer.core.TamerStage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.me.tamer.gameobjects.renderers.UiRenderer;
 import com.me.tamer.services.TextureManager.TamerTexture;
-import com.me.tamer.utils.Helper;
 
 public class SpearButton extends Actor {
 
@@ -42,10 +45,11 @@ public class SpearButton extends Actor {
 	UiRenderer renderer3 = new UiRenderer();
 	UiRenderer currentRenderer;
 	
+	Label amountLabel;
+	int spearsAvailable = 0;
+	
 	//Status variables
 	private boolean onCooldown = false;
-
-
 	private boolean spearOnRange = false;
 	
 	private Joystick joystick;
@@ -70,13 +74,24 @@ public class SpearButton extends Actor {
 		
 		currentRenderer = renderer;
 		
+		//Amount label
+		Skin skin = new Skin();
+		Pixmap pixmap = new Pixmap(100, 100, Format.RGBA8888);
+		pixmap.setColor(Color.GREEN);
+		pixmap.fill();
+		skin.add("white", new Texture(pixmap));
+		
+		BitmapFont bfont = new BitmapFont();
+		bfont.scale(Gdx.graphics.getHeight() * 0.001f);
+		skin.add("default", bfont);
+		
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = skin.getFont("default");
+		amountLabel = new Label("1", labelStyle);
+		amountLabel.setPosition(restingpoint.x + BUTTON_SIZE / 10, restingpoint.y - BUTTON_SIZE / 4);
+		
+		//Positions
 		localCenter.set(BUTTON_SIZE / 2, BUTTON_SIZE / 2);
-	
-		cam = controlContainer.getCam();
-		uiCam = controlContainer.getUiCam();
-		
-		joystick = controlContainer.getJoystick();
-		
 		setPosition(restingpoint.x - BUTTON_SIZE/2, restingpoint.y - BUTTON_SIZE/2);
 		setSize(BUTTON_SIZE, BUTTON_SIZE);
 		
@@ -87,8 +102,14 @@ public class SpearButton extends Actor {
 		if (spearOnRange)currentRenderer = renderer3;
 		else if (onCooldown)currentRenderer = renderer;
 		else currentRenderer = renderer2;
-			
+		
 		currentRenderer.draw(batch);
+		
+		//Draw number on top of the icon
+		amountLabel.draw(batch, parentAlpha);
+	}
+	
+	public void update(float dt){
 		
 	}
 
@@ -117,6 +138,10 @@ public class SpearButton extends Actor {
 		});	
 	}
 
+	public void addSpearsAvailable(int s){
+		spearsAvailable += s;
+		amountLabel.setText(""+spearsAvailable);
+	}
 	
 	public float getThrowDistance(){
 		return throwDistance;

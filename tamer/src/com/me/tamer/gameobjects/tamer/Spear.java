@@ -29,7 +29,6 @@ public class Spear extends DynamicObject {
 
 	private Environment environment;
 	private Tamer tamer;
-	private SoundManager sound;
 
 	private Creature targetCreature = null;
 	private Creature creature = null;
@@ -37,8 +36,6 @@ public class Spear extends DynamicObject {
 	private boolean attached = false;
 
 	private Vector2 targetPoint = new Vector2();
-
-	private boolean justDropped = false;
 
 	private Vector2 direction = new Vector2();
 	private final float SPEED = 25.0f;
@@ -48,7 +45,6 @@ public class Spear extends DynamicObject {
 
 	public Spear() {
 		setGraphics(TamerTexture.SPEAR);
-		sound = SoundManager.instance();
 
 		// hitbox
 		//hitbox.setGraphics("vRocks1.png");
@@ -65,15 +61,6 @@ public class Spear extends DynamicObject {
 
 	public void update(float dt) {
 		
-		// check that tamer has moved enough from spear when it has been dropped
-		// and spear has reached ground
-		if (justDropped
-				&& attached
-				&& environment.getTamer().getShadow().getPosition()
-						.dst(getPosition()) > 1) {
-			justDropped = false;
-		}
-
 		if (!attached) {
 			// adjust direction when worm moves
 			direction.set(targetPoint.tmp().sub(getPosition()));
@@ -84,17 +71,8 @@ public class Spear extends DynamicObject {
 				//not sure if really needed, but null pointer happened
 				if (targetCreature != null) {
 					targetCreature.spearHit(this);
-					
-					//start timer to stop adjusting
-					EventPool.addEvent(new tEvent(this,"stopAdjusting", ADJUST_TIME,1));
-							
-					//play sound
-					/*
-					sound.setVolume(0.3f);
-					Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-							+ " :: playing sound HIT");
-					sound.play(TamerSound.HIT);*/
-					
+				} else{
+					playSound(TamerSound.SPEAR_GROUND);
 				}
 				setPosition(targetPoint);
 				attached = true;
@@ -106,10 +84,6 @@ public class Spear extends DynamicObject {
 				hitbox.markAsActive();
 			}
 		}
-	}
-	
-	public void stopAdjusting(){
-		targetWorm.bind();
 	}
 	
 	@Override
@@ -161,20 +135,25 @@ public class Spear extends DynamicObject {
 				targetFound = true;
 				switch (creature.getType()){
 				case (Creature.TYPE_ANT):
+					System.out.println("MULKKU TAHDATTY");
 					targetCreature = creature;
 					if (((AntOrc)targetCreature).getTargetWorm() != null) targetWorm = ((AntOrc)targetCreature).getTargetWorm();
 					targetPoint = ((DynamicObject) targetCreature).getPosition();
 					break;
 				case (Creature.TYPE_WORM):
 					if (targetCreature == null) {
+						//If ant is not on the aim try finding worm
+						//Hit always the tail of the worm
 						targetWorm = ((Worm)creatures.get(i));
-						targetCreature = creature;
+						targetCreature = targetWorm.getParts().get( targetWorm.getParts().size() - 1);
 						targetPoint = ((DynamicObject) targetCreature).getPosition();
-					} else if (((DynamicObject) creature).getPosition().dst(tamer.getShadow().getPosition()) < ((DynamicObject) targetCreature).getPosition().dst(tamer.getShadow().getPosition())) {
-						targetCreature = creature;
-						targetPoint = ((DynamicObject) targetCreature)
-								.getPosition();
-					}
+					} 
+//					else if (((DynamicObject) creature).getPosition().dst(tamer.getShadow().getPosition()) < ((DynamicObject) targetCreature).getPosition().dst(tamer.getShadow().getPosition())) {
+//						targetCreature = creature;
+//						targetPoint = ((DynamicObject) targetCreature)
+//								.getPosition();>p
+				
+//					}
 					break;
 				default:
 					break;
@@ -200,11 +179,6 @@ public class Spear extends DynamicObject {
 		setHeading(targetPoint.tmp().sub(getPosition()));
 		direction.set(targetPoint.tmp().sub(getPosition()));
 		direction.nor();
-		
-		//boolean to prevent tamer from picking up spear right after it has been dropped
-		justDropped = true;
-
-		//TamerStage.addDebugLine(new Vector2(0, 0), targetPoint);
 	}
 
 	/**
@@ -237,10 +211,6 @@ public class Spear extends DynamicObject {
 
 	public boolean isAttached() {
 		return attached;
-	}
-
-	public boolean isJustDropped() {
-		return justDropped;
 	}
 
 	@Override

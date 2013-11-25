@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.tamer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -10,12 +11,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
-import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.services.SoundManager;
+import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.EventPool;
@@ -44,9 +44,10 @@ public class Tamer extends DynamicObject {
 	private Vector2 movementAxis = new Vector2();
 
 	// spear related variables
-	private int numSpears = 30;
+	private final int SPEAR_AMOUNT = 5; //this should be set by the level
 	private ArrayList<Spear> spears = null;
 	private Spear spearToBePicked = null;
+	private Vector2 targetTilePosition = new Vector2();
 
 	// Variables for entering the field
 	private Vector2 spawnPosition = new Vector2();
@@ -55,16 +56,15 @@ public class Tamer extends DynamicObject {
 	private Vector2 mapBounds = new Vector2();
 	private boolean enteredField = false;
 
-	private SoundManager sound;
 	private ControlContainer controls;
 
 	public Tamer() {
 		// Spears
 		spears = new ArrayList<Spear>();
-		for (int i = 0; i < numSpears; i++) {
+		for (int i = 0; i < SPEAR_AMOUNT; i++) {
 			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
 		}
-
+		
 		// Scream
 		scream = new GryphonScream(this);
 
@@ -74,13 +74,11 @@ public class Tamer extends DynamicObject {
 		// Z-index for drawing order
 		setZindex(-10);
 		setGraphics(TamerTexture.TAMER);
-
-		// sound
-		sound = SoundManager.instance();
+		
 		controls = ControlContainer.instance();
+		
 	}
 	
-
 	public void wakeUp(Environment environment) {		
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
 				+ " :: Tamer has woken up! " + this.toString());
@@ -94,6 +92,8 @@ public class Tamer extends DynamicObject {
 		mapBounds.y -= DISTANCE_BOUNDS;
 
 		spawnPosition.set(shadow.getPosition());
+		
+		controls.addSpearsAvailable(SPEAR_AMOUNT);
 	}
 
 	public void setGraphics(TamerTexture graphics) {
@@ -101,11 +101,17 @@ public class Tamer extends DynamicObject {
 		render.loadGraphics(graphics, 1, 8);
 		setSize(5, 3.1f);
 		setRenderType(graphics.name());
+		
+		//create targettile renderer
+		Renderer render2 = RenderPool.addRendererToPool("animated", TamerTexture.TARGET_TILE.name() );
+		render2.loadGraphics(TamerTexture.TARGET_TILE, 1, 1);
+		render2.setSize(Helper.TILESIZE);
 	}
 
 	@Override
 	public void update(float dt) {
 		super.update(dt);
+		
 		if (environment.getState() == RunningState.TAMER_ENTER) {
 			if (shadow.getPosition().dst(spawnPosition) > SPAWN_DISTANCE) {
 				enteredField = true;
@@ -115,7 +121,9 @@ public class Tamer extends DynamicObject {
 					.add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
 			getPosition().set(shadow.getPosition().x - FLYING_HEIGHT,
 					shadow.getPosition().y + FLYING_HEIGHT);
-		} else {
+		} 
+		
+		else {
 			shadow.getPosition().add(getHeading().tmp().mul(SPEED * dt));
 			getPosition().set(shadow.getPosition().x - FLYING_HEIGHT,
 					shadow.getPosition().y + FLYING_HEIGHT);
@@ -134,25 +142,26 @@ public class Tamer extends DynamicObject {
 			
 			controls.setSpearOnRange( spearOnRange );
 			scream.update(dt);
-		}	
 			
-//			for (int i = 0; i < spears.size(); i++) {
-//				if (!spears.get(i).isJustDropped()
-//						&& shadow.getPosition()
-//								.dst(spears.get(i).getPosition()) < 1) {
-//					if (spears.get(i).isAttached()) {
-//						spears.get(i).pickUp();
-//						spears.remove(i);
-//					}
-//				}
-//			}
-//		}
-		
+			//set target tile position
+			targetTilePosition.set( shadow.getPosition().tmp().add(-0.5f,0.5f) );
+			targetTilePosition.x = (float) Math.floor(targetTilePosition.x) + 1;
+			targetTilePosition.y = (float) Math.floor(targetTilePosition.y);
+		}			
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
 		super.draw(batch);
+		
+		//Draw targetTile
+		Renderer renderer2 = RenderPool.getRenderer( TamerTexture.TARGET_TILE.name() );
+		renderer2.setSize(Helper.TILESIZE);
+		renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
+		batch.setColor(1, 1, 1, 0.5f);
+		renderer2.draw(batch);	
+		batch.setColor(Color.WHITE);
+		
 		shadow.draw(batch);
 		scream.draw(batch);
 	}
@@ -232,18 +241,15 @@ public class Tamer extends DynamicObject {
 			onSpearCoolDown = true;
 			controls.setSpearCooldown(true);
 			EventPool.addEvent(new tEvent(this,"enable",SPEAR_COOL_DOWN,1));
+			
+			controls.addSpearsAvailable(-1);
+			playSound(TamerSound.TAMER_SPEAR);
 		} else
 			System.err.println("No spears remaining");
-		
-		/*
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-				+ " :: playing throwing sound");
-		sound.setVolume(0.8f);
-		sound.play(TamerSound.THROW);*/
-
 	}
 	
 	public void pickUpSpear(){
+		controls.addSpearsAvailable(1);
 		spearToBePicked.pickUp();
 		spears.remove( spearToBePicked );
 	}
@@ -315,7 +321,6 @@ public class Tamer extends DynamicObject {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	@Override
 	public void setGraphics(String graphics) {

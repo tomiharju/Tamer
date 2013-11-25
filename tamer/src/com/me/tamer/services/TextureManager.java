@@ -26,7 +26,8 @@ public class TextureManager {
 		
 		//
 		TAMER_SHADOW("tamershadow"),
-		SCREAM("scream");
+		SCREAM("scream"),
+		TARGET_TILE("targetTile");
 		
 		private final String fileName;
 		private final String animationsPath = "data/graphics/";
