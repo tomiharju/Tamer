@@ -19,7 +19,6 @@ import com.me.tamer.utils.Helper;
 
 public class Prop extends StaticObject implements Obstacle {
 	private float scale = 0;
-	private float bounds = 0;
 	private Vector2 temp = new Vector2();
 	private Vector2 collisionAxis = new Vector2();
 	private Vector2 closestVertice = new Vector2();
@@ -53,7 +52,7 @@ public class Prop extends StaticObject implements Obstacle {
 	public void setHitBox(String scale) {
 		float s = Float.parseFloat(scale);
 		this.scale = s;
-		bounds = this.scale;
+		setBounds(this.scale);
 
 	}
 
@@ -75,10 +74,10 @@ public class Prop extends StaticObject implements Obstacle {
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
 			Vector2 center = getPosition();
 			
-			if (temp.x + s.x / 2 > center.x - bounds
+			if (temp.x + s.x / 2 > center.x - getBounds()
 					&& temp.x - s.x / 2 < center.x
 					&& temp.y + s.y  > center.y
-					&& temp.y  < center.y + bounds) {
+					&& temp.y  < center.y + getBounds()) {
 
 				collisionAxis.set(getCollisionNormal(creatures.get(i)
 						.getHeading()));
@@ -107,7 +106,7 @@ public class Prop extends StaticObject implements Obstacle {
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x, temp.y,-bounds,bounds);
+		shapeRndr.rect(temp.x, temp.y,-getBounds(),getBounds());
 		shapeRndr.end();
 		shapeRndr.begin(ShapeType.Rectangle);
 		shapeRndr.rect(temp.x-0.1f, temp.y-0.1f,.2f,.2f);
@@ -133,8 +132,8 @@ public class Prop extends StaticObject implements Obstacle {
 	 * we need this?
 	 */
 	public Vector2 getCenterPosition() {
-		return getPosition().tmp().set(getPosition().x - bounds,
-				getPosition().y + bounds);
+		return getPosition().tmp().set(getPosition().x -  getBounds(),
+				getPosition().y +  getBounds());
 
 	}
 
@@ -143,13 +142,13 @@ public class Prop extends StaticObject implements Obstacle {
 	 */
 	public void createVertices() {
 		vertices = new ArrayList<Vector2>(4);
-		Vector2 v1 = new Vector2((getPosition().x - bounds / 2),
+		Vector2 v1 = new Vector2((getPosition().x -  getBounds() / 2),
 				(getPosition().y));
-		Vector2 v2 = new Vector2((getPosition().x - bounds / 2),
-				(getPosition().y + bounds));
-		Vector2 v3 = new Vector2((getPosition().x + bounds / 2),
-				(getPosition().y + bounds));
-		Vector2 v4 = new Vector2((getPosition().x + bounds / 2),
+		Vector2 v2 = new Vector2((getPosition().x -  getBounds() / 2),
+				(getPosition().y +  getBounds()));
+		Vector2 v3 = new Vector2((getPosition().x +  getBounds() / 2),
+				(getPosition().y +  getBounds()));
+		Vector2 v4 = new Vector2((getPosition().x +  getBounds() / 2),
 				(getPosition().y));
 		vertices.add(v1);
 		vertices.add(v2);

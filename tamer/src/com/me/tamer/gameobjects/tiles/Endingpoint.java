@@ -35,6 +35,11 @@ public class Endingpoint extends StaticObject implements Obstacle {
 		float y = Float.parseFloat(pixels);
 		setSize(getSize().x, y);
 	}
+	public void setHitBox(String hitbox) {
+		float b = Float.parseFloat(hitbox);
+		setBounds(b);
+
+	}
 
 	public void setGraphics(String graphics) {
 		Renderer render = RenderPool.addRendererToPool("static", graphics);
@@ -49,7 +54,7 @@ public class Endingpoint extends StaticObject implements Obstacle {
 		for (int i = 0; i < size; i++) {
 			if (creatures.get(i).getType() == Creature.TYPE_WORM) {
 				Worm worm = (Worm)creatures.get(i);
-				if (worm.isWithinRange(getPosition(), 1f) ) {
+				if (worm.isWithinRange(getPosition(), getBounds() / 2) ) {
 					worm.setInsideFence(true);
 				} else worm.setInsideFence(false);
 			}

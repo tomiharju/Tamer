@@ -263,13 +263,14 @@ public class Environment extends Actor {
 				TextureRegion texture = assetManager.get("data/graphics/sheetData",
 						TextureAtlas.class).findRegion(staticObjects.get(i).getRenderType());
 				help.set(Helper.worldToScreen(staticObjects.get(i).getPosition()));
-				environmentCache.add(texture, help.x,
+				environmentCache.add(texture, help.x-staticObjects.get(i).getSize().x/2,
 						help.y, staticObjects.get(i).getSize().x,staticObjects.get(i).getSize().y);
 				
 			}
 		cacheID = environmentCache.endCache();
 		environmentCache.setProjectionMatrix(stage.getCamera().combined);
 		System.out.println("CAche created with "+staticObjects.size() + " objects");
+		staticObjects.clear();
 	}
 
 	/**
@@ -317,6 +318,7 @@ public class Environment extends Actor {
 		for (GameObject go : gameobjects) {
 			go.dispose(this);
 		}
+		environmentCache.dispose();//This is important
 		gameobjects.clear();
 		carbages.clear();
 		newobjects.clear();
