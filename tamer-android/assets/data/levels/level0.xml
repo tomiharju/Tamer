@@ -595,14 +595,6 @@
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
 	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">-4:-19</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence2.png</property>
-	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">-4:-19</property>
 		<property type="Graphics">ending0.png</property>
@@ -622,14 +614,6 @@
 		<property type="Position">-5:-20</property>
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
-	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">-2:-17</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">-3:-18</property>
@@ -802,26 +786,10 @@
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
 	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">-4:-23</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence2.png</property>
-	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">-4:-23</property>
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
-	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">2:-17</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">1:-18</property>
@@ -1052,14 +1020,6 @@
 		<property type="Position">3:-20</property>
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
-	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">-2:-25</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">3:-20</property>
@@ -1302,14 +1262,6 @@
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
 	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">10:-17</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence.png</property>
-	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">6:-21</property>
 		<property type="Graphics">ending0.png</property>
@@ -1334,14 +1286,6 @@
 		<property type="Position">5:-22</property>
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
-	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">2:-25</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">6:-21</property>
@@ -1543,14 +1487,6 @@
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
 	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">6:-25</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence.png</property>
-	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">9:-22</property>
 		<property type="Graphics">ending0.png</property>
@@ -1570,14 +1506,6 @@
 		<property type="Position">9:-22</property>
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
-	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">14:-17</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">11:-20</property>
@@ -1739,14 +1667,6 @@
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
 	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">10:-25</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence.png</property>
-	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">12:-23</property>
 		<property type="Graphics">ending0.png</property>
@@ -1775,14 +1695,6 @@
 		<property type="PixelsY">54</property>
 		<property type="Graphics">stump2.png</property>
 	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">16:-19</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence2.png</property>
-	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Endingpoint">
 		<property type="Position">13:-23</property>
 		<property type="Graphics">ending0.png</property>
@@ -1802,22 +1714,6 @@
 		<property type="Position">14:-23</property>
 		<property type="Graphics">ending0.png</property>
 		<property type="zIndex">1</property>
-	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">16:-23</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence2.png</property>
-	</GameObject>
-	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2</property>
-		<property type="zIndex">1</property>
-		<property type="Position">14:-25</property>
-		<property type="PixelsX">80</property>
-		<property type="PixelsY">88</property>
-		<property type="Graphics">fence.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
 		<property type="Position">-24:20</property>

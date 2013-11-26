@@ -21,7 +21,6 @@ public class Decor extends StaticObject{
 		env.addNewObject(this);
 	}
 
-
 	public void setPixelsX(String pixels){
 		float x = Float.parseFloat(pixels);
 		setSize(x / Helper.TILE_WIDTH,getSize().y );
@@ -31,12 +30,6 @@ public class Decor extends StaticObject{
 		setSize(getSize().x ,y / Helper.TILE_WIDTH);
 	}
 	
-	
-	
-	
-
-
-
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
 		// TODO Auto-generated method stub

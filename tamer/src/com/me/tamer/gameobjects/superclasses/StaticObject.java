@@ -5,8 +5,10 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
+import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public abstract class StaticObject implements GameObject{
@@ -61,12 +63,19 @@ public abstract class StaticObject implements GameObject{
 	public void setSize(float x, float y){
 		this.size.set(x,y);
 	}
+	
 	public void setGraphics(String graphics){
 		graphics = graphics.split("\\.")[0];
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setRenderType(graphics);
 	}
+	
+	@Override
+	public void setGraphics(TamerTexture tex) {
+		// TODO Auto-generated method stub
+	}
+	
 	@Override
 	public void setPosition(String pos) {
 		String[] values = pos.split(":");
@@ -93,6 +102,16 @@ public abstract class StaticObject implements GameObject{
 		return centerPosition;
 	}
 	
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public Vector2 getSize() {

@@ -50,7 +50,6 @@ public class ControlContainer extends Group {
 
 		spearButton = new SpearButton(this);
 		this.addActor(spearButton);
-		SnapshotArray<Actor> actors = getChildren();
 
 		// Hide all buttons in startup
 		disableInput();
@@ -62,7 +61,6 @@ public class ControlContainer extends Group {
 		for (int i = 0; i < actors.size; i++) {
 			actors.get(i).act(dt);
 		}
-
 	}
 
 	@Override

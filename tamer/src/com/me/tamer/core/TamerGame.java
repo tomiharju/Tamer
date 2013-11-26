@@ -63,11 +63,6 @@ public class TamerGame extends Game {
 	private LoadingScreen loadingScreen;
 	private Screen fadingScreen;
 
-	// Main drawing batch
-	//private SpriteBatch batch = null;
-
-	Hud hud;
-
 	@Override
 	public void create() {
 		// Set log level
@@ -75,9 +70,6 @@ public class TamerGame extends Game {
 
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 				+ " :: Creating game on " + Gdx.app.getType());
-		// Spritebatch is used for drawing sprites
-
-		//batch = new SpriteBatch();
 
 		// create the preference manager
 		preferenceManager = new PreferenceManager();
@@ -104,8 +96,6 @@ public class TamerGame extends Game {
 		levelCompleteScreen = new LevelCompleteScreen(this);
 		levelCompleteScreen.create();
 		
-		//Take hud instance
-		hud = Hud.instance();
 
 		// start the game with main menu screen
 		setScreen(ScreenType.LOADING);
@@ -114,7 +104,6 @@ public class TamerGame extends Game {
 	public PlayScreen createNewPlayScreen() {
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 				+ " :: Reseting hud");
-		hud.resetHud();
 
 		// dispose old before making new one
 		if (playScreen != null)
@@ -125,7 +114,7 @@ public class TamerGame extends Game {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl.glClearColor(7f / 255, 10f / 255, 27f / 255, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		Gdx.gl.glEnable(GL10.GL_BLEND);
 
@@ -200,8 +189,6 @@ public class TamerGame extends Game {
 		super.dispose();
 		Gdx.app.log(TamerGame.LOG, "Disposing game");
 		musicManager.dispose();
-
-		
 	}
 
 	public MusicManager getMusicManager() {

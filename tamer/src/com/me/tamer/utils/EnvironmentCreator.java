@@ -34,7 +34,7 @@ public class EnvironmentCreator {
 	public static Environment create(int level_number){
 
 		
-		Environment level = new Environment();
+		Environment environment = new Environment();
 		XmlReader reader = new XmlReader();
 		try {
 			FileHandle file = Gdx.files.internal("data/levels/level"+level_number+".xml");
@@ -51,8 +51,8 @@ public class EnvironmentCreator {
 			
 			for(Element property : properties){
 				//Get the setter method, "set + type in xml"
-				Method method = level.getClass().getMethod("set" +property.getAttribute("type"), String.class);
-				method.invoke(level, (Object)property.getText());	
+				Method method = environment.getClass().getMethod("set" +property.getAttribute("type"), String.class);
+				method.invoke(environment, (Object)property.getText());	
 			}
 			
 			//GameObjects
@@ -78,17 +78,17 @@ public class EnvironmentCreator {
 
 				if(subObjects.size != 0){
 					Gdx.app.debug(TamerGame.LOG, " :: Creating Sub-objects for {"+objectToAdd.getClass().getSimpleName()+"}");
-					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName(),level);
+					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName(),environment);
 				}
-				objectToAdd.setup(level);
+				objectToAdd.setup(environment);
 				
 			}
 			
 			//Once xml file is completely read, and all objects are added, return new fresh level.
 			//Setup objects adds all obstacles to specific obstacle list, used later for sandpit resolution etc.
-			level.setupGame();
+			environment.setupGame();
 			
-			return level;	  
+			return environment;	  
 		  
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());

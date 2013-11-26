@@ -109,9 +109,10 @@ public class Hud extends Group {
 		table.add(deadLabel).uniform().spaceBottom(10);
 		table.add(fpsLabel).uniform().spaceBottom(10);
 
-		// Register actors
+		// Register actors	
 		this.addActor(bgImage);
 		this.addActor(table);
+		
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha) {

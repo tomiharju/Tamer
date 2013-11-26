@@ -104,7 +104,9 @@ public class AntOrc extends DynamicObject implements Creature{
 				
 				if(!eatingTimer.isFinished())eatingTimer.step(dt);
 				
-			}else if(targetPart != null) followTarget();
+			}else if( checkTargetState() ) {
+				followTarget();
+			}
 			else followPath();
 			
 			if (!attached){
@@ -114,13 +116,25 @@ public class AntOrc extends DynamicObject implements Creature{
 		}
 	}
 	
+	public boolean checkTargetState(){
+		if (targetPart == null) return false;
+		
+		//remove target if it is drowning
+		 if (targetWorm.isDrowning()){
+			targetWorm = null;
+			targetPart = null;
+			return false;
+		}
+		 
+		return true;
+	}
+	
 	public void solveEffects(){
 		onSpearRange = false;
 		if (getPosition().dst( environment.getTamer().getShadow().getPosition()) < SIZE){
 			onSpearRange = true;
 			environment.getTamer().setCreatureOnSpearRange( getCenterPosition() );
 		}
-		
 	}
 
 	public void lockToTarget(WormPart wp){
@@ -213,14 +227,15 @@ public class AntOrc extends DynamicObject implements Creature{
 				ArrayList<WormPart> wormParts = worm.getParts();
 				for (int j = 0; j < wormParts.size(); j++){
 					WormPart part = wormParts.get(j);
-					if ( part.getPosition().dst( getPosition() ) < WORM_SCAN_RADIUS && !worm.isBeingEaten() && !part.isDecaying() && !part.isAttacked()){				
+					
+					//Check that worm is inside scan radius && not being eaten && not deacaying && not being attacked && not drowning
+					if ( part.getPosition().dst( getPosition() ) < WORM_SCAN_RADIUS && !worm.isBeingEaten() && !part.isDecaying() && !part.isAttacked() && !worm.isDrowning()){				
 						//flag that worm is being attacked so it won't be attacked by other ants
 						targetWorm = worm;
 						targetWorm.setAttacked(true);
 						
 						//always lock to center of the worm 
 						lockToTarget(wormParts.get( wormParts.size() / 2));
-						
 					}
 				}		
 			}
@@ -268,44 +283,7 @@ public class AntOrc extends DynamicObject implements Creature{
 		
 		playSound(TamerSound.SPEAR_ANT);
 	}
-
-	@Override
-	public void lassoHit(String lasso) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void unBind() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void applyPull(Vector2 point,float magnitude) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isWithinRange(Vector2 point, float radius) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setzIndex(String index) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public int getType() {
 		return Creature.TYPE_ANT;
@@ -321,7 +299,6 @@ public class AntOrc extends DynamicObject implements Creature{
 		decaying = true;
 		
 		//Set new graphics for decaying ant here
-		
 	}
 
 	@Override
@@ -336,5 +313,25 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public Worm getTargetWorm(){
 		return targetWorm;
+	}
+	
+	//Creature implementation
+	
+	@Override
+	public void lassoHit(String lasso) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void unBind() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void applyPull(Vector2 point,float magnitude) {
+		// TODO Auto-generated method stub
+		
 	}
 }

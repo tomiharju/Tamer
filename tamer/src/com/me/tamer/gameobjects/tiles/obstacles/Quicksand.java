@@ -90,8 +90,8 @@ public class Quicksand extends StaticObject implements Obstacle{
 				}
 			}
 		}
+		
 		//Check if one or more entered creatures have left the cluster
-	
 		for(int i = 0 ; i < creatures_entered.size() ; i ++){
 			Creature targetCreature = creatures_entered.get(i);
 			boolean isUnderRadius = false;
@@ -113,11 +113,15 @@ public class Quicksand extends StaticObject implements Obstacle{
 			for(int i = 0 ; i < size ; i ++){
 				creatures_entered.get(i).applyPull(bogHoleCenter,PULL_MAGNITUDE);
 				for(int k = 0; k < psize ; k ++){
-					//Check if this creature is closer than 1 from any of this clusters parts
-					Worm casultyWorm = (Worm) creatures_entered.get(i);
-					for(int j = 0 ; j < casultyWorm.getParts().size() ; j ++){
-						if(casultyWorm.getParts().get(j).isWithinRange(parts.get(k).getPosition(),0.5f))
-							casultyWorm.getParts().get(j).decay();
+					if (creatures_entered.get(i).getType() == Creature.TYPE_WORM){
+						//Check if this creature is closer than 1 from any of this clusters parts
+						Worm casultyWorm = (Worm) creatures_entered.get(i);
+						//flag worm to be drowning, so it is not affected by stuff in the game anymore
+						casultyWorm.setDrowning(true);
+						for(int j = 0 ; j < casultyWorm.getParts().size() ; j ++){
+							if(casultyWorm.getParts().get(j).isWithinRange(parts.get(k).getPosition(),0.5f))
+								casultyWorm.getParts().get(j).decay();
+						}
 					}
 				}
 			}		

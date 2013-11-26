@@ -22,10 +22,9 @@ public class Worm extends DynamicObject implements Creature {
 
 	private final int NUMBER_PARTS = 8;
 	private ArrayList<WormPart> parts;
-	private float SPEED = 12.0f;
+	private float SPEED = 7.0f;
 	private WormPart head = null;
 	private WormPart tail = null;
-	private boolean collisionDisabled = false;
 
 	// for effects
 	private ControlContainer controls;
@@ -36,6 +35,8 @@ public class Worm extends DynamicObject implements Creature {
 	private boolean beingEaten = false;
 	private boolean bound = false;
 	private boolean insideFence = false;
+	private boolean drowning = false;
+	private boolean dead = false;
 
 	// for effects
 	private DrawOrderComparator comparator;
@@ -105,17 +106,19 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public void update(float dt) {
-		for (int i = 0; i < parts.size(); i++)
+		//reset dead to true and check parts to prove otherwise
+		dead = true;
+		
+		for (int i = 0; i < parts.size(); i++){
 			parts.get(i).solveJoints(dt);
-		for (int i = 0; i < parts.size(); i++)
 			parts.get(i).update(dt);
-
-		head.getVelocity().set(head.getHeading().tmp().mul(SPEED));
+			if( parts.get(i).getLevelOfDecay() > 0.1f ) dead = false;
+		}
 
 		// kill worm when head has decayed
-		if (head.getLevelOfDecay() < 0.1) {
-			markAsCarbage();
-		}
+		if (dead) markAsCarbage();
+			
+		head.getVelocity().set(head.getHeading().tmp().mul(SPEED));
 
 		solveEffects();
 	}
@@ -214,13 +217,15 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void spearHit(Spear spear) {
-		// nail worm to center of a tile
-		getPosition().x = (float) Math.floor(getPosition().x) + 1;
-		getPosition().y = (float) Math.floor(getPosition().y);
-		bind();
+		//this is double check. already checked on spear
+		if (!drowning) {
+			// nail worm to center of a tile
+			getPosition().x = (float) Math.floor(getPosition().x) + 1;
+			getPosition().y = (float) Math.floor(getPosition().y);
+			bind();
 
-		playSound(TamerSound.SPEAR_WORM);
-
+			playSound(TamerSound.SPEAR_WORM);
+		}
 	}
 
 	public void bind() {
@@ -254,12 +259,13 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public void setOnSpearRange(boolean onRange) {
-		for (int i = 0; i < parts.size(); i++) {
-			parts.get(i).setOnSpearRange(onRange);
+		if ( !drowning && !beingEaten && !bound){
+			for (int i = 0; i < parts.size(); i++) {
+				parts.get(i).setOnSpearRange(onRange);
+			}
+			// Tell tamer that worm is on range and give the tail part as parameter
+			if (onRange)environment.getTamer().setCreatureOnSpearRange( parts.get(parts.size() - 1).getPosition());
 		}
-
-		// Tell tamer that worm is on range and give the tail part as parameter
-		if (onRange)environment.getTamer().setCreatureOnSpearRange( parts.get(parts.size() - 1).getPosition());
 	}
 
 	public void setTail(WormPart part) {
@@ -364,9 +370,13 @@ public class Worm extends DynamicObject implements Creature {
 
 	}
 
-	@Override
-	public void setGraphics(TamerTexture tex) {
-		// TODO Auto-generated method stub
-
+	public boolean isDrowning() {
+		return drowning;
 	}
+
+	public void setDrowning(boolean drowning) {
+		this.drowning = drowning;
+	}
+
+	
 }

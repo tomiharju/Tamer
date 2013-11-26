@@ -71,6 +71,7 @@ public class Spear extends DynamicObject {
 				//not sure if really needed, but null pointer happened
 				if (targetCreature != null) {
 					targetCreature.spearHit(this);
+					
 				} else{
 					playSound(TamerSound.SPEAR_GROUND);
 				}
@@ -125,17 +126,17 @@ public class Spear extends DynamicObject {
 					tamer.getShadow().getPosition(),
 					tamer.getShadow().getSize().x / 2);
 			
-			//remove target if it is worm that is being eaten
+			//remove target if it is worm that is being eaten or already bound or drowning
 			if(creatures.get(i).getType() == Creature.TYPE_WORM){
 				if(((Worm)creatures.get(i)).isBeingEaten())creature = null;
 				else if (((Worm)creatures.get(i)).isBound())creature = null;
+				else if (((Worm)creatures.get(i)).isDrowning())creature = null;
 			}
 			
 			if (creature != null) {
 				targetFound = true;
 				switch (creature.getType()){
 				case (Creature.TYPE_ANT):
-					System.out.println("MULKKU TAHDATTY");
 					targetCreature = creature;
 					if (((AntOrc)targetCreature).getTargetWorm() != null) targetWorm = ((AntOrc)targetCreature).getTargetWorm();
 					targetPoint = ((DynamicObject) targetCreature).getPosition();
@@ -148,12 +149,6 @@ public class Spear extends DynamicObject {
 						targetCreature = targetWorm.getParts().get( targetWorm.getParts().size() - 1);
 						targetPoint = ((DynamicObject) targetCreature).getPosition();
 					} 
-//					else if (((DynamicObject) creature).getPosition().dst(tamer.getShadow().getPosition()) < ((DynamicObject) targetCreature).getPosition().dst(tamer.getShadow().getPosition())) {
-//						targetCreature = creature;
-//						targetPoint = ((DynamicObject) targetCreature)
-//								.getPosition();>p
-				
-//					}
 					break;
 				default:
 					break;
@@ -167,6 +162,7 @@ public class Spear extends DynamicObject {
 			//if target is not found, aim to center of a tile
 			targetPoint = new Vector2();
 			targetPoint.set(environment.getTamer().getShadow().getPosition());
+			
 			// Subtract size of the shadow in world to get centerpoint
 			targetPoint.x -= 0.5;
 			targetPoint.y += 0.5;
@@ -190,7 +186,6 @@ public class Spear extends DynamicObject {
 
 		if (targetCreature != null && targetWorm != null) {
 			//don't unbind if being eaten
-			System.out.println("target worm being eaten: " +targetWorm.isBeingEaten());
 			if(!targetWorm.isBeingEaten()){
 				targetWorm.unBind();
 			}
@@ -211,28 +206,5 @@ public class Spear extends DynamicObject {
 
 	public boolean isAttached() {
 		return attached;
-	}
-
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setup(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub	
-	}
-
-	@Override
-	public void setGraphics(String graphics) {
-		// TODO Auto-generated method stub
-		
 	}
 }

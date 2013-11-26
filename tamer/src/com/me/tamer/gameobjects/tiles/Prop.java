@@ -79,7 +79,7 @@ public class Prop extends StaticObject implements Obstacle {
 					&& temp.x - s.x / 2 < center.x
 					&& temp.y + s.y  > center.y
 					&& temp.y  < center.y + bounds) {
-
+				
 				collisionAxis.set(getCollisionNormal(creatures.get(i)
 						.getHeading()));
 				headingAdjust.set(Helper.projection(creatures.get(i)
