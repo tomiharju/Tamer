@@ -34,7 +34,7 @@ public class SoundManager  {
 		//Menu
 		MENU_CLICK("Menu_nappi01.ogg"),
 		
-		TAMER_SPEAR("heitto02.ogg"),
+		TAMER_SPEAR("Heitto02.ogg"),
 		GRYPHON("hawk.wav"),
 		ANT_EAT("Murkku_syonti01.ogg"),
 		
