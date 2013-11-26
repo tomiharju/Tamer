@@ -74,6 +74,8 @@ public class Environment extends Actor {
 	
 	//fence
 	private Fence fence;
+	private Vector2 fenceUpLeft = new Vector2();
+	private Vector2 fenceBottomRight = new Vector2();
 
 	public Environment() {
 		RuntimeObjectFactory.createLinkToLevel(this);
@@ -261,13 +263,14 @@ public class Environment extends Actor {
 				TextureRegion texture = assetManager.get("data/graphics/sheetData",
 						TextureAtlas.class).findRegion(staticObjects.get(i).getRenderType());
 				help.set(Helper.worldToScreen(staticObjects.get(i).getPosition()));
-				environmentCache.add(texture, help.x,
+				environmentCache.add(texture, help.x-staticObjects.get(i).getSize().x/2,
 						help.y, staticObjects.get(i).getSize().x,staticObjects.get(i).getSize().y);
 				
 			}
 		cacheID = environmentCache.endCache();
 		environmentCache.setProjectionMatrix(stage.getCamera().combined);
 		System.out.println("CAche created with "+staticObjects.size() + " objects");
+		staticObjects.clear();
 	}
 
 	/**
@@ -315,6 +318,7 @@ public class Environment extends Actor {
 		for (GameObject go : gameobjects) {
 			go.dispose(this);
 		}
+		environmentCache.dispose();//This is important
 		gameobjects.clear();
 		carbages.clear();
 		newobjects.clear();
@@ -359,10 +363,4 @@ public class Environment extends Actor {
 	public Fence getFence() {
 		return fence;
 	}
-
-	public void setFence(Fence fence) {
-		this.fence = fence;
-	}
-	
-	
 }

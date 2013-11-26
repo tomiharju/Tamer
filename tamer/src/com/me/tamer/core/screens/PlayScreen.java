@@ -18,7 +18,7 @@ public class PlayScreen extends AbstractScreen{
 	
 	public void create(){
 		game.getMusicManager().stop();
-		//game.getMusicManager().setVolume(0.8f);
+		game.getMusicManager().setVolume(1.0f);
 		//game.getMusicManager().play( TamerMusic.LEVEL ); 
 
 		//stage has to be created after state is set to GAME_RUNNING because of the threads

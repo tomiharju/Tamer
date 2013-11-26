@@ -11,10 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
+import com.me.tamer.gameobjects.creatures.WormPart;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.ui.ControlContainer;
@@ -48,6 +48,7 @@ public class Tamer extends DynamicObject {
 	private ArrayList<Spear> spears = null;
 	private Spear spearToBePicked = null;
 	private Vector2 targetTilePosition = new Vector2();
+	private boolean wormOnSpearRange = false;
 
 	// Variables for entering the field
 	private Vector2 spawnPosition = new Vector2();
@@ -112,18 +113,9 @@ public class Tamer extends DynamicObject {
 	public void update(float dt) {
 		super.update(dt);
 		
-		if (environment.getState() == RunningState.TAMER_ENTER) {
-			if (shadow.getPosition().dst(spawnPosition) > SPAWN_DISTANCE) {
-				enteredField = true;
-			}
-
-			shadow.getPosition()
-					.add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
-			getPosition().set(shadow.getPosition().x - FLYING_HEIGHT,
-					shadow.getPosition().y + FLYING_HEIGHT);
-		} 
-		
+		if (environment.getState() == RunningState.TAMER_ENTER) enterField(dt);
 		else {
+			
 			shadow.getPosition().add(getHeading().tmp().mul(SPEED * dt));
 			getPosition().set(shadow.getPosition().x - FLYING_HEIGHT,
 					shadow.getPosition().y + FLYING_HEIGHT);
@@ -144,26 +136,46 @@ public class Tamer extends DynamicObject {
 			scream.update(dt);
 			
 			//set target tile position
-			targetTilePosition.set( shadow.getPosition().tmp().add(-0.5f,0.5f) );
-			targetTilePosition.x = (float) Math.floor(targetTilePosition.x) + 1;
-			targetTilePosition.y = (float) Math.floor(targetTilePosition.y);
+			if (!wormOnSpearRange){
+				targetTilePosition.set( shadow.getPosition().tmp().add(-0.5f,0.5f) );
+				targetTilePosition.x = (float) Math.floor(targetTilePosition.x) + 1;
+				targetTilePosition.y = (float) Math.floor(targetTilePosition.y);
+			}
+				
+			//reset this after every loop
+			wormOnSpearRange = false;	
 		}			
+	}
+	
+	public void enterField(float dt){
+		if (shadow.getPosition().dst(spawnPosition) > SPAWN_DISTANCE) {
+			enteredField = true;
+		}
+
+		shadow.getPosition()
+				.add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
+		getPosition().set(shadow.getPosition().x - FLYING_HEIGHT,
+				shadow.getPosition().y + FLYING_HEIGHT);
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		super.draw(batch);
 		
-		//Draw targetTile
-		Renderer renderer2 = RenderPool.getRenderer( TamerTexture.TARGET_TILE.name() );
-		renderer2.setSize(Helper.TILESIZE);
-		renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
-		batch.setColor(1, 1, 1, 0.5f);
-		renderer2.draw(batch);	
-		batch.setColor(Color.WHITE);
-		
-		shadow.draw(batch);
-		scream.draw(batch);
+		//Quick fix to issue that tamer is drawn before he is supposed to
+		if (environment.getState() == RunningState.TAMER_ENTER || environment.getState() == RunningState.NORMAL){
+			super.draw(batch);
+			
+			//Draw targetTile
+			Renderer renderer2 = RenderPool.getRenderer( TamerTexture.TARGET_TILE.name() );
+			renderer2.setSize(Helper.TILESIZE);
+			renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
+			batch.setColor(1, 1, 1, 0.5f);
+			renderer2.draw(batch);	
+			batch.setColor(Color.WHITE);
+			
+			shadow.draw(batch);
+			scream.draw(batch);
+		}
 	}
 
 	/**
@@ -218,17 +230,6 @@ public class Tamer extends DynamicObject {
 		return movement;
 	}
 
-	/**
-	 * @param direction
-	 *            Used only to turn tamer around his position when throwing a
-	 *            spear
-	 */
-	public void turn(Vector2 direction) {
-		direction.rotate(45);
-		getHeading().lerp(direction, AIM_SPEED);
-		getHeading().nor();
-	}
-
 	public void throwSpear() {
 		if(onSpearCoolDown) return;
 		
@@ -261,6 +262,13 @@ public class Tamer extends DynamicObject {
 
 	public void setSpawnDirection(Vector2 spawnDirection) {
 		this.spawnDirection.set(spawnDirection);
+	}
+	
+	public void setCreatureOnSpearRange(Vector2 wpPos){
+		if(wpPos!=null){
+			wormOnSpearRange=true;
+			targetTilePosition.set(wpPos);
+		}	
 	}
 
 	public void useScream() {
@@ -304,27 +312,5 @@ public class Tamer extends DynamicObject {
 		shapeRndr.rect(-0.25f, -0.25f, .5f, .5f);
 		shapeRndr.end();
 
-	}
-
-	public boolean getDebug() {
-		return false;
-	}
-
-	@Override
-	public void setup(Environment level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setGraphics(String graphics) {
-		// TODO Auto-generated method stub
-		
 	}
 }

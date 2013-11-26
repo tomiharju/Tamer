@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.services.SoundManager;
@@ -249,5 +250,25 @@ public abstract class DynamicObject implements GameObject {
 	public void enableCollision() {
 		collisionDisabled = false;
 	}
+	
+	@Override
+	public void setup(Environment level) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setGraphics(String graphics) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }

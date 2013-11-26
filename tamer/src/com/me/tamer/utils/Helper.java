@@ -23,7 +23,7 @@ public class Helper {
 	public static float VIRTUAL_SIZE_Y = (float) ((40- (40/12)) * Math.sqrt(2) / 2);
 	
 	//public static Vector2 TILESIZE = new Vector2(Gdx.graphics.getWidth() / 12,(Gdx.graphics.getHeight() / 20));
-	public static Vector2 TILESIZE = new Vector2((float)Math.sqrt(2),((float)Math.sqrt(2) / 2));//.mul(1.0f,1.1f);
+	public static Vector2 TILESIZE = new Vector2((float)Math.sqrt(2),((float)Math.sqrt(2) / 2));
 	
 	static Vector2 projection = new Vector2();
 	static Vector2 unit = new Vector2();
@@ -31,8 +31,6 @@ public class Helper {
 	
 	private static Matrix3 worldMatrix = new Matrix3().scale(1f,0.5f).rotate(-45);
 	private static Matrix3 screenMatrix = new Matrix3().scale(1f,(float) 0.5f).rotate(-45).inv();
-	//private static Matrix3 worldMatrix = new Matrix3().scale(1,0.5f).rotate(-45);
-	//private static Matrix3 screenMatrix = new Matrix3().scale(1,0.5f).rotate(-45).inv();
 	private static Vector2 temp = new Vector2(0,0), temp1 = new Vector2(0,0);
 	
 	

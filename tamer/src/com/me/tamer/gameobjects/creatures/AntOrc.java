@@ -15,6 +15,7 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.tEvent;
@@ -26,8 +27,8 @@ public class AntOrc extends DynamicObject implements Creature{
 	private final float WORM_SCAN_RADIUS = 10.0f; //ScanArea is a circle
 	private final float WAYPOINT_SCAN_RADIUS = 0.5f;
 	private final float ATTACK_DISTANCE = 0.3f;
-	private final float SPEED_INCREASE = 1.1f; //A number on which the velocity is multiplied with
-	private final float SPEED = 3.0f;
+	private final float SPEED_INCREASE = 1.5f; //A number on which the velocity is multiplied with
+	private final float SPEED = 2.0f;
 	private final float EATING_TIME = 3.0f;
 	private final Vector2 EATING_OFFSET = new Vector2 (1.0f,-1.0f);
 	private final float SIZE = 1.9f;
@@ -41,6 +42,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	private boolean markedDead = false;
 	private boolean returning = false;
 	private boolean decaying = false;
+	private boolean onSpearRange = false;
 	
 	//eating
 	private int loopCount = 0;
@@ -83,6 +85,9 @@ public class AntOrc extends DynamicObject implements Creature{
 	}
 	
 	public void update(float dt){
+		
+		solveEffects();
+		
 		//how often should this scan
 		if (!decaying){
 			if(!returning && targetPart==null)scanWorms();
@@ -109,16 +114,24 @@ public class AntOrc extends DynamicObject implements Creature{
 		}
 	}
 	
-	
+	public void solveEffects(){
+		onSpearRange = false;
+		if (getPosition().dst( environment.getTamer().getShadow().getPosition()) < SIZE){
+			onSpearRange = true;
+			environment.getTamer().setCreatureOnSpearRange( getCenterPosition() );
+		}
+		
+	}
 
 	public void lockToTarget(WormPart wp){
 		//Increase speed and set target
 		targetPart = wp;
-		
-		//getVelocity().mul(SPEED_INCREASE) ;
+		getVelocity().mul(SPEED_INCREASE) ;
 	}
 	
 	public void draw(SpriteBatch batch){
+		if (onSpearRange) batch.setColor(1, 0.7f, 0.7f, 1.0f);
+		
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
 		if (decaying) {	
 			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
@@ -208,9 +221,6 @@ public class AntOrc extends DynamicObject implements Creature{
 						//always lock to center of the worm 
 						lockToTarget(wormParts.get( wormParts.size() / 2));
 						
-						//if( wormParts.get(j).getOrdinal() < WORM_MIN_LENGTH)
-							//if (!wormParts.get(WORM_MIN_LENGTH).isDecaying()) lockToTarget( wormParts.get(WORM_MIN_LENGTH));		
-						//else lockToTarget(wormParts.get(j));
 					}
 				}		
 			}
@@ -219,7 +229,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	@Override
 	public Creature affectedCreature(Vector2 point,float radius) {
-		if( this.getPosition().dst(point) < radius)
+		if( this.getPosition().dst(point) - SIZE /2 < radius)
 			return this;
 		else
 			return null;
@@ -235,7 +245,6 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	@Override
 	public void kill() {
-		
 		markAsCarbage();	
 	}
 	
@@ -248,10 +257,10 @@ public class AntOrc extends DynamicObject implements Creature{
 		
 		if(targetPart != null){
 			targetWorm.unBind();
-		//	targetPart.spearHit(spear);
+//			targetPart.spearHit(spear);
 			targetWorm.setBeingEaten(false);
 			
-			EventPool.addEvent(new tEvent(spear,"stopAdjusting", 0.5f,1));
+//			EventPool.addEvent(new tEvent(spear,"stopAdjusting", 0.5f,1));
 		}
 		
 		//just kill when spear hits for now
@@ -265,7 +274,6 @@ public class AntOrc extends DynamicObject implements Creature{
 		// TODO Auto-generated method stub
 		
 	}
-
 
 
 	@Override
@@ -288,24 +296,6 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setGraphics(String graphics) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setup(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -346,17 +336,5 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public Worm getTargetWorm(){
 		return targetWorm;
-	}
-
-	@Override
-	public void disableCollision() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void enableCollision() {
-		// TODO Auto-generated method stub
-		
 	}
 }

@@ -144,7 +144,8 @@ public class TamerStage extends Stage{
 		super.getCamera().update();
 		if (!super.getRoot().isVisible()) return;
 		super.getRoot().draw(super.getSpriteBatch(), 1);
-	//	environment.debugDraw(debugRender);
+//		environment.debugDraw(debugRender);
+//		Helper.debugDraw(debugRender, camera);
 		super.getSpriteBatch().end();
 	}
 	

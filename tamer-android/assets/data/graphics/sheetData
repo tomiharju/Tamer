@@ -65,7 +65,7 @@ tree-2
   orig: 120, 142
   offset: 12, 6
   index: -1
-fence4
+fence2
   rotate: false
   xy: 374, 180
   size: 80, 72
@@ -240,7 +240,7 @@ dirt0
   orig: 40, 20
   offset: 1, 0
   index: -1
-fence3
+fence
   rotate: false
   xy: 454, 180
   size: 80, 72

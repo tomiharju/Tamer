@@ -93,6 +93,7 @@ public class GryphonScream extends DynamicObject {
 	
 	public void draw(SpriteBatch batch){
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		batch.setColor(0.7f,0.7f,1,0.4f);
 		for(int i = 0 ; i < soundWaves.size() ; i++){
 			if(soundWaves.get(i).z == 0){
 				renderer.setSize(soundWaves.get(i).x,soundWaves.get(i).x  / 2);
@@ -100,6 +101,7 @@ public class GryphonScream extends DynamicObject {
 				renderer.draw(batch);
 			}	
 		}
+		batch.setColor(Color.WHITE);
 	}
 
 	public void activate(){

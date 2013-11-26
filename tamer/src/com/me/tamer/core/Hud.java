@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.me.tamer.core.Level.WormState;
 import com.me.tamer.core.TamerGame.ScreenType;
 
 public class Hud extends Group {
@@ -31,8 +32,8 @@ public class Hud extends Group {
 	private TamerStage stage;
 
 	private Label remainingLabel, survivedLabel, deadLabel, fpsLabel;
-	public static final int LABEL_REMAINING = 0, LABEL_SURVIVED = 1, LABEL_DEAD = 4,
-			LABEL_FPS = 2;
+	public static final int LABEL_REMAINING = 0, LABEL_SURVIVED = 1,
+			LABEL_DEAD = 4, LABEL_FPS = 2;
 	private int remaining = 0, survived = 0, dead = 0;
 	private Image bgImage;
 
@@ -87,7 +88,6 @@ public class Hud extends Group {
 			}
 		});
 
-
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = skin.getFont("default");
 
@@ -113,7 +113,7 @@ public class Hud extends Group {
 		this.addActor(bgImage);
 		this.addActor(table);
 	}
-	
+
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setProjectionMatrix(stage.getUiCamera().combined);
 		SnapshotArray<Actor> actors = getChildren();
@@ -125,7 +125,7 @@ public class Hud extends Group {
 	public void resetHud() {
 		remaining = 0;
 		remainingLabel.setText("R: " + remaining);
-		
+
 		dead = 0;
 		deadLabel.setText("D: " + dead);
 
@@ -144,13 +144,31 @@ public class Hud extends Group {
 			survived += amount;
 			survivedLabel.setText("S: " + survived);
 			break;
-		}	
+		}
 		case LABEL_DEAD: {
 			dead += amount;
 			survivedLabel.setText("D: " + survived);
 		}
 		case LABEL_FPS: {
 			fpsLabel.setText("FPS: " + amount);
+			break;
+		}
+		}
+	}
+
+	public void updateLabel(WormState state, int amount){
+		switch(state){
+		case DEFAULT: {
+			remainingLabel.setText("R: " + amount);
+			break;
+		}
+		case FENCE: {
+			survivedLabel.setText("S: " + amount);
+			
+			break;
+		}	
+		case DEAD: {
+			survivedLabel.setText("D: " + amount);
 			break;
 		}
 		}

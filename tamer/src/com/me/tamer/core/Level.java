@@ -1,46 +1,56 @@
 package com.me.tamer.core;
 
-
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
 import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.utils.EnvironmentCreator;
 
-public class Level{
-	
+public class Level {
+
 	private TamerStage stage;
 	private final int id;
 	private String name;
-    private boolean completed;
-    private Level nextLevel;
+	private boolean completed;
+	private Level nextLevel;
 
 	Environment environment = null;
-	ArrayList<Worm> worms;
+	Hud hud = null;
 
-	public Level(int id){
-		this.id = id;
+	int worms = 0, normal = 0, dead = 0, fence = 0;
+
+	public enum WormState {
+		DEFAULT, DEAD, FENCE;
 	}
-	
-	public void setStage(TamerStage stage){
+
+	public Level(int id) {
+		this.id = id;
+		hud = Hud.instance();
+	}
+
+	public void setStage(TamerStage stage) {
 		this.stage = stage;
 	}
-	
+
 	/**
-	 * @param current_env 
-	 * Create new env based on data read from level configuration file.
-	 * Give this as parameter, so that EnvironmentFactory can properly add objects to gameobjects
+	 * @param current_env
+	 *            Create new env based on data read from level configuration
+	 *            file. Give this as parameter, so that EnvironmentFactory can
+	 *            properly add objects to gameobjects
 	 */
-	public void createEnvironment(){
+	public void createEnvironment() {
 		environment = EnvironmentCreator.create(id);
 		environment.setStage(stage);
 	}
-	
-	public Environment getEnvironment(){
+
+	public Environment getEnvironment() {
 		return environment;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -65,8 +75,41 @@ public class Level{
 	public void setNextLevel(Level nextLevel) {
 		this.nextLevel = nextLevel;
 	}
-	
+
 	public int getId() {
 		return id;
+	}
+
+	public void addWorm(Worm w) {
+		worms++;
+		updateHud();
+	}
+
+	public void setWormState(Worm w, WormState state) {
+		switch (state) {
+		case DEFAULT:
+			worms++;
+			fence--;
+			break;
+		case DEAD:
+			worms--;
+			dead++;
+			break;
+		case FENCE:
+			worms--;
+			fence++;
+			break;
+		default:
+			break;
+		}
+		
+		if (worms<=0) setCompleted(true);
+		updateHud();
+	}
+
+	public void updateHud() {
+		hud.updateLabel(WormState.DEFAULT, worms);
+		hud.updateLabel(WormState.DEAD, dead);
+		hud.updateLabel(WormState.FENCE, fence);
 	}
 }

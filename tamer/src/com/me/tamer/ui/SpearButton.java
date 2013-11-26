@@ -21,23 +21,13 @@ import com.me.tamer.services.TextureManager.TamerTexture;
 public class SpearButton extends Actor {
 
 	ControlContainer controlContainer = null;
-	OrthographicCamera cam = null;
-	OrthographicCamera uiCam = null;
-
-	private Vector2 help = new Vector2();
 	
 	private Vector2 input = new Vector2();
 	private Vector2 localCenter = new Vector2();
 	
 	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 165,100);
 	final float BUTTON_SIZE = 180;
-	final float MIN_DISTANCE = 2;
-	final float SPEED = 12; // for increasing the throwing distance
-	final float MAX_DISTANCE = 15;
 
-	private Vector2 cameraPoint = new Vector2(); //the point that AIM_CAMERA mode follows
-
-	float throwDistance = 0; 
 	boolean buttonPressed = false;
 	boolean inputDisabled = false;
 	UiRenderer renderer = new UiRenderer();
@@ -51,8 +41,6 @@ public class SpearButton extends Actor {
 	//Status variables
 	private boolean onCooldown = false;
 	private boolean spearOnRange = false;
-	
-	private Joystick joystick;
 	
 	public SpearButton(ControlContainer controlContainer) {
 		this.controlContainer = controlContainer;
@@ -68,7 +56,7 @@ public class SpearButton extends Actor {
 		renderer2.setPosition(restingpoint);
 		
 		//pick up spear
-		renderer3.loadGraphics("joystick");
+		renderer3.loadGraphics(TamerTexture.JOYSTICK);
 		renderer3.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer3.setPosition(restingpoint);
 		
@@ -126,7 +114,6 @@ public class SpearButton extends Actor {
 	        }
 			 
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				//stopAim();		
 			}
 			
 			public void touchDragged(InputEvent event, float x, float y, int pointer){
@@ -141,14 +128,6 @@ public class SpearButton extends Actor {
 	public void addSpearsAvailable(int s){
 		spearsAvailable += s;
 		amountLabel.setText(""+spearsAvailable);
-	}
-	
-	public float getThrowDistance(){
-		return throwDistance;
-	}
-	
-	public Vector2 getCameraPoint(){
-		return cameraPoint;
 	}
 	
 	public void setOnCooldown(boolean b){

@@ -65,7 +65,7 @@ public class TileMap extends StaticObject {
 		if (terrainTex != null)
 			for (int i = 0; i < terrain.size(); i++) {
 				help.set(Helper.worldToScreen(terrain.get(i)));
-				cache.add(terrainTex, help.x,
+				cache.add(terrainTex, help.x - Helper.TILESIZE.x / 2,
 						help.y, Helper.TILESIZE.x, Helper.TILESIZE.y);
 				
 			}
