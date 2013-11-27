@@ -25,6 +25,7 @@ public class Prop extends StaticObject implements Obstacle {
 	private Vector2 headingAdjust = new Vector2();
 	private Vector2 newHeading = new Vector2();
 	private Vector2 impulse = new Vector2();
+	private Vector2 movementAxis = new Vector2();
 	private ArrayList<Vector2> vertices;
 	private ArrayList<Vector2> axes;
 
@@ -73,7 +74,7 @@ public class Prop extends StaticObject implements Obstacle {
 			// Creatures size
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
 			Vector2 center = getPosition();
-			
+		
 			if (temp.x + s.x / 2 > center.x - getBounds()
 					&& temp.x - s.x / 2 < center.x
 					&& temp.y + s.y  > center.y
@@ -89,9 +90,9 @@ public class Prop extends StaticObject implements Obstacle {
 				closestVertice.set(getClosestVertice(((DynamicObject) creatures
 						.get(i)).getPosition()));
 				float distance = closestVertice.dst(((Worm) creatures.get(i)).getHead().getPosition());
-				//impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
-					//	.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
-				impulse.set(collisionAxis.mul(distance));
+				impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
+						.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
+				//impulse.set(collisionAxis.mul(distance));
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse);
 				((DynamicObject)creatures.get(i)).setHeading(newHeading);

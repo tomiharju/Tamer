@@ -52,7 +52,7 @@ public class Hud extends Group {
 	}
 
 	public void create() {
-		float h = Gdx.graphics.getHeight() / 12;
+		float h = Gdx.graphics.getHeight() /12;
 		float w = Gdx.graphics.getWidth();
 		float x = 0;
 		float y = Gdx.graphics.getHeight() - h;
