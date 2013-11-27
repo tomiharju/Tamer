@@ -21,7 +21,7 @@ public abstract class StaticObject implements GameObject{
 	private boolean isCarbage 		= false;
 	private boolean debug 			= false;
 	private int zIndex 				= 0;
-	
+	private float bounds = 0;
 	private boolean fading = false;
 	
 	TweenManager tweenManager;
@@ -140,7 +140,9 @@ public abstract class StaticObject implements GameObject{
 	public void setRenderType(String renderType) {
 		this.renderType = renderType;
 	}
-
+	public void setBounds(float bounds){
+		this.bounds = bounds;
+	}
 	@Override
 	public void setzIndex(String index) {
 		int zIndex = Integer.parseInt(index);
@@ -157,5 +159,8 @@ public abstract class StaticObject implements GameObject{
 	public boolean getDebug() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	public float getBounds(){
+		return bounds;
 	}
 }
