@@ -109,9 +109,13 @@ public class Environment extends Actor {
 					//quick fix to the issue where this is not updated before moving joystick
 					tamerShadowPosition = ((Tamer) tamer).getShadow().getCenterPosition();
 				}
-			}		
+			}
+			
 			break;
 		case END_FADE:
+			for (int k = 0; k < numObjects; k++) {
+				gameobjects.get(k).update(dt);
+			}
 			stage.getGame().changeLevelCompleteScreen();
 			break;
 		default:

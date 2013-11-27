@@ -47,7 +47,6 @@ public class Endingpoint extends StaticObject implements Obstacle {
 		float s = Float.parseFloat(scale);
 		this.scale = s;
 		bounds = this.scale;
-
 	}
 
 	@Override
@@ -74,23 +73,5 @@ public class Endingpoint extends StaticObject implements Obstacle {
 //				} else worm.setInsideFence(false);
 			}
 		}
-	}
-
-	@Override
-	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setGraphics(TamerTexture tex) {
-		// TODO Auto-generated method stub
-		
 	}
 }

@@ -165,11 +165,10 @@ public class Hud extends Group {
 		}
 		case FENCE: {
 			survivedLabel.setText("S: " + amount);
-			
 			break;
 		}	
 		case DEAD: {
-			survivedLabel.setText("D: " + amount);
+			deadLabel.setText("D: " + amount);
 			break;
 		}
 		}

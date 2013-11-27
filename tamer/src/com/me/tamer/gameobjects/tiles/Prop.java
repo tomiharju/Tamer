@@ -41,12 +41,12 @@ public class Prop extends StaticObject implements Obstacle {
 
 	public void setPixelsX(String pixels) {
 		float x = Float.parseFloat(pixels);
-		setSize(x / Helper.TILE_WIDTH, getSize().y);
+		setSize(x / Helper.TILE_WIDTH_PIXEL, getSize().y);
 	}
 
 	public void setPixelsY(String pixels) {
 		float y = Float.parseFloat(pixels);
-		setSize(getSize().x, y / Helper.TILE_WIDTH);
+		setSize(getSize().x, y / Helper.TILE_WIDTH_PIXEL);
 	}
 
 	public void setHitBox(String scale) {
