@@ -57,24 +57,6 @@ public class AnimatedRenderer implements Renderer {
 
 	private AssetManager assetManager;
 
-	final String VERT = "attribute vec4 "
-			+ ShaderProgram.POSITION_ATTRIBUTE
-			+ ";\n"
-			+
-			// "attribute vec4 "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
-			// "attribute vec2 "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
-
-			"uniform mat4 u_projTrans;\n" + " \n" + "varying vec4 vColor;\n"
-			+ "varying vec2 vTexCoord;\n"
-			+
-
-			"void main() {\n"
-			+
-			// "	vColor = "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
-			// "	vTexCoord = "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
-			"	gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE
-			+ ";\n" + "}";
-
 	public AnimatedRenderer() {
 		animations = new ArrayList<Animation>();
 		stage = TamerStage.instance();

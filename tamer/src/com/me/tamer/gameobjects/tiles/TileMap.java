@@ -67,6 +67,8 @@ public class TileMap extends StaticObject {
 				help.set(Helper.worldToScreen(terrain.get(i)));
 				cache.add(terrainTex, help.x - Helper.TILESIZE.x / 2,
 						help.y, Helper.TILESIZE.x, Helper.TILESIZE.y);
+//				cache.add(terrainTex, help.x - (float)Math.sqrt(2) / 2,
+//				help.y, (float)Math.sqrt(2), (float)Math.sqrt(2) / 2);
 				
 			}
 	
@@ -74,44 +76,11 @@ public class TileMap extends StaticObject {
 	public void setTerrain(String graphics) {
 		graphics = graphics.split("\\.")[0];
 		setSize(Helper.TILESIZE);
+//		setSize(1,0.5f);
 		setRenderType(graphics);
 	}
 
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setGraphics(String graphics) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean getDebug() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	public int getNumTiles(){
 		return numTiles;
-	}
-	@Override
-	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setGraphics(TamerTexture tex) {
-		// TODO Auto-generated method stub
-
 	}
 }

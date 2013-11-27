@@ -168,24 +168,6 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	@Override
-	public void setup(Environment level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void lassoHit(String lasso) {
 		// TODO Auto-generated method stub
 
@@ -193,7 +175,7 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void kill() {
-
+		
 		for (int i = 0; i < parts.size(); i++) {
 			parts.get(i).decay();
 		}
@@ -282,13 +264,11 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void markAsCarbage() {
-		stage.getLevel().setWormState(this, WormState.DEAD);
+		System.out.println("drownin: " +drowning +"beingEta: " +beingEaten);
+		if(drowning)stage.getLevel().setWormState(this, WormState.DEAD);
+		else stage.getLevel().setWormState(this, WormState.FENCE);
+		
 		super.markAsCarbage();
-	}
-
-	@Override
-	public void setGraphics(String graphics) {
-		// TODO Auto-generated method stub
 	}
 
 	public ArrayList<WormPart> getParts() {
@@ -362,10 +342,14 @@ public class Worm extends DynamicObject implements Creature {
 	public void setInsideFence(boolean b) {
 		if (!insideFence && b) {
 			insideFence = b;
-			stage.getLevel().setWormState(this, WormState.FENCE);
+			
+			for (int i = 0; i < parts.size(); i++) {
+				parts.get(i).decay();
+			}
+			
 		} else if (insideFence && !b) {
-			insideFence = b;
-			stage.getLevel().setWormState(this, WormState.DEFAULT);
+//			insideFence = b;
+			//stage.getLevel().setWormState(this, WormState.DEFAULT);
 		}
 
 	}

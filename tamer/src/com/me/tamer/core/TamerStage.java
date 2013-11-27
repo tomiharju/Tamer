@@ -175,7 +175,11 @@ public class TamerStage extends Stage{
 	}
 	
 	public void setupCamera(){	
+		//test
 		camera = new OrthographicCamera(Helper.VIRTUAL_SIZE_X, Helper.VIRTUAL_SIZE_Y);
+//		camera = new OrthographicCamera(Helper.TILESIZE.x * 12, Helper.TILESIZE.y * 20);
+		
+		
 		uiCamera = new OrthographicCamera();
 		uiCamera.setToOrtho(false);
 		
