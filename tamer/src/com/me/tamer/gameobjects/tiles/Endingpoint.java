@@ -21,7 +21,7 @@ public class Endingpoint extends StaticObject implements Obstacle {
 	
 	public void setup(Environment environment) {
 		environment.addNewObject(this);
-		environment.getObstacles().add(this);
+		environment.addObstacle(this);
 		setZindex(1);
 
 	}
@@ -65,12 +65,10 @@ public class Endingpoint extends StaticObject implements Obstacle {
 						&& temp.y + s.y  > center.y
 						&& temp.y  < center.y + bounds) {
 					worm.setInsideFence(true);
+					worm.kill();
 				} else worm.setInsideFence(false);
 					
 				
-//				if (worm.isWithinRange(getPosition(), 1f) ) {
-//					worm.setInsideFence(true);
-//				} else worm.setInsideFence(false);
 			}
 		}
 	}

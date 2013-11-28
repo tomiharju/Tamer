@@ -116,8 +116,7 @@ public class TamerGame extends Game {
 	public void render() {
 		Gdx.gl.glClearColor(7f / 255, 10f / 255, 27f / 255, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		Gdx.gl.glEnable(GL10.GL_BLEND);
-
+		Gdx.gl.glEnable(GL20.GL_BLEND);
 		if (fadingScreen != null) {
 			fadingScreen.render(Gdx.graphics.getDeltaTime());
 			if (((LevelCompleteScreen) getScreen()).getFadingDone()) {
