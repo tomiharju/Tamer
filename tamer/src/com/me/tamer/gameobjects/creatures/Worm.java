@@ -21,7 +21,7 @@ import com.me.tamer.utils.DrawOrderComparator;
 public class Worm extends DynamicObject implements Creature {
 
 	private final int NUMBER_PARTS = 8;
-	private final float FINAL_SPEED = 8.0f;
+	private final float FINAL_SPEED = 100.0f;
 	private ArrayList<WormPart> parts;
 	private float speed = FINAL_SPEED;
 	private WormPart head = null;
@@ -85,8 +85,7 @@ public class Worm extends DynamicObject implements Creature {
 		} else if (type.equalsIgnoreCase("joint")) {
 			part = new WormPart();
 			part.createBodyPart(ordinal, pos, vel, this);
-		} else
-			throw new IllegalArgumentException("Wrong partname");
+		} 
 
 		parts.add(part);
 	}
@@ -119,7 +118,9 @@ public class Worm extends DynamicObject implements Creature {
 		// kill worm when head has decayed
 		if (dead) markAsCarbage();
 			
-		head.getVelocity().set(head.getHeading().tmp().mul(speed));
+		
+		//SHOULD DELTA TIME BE ADDED HERE????????????
+		head.getVelocity().set(head.getHeading().tmp().mul(speed) );
 
 		solveEffects();
 	}
@@ -161,11 +162,9 @@ public class Worm extends DynamicObject implements Creature {
 	@Override
 	public void applyPull(Vector2 point, float magnitude) {
 		Vector2 direction = point.tmp().sub(head.getPosition());
-
-		if (point.dst(head.getPosition()) > 0.5f) {
-			head.getVelocity().add(direction.mul(magnitude));
-			head.setHeading(direction);
-		}
+		head.getVelocity().add(direction.mul(magnitude));
+		head.setHeading(direction);
+		
 	}
 
 	@Override
@@ -355,6 +354,7 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public void setDrowning(boolean drowning) {
+		speed = 0;
 		this.drowning = drowning;
 	}
 

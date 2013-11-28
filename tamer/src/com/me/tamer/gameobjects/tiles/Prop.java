@@ -162,7 +162,7 @@ public class Prop extends StaticObject implements Obstacle {
 			Vector2 p1 = this.vertices.get(i);
 			Vector2 p2 = this.vertices.get(i + 1 == this.vertices.size() ? 0
 					: i + 1);
-			Vector2 edge = p1.cpy().sub(p2);
+			Vector2 edge = p2.cpy().sub(p1);
 			Vector2 normal = edge.rotate(-90);
 			normal.nor();
 			axes.add(normal);

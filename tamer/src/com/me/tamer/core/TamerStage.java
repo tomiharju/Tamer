@@ -136,7 +136,7 @@ public class TamerStage extends Stage{
         //Register actors in drawing order
         this.addActor( environment );
         this.addActor( hud );
-        //this.addActor( controlContainer);
+        this.addActor( controlContainer);
                 
 //        setCameraHolder(BEGIN_CAMERA);
         

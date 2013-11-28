@@ -5,22 +5,350 @@
 	</Settings>
 	<GameObject type="com.me.tamer.gameobjects.tiles.TileMap">
 		<property type="TileMap">-10:-10.-10:-9.-10:-8.-10:-7.-10:-6.-10:-5.-10:-4.-10:-3.-10:-2.-10:-1.-10:0.-10:1.-10:2.-10:3.-10:4.-10:5.-10:6.-10:7.-10:8.-10:9.-10:10.-9:-10.-9:-9.-9:-8.-9:-7.-9:-6.-9:-5.-9:-4.-9:-3.-9:-2.-9:-1.-9:0.-9:1.-9:2.-9:3.-9:4.-9:5.-9:6.-9:7.-9:8.-9:9.-9:10.-8:-10.-8:-9.-8:-8.-8:-7.-8:-6.-8:-5.-8:-4.-8:-3.-8:-2.-8:-1.-8:0.-8:1.-8:2.-8:3.-8:4.-8:5.-8:6.-8:7.-8:8.-8:9.-8:10.-7:-10.-7:-9.-7:-8.-7:-7.-7:-6.-7:-5.-7:-4.-7:-3.-7:-2.-7:-1.-7:0.-7:1.-7:2.-7:3.-7:4.-7:5.-7:6.-7:7.-7:8.-7:9.-7:10.-6:-10.-6:-9.-6:-8.-6:-7.-6:-6.-6:-5.-6:-4.-6:-3.-6:-2.-6:-1.-6:0.-6:1.-6:2.-6:3.-6:4.-6:5.-6:6.-6:7.-6:8.-6:9.-6:10.-5:-10.-5:-9.-5:-8.-5:-7.-5:-6.-5:-5.-5:-4.-5:-3.-5:-2.-5:-1.-5:0.-5:1.-5:2.-5:3.-5:4.-5:5.-5:6.-5:7.-5:8.-5:9.-5:10.-4:-10.-4:-9.-4:-8.-4:-7.-4:-6.-4:-5.-4:-4.-4:-3.-4:-2.-4:-1.-4:0.-4:1.-4:2.-4:3.-4:4.-4:5.-4:6.-4:7.-4:8.-4:9.-4:10.-3:-10.-3:-9.-3:-8.-3:-7.-3:-6.-3:-5.-3:-4.-3:-3.-3:-2.-3:-1.-3:0.-3:1.-3:2.-3:3.-3:4.-3:5.-3:6.-3:7.-3:8.-3:9.-3:10.-2:-10.-2:-9.-2:-8.-2:-7.-2:-6.-2:-5.-2:-4.-2:-3.-2:-2.-2:-1.-2:0.-2:1.-2:2.-2:3.-2:4.-2:5.-2:6.-2:7.-2:8.-2:9.-2:10.-1:-10.-1:-9.-1:-8.-1:-7.-1:-6.-1:-5.-1:-4.-1:-3.-1:-2.-1:-1.-1:0.-1:1.-1:2.-1:3.-1:4.-1:5.-1:6.-1:7.-1:8.-1:9.-1:10.0:-10.0:-9.0:-8.0:-7.0:-6.0:-5.0:-4.0:-3.0:-2.0:-1.0:0.0:1.0:2.0:3.0:4.0:5.0:6.0:7.0:8.0:9.0:10.1:-10.1:-9.1:-8.1:-7.1:-6.1:-5.1:-4.1:-3.1:-2.1:-1.1:0.1:1.1:2.1:3.1:4.1:5.1:6.1:7.1:8.1:9.1:10.2:-10.2:-9.2:-8.2:-7.2:-6.2:-5.2:-4.2:-3.2:-2.2:-1.2:0.2:1.2:2.2:3.2:4.2:5.2:6.2:7.2:8.2:9.2:10.3:-10.3:-9.3:-8.3:-7.3:-6.3:-5.3:-4.3:-3.3:-2.3:-1.3:0.3:1.3:2.3:3.3:4.3:5.3:6.3:7.3:8.3:9.3:10.4:-10.4:-9.4:-8.4:-7.4:-6.4:-5.4:-4.4:-3.4:-2.4:-1.4:0.4:1.4:2.4:3.4:4.4:5.4:6.4:7.4:8.4:9.4:10.5:-10.5:-9.5:-8.5:-7.5:-6.5:-5.5:-4.5:-3.5:-2.5:-1.5:0.5:1.5:2.5:3.5:4.5:5.5:6.5:7.5:8.5:9.5:10.6:-10.6:-9.6:-8.6:-7.6:-6.6:-5.6:-4.6:-3.6:-2.6:-1.6:0.6:1.6:2.6:3.6:4.6:5.6:6.6:7.6:8.6:9.6:10.7:-10.7:-9.7:-8.7:-7.7:-6.7:-5.7:-4.7:-3.7:-2.7:-1.7:0.7:1.7:2.7:3.7:4.7:5.7:6.7:7.7:8.7:9.7:10.8:-10.8:-9.8:-8.8:-7.8:-6.8:-5.8:-4.8:-3.8:-2.8:-1.8:0.8:1.8:2.8:3.8:4.8:5.8:6.8:7.8:8.8:9.8:10.9:-10.9:-9.9:-8.9:-7.9:-6.9:-5.9:-4.9:-3.9:-2.9:-1.9:0.9:1.9:2.9:3.9:4.9:5.9:6.9:7.9:8.9:9.9:10.10:-10.10:-9.10:-8.10:-7.10:-6.10:-5.10:-4.10:-3.10:-2.10:-1.10:0.10:1.10:2.10:3.10:4.10:5.10:6.10:7.10:8.10:9.10:10</property>
-		<property type="Terrain">dirt2.png</property>
+		<property type="Terrain">dirt0.png</property>
 		<property type="Size">20</property>
 		<property type="BoundsH">10</property>
 		<property type="BoundsW">10</property>
 		<property type="ShowBounds">0</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">0.7</property>
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-1</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-1</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-1</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-1</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-2</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-1</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-3</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist5.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-2</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist3.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-3</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-1</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-2</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">0:6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist5.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-2</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-4</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist4.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-4</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist5.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-2</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
 		<property type="zIndex">1</property>
 		<property type="Position">-8:-3</property>
-		<property type="PixelsX">28</property>
-		<property type="PixelsY">28</property>
-		<property type="Graphics">decor_leaves.png</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist3.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-6:-1</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-4</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-3</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist4.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-6:-2</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-6:-3</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-4</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist3.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-5:-2</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist5.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist4.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-5:-3</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-6:-4</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-5:-3</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-4:-3</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist5.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
-		<property type="Position">1:5</property>
+		<property type="Position">-2:-1</property>
 		<property type="SpawnType">Worm</property>
 		<property type="SpawnDirection">0</property>
 		<property type="SpawnId">0</property>
@@ -32,67 +360,483 @@
 		<property type="Graphics">spawn.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">0.5</property>
+		<property type="Scale">1.125</property>
 		<property type="zIndex">1</property>
-		<property type="Position">-9:-7</property>
-		<property type="PixelsX">48</property>
-		<property type="PixelsY">24</property>
-		<property type="Graphics">decor_rocks1.png</property>
+		<property type="Position">-6:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist3.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">1.7</property>
+		<property type="Scale">1.125</property>
 		<property type="zIndex">1</property>
-		<property type="Position">-5:-3</property>
-		<property type="PixelsX">68</property>
-		<property type="PixelsY">68</property>
-		<property type="Graphics">decor_leaves.png</property>
+		<property type="Position">-5:-4</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">0.5</property>
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist4.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-6:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-5:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-4:-4</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-3:-4</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
 		<property type="zIndex">1</property>
 		<property type="Position">-5:-6</property>
-		<property type="PixelsX">48</property>
-		<property type="PixelsY">24</property>
-		<property type="Graphics">decor_rocks2.png</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist3.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">0.5</property>
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-6:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist5.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-4:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-9:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-8:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-5:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-4:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
 		<property type="zIndex">1</property>
 		<property type="Position">-6:-8</property>
-		<property type="PixelsX">48</property>
-		<property type="PixelsY">24</property>
-		<property type="Graphics">decor_rocks3.png</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist4.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2.3</property>
+		<property type="Scale">1.125</property>
 		<property type="zIndex">1</property>
-		<property type="Position">0:-2</property>
-		<property type="PixelsX">92</property>
-		<property type="PixelsY">92</property>
-		<property type="Graphics">decor_shrub3.png</property>
+		<property type="Position">-3:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">0.5</property>
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-6:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-2:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-3:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-4:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist3.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-5:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist5.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-7:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-4:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
 		<property type="zIndex">1</property>
 		<property type="Position">2:-2</property>
-		<property type="PixelsX">20</property>
-		<property type="PixelsY">20</property>
-		<property type="Graphics">decor_shrub3.png</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">1.3</property>
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-6:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-3:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-2:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-2:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-5:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist4.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-1:-6</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-4:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist5.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-3:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist3.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-5:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-2:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
 		<property type="zIndex">1</property>
 		<property type="Position">-1:-7</property>
-		<property type="PixelsX">124.80000000000001</property>
-		<property type="PixelsY">62.400000000000006</property>
-		<property type="Graphics">decor_rocks3.png</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
-		<property type="Scale">2.1</property>
+		<property type="Scale">1.125</property>
 		<property type="zIndex">1</property>
-		<property type="Position">4:-9</property>
-		<property type="PixelsX">84</property>
-		<property type="PixelsY">84</property>
-		<property type="Graphics">decor_leaves.png</property>
+		<property type="Position">-2:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-3:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-4:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist4.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-1:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">0:-7</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">9:2</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-3:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist5.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-2:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist3.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-1:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">0:-8</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-2:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist6.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">0:-9</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-1:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist3.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">0:-10</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">5:-5</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Decor">
+		<property type="Scale">1.125</property>
+		<property type="zIndex">1</property>
+		<property type="Position">8:-2</property>
+		<property type="PixelsX">45</property>
+		<property type="PixelsY">23</property>
+		<property type="Graphics">mist7.png</property>
 	</GameObject>
 </root>
