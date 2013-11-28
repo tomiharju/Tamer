@@ -18,6 +18,7 @@ public class SandPart extends StaticObject{
 
 	public void setup(Environment environment){
 		environment.addStaticObject(this);
+//		environment.addNewObject(this);
 		setZindex(0);
 		setAnimState(20);
 	}
@@ -44,5 +45,7 @@ public class SandPart extends StaticObject{
 		setSize(Helper.TILESIZE);
 		render.loadGraphics(graphics);
 		setRenderType(graphics);
+		
+		
 	}
 }

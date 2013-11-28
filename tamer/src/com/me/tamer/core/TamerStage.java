@@ -62,8 +62,6 @@ public class TamerStage extends Stage{
 	public static final int BEGIN_CAMERA = 3;
 	
 	
-	
-	
 	//Debug
 	ShapeRenderer debugRender = new ShapeRenderer();
 	
