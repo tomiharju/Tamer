@@ -61,7 +61,7 @@ public class Hud extends Group {
 		bgImage = new Image(new Texture(
 				Gdx.files.internal("data/graphics/levelcomplete_bg.png")));
 		bgImage.setFillParent(true);
-		bgImage.setPosition(x, y);
+		//bgImage.setPosition(x, y);
 
 		// Skin and font
 		skin = new Skin();
@@ -102,7 +102,7 @@ public class Hud extends Group {
 		Table table = new Table(skin);
 		table.setFillParent(true);
 
-		table.setPosition(x, y);
+		//table.setPosition(x, y);
 		table.add(menuButton).uniform().spaceBottom(10);
 		table.add(remainingLabel).uniform().spaceBottom(10);
 		table.add(survivedLabel).uniform().spaceBottom(10);

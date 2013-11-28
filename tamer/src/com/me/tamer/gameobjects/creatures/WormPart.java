@@ -63,7 +63,7 @@ public class WormPart extends DynamicObject implements Creature{
 		invMass = 1 / mass;
 		setPosition(pos);
 		setVelocity(vel);
-		setForce(new Vector2(vel).mul(worm.getSPEED()));
+		setForce(new Vector2(vel).mul(worm.getSpeed()));
 		setHeading(vel);
 		this.ordinal = 0;
 	}

@@ -113,6 +113,11 @@ public class AntOrc extends DynamicObject implements Creature{
 				setVelocity(getHeading().tmp().mul(SPEED));
 				getPosition().add(getVelocity().tmp().mul(dt));	
 			}	
+		}else{
+			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
+			if(levelOfDecay < 0){
+				kill();
+			}
 		}
 	}
 	
@@ -144,16 +149,10 @@ public class AntOrc extends DynamicObject implements Creature{
 	}
 	
 	public void draw(SpriteBatch batch){
-		if (onSpearRange) batch.setColor(1, 0.7f, 0.7f, 1.0f);
+		if (onSpearRange) batch.setColor(1, 0.6f, 0.6f, 1.0f);
+		if (decaying) batch.setColor(1, 1, 1, levelOfDecay);
 		
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		if (decaying) {	
-			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
-			batch.setColor(1, 1, 1, levelOfDecay);
-			if(levelOfDecay < 0)
-				kill();
-		}
-	
 		renderer.setSize(getSize());
 		renderer.setPosition(Helper.worldToScreen(getPosition()));
 		renderer.setOrientation(solveOrientation());
@@ -274,8 +273,11 @@ public class AntOrc extends DynamicObject implements Creature{
 			targetWorm.unBind();
 //			targetPart.spearHit(spear);
 			targetWorm.setBeingEaten(false);
-			
-//			EventPool.addEvent(new tEvent(spear,"stopAdjusting", 0.5f,1));
+		}
+		
+		if(targetWorm!=null){
+			targetWorm.setBeingEaten(false);
+			targetWorm.setAttacked(false);
 		}
 		
 		//just kill when spear hits for now
@@ -291,11 +293,6 @@ public class AntOrc extends DynamicObject implements Creature{
 
 	@Override
 	public void decay() {
-		if(targetWorm!=null){
-			targetWorm.setBeingEaten(false);
-			targetWorm.setAttacked(false);
-		}
-		
 		decaying = true;
 		
 		//Set new graphics for decaying ant here

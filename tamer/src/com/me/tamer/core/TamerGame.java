@@ -120,6 +120,7 @@ public class TamerGame extends Game {
 		if (fadingScreen != null) {
 			fadingScreen.render(Gdx.graphics.getDeltaTime());
 			if (((LevelCompleteScreen) getScreen()).getFadingDone()) {
+				((LevelCompleteScreen) getScreen()).createButtons();
 				fadingScreen = null;
 				tweenManager = null;
 			}

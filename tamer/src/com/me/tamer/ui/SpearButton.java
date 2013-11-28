@@ -56,7 +56,7 @@ public class SpearButton extends Actor {
 		renderer2.setPosition(restingpoint);
 		
 		//pick up spear
-		renderer3.loadGraphics(TamerTexture.JOYSTICK);
+		renderer3.loadGraphics(TamerTexture.BUTTON_SPEAR_GLOW_BLUE);
 		renderer3.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer3.setPosition(restingpoint);
 		

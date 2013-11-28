@@ -4,9 +4,10 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="libs/gdx-backend-android.jar"/>
-	<classpathentry kind="lib" path="/tamer/libs/gdx.jar" sourcepath="/tamer/libs/gdx-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-android.jar"/>
+	<classpathentry exported="true" kind="lib" path="/tamer/libs/gdx.jar" sourcepath="/tamer/libs/gdx-sources.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/tamer"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="lib" path="/tamer/libs/tween-engine-api.jar" sourcepath="/tamer/libs/tween-engine-api-sources.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -32,10 +32,13 @@ public class PlayScreen extends AbstractScreen{
 	@Override
 	public void show() {
 		super.show();
+		
+		Gdx.input.setInputProcessor( stage );
+		
 		if(((TamerStage)stage).getGameState() == TamerStage.GAME_PAUSED){
 				((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
 		}	
-		Gdx.input.setInputProcessor( stage );
+		
 	}
 	
 	public void dispose(){

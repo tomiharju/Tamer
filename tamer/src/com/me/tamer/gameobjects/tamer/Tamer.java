@@ -48,7 +48,7 @@ public class Tamer extends DynamicObject {
 	private ArrayList<Spear> spears = null;
 	private Spear spearToBePicked = null;
 	private Vector2 targetTilePosition = new Vector2();
-	private boolean wormOnSpearRange = false;
+	private boolean creatureOnSpearRange = false;
 
 	// Variables for entering the field
 	private Vector2 spawnPosition = new Vector2();
@@ -136,14 +136,14 @@ public class Tamer extends DynamicObject {
 			scream.update(dt);
 			
 			//set target tile position
-			if (!wormOnSpearRange){
+			if (!creatureOnSpearRange){
 				targetTilePosition.set( shadow.getPosition().tmp().add(-0.5f,0.5f) );
 				targetTilePosition.x = (float) Math.floor(targetTilePosition.x) + 1;
 				targetTilePosition.y = (float) Math.floor(targetTilePosition.y);
 			}
 				
 			//reset this after every loop
-			wormOnSpearRange = false;	
+			creatureOnSpearRange = false;	
 		}			
 	}
 	
@@ -165,13 +165,15 @@ public class Tamer extends DynamicObject {
 		if (environment.getState() == RunningState.TAMER_ENTER || environment.getState() == RunningState.NORMAL){
 			super.draw(batch);
 			
-			//Draw targetTile
-			Renderer renderer2 = RenderPool.getRenderer( TamerTexture.TARGET_TILE.name() );
-			renderer2.setSize(Helper.TILESIZE);
-			renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
-			batch.setColor(1, 1, 1, 0.5f);
-			renderer2.draw(batch);	
-			batch.setColor(Color.WHITE);
+			//Draw targetTile if spear not on range
+			if (!spearOnRange){
+				Renderer renderer2 = RenderPool.getRenderer( TamerTexture.TARGET_TILE.name() );
+				renderer2.setSize(Helper.TILESIZE);
+				renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
+				batch.setColor(1, 1, 1, 0.5f);
+				renderer2.draw(batch);	
+				batch.setColor(Color.WHITE);
+			}
 			
 			shadow.draw(batch);
 			scream.draw(batch);
@@ -264,10 +266,10 @@ public class Tamer extends DynamicObject {
 		this.spawnDirection.set(spawnDirection);
 	}
 	
-	public void setCreatureOnSpearRange(Vector2 wpPos){
-		if(wpPos!=null){
-			wormOnSpearRange=true;
-			targetTilePosition.set(wpPos);
+	public void setCreatureOnSpearRange(Vector2 creaturePosition){
+		if(creaturePosition!=null){
+			creatureOnSpearRange=true;
+			targetTilePosition.set(creaturePosition);
 		}	
 	}
 

@@ -241,7 +241,7 @@ public abstract class DynamicObject implements GameObject {
 
 	@Override
 	public Vector2 getCenterPosition() {
-		this.centerPosition.set(position.x - getSize().x / 4, position.y
+		this.centerPosition.set(position.x - getSize().x / 2, position.y
 				+ getSize().y / 2);
 		return centerPosition;
 	}
