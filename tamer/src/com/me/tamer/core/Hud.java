@@ -52,7 +52,7 @@ public class Hud extends Group {
 	}
 
 	public void create() {
-		float h = Gdx.graphics.getHeight() / 12;
+		float h = Gdx.graphics.getHeight() /12;
 		float w = Gdx.graphics.getWidth();
 		float x = 0;
 		float y = Gdx.graphics.getHeight() - h;
@@ -109,9 +109,10 @@ public class Hud extends Group {
 		table.add(deadLabel).uniform().spaceBottom(10);
 		table.add(fpsLabel).uniform().spaceBottom(10);
 
-		// Register actors
+		// Register actors	
 		this.addActor(bgImage);
 		this.addActor(table);
+		
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha) {
@@ -164,11 +165,10 @@ public class Hud extends Group {
 		}
 		case FENCE: {
 			survivedLabel.setText("S: " + amount);
-			
 			break;
 		}	
 		case DEAD: {
-			survivedLabel.setText("D: " + amount);
+			deadLabel.setText("D: " + amount);
 			break;
 		}
 		}

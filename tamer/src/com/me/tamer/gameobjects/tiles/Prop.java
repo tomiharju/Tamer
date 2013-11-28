@@ -25,6 +25,7 @@ public class Prop extends StaticObject implements Obstacle {
 	private Vector2 headingAdjust = new Vector2();
 	private Vector2 newHeading = new Vector2();
 	private Vector2 impulse = new Vector2();
+	private Vector2 movementAxis = new Vector2();
 	private ArrayList<Vector2> vertices;
 	private ArrayList<Vector2> axes;
 
@@ -41,12 +42,12 @@ public class Prop extends StaticObject implements Obstacle {
 
 	public void setPixelsX(String pixels) {
 		float x = Float.parseFloat(pixels);
-		setSize(x / Helper.TILE_WIDTH, getSize().y);
+		setSize(x / Helper.TILE_WIDTH_PIXEL, getSize().y);
 	}
 
 	public void setPixelsY(String pixels) {
 		float y = Float.parseFloat(pixels);
-		setSize(getSize().x, y / Helper.TILE_WIDTH);
+		setSize(getSize().x, y / Helper.TILE_WIDTH_PIXEL);
 	}
 
 	public void setHitBox(String scale) {
@@ -73,7 +74,7 @@ public class Prop extends StaticObject implements Obstacle {
 			// Creatures size
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
 			Vector2 center = getPosition();
-			
+		
 			if (temp.x + s.x / 2 > center.x - getBounds()
 					&& temp.x - s.x / 2 < center.x
 					&& temp.y + s.y  > center.y
@@ -89,9 +90,9 @@ public class Prop extends StaticObject implements Obstacle {
 				closestVertice.set(getClosestVertice(((DynamicObject) creatures
 						.get(i)).getPosition()));
 				float distance = closestVertice.dst(((Worm) creatures.get(i)).getHead().getPosition());
-				//impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
-					//	.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
-				impulse.set(collisionAxis.mul(distance));
+				impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
+						.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
+				//impulse.set(collisionAxis.mul(distance));
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse);
 				((DynamicObject)creatures.get(i)).setHeading(newHeading);

@@ -9,7 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.me.tamer.core.TamerGame.ScreenType;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
 import com.me.tamer.ui.ControlContainer;
@@ -18,10 +22,11 @@ import com.me.tamer.utils.Helper;
 public class TamerStage extends Stage{
 	public static TamerStage instance;
 	
-	
 	float ASPECT_RATIO =(float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
 	private final float BEGIN_ZOOM_SPEED = 0.01F;
+	private final float BEGIN_CAMERA_SPEED = 15f;
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
+	private final float BEGIN_ZOOM_AMOUNT = 1.8f;
 	
 	private OrthographicCamera camera, uiCamera;
 	
@@ -44,6 +49,12 @@ public class TamerStage extends Stage{
 	
 	//Camera
 	private Vector2 cameraPosition = new Vector2();
+	private Vector2 cameraStartPosition = new Vector2();
+	private Vector2 cameraTargetPosition = new Vector2();
+	private Vector2 cameraHeading = new Vector2();
+	private boolean cameraReturning = false;
+	private boolean cameraDoneMoving = false;
+	
 	private int cameraHolder;
 	public static final int TAMER_CAMERA = 0;
 	public static final int SPEAR_CAMERA = 1;
@@ -51,7 +62,7 @@ public class TamerStage extends Stage{
 	public static final int BEGIN_CAMERA = 3;
 	
 	
-	private final float ZOOM_SPEED = 0.01f;
+	
 	
 	//Debug
 	ShapeRenderer debugRender = new ShapeRenderer();
@@ -68,7 +79,7 @@ public class TamerStage extends Stage{
 	
 	//Camera begin movement
 	private Vector2 currentPosition = new Vector2();
-	private final float BEGIN_CAMERA_SPEED = 2.0f;
+	
 	
 	
 	//End fade tween
@@ -101,23 +112,39 @@ public class TamerStage extends Stage{
 		//Hud
         hud = Hud.instance();
         hud.initialize(this);
-       
-   
+        
+        hud.addListener(new ChangeListener() {
+			public void changed(ChangeEvent event, Actor actor) {
+				System.out.println("hudi painettu");
+			}
+		});
+        
 		//environment
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Adding level to PlayScreen and generating environment " +level.getId());
 		level.createEnvironment();
 		environment = level.getEnvironment();
 		
+		environment.addListener(new ChangeListener() {
+			public void changed(ChangeEvent event, Actor actor) {
+				System.out.println("envi painettu");
+			}
+		});
+		
         //input controller
         controlContainer = ControlContainer.instance();
         controlContainer.initialize(this);
+        controlContainer.addListener(new ChangeListener() {
+			public void changed(ChangeEvent event, Actor actor) {
+				System.out.println("cont painettu");
+			}
+		});
         
         //Register actors in drawing order
         this.addActor( environment );
         this.addActor( hud );
         this.addActor( controlContainer);
                 
-        setCameraHolder(BEGIN_CAMERA);
+//        setCameraHolder(BEGIN_CAMERA);
         
 	}  
 
@@ -130,8 +157,6 @@ public class TamerStage extends Stage{
 			getRoot().act(delta);
 			break;
 		case(GAME_PAUSED):
-			break;
-		case(GAME_END_LEVEL):
 			break;
 		default:
 			break;
@@ -150,10 +175,10 @@ public class TamerStage extends Stage{
 	}
 	
 	public void setupCamera(){	
-		//camera = new OrthographicCamera();
+		//test
 		camera = new OrthographicCamera(Helper.VIRTUAL_SIZE_X, Helper.VIRTUAL_SIZE_Y);
-		//camera.setToOrtho(false,VIRTUAL_WIDTH,VIRTUAL_HEIGHT);
-		//camera.position.set(0f,0,0f);
+//		camera = new OrthographicCamera(Helper.TILESIZE.x * 12, Helper.TILESIZE.y * 20);
+		
 		
 		uiCamera = new OrthographicCamera();
 		uiCamera.setToOrtho(false);
@@ -179,21 +204,45 @@ public class TamerStage extends Stage{
 			break;	
 		case BEGIN_CAMERA:
 			if (environment.getState() != RunningState.BEGIN_ZOOM){
-				camera.zoom = 2.0f;
-				//begin this after asset manager has run so that you can use tamerpos etc
-				//cameraPosition.set(environment.getTamer().getPosition());
+				camera.zoom = BEGIN_ZOOM_AMOUNT;
+				
+				cameraStartPosition.set( Helper.worldToScreen( environment.getTamer().getPosition() ));
+				cameraPosition.set(cameraStartPosition);
+				
+				//CHANGE THIS 
+				cameraTargetPosition.set( Helper.worldToScreen( new Vector2(20,0)) );
+				//------------------//
+				
+				cameraHeading.set( cameraTargetPosition.tmp().sub(cameraPosition));
+				cameraHeading.nor();
+				
 				environment.setState(RunningState.BEGIN_ZOOM);
 			}
 			
-//			currentPosition.set(currentPosition.x + BEGIN_CAMERA_SPEED * dt, currentPosition.y + BEGIN_CAMERA_SPEED * dt);
-			cameraPosition.set(currentPosition);
-			
-			camera.zoom -= BEGIN_ZOOM_SPEED;
-			
-//			System.out.println(camera.zoom);
-			if(camera.zoom <= 1.0f) {
-				setCameraHolder(TAMER_CAMERA);
-				environment.setState(RunningState.TAMER_ENTER);
+			if (!cameraDoneMoving){
+				cameraPosition.x += cameraHeading.x * dt * BEGIN_CAMERA_SPEED;
+				cameraPosition.y += cameraHeading.y * dt * BEGIN_CAMERA_SPEED;
+		
+				System.out.println(cameraPosition.dst( cameraStartPosition ));
+				
+				
+				if (!cameraReturning && cameraPosition.dst( cameraTargetPosition ) < 3.0f){
+					cameraHeading.mul(-1);
+					cameraReturning = true;
+				} 
+				
+				if ( cameraReturning && cameraPosition.dst( cameraStartPosition ) < 3.0f){
+					cameraDoneMoving = true;
+				} 
+				
+			}
+			else
+			{
+				camera.zoom -= BEGIN_ZOOM_SPEED;
+				if(camera.zoom <= 1.0f) {
+					setCameraHolder(TAMER_CAMERA);
+					environment.setState(RunningState.TAMER_ENTER);
+				}
 			}
 			break;
 		default:
@@ -233,7 +282,7 @@ public class TamerStage extends Stage{
 	}
 	
 	public void setGameState(int s){
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switching to state " +s);
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switching to Game State " +s);
 		gameState = s;
 	}
 	

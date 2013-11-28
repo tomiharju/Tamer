@@ -37,30 +37,7 @@ public class SandPart extends StaticObject{
 	public void setAnimState(int framecount){
 		animState = (float) (Math.random()*framecount);
 	}
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public boolean getDebug() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void setGraphics(TamerTexture tex) {
-		// TODO Auto-generated method stub
-	}
+	
 	public void setGraphics(String graphics){
 		graphics = graphics.split("\\.")[0];
 		Renderer render = RenderPool.addRendererToPool("static",graphics);

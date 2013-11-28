@@ -4,56 +4,42 @@ filter: Linear,Linear
 repeat: none
 swamp10
   rotate: false
-  xy: 276, 202
+  xy: 981, 152
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
 decor_rocks2
   rotate: false
-  xy: 536, 148
+  xy: 540, 116
   size: 42, 38
   orig: 96, 48
   offset: 30, 10
   index: -1
-vRocks1_flipped
+vRocks3
   rotate: false
-  xy: 496, 148
-  size: 40, 32
-  orig: 40, 40
-  offset: 0, 0
-  index: 3
-vRocks1
-  rotate: false
-  xy: 200, 182
+  xy: 630, 156
   size: 36, 36
   orig: 40, 40
   offset: 0, 1
-  index: 3
-vRocks1
+  index: -1
+vRocksF6
   rotate: false
-  xy: 699, 78
+  xy: 622, 116
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
-  index: 6
+  index: -1
 swamp7
   rotate: false
-  xy: 692, 186
+  xy: 753, 118
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
-vRocks1_flipped
-  rotate: false
-  xy: 734, 138
-  size: 34, 32
-  orig: 40, 40
-  offset: 3, 3
-  index: 10
 decor_twigs
   rotate: false
-  xy: 374, 134
+  xy: 778, 158
   size: 28, 32
   orig: 40, 40
   offset: 8, 3
@@ -65,44 +51,37 @@ tree-2
   orig: 120, 142
   offset: 12, 6
   index: -1
-fence2
-  rotate: false
-  xy: 374, 180
-  size: 80, 72
-  orig: 80, 88
-  offset: 0, 9
-  index: -1
 dirt_decor4
   rotate: false
-  xy: 502, 68
+  xy: 810, 0
   size: 96, 80
   orig: 120, 120
   offset: 15, 19
   index: -1
+fogtopCorner
+  rotate: false
+  xy: 740, 138
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
 decor_leaves
   rotate: false
-  xy: 606, 226
+  xy: 873, 110
   size: 32, 26
   orig: 40, 40
   offset: 1, 6
   index: -1
 swamp3
   rotate: false
-  xy: 678, 226
+  xy: 941, 128
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
-vRocks1_flipped
-  rotate: false
-  xy: 160, 218
-  size: 34, 34
-  orig: 40, 40
-  offset: 3, 3
-  index: 9
 dirt0 (copy)
   rotate: false
-  xy: 278, 134
+  xy: 489, 68
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
@@ -116,25 +95,25 @@ ending1
   index: -1
 swamp13
   rotate: false
-  xy: 278, 182
+  xy: 981, 132
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
-vRocks1
+fence
   rotate: false
-  xy: 570, 226
-  size: 36, 26
-  orig: 40, 40
-  offset: 2, 0
-  index: 10
-vRocks1_flipped
+  xy: 278, 126
+  size: 80, 72
+  orig: 80, 88
+  offset: 0, 8
+  index: -1
+vRocks2
   rotate: false
-  xy: 694, 138
-  size: 40, 28
+  xy: 990, 34
+  size: 34, 34
   orig: 40, 40
-  offset: 0, 3
-  index: 4
+  offset: 3, 3
+  index: -1
 spawn
   rotate: false
   xy: 292, 0
@@ -142,65 +121,93 @@ spawn
   orig: 136, 68
   offset: 0, 0
   index: -1
+vRocksF10
+  rotate: false
+  xy: 990, 68
+  size: 34, 32
+  orig: 40, 40
+  offset: 3, 3
+  index: -1
 dirt3
   rotate: false
-  xy: 402, 132
+  xy: 585, 68
   size: 94, 48
   orig: 96, 48
   offset: 1, 0
   index: -1
+vRocksF3
+  rotate: false
+  xy: 753, 66
+  size: 40, 32
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+fogbottom
+  rotate: false
+  xy: 886, 176
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
 stump1
   rotate: false
-  xy: 124, 164
+  xy: 582, 116
   size: 40, 54
   orig: 40, 54
   offset: 0, 0
   index: -1
 decor_swampstream3
   rotate: false
-  xy: 598, 68
+  xy: 292, 68
   size: 101, 58
   orig: 101, 62
   offset: 0, 1
   index: -1
 swamp6
   rotate: false
-  xy: 652, 206
+  xy: 700, 129
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
 tile_dirt_v8
   rotate: false
-  xy: 316, 202
+  xy: 900, 156
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
+vRocks10
+  rotate: false
+  xy: 905, 108
+  size: 36, 26
+  orig: 40, 40
+  offset: 2, 0
+  index: -1
 rock2
   rotate: false
-  xy: 242, 152
+  xy: 717, 102
   size: 36, 27
   orig: 40, 27
   offset: 2, 0
   index: -1
-vRocks1
+vRocks7
   rotate: false
-  xy: 268, 222
-  size: 34, 30
-  orig: 40, 40
-  offset: 6, 1
-  index: 4
-vRocks1
-  rotate: false
-  xy: 228, 221
+  xy: 558, 170
   size: 40, 28
   orig: 40, 40
   offset: 0, 3
-  index: 7
+  index: -1
+vRocksF7
+  rotate: false
+  xy: 871, 80
+  size: 34, 30
+  orig: 40, 40
+  offset: 0, 1
+  index: -1
 swamp2
   rotate: false
-  xy: 340, 222
+  xy: 258, 104
   size: 34, 20
   orig: 34, 20
   offset: 0, 0
@@ -214,133 +221,175 @@ tree1
   index: -1
 swamp12
   rotate: false
-  xy: 318, 182
+  xy: 829, 130
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
-vRocks1_flipped
-  rotate: false
-  xy: 534, 226
-  size: 36, 26
-  orig: 40, 40
-  offset: 1, 0
-  index: 1
 decor_rocks1
   rotate: false
-  xy: 740, 38
+  xy: 358, 180
   size: 28, 18
   orig: 96, 48
   offset: 32, 16
   index: -1
 dirt0
   rotate: false
-  xy: 302, 222
+  xy: 869, 136
   size: 38, 20
   orig: 40, 20
   offset: 1, 0
   index: -1
-fence
+vRocksF4
   rotate: false
-  xy: 454, 180
-  size: 80, 72
-  orig: 80, 88
-  offset: 0, 8
+  xy: 518, 170
+  size: 40, 28
+  orig: 40, 40
+  offset: 0, 3
+  index: -1
+fogdefault
+  rotate: false
+  xy: 860, 156
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
   index: -1
 decor_swampstream4
   rotate: false
-  xy: 700, 0
+  xy: 398, 116
   size: 70, 38
   orig: 72, 42
   offset: 0, 0
   index: -1
-vRocks1_flipped
+fogrightCorner
   rotate: false
-  xy: 534, 186
-  size: 40, 40
-  orig: 40, 40
+  xy: 738, 158
+  size: 40, 20
+  orig: 40, 20
   offset: 0, 0
-  index: 6
+  index: -1
+fogright
+  rotate: false
+  xy: 738, 178
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
 bush
   rotate: false
-  xy: 614, 174
+  xy: 679, 68
   size: 38, 38
   orig: 40, 44
   offset: 2, 3
   index: -1
-vRocks1_flipped
+vRocks5
   rotate: false
-  xy: 700, 38
+  xy: 478, 146
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
-  index: 5
+  index: -1
 decor_shrub
   rotate: false
-  xy: 739, 78
+  xy: 598, 170
   size: 32, 28
   orig: 40, 40
   offset: 3, 6
   index: -1
 dirt4
   rotate: false
-  xy: 598, 126
+  xy: 393, 68
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
+vRocks6
+  rotate: false
+  xy: 438, 154
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+vRocksF8
+  rotate: false
+  xy: 717, 66
+  size: 36, 36
+  orig: 40, 40
+  offset: 3, 1
+  index: -1
 swamp9
   rotate: false
-  xy: 699, 118
+  xy: 218, 104
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
 dirt_decor
   rotate: false
-  xy: 0, 143
+  xy: 906, 0
   size: 84, 108
   orig: 120, 120
   offset: 16, 6
   index: -1
+fence2
+  rotate: false
+  xy: 198, 126
+  size: 80, 72
+  orig: 80, 88
+  offset: 0, 9
+  index: -1
 vRocks1
   rotate: false
-  xy: 574, 186
-  size: 40, 40
+  xy: 990, 100
+  size: 34, 32
   orig: 40, 40
-  offset: 0, 0
-  index: 5
-vRocks1
+  offset: 3, 3
+  index: -1
+vRocksF1
   rotate: false
-  xy: 652, 174
-  size: 40, 32
+  xy: 793, 112
+  size: 36, 26
   orig: 40, 40
-  offset: 0, 0
-  index: 8
-swamp5
+  offset: 1, 0
+  index: -1
+fogtop
   rotate: false
-  xy: 692, 206
+  xy: 780, 138
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
+swamp5
+  rotate: false
+  xy: 833, 110
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+vRocks4
+  rotate: false
+  xy: 704, 149
+  size: 34, 30
+  orig: 40, 40
+  offset: 6, 1
+  index: -1
 dirt1
   rotate: false
-  xy: 278, 134
+  xy: 489, 68
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
-vRocks1
+vRocksF5
   rotate: false
-  xy: 732, 190
-  size: 34, 32
+  xy: 398, 154
+  size: 40, 40
   orig: 40, 40
-  offset: 3, 3
-  index: 1
+  offset: 0, 0
+  index: -1
 swamp8
   rotate: false
-  xy: 694, 166
+  xy: 753, 98
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
@@ -354,88 +403,81 @@ dirt_decor2
   index: -1
 swamp1
   rotate: false
-  xy: 734, 170
+  xy: 907, 134
   size: 34, 20
   orig: 34, 20
   offset: 0, 0
   index: -1
-vRocks1_flipped
+fogleft
   rotate: false
-  xy: 208, 152
-  size: 34, 30
-  orig: 40, 40
-  offset: 0, 1
-  index: 7
+  xy: 806, 170
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
 decor_crack
   rotate: false
-  xy: 292, 68
+  xy: 700, 0
   size: 110, 66
   orig: 120, 96
   offset: 5, 15
   index: -1
-vRocks1_flipped
-  rotate: false
-  xy: 84, 218
-  size: 38, 34
-  orig: 40, 40
-  offset: 2, 0
-  index: 2
-vRocks1
-  rotate: false
-  xy: 194, 218
-  size: 34, 34
-  orig: 40, 40
-  offset: 3, 3
-  index: 2
 decor_shrub3
   rotate: false
-  xy: 170, 152
+  xy: 833, 80
   size: 38, 30
   orig: 40, 40
   offset: 2, 5
   index: -1
+vRocks9
+  rotate: false
+  xy: 666, 150
+  size: 38, 34
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+vRocksF9
+  rotate: false
+  xy: 990, 0
+  size: 34, 34
+  orig: 40, 40
+  offset: 3, 3
+  index: -1
 swamp4
   rotate: false
-  xy: 638, 226
+  xy: 941, 108
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
+fogbottomCorner
+  rotate: false
+  xy: 846, 176
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
 decor_rocks3
   rotate: false
-  xy: 98, 134
+  xy: 468, 116
   size: 72, 30
   orig: 96, 48
   offset: 13, 10
   index: -1
 swamp11
   rotate: false
-  xy: 236, 201
+  xy: 941, 148
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
 stump2
   rotate: false
-  xy: 84, 164
+  xy: 358, 126
   size: 40, 54
   orig: 40, 54
   offset: 0, 0
   index: -1
-vRocks1
-  rotate: false
-  xy: 122, 218
-  size: 38, 34
-  orig: 40, 40
-  offset: 0, 0
-  index: 9
-vRocks1_flipped
-  rotate: false
-  xy: 164, 182
-  size: 36, 36
-  orig: 40, 40
-  offset: 3, 1
-  index: 8
 ending0
   rotate: false
   xy: 564, 0
@@ -443,37 +485,51 @@ ending0
   orig: 136, 68
   offset: 0, 0
   index: -1
+fogleftCorner
+  rotate: false
+  xy: 820, 150
+  size: 40, 20
+  orig: 40, 20
+  offset: 0, 0
+  index: -1
 tile_swamp_v4
   rotate: false
-  xy: 182, 104
+  xy: 0, 143
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 decor_shrub2
   rotate: false
-  xy: 242, 179
+  xy: 182, 104
   size: 36, 22
   orig: 40, 40
   offset: 3, 1
   index: -1
 dirt2
   rotate: false
-  xy: 316, 202
+  xy: 900, 156
   size: 40, 20
   orig: 40, 20
   offset: 0, 0
   index: -1
-tile_fog9
+vRocks8
   rotate: false
-  xy: 739, 106
-  size: 30, 16
-  orig: 40, 20
-  offset: 0, 4
+  xy: 793, 80
+  size: 40, 32
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+vRocksF2
+  rotate: false
+  xy: 662, 116
+  size: 38, 34
+  orig: 40, 40
+  offset: 2, 0
   index: -1
 dirt_decor3
   rotate: false
-  xy: 402, 68
+  xy: 98, 134
   size: 100, 64
   orig: 120, 120
   offset: 15, 28

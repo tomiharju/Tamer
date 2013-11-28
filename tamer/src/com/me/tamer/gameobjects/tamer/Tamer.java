@@ -24,9 +24,9 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.tEvent;
 
 public class Tamer extends DynamicObject {
-
+	
+	public final static float FLYING_HEIGHT = 7.0f;
 	private float SPEED = 0f;
-	private final float FLYING_HEIGHT = 7.0f;
 	private final float AIM_SPEED = 0.001f; // heading interpolating coefficient
 
 	private final float DISTANCE_BOUNDS = 5.0f;
@@ -85,7 +85,7 @@ public class Tamer extends DynamicObject {
 				+ " :: Tamer has woken up! " + this.toString());
 		
 		this.environment = environment;
-		this.environment.setTamer(this);
+		//this.environment.setTamer(this);
 
 		// enter the field
 		mapBounds.set(environment.getMapBounds());

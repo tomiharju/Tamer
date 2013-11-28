@@ -1,10 +1,5 @@
 package com.me.tamer.core;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
 import com.me.tamer.gameobjects.creatures.Worm;
@@ -30,6 +25,7 @@ public class Level {
 	public Level(int id) {
 		this.id = id;
 		hud = Hud.instance();
+		hud.resetHud();
 	}
 
 	public void setStage(TamerStage stage) {
@@ -103,8 +99,10 @@ public class Level {
 			break;
 		}
 		
-		if (worms<=0) setCompleted(true);
+		System.out.println("worms: " +worms +"dead:" +dead);
+		
 		updateHud();
+		if (worms<=0) setCompleted(true);
 	}
 
 	public void updateHud() {

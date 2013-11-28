@@ -25,7 +25,6 @@ public class PlayScreen extends AbstractScreen{
 		stage = TamerStage.instance();
 		((TamerStage)stage).setup(game);
 		
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state to GAME_RUNNING");
 //		TamerStage.gameState = TamerStage.GAME_READY;
 		((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
 	}
@@ -34,7 +33,6 @@ public class PlayScreen extends AbstractScreen{
 	public void show() {
 		super.show();
 		if(((TamerStage)stage).getGameState() == TamerStage.GAME_PAUSED){
-				Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Switching state from GAME_PAUSED to GAME_RUNNING");
 				((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
 		}	
 		Gdx.input.setInputProcessor( stage );
@@ -47,7 +45,6 @@ public class PlayScreen extends AbstractScreen{
 	@Override
 	public void hide(){
 		super.hide();
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: switching gameState to GAME_PAUSED");
 		((TamerStage)stage).setGameState(TamerStage.GAME_PAUSED);
 	}
 	

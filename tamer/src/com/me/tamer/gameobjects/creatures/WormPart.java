@@ -17,8 +17,8 @@ import com.me.tamer.utils.Helper;
 public class WormPart extends DynamicObject implements Creature{
 	
 	private final float DECAY_SPEED = 0.5f;
-	private final float MIN_LENGTH = 0.15f;
-	private final float STRETCH_AMOUNT = 0.13f;
+	private final float MIN_LENGTH = 0.09f;
+	private final float STRETCH_AMOUNT = 0.08f;
 	private final float HEAD_POS_FIX = 0.000f;
 	
 	// Container worm
@@ -31,7 +31,6 @@ public class WormPart extends DynamicObject implements Creature{
 	private float lengthAngle = 0;
 	private int ordinal;
 	private float invMass;
-
 
 	private float mass;
 	private Vector2 help = new Vector2();

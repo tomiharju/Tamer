@@ -1,7 +1,6 @@
 package com.me.tamer.utils;
 
 import aurelienribon.tweenengine.TweenAccessor;
-
 import com.me.tamer.core.screens.AbstractScreen;
 
 public class ScreenAccessor implements TweenAccessor<AbstractScreen> {

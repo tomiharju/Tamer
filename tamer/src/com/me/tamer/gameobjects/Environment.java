@@ -15,12 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.creatures.Creature;
-import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
-import com.me.tamer.gameobjects.tiles.Fence;
 import com.me.tamer.gameobjects.tiles.TileMap;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.services.SoundManager;
@@ -73,7 +71,6 @@ public class Environment extends Actor {
 	private Vector2 focusPoint = new Vector2();
 	
 	//fence
-	private Fence fence;
 	private Vector2 fenceUpLeft = new Vector2();
 	private Vector2 fenceBottomRight = new Vector2();
 
@@ -81,15 +78,13 @@ public class Environment extends Actor {
 		RuntimeObjectFactory.createLinkToLevel(this);
 		controls = ControlContainer.instance();
 		sound = SoundManager.instance();
-	
-		//create fence
-//		fence = new Fence(0,0,0,0);
+		stage = TamerStage.instance();
 	}
 
 	public void act(float dt) {
-		runCarbageCollection();
 		addNewObjects();
-		stepTimers(dt);
+		
+		runCarbageCollection();
 		resolveObstacles(dt);
 
 		int numObjects = gameobjects.size();
@@ -97,7 +92,8 @@ public class Environment extends Actor {
 		switch (state) {
 		case BEGIN_ZOOM:
 			break;
-		case NORMAL:	
+		case NORMAL:
+			stepTimers(dt);
 			for (int k = 0; k < numObjects; k++) {
 				gameobjects.get(k).update(dt);
 			}
@@ -109,12 +105,17 @@ public class Environment extends Actor {
 					setState(RunningState.NORMAL);
 					controls.enableInput();
 					// sound.play(TamerSound.OPENING);
+					
 					//quick fix to the issue where this is not updated before moving joystick
 					tamerShadowPosition = ((Tamer) tamer).getShadow().getCenterPosition();
 				}
-			}		
+			}
+			
 			break;
 		case END_FADE:
+			for (int k = 0; k < numObjects; k++) {
+				gameobjects.get(k).update(dt);
+			}
 			stage.getGame().changeLevelCompleteScreen();
 			break;
 		default:
@@ -235,7 +236,12 @@ public class Environment extends Actor {
 	 * to it)
 	 */
 	public void setupGame() {
+		
 		generateSpriteCache();
+		
+//		setState(RunningState.BEGIN_ZOOM);
+		//Camera mode will change Running_state when it's done
+		stage.setCameraHolder(TamerStage.BEGIN_CAMERA);
 		
 	}
 	/**
@@ -259,14 +265,15 @@ public class Environment extends Actor {
 	
 		Vector2 help = new Vector2();
 		
-			for (int i = 0; i < staticObjects.size(); i++) {
-				TextureRegion texture = assetManager.get("data/graphics/sheetData",
-						TextureAtlas.class).findRegion(staticObjects.get(i).getRenderType());
-				help.set(Helper.worldToScreen(staticObjects.get(i).getPosition()));
-				environmentCache.add(texture, help.x-staticObjects.get(i).getSize().x/2,
-						help.y, staticObjects.get(i).getSize().x,staticObjects.get(i).getSize().y);
-				
-			}
+		for (int i = 0; i < staticObjects.size(); i++) {
+			TextureRegion texture = assetManager.get("data/graphics/sheetData",
+					TextureAtlas.class).findRegion(staticObjects.get(i).getRenderType());
+			help.set(Helper.worldToScreen(staticObjects.get(i).getPosition()));
+			environmentCache.add(texture, help.x-staticObjects.get(i).getSize().x/2,
+					help.y, staticObjects.get(i).getSize().x,staticObjects.get(i).getSize().y);
+			
+		}
+		
 		cacheID = environmentCache.endCache();
 		environmentCache.setProjectionMatrix(stage.getCamera().combined);
 		System.out.println("CAche created with "+staticObjects.size() + " objects");
@@ -302,9 +309,6 @@ public class Environment extends Actor {
 
 	}
 
-	/**
-	 * 
-	 */
 	public void setTamer(Tamer tamer) {
 		this.tamer = tamer;
 		tamerShadowPosition = tamer.getShadow().getCenterPosition();
@@ -341,6 +345,10 @@ public class Environment extends Actor {
 	public ArrayList<Obstacle> getObstacles() {
 		return obstacles;
 	}
+	
+	public Vector2 getTamerShadowPosition() {
+		return tamerShadowPosition;
+	}
 
 	public Tamer getTamer() {
 		return (Tamer) tamer;
@@ -352,7 +360,7 @@ public class Environment extends Actor {
 
 	public void setState(RunningState s) {
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-				+ " :: setting state to " + s);
+				+ " :: setting RunningState to " + s);
 		state = s;
 	}
 
@@ -360,7 +368,4 @@ public class Environment extends Actor {
 		return state;
 	}
 
-	public Fence getFence() {
-		return fence;
-	}
 }

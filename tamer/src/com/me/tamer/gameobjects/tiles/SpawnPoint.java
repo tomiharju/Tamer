@@ -53,12 +53,14 @@ public class SpawnPoint extends StaticObject{
 		environment.addNewObject(this);
 		environment.addStaticObject(this);
 		this.environment = environment;
-		EventPool.addEvent(new tEvent(this,"spawnTamer",TAMER_SPAWN_TIME,1));
+		//EventPool.addEvent(new tEvent(this,"spawnTamer",TAMER_SPAWN_TIME,1));
+		spawnTamer();
+		System.out.println(tamer);
+		if(tamer!=null)environment.setTamer(tamer);
+
 		setZindex(1);
 		
 	}
-	
-
 	
 	public void setSpawnCount(String count){
 		this.spawnCount = Integer.parseInt(count);
@@ -98,9 +100,6 @@ public class SpawnPoint extends StaticObject{
 		ant.setVelocity(spawnVelocity);
 	}
 
-
-	
-	
 	/**
 	 *	After initial sleep, this method is called every "sleepTime" interval 
 	 */
@@ -153,9 +152,10 @@ public class SpawnPoint extends StaticObject{
 			tamer = new Tamer();
 			
 			tamer.getShadow().setPosition(getCenterPosition());
+			tamer.setPosition( getCenterPosition().add(-Tamer.FLYING_HEIGHT, Tamer.FLYING_HEIGHT) );
 			tamer.setSpawnDirection(spawnVelocity);
 			tamer.setHeading(spawnVelocity.tmp().nor());
-
+			
 			RuntimeObjectFactory.addToObjectPool("tamer",(GameObject)tamer);
 			
 		}
@@ -163,35 +163,5 @@ public class SpawnPoint extends StaticObject{
 
 	public Vector2 getSpawnVelocity(){
 		return spawnVelocity;
-	}
-
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean getDebug() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setGraphics(TamerTexture tex) {
-		// TODO Auto-generated method stub
-		
 	}
 }

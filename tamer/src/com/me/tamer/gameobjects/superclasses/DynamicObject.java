@@ -4,6 +4,7 @@ import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
@@ -65,15 +66,21 @@ public abstract class DynamicObject implements GameObject {
 	public int solveOrientation() {
 
 		zeroHeading.nor();
+		
+		//quick fix to the issue
+		if (heading.y == 0) heading.y = 0.001f;
+		else if(heading.x == 0) heading.x = 0.001f;
+		
 		headingAngle = ((float) Math.acos(heading.dot(zeroHeading)
 				/ (heading.len() * zeroHeading.len())));
 		spriteNumber = ((float) (headingAngle / Math.PI * 180 / 45));
 
-		// cannot be zero
-		if (spriteNumber == 0)
+		// cannot be below zero
+		if (spriteNumber <= 0)
 			spriteNumber = 0.001f;
-		if(spriteNumber == 1)
-			spriteNumber = -0.001f;
+//		if(spriteNumber == 1)
+//			spriteNumber = -0.001f;
+		
 		if (heading.x > zeroHeading.x && heading.y > 0)
 			spriteNumber = (8 - spriteNumber);
 		else if (heading.x > -zeroHeading.x && heading.y < 0)
@@ -267,6 +274,18 @@ public abstract class DynamicObject implements GameObject {
 	public void setGraphics(String graphics) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void debugDraw(ShapeRenderer shapeRndr) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void setGraphics(TamerTexture tex) {
+		// TODO Auto-generated method stub
+
 	}
 	
 	
