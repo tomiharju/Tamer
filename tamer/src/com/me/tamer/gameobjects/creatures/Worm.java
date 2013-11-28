@@ -84,8 +84,7 @@ public class Worm extends DynamicObject implements Creature {
 		} else if (type.equalsIgnoreCase("joint")) {
 			part = new WormPart();
 			part.createBodyPart(ordinal, pos, vel, this);
-		} else
-			throw new IllegalArgumentException("Wrong partname");
+		} 
 
 		parts.add(part);
 	}
@@ -160,11 +159,9 @@ public class Worm extends DynamicObject implements Creature {
 	@Override
 	public void applyPull(Vector2 point, float magnitude) {
 		Vector2 direction = point.tmp().sub(head.getPosition());
-
-		if (point.dst(head.getPosition()) > 0.5f) {
-			head.getVelocity().add(direction.mul(magnitude));
-			head.setHeading(direction);
-		}
+		head.getVelocity().add(direction.mul(magnitude));
+		head.setHeading(direction);
+		
 	}
 
 	@Override
@@ -359,6 +356,7 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public void setDrowning(boolean drowning) {
+		SPEED = 0;
 		this.drowning = drowning;
 	}
 

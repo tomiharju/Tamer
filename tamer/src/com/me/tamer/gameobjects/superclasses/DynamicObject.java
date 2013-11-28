@@ -22,6 +22,7 @@ public abstract class DynamicObject implements GameObject {
 	private Vector2 centerPosition = new Vector2();
 	private Vector2 velocity = new Vector2(); // "World velocity"
 	private Vector2 heading = new Vector2(); // Unit vector of current velocity
+	private Vector2 spriteHeading = new Vector2();
 	private Vector2 force = new Vector2(); // Magnitude and direction of per
 											// loop velocity increment
 	private Vector2 size = new Vector2(); // Graphics sprite size
@@ -66,13 +67,13 @@ public abstract class DynamicObject implements GameObject {
 	public int solveOrientation() {
 
 		zeroHeading.nor();
-		
+		spriteHeading.set(heading);
 		//quick fix to the issue
-		if (heading.y == 0) heading.y = 0.001f;
-		else if(heading.x == 0) heading.x = 0.001f;
+		if (spriteHeading.y == 0) spriteHeading.y = 0.001f;
+		else if(spriteHeading.x == 0) spriteHeading.x = 0.001f;
 		
-		headingAngle = ((float) Math.acos(heading.dot(zeroHeading)
-				/ (heading.len() * zeroHeading.len())));
+		headingAngle = ((float) Math.acos(spriteHeading.dot(zeroHeading)
+				/ (spriteHeading.len() * zeroHeading.len())));
 		spriteNumber = ((float) (headingAngle / Math.PI * 180 / 45));
 
 		// cannot be below zero
@@ -81,9 +82,9 @@ public abstract class DynamicObject implements GameObject {
 //		if(spriteNumber == 1)
 //			spriteNumber = -0.001f;
 		
-		if (heading.x > zeroHeading.x && heading.y > 0)
+		if (spriteHeading.x > zeroHeading.x && spriteHeading.y > 0)
 			spriteNumber = (8 - spriteNumber);
-		else if (heading.x > -zeroHeading.x && heading.y < 0)
+		else if (spriteHeading.x > -zeroHeading.x && spriteHeading.y < 0)
 			spriteNumber = (8 - spriteNumber);
 
 		spriteNumber = ((float) Math.floor(spriteNumber));

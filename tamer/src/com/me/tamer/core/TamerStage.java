@@ -223,7 +223,6 @@ public class TamerStage extends Stage{
 				cameraPosition.x += cameraHeading.x * dt * BEGIN_CAMERA_SPEED;
 				cameraPosition.y += cameraHeading.y * dt * BEGIN_CAMERA_SPEED;
 		
-				System.out.println(cameraPosition.dst( cameraStartPosition ));
 				
 				
 				if (!cameraReturning && cameraPosition.dst( cameraTargetPosition ) < 3.0f){

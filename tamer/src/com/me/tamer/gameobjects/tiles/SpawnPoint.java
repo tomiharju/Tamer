@@ -90,6 +90,7 @@ public class SpawnPoint extends StaticObject{
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		worm.setPosition(getPosition());
 		worm.setVelocity(spawnVelocity);
+		worm.setHeading(spawnVelocity);
 	}
 
 	
@@ -154,8 +155,7 @@ public class SpawnPoint extends StaticObject{
 			tamer.getShadow().setPosition(getCenterPosition());
 			tamer.setPosition( getCenterPosition().add(-Tamer.FLYING_HEIGHT, Tamer.FLYING_HEIGHT) );
 			tamer.setSpawnDirection(spawnVelocity);
-			tamer.setHeading(spawnVelocity.tmp().nor());
-			
+			tamer.setHeading(spawnVelocity);
 			RuntimeObjectFactory.addToObjectPool("tamer",(GameObject)tamer);
 			
 		}
