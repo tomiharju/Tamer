@@ -91,7 +91,7 @@ public class Prop extends StaticObject implements Obstacle {
 						.get(i)).getPosition()));
 				float distance = closestVertice.dst(((Worm) creatures.get(i)).getHead().getPosition());
 				impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
-						.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
+						.getSpeed() * 3 * Gdx.graphics.getDeltaTime()));
 				//impulse.set(collisionAxis.mul(distance));
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse);
