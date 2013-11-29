@@ -48,7 +48,6 @@ public class Spear extends DynamicObject {
 		setGraphics(TamerTexture.SPEAR);
 
 		// hitbox
-		//hitbox.setGraphics("vRocks1.png");
 		hitbox.setHitBox("1");
 		hitbox.setSize(Helper.TILESIZE);
 		hitbox.setZindex(10);

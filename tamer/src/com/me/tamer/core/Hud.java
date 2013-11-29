@@ -133,7 +133,8 @@ public class Hud extends Group {
 		survived = 0;
 		survivedLabel.setText("S: " + survived);
 	}
-
+	
+	//old stuff
 	public void updateLabel(int type, int amount) {
 		switch (type) {
 		case LABEL_REMAINING: {

@@ -35,10 +35,6 @@ public class TamerShadow extends DynamicObject{
 	
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.me.tamer.gameobjects.superclasses.DynamicObject#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)
-	 */
 	@Override
 	public void draw(SpriteBatch batch) {
 		batch.setColor(0.1f, 0.1f, 0.1f, 0.7f);
@@ -72,29 +68,8 @@ public class TamerShadow extends DynamicObject{
 	}
 
 	@Override
-	public void setup(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void wakeUp(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setGraphics(String graphics) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
 }
