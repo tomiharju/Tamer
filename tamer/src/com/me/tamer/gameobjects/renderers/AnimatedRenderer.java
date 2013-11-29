@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerStage;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerAnimations;
 
 /**
  * @author Kesyttäjät
@@ -94,7 +94,7 @@ public class AnimatedRenderer implements Renderer {
 	}
 
 	@Override
-	public void loadGraphics(TamerTexture animName, int FRAME_COLS,
+	public void loadGraphics(TamerAnimations animName, int FRAME_COLS,
 			int FRAME_ROWS) {
 		
 		spriteSheet = assetManager.get(animName.getFileName(), Texture.class);
@@ -180,10 +180,6 @@ public class AnimatedRenderer implements Renderer {
 		return batchColor;
 	}
 
-	@Override
-	public void loadGraphics(TamerTexture animName) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

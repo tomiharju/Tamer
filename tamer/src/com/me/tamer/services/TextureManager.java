@@ -8,15 +8,9 @@ import com.me.tamer.core.TamerGame;
 public class TextureManager {
 	AssetManager assetManager;
 	
-	public enum TamerTexture{
-		//Animated gameobjects
-		ANT("animations/antorc"),
-		SPEAR("animations/spear"),
-		TAMER("animations/tamer"),
-		WORMPART("animations/vwormpart2"),
-		WORMHEAD("animations/wormhead"),
+	public enum TamerStatic{
+
 		
-		//controls
 		BUTTON_SPEAR("button_spear"),
 		BUTTON_SPEAR_GLOW("button_spear_glow"),
 		BUTTON_SPEAR_GLOW_BLUE("button_spear_glow_blue"),
@@ -24,18 +18,38 @@ public class TextureManager {
 		BUTTON_SCREAM_GLOW("button_scream_glow"),
 		JOYSTICK("joystick"),
 		JOYSTICK_INNER("joystick_inner"),
-		
-		//
+		//Tamer skil graphics
 		TAMER_SHADOW("tamershadow"),
 		SCREAM("scream"),
 		TARGET_TILE("targetTile"),
 		SPEAR_CRACK("spearCrack");
+
+		private final String fileName;
+
+		private TamerStatic(String fileName) {
+			this.fileName = fileName;
+		}
+		public String getFileName() {
+			return fileName;
+		}
+	}
+	
+	public enum TamerAnimations{
+		//Animated gameobjects
+		ANT("animations/antorc"),
+		SPEAR("animations/spear"),
+		TAMER("animations/tamer"),
+		WORMPART("animations/vwormpart2"),
+		WORMHEAD("animations/wormhead");
+		
+	
+		
 		
 		private final String fileName;
 		private final String animationsPath = "data/graphics/";
 		private final String extension = ".png";
 		
-		private TamerTexture(String fileName) {
+		private TamerAnimations(String fileName) {
 			this.fileName = fileName;
 		}
 
@@ -45,7 +59,7 @@ public class TextureManager {
 	}
 	
 	public void loadTextures(){
-		for( TamerTexture t : TamerTexture.values() ){
+		for( TamerAnimations t : TamerAnimations.values() ){
 			assetManager.load(t.getFileName(), Texture.class);
 			Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Started loading asset: " +t.name());
 		}

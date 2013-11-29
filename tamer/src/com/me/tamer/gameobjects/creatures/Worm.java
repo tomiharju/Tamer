@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.creatures;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -14,14 +15,13 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.DrawOrderComparator;
 
 public class Worm extends DynamicObject implements Creature {
 
 	private final int NUMBER_PARTS = 8;
-	private final float FINAL_SPEED = 100.0f;
+	private final float FINAL_SPEED = 8.0f;
 	private ArrayList<WormPart> parts;
 	private float speed = FINAL_SPEED;
 	private WormPart head = null;
@@ -92,8 +92,6 @@ public class Worm extends DynamicObject implements Creature {
 
 	public void removePart(WormPart part) {
 		parts.remove(part);
-		if (parts.size() > 0)
-			tail = parts.get(parts.size() - 1);
 	}
 
 	public void connectPieces() {
@@ -117,9 +115,7 @@ public class Worm extends DynamicObject implements Creature {
 
 		// kill worm when head has decayed
 		if (dead) markAsCarbage();
-			
-		
-		//SHOULD DELTA TIME BE ADDED HERE????????????
+	
 		head.getVelocity().set(head.getHeading().tmp().mul(speed) );
 
 		solveEffects();
@@ -143,7 +139,8 @@ public class Worm extends DynamicObject implements Creature {
 			}
 	}
 
-	public void dispose() {
+	public void dispose(){
+		parts.clear();
 		parts = null;
 		head = null;
 	}
@@ -162,7 +159,7 @@ public class Worm extends DynamicObject implements Creature {
 	@Override
 	public void applyPull(Vector2 point, float magnitude) {
 		Vector2 direction = point.tmp().sub(head.getPosition());
-		head.getVelocity().add(direction.mul(magnitude));
+		head.getPosition().add(direction.mul(Gdx.graphics.getDeltaTime()));
 		head.setHeading(direction);
 		
 	}
@@ -355,6 +352,8 @@ public class Worm extends DynamicObject implements Creature {
 
 	public void setDrowning(boolean drowning) {
 		speed = 0;
+		for(int i = 0 ; i < parts.size() ; i++)
+			parts.get(i).setJointlength(0.01f);
 		this.drowning = drowning;
 	}
 
