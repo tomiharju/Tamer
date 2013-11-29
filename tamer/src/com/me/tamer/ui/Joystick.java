@@ -8,15 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
 import com.me.tamer.gameobjects.renderers.UiRenderer;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerStatic;
+
 
 public class Joystick extends Actor{
 	private final float BUTTON_SIZE	= 250;
 	private final float ZOOM_IN_SPEED = 0.015f;
 	private final float ZOOM_OUT_SPEED = 0.01f;
 	private final float ZOOM_MIN_AMOUNT = 0.05f;
-	private final float ZOOM_DEFAULT = 1.05f;
-	private final float ZOOM_MAX_COEFFIENT = 0.004f;
+	private final float ZOOM_DEFAULT = 1.1f;
+	private final float ZOOM_MAX_COEFFIENT = 0.007f;
 	private ControlContainer controlContainer = null;
 	private Environment environment = null;
 	
@@ -42,11 +43,11 @@ public class Joystick extends Actor{
 		
 		environment		= controlContainer.getEnvironment();
 		
-		renderer_outer.loadGraphics(TamerTexture.JOYSTICK);
+		renderer_outer.loadGraphics(TamerStatic.JOYSTICK.getFileName());
 		renderer_outer.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer_outer.setPosition(restingpoint);
 		
-		renderer_inner.loadGraphics(TamerTexture.JOYSTICK_INNER);
+		renderer_inner.loadGraphics(TamerStatic.JOYSTICK_INNER.getFileName());
 		renderer_inner.setSize(POINTER_SIZE,POINTER_SIZE);
 		renderer_inner.setPosition(joystickPoint);
 		

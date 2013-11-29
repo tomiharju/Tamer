@@ -14,14 +14,22 @@
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">-13:10</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
+=======
+		<property type="Position">-10:9</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">-19:3</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
@@ -104,26 +112,63 @@
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
+=======
+		<property type="Position">-7:9</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+		<property type="Position">-10:6</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-10:3</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">-12:4</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
+=======
+		<property type="Position">-4:9</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">-11:3</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
+=======
+		<property type="Position">-10:0</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">-16:-2</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
@@ -552,10 +597,49 @@
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
+=======
+		<property type="Position">-1:9</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
+		<property type="Position">-8:0</property>
+		<property type="SpawnType">Worm</property>
+		<property type="SpawnDirection">0</property>
+		<property type="SpawnId">0</property>
+		<property type="InitialSleep">0</property>
+		<property type="SleepTime">4</property>
+		<property type="TamerSpawn">1</property>
+		<property type="SpawnCount">10</property>
+		<property type="zIndex">1</property>
+		<property type="Graphics">spawn.png</property>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.creatures.Worm">
+		</SubObject>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">1:1</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
@@ -576,10 +660,17 @@
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
+=======
+		<property type="Position">-10:-3</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">-1:-1</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
@@ -632,26 +723,193 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">20</property>
 		<property type="Graphics">fogtop.png</property>
+=======
+		<property type="Position">2:9</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.obstacles.Quicksand">
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-3:3</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-3:2</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-2:3</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-1:3</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-3:1</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-2:2</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">0:3</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-2:1</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-3:0</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-1:2</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-1:1</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">0:2</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-2:0</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-3:-1</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-2:-1</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-1:0</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">0:1</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-3:-2</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-1:-1</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-2:-2</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">0:0</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">0:-1</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">-1:-2</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+		<SubObject type="com.me.tamer.gameobjects.tiles.obstacles.SandPart">
+			<property type="Position">0:-2</property>
+			<property type="Graphics">swamp_mid.png</property>
+			<property type="Group">0</property>
+			<property type="zIndex">1</property>
+		</SubObject>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">-7:-9</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
+=======
+		<property type="Position">5:9</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">-4:-6</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
+=======
+		<property type="Position">-10:-6</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">0:-3</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
@@ -664,10 +922,25 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">54</property>
 		<property type="Graphics">stump2.png</property>
+=======
+		<property type="Position">-10:-7</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+		<property type="Position">8:9</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">1:-2</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
@@ -744,10 +1017,17 @@
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
 		<property type="Graphics">tree1.png</property>
+=======
+		<property type="Position">-8:-10</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
 		<property type="zIndex">1</property>
+<<<<<<< HEAD
 		<property type="Position">5:-1</property>
 		<property type="PixelsX">120</property>
 		<property type="PixelsY">143</property>
@@ -1200,5 +1480,92 @@
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">20</property>
 		<property type="Graphics">fogdefault.png</property>
+=======
+		<property type="Position">10:6</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-5:-10</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">10:3</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">-2:-10</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">10:0</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">1:-10</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">10:-3</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">4:-10</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">10:-6</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">7:-10</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+	</GameObject>
+	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
+		<property type="HitBox">3</property>
+		<property type="zIndex">1</property>
+		<property type="Position">10:-9</property>
+		<property type="PixelsX">120</property>
+		<property type="PixelsY">142</property>
+		<property type="Graphics">tree-2.png</property>
+>>>>>>> dc332e3cb066b2733356881e2f2033ecb5187dd3
 	</GameObject>
 </root>
+ 

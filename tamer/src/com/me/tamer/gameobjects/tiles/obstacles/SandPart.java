@@ -6,7 +6,6 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
-import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public class SandPart extends StaticObject{

@@ -246,7 +246,7 @@ public class TamerStage extends Stage{
 	
 	public void reset(){
 		cameraReturning = false;
-		cameraDoneMoving = false;
+		cameraDoneMoving = true;
 		fading = false;
 	}
 	
@@ -257,6 +257,7 @@ public class TamerStage extends Stage{
 		
 		
 		environment = null;
+		level = null;
 		this.getActors().clear();
 		
 	}

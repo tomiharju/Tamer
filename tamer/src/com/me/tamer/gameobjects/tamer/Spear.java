@@ -18,7 +18,8 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tiles.Prop;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerAnimations;
+import com.me.tamer.services.TextureManager.TamerStatic;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
@@ -45,24 +46,24 @@ public class Spear extends DynamicObject {
 	private Vector2 help = new Vector2();
 
 	public Spear() {
-		setGraphics(TamerTexture.SPEAR);
+		setGraphics(TamerAnimations.SPEAR);
 
 		// hitbox
 		//hitbox.setGraphics("vRocks1.png");
-		hitbox.setHitBox("1");
-		hitbox.setSize(Helper.TILESIZE);
-		hitbox.setZindex(10);
+//		hitbox.setHitBox("1");
+//		hitbox.setSize(Helper.TILESIZE);
+//		hitbox.setZindex(10);
 	}
 
-	public void setGraphics(TamerTexture graphics) {
-		Renderer render = RenderPool.addRendererToPool("animated", graphics.name());
+	public void setGraphics(TamerAnimations graphics) {
+		Renderer render = RenderPool.addRendererToPool("animated", graphics.getFileName());
 		render.loadGraphics(graphics, 1, 8);
 		setSize(new Vector2(2.4f, 1.5f));
-		setRenderType(graphics.name());
+		setRenderType(graphics.getFileName());
 		
 		
-		Renderer render2 = RenderPool.addRendererToPool("animated", TamerTexture.SPEAR_CRACK.name());
-		render2.loadGraphics(TamerTexture.SPEAR_CRACK, 1, 1);
+		Renderer render2 = RenderPool.addRendererToPool("static", TamerStatic.SPEAR_CRACK.getFileName());
+		render2.loadGraphics(TamerStatic.SPEAR_CRACK.getFileName());
 	}
 
 	public void update(float dt) {
@@ -85,11 +86,11 @@ public class Spear extends DynamicObject {
 				attached = true;
 
 				// create hitbox
-				environment.addNewObject(hitbox);
-				hitbox.setZindex(-1);
-				hitbox.setPosition( getPosition() );
-				hitbox.setSize(Helper.TILESIZE);
-				hitbox.markAsActive();
+//				environment.addNewObject(hitbox);
+//				hitbox.setZindex(-1);
+//				hitbox.setPosition( getPosition() );
+//				hitbox.setSize(Helper.TILESIZE);
+//				hitbox.markAsActive();
 			}
 		}
 	}
@@ -111,7 +112,7 @@ public class Spear extends DynamicObject {
 		
 		
 		//hitbox draw for test. did not want to mess with the sheet
-		Renderer renderer2 = RenderPool.getRenderer( TamerTexture.SPEAR_CRACK.name() );
+		Renderer renderer2 = RenderPool.getRenderer( TamerStatic.SPEAR_CRACK.getFileName());
 		renderer2.setSize( hitbox.getSize() );
 		batch.setColor(1, 1, 1, 0.6f);
 		renderer2.setOrientation(0);
@@ -217,9 +218,9 @@ public class Spear extends DynamicObject {
 		
 
 		// remove hitbox
-		hitbox.markAsCarbage();
-		hitbox.setzIndex("10");
-		hitbox.setSize(0, 0);
+//		hitbox.markAsCarbage();
+//		hitbox.setzIndex("10");
+//		hitbox.setSize(0, 0);
 
 		RuntimeObjectFactory.addToObjectPool("spear", this);
 		markAsCarbage();

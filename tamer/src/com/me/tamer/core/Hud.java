@@ -123,16 +123,16 @@ public class Hud extends Group {
 		}
 	}
 
-	public void resetHud() {
-		remaining = 0;
-		remainingLabel.setText("R: " + remaining);
-
-		dead = 0;
-		deadLabel.setText("D: " + dead);
-
-		survived = 0;
-		survivedLabel.setText("S: " + survived);
-	}
+//	public void resetHud() {
+//		remaining = 0;
+//		remainingLabel.setText("R: " + remaining);
+//
+//		dead = 0;
+//		deadLabel.setText("D: " + dead);
+//
+//		survived = 0;
+//		survivedLabel.setText("S: " + survived);
+//	}
 
 	public void updateLabel(int type, int amount) {
 		switch (type) {

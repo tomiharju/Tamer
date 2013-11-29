@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerAnimations;
 
 public class EffectRenderer implements Renderer{
 
@@ -119,15 +119,11 @@ public class EffectRenderer implements Renderer{
 		return null;
 	}
 	@Override
-	public void loadGraphics(TamerTexture animName, int FRAME_COLS,
+	public void loadGraphics(TamerAnimations animName, int FRAME_COLS,
 			int FRAME_ROWS) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public void loadGraphics(TamerTexture animName) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }

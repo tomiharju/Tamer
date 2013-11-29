@@ -14,7 +14,7 @@ import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerAnimations;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
@@ -67,7 +67,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	public void wakeUp(Environment environment){
 		this.environment = environment;
 
-		setGraphics(TamerTexture.ANT);
+		setGraphics(TamerAnimations.ANT);
 		markAsActive();
 		
 		//Add the spawning position as a first waypoint
@@ -77,11 +77,11 @@ public class AntOrc extends DynamicObject implements Creature{
 		environment.getCreatures().add(this);	
 	}
 	
-	public void setGraphics(TamerTexture graphics) {
-		Renderer render = RenderPool.addRendererToPool("animated", graphics.name());
+	public void setGraphics(TamerAnimations graphics) {
+		Renderer render = RenderPool.addRendererToPool("animated", graphics.getFileName());
 		render.loadGraphics(graphics, 1, 8);
 		setSize(new Vector2(SIZE,SIZE));
-		setRenderType(graphics.name());
+		setRenderType(graphics.getFileName());
 	}
 	
 	public void update(float dt){

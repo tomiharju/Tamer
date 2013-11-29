@@ -17,7 +17,6 @@ import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
-import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
@@ -68,8 +67,9 @@ public class SpawnPoint extends StaticObject{
 	
 	public void setSpawnDirection(String vel){
 		float angle = Float.parseFloat(vel);
-		angle += 45;
-		this.spawnVelocity = new Vector2(1,0);
+		//angle += 45;
+		this.spawnVelocity = new Vector2(1,1);
+		spawnVelocity.nor();
 		this.spawnVelocity.setAngle(angle);		
 	}
 	
