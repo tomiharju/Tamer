@@ -36,12 +36,6 @@ public class Endingpoint extends StaticObject implements Obstacle {
 		setSize(getSize().x, y);
 	}
 
-	public void setGraphics(String graphics) {
-		Renderer render = RenderPool.addRendererToPool("static", graphics);
-		render.loadGraphics(graphics);
-		setSize(Helper.TILESIZE);
-		setRenderType(graphics);
-	}
 	
 	public void setHitBox(String scale) {
 		float s = Float.parseFloat(scale);

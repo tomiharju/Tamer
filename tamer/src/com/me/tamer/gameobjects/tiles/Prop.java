@@ -34,8 +34,9 @@ public class Prop extends StaticObject implements Obstacle {
 		env.addNewObject(this);
 		createVertices();
 	}
-	public void wakeup(Environment env){
-		env.addNewObject(this);
+	
+	@Override
+	public void wakeUp(Environment env){
 		env.addObstacle(this);
 		createVertices();
 	}
@@ -57,8 +58,6 @@ public class Prop extends StaticObject implements Obstacle {
 
 	}
 
-	
-
 	@Override
 	public void resolve(ArrayList<Creature> creatures) {
 		// Only collide with ground level obstacles
@@ -74,6 +73,8 @@ public class Prop extends StaticObject implements Obstacle {
 			// Creatures size
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
 			Vector2 center = getPosition();
+			
+			
 		
 			if (temp.x + s.x / 2 > center.x - getBounds()
 					&& temp.x - s.x / 2 < center.x
@@ -91,7 +92,7 @@ public class Prop extends StaticObject implements Obstacle {
 						.get(i)).getPosition()));
 				float distance = closestVertice.dst(((Worm) creatures.get(i)).getHead().getPosition());
 				impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
-						.getSpeed() * 2 * Gdx.graphics.getDeltaTime()));
+						.getSpeed() * 3 * Gdx.graphics.getDeltaTime()));
 				//impulse.set(collisionAxis.mul(distance));
 				((Worm) creatures.get(i)).getHead().getPosition()
 						.add(impulse);
@@ -161,7 +162,7 @@ public class Prop extends StaticObject implements Obstacle {
 			Vector2 p1 = this.vertices.get(i);
 			Vector2 p2 = this.vertices.get(i + 1 == this.vertices.size() ? 0
 					: i + 1);
-			Vector2 edge = p1.cpy().sub(p2);
+			Vector2 edge = p2.cpy().sub(p1);
 			Vector2 normal = edge.rotate(-90);
 			normal.nor();
 			axes.add(normal);
@@ -199,18 +200,6 @@ public class Prop extends StaticObject implements Obstacle {
 
 	public void dispose(Environment environment) {
 		environment.getObstacles().remove(this);
-	}
-
-	@Override
-	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setGraphics(TamerTexture tex) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

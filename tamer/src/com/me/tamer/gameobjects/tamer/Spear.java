@@ -3,6 +3,7 @@ package com.me.tamer.gameobjects.tamer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -49,7 +50,8 @@ public class Spear extends DynamicObject {
 		// hitbox
 		//hitbox.setGraphics("vRocks1.png");
 		hitbox.setHitBox("1");
-		hitbox.setZindex(-10);
+		hitbox.setSize(Helper.TILESIZE);
+		hitbox.setZindex(10);
 	}
 
 	public void setGraphics(TamerTexture graphics) {
@@ -57,6 +59,10 @@ public class Spear extends DynamicObject {
 		render.loadGraphics(graphics, 1, 8);
 		setSize(new Vector2(2.4f, 1.5f));
 		setRenderType(graphics.name());
+		
+		
+		Renderer render2 = RenderPool.addRendererToPool("animated", TamerTexture.SPEAR_CRACK.name());
+		render2.loadGraphics(TamerTexture.SPEAR_CRACK, 1, 1);
 	}
 
 	public void update(float dt) {
@@ -81,7 +87,8 @@ public class Spear extends DynamicObject {
 				// create hitbox
 				environment.addNewObject(hitbox);
 				hitbox.setZindex(-1);
-				hitbox.setPosition(getPosition());
+				hitbox.setPosition( getPosition() );
+				hitbox.setSize(Helper.TILESIZE);
 				hitbox.markAsActive();
 			}
 		}
@@ -101,6 +108,18 @@ public class Spear extends DynamicObject {
 		renderer.setPosition(help);
 		renderer.setOrientation( solveOrientation() );
 		renderer.draw(batch);	
+		
+		
+		//hitbox draw for test. did not want to mess with the sheet
+		Renderer renderer2 = RenderPool.getRenderer( TamerTexture.SPEAR_CRACK.name() );
+		renderer2.setSize( hitbox.getSize() );
+		batch.setColor(1, 1, 1, 0.6f);
+		renderer2.setOrientation(0);
+		renderer2.setPosition( Helper.worldToScreen(hitbox.getPosition()));
+		renderer2.draw(batch);	
+		
+		batch.setColor(Color.WHITE);
+		
 	}
 
 	public void wakeUp(Environment environment) {
@@ -133,7 +152,8 @@ public class Spear extends DynamicObject {
 				else if (((Worm)creatures.get(i)).isDrowning())creature = null;
 			}
 			
-			if (creature != null) {
+			//latter one is because dispose is not implemented
+			if (creature != null && !creature.isDecaying()) {
 				targetFound = true;
 				switch (creature.getType()){
 				case (Creature.TYPE_ANT):
@@ -184,19 +204,22 @@ public class Spear extends DynamicObject {
 		attached = false;
 		setZindex(-1); // not sure if needed here
 
-		if (targetCreature != null && targetWorm != null) {
+		if (targetWorm != null) {
 			//don't unbind if being eaten
 			if(!targetWorm.isBeingEaten()){
 				targetWorm.unBind();
 			}
-			
-			targetWorm = null;
-			targetCreature = null;
-			creature = null;
 		}
+		
+		targetWorm = null;
+		targetCreature = null;
+		creature = null;
+		
 
 		// remove hitbox
 		hitbox.markAsCarbage();
+		hitbox.setzIndex("10");
+		hitbox.setSize(0, 0);
 
 		RuntimeObjectFactory.addToObjectPool("spear", this);
 		markAsCarbage();

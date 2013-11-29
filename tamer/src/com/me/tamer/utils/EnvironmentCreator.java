@@ -72,6 +72,8 @@ public class EnvironmentCreator {
 				}
 				//Create new gameobject
 				GameObject objectToAdd = GameObjectFactory.createGameObject(objectType,propertyConfig);
+				if(objectToAdd == null)
+					throw new Exception("ERROR CREATING A GAME OBJECT");
 				//If object has subobjects, create them aswell
 				subObjects = gameobject.getChildrenByName("SubObject");
 				

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
@@ -57,18 +58,20 @@ public class TileMap extends StaticObject {
 	}
 
 	public void generate(SpriteCache cache){
+
 		TamerStage stage = TamerStage.instance();
+		cache.setProjectionMatrix(stage.getCamera().combined);
+
 		AssetManager assetManager = stage.getGame().getAssetManager();
 		TextureRegion terrainTex = assetManager.get("data/graphics/sheetData",
 				TextureAtlas.class).findRegion(getRenderType());
+	
 		Vector2 help = new Vector2();
 		if (terrainTex != null)
 			for (int i = 0; i < terrain.size(); i++) {
 				help.set(Helper.worldToScreen(terrain.get(i)));
 				cache.add(terrainTex, help.x - Helper.TILESIZE.x / 2,
-						help.y, Helper.TILESIZE.x, Helper.TILESIZE.y);
-//				cache.add(terrainTex, help.x - (float)Math.sqrt(2) / 2,
-//				help.y, (float)Math.sqrt(2), (float)Math.sqrt(2) / 2);
+						help.y, Helper.TILESIZE.x , Helper.TILESIZE.y  );
 				
 			}
 	
@@ -76,7 +79,6 @@ public class TileMap extends StaticObject {
 	public void setTerrain(String graphics) {
 		graphics = graphics.split("\\.")[0];
 		setSize(Helper.TILESIZE);
-//		setSize(1,0.5f);
 		setRenderType(graphics);
 	}
 

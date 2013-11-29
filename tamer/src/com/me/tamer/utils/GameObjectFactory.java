@@ -35,8 +35,10 @@ public class GameObjectFactory {
 				  setter.invoke(object, entry.getValue());
 			  }catch(NoSuchMethodException e){
 				  Gdx.app.debug(TamerGame.LOG, " :: Trying to set invalid object property ["+entry.getKey()+"] " + e.getMessage());
+		
 			  }catch(InvocationTargetException i){
 				  Gdx.app.debug(TamerGame.LOG, " :: set" + entry.getKey() +" Failed to run succesfully\n" + i.getMessage());
+				  return null;
 			  }
 			 
 			}

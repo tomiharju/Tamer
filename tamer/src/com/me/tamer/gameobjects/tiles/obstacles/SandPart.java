@@ -19,7 +19,7 @@ public class SandPart extends StaticObject{
 	public void setup(Environment environment){
 		environment.addStaticObject(this);
 //		environment.addNewObject(this);
-		setZindex(0);
+		setZindex(-1);
 		setAnimState(20);
 	}
 	

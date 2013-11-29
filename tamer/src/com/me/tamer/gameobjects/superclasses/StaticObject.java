@@ -101,17 +101,6 @@ public abstract class StaticObject implements GameObject{
 		this.centerPosition.set(Helper.worldToScreen(position).x + Helper.TILESIZE.x / 2, Helper.worldToScreen(position).y + Helper.TILESIZE.y / 2);
 		return centerPosition;
 	}
-	
-	@Override
-	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public Vector2 getSize() {
@@ -160,6 +149,18 @@ public abstract class StaticObject implements GameObject{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void dispose(Environment level) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public float getBounds(){
 		return bounds;
 	}
