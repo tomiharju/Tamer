@@ -9,13 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.me.tamer.core.TamerGame.ScreenType;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
+import com.me.tamer.services.SoundManager;
+import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.Helper;
 
@@ -24,7 +22,7 @@ public class TamerStage extends Stage{
 	
 	float ASPECT_RATIO =(float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
 	private final float BEGIN_ZOOM_SPEED = 0.01F;
-	private final float BEGIN_CAMERA_SPEED = 30f;
+	private final float BEGIN_CAMERA_SPEED = 8f;
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
 	private final float BEGIN_ZOOM_AMOUNT = 1.8f;
 	
@@ -53,6 +51,7 @@ public class TamerStage extends Stage{
 	private Vector2 cameraHeading = new Vector2();
 	private boolean cameraReturning = false;
 	private boolean cameraDoneMoving = false;
+	private boolean reseted = false;
 	
 	private int cameraHolder;
 	public static final int TAMER_CAMERA = 0;
@@ -80,6 +79,9 @@ public class TamerStage extends Stage{
 	TweenManager tweenManager;
 	boolean fading = false;
 	
+	//Sound
+	SoundManager sound = null;
+	
 	
 	public static TamerStage instance(){
 		if(instance==null) instance = new TamerStage();
@@ -98,6 +100,7 @@ public class TamerStage extends Stage{
 	
 	private TamerStage(){
 		//private constructor because this is singleton
+		sound = SoundManager.instance();
 	}
 	
 	public void createActors(){
@@ -137,6 +140,8 @@ public class TamerStage extends Stage{
         this.addActor( environment );
         this.addActor( hud );
         this.addActor( controlContainer);
+        
+        setGameState(GAME_RUNNING);
                 
 //        setCameraHolder(BEGIN_CAMERA);
         
@@ -195,23 +200,7 @@ public class TamerStage extends Stage{
 			}
 			break;	
 		case BEGIN_CAMERA:
-			if (environment.getState() != RunningState.BEGIN_ZOOM){
-				//reset when moving to next level
-				reset();
-				camera.zoom = BEGIN_ZOOM_AMOUNT;
-				
-				cameraStartPosition.set( Helper.worldToScreen( environment.getTamer().getPosition() ));
-				cameraPosition.set(cameraStartPosition);
-				
-				//CHANGE THIS 
-				cameraTargetPosition.set( Helper.worldToScreen( new Vector2(20,0)) );
-				//------------------//
-				
-				cameraHeading.set( cameraTargetPosition.tmp().sub(cameraPosition));
-				cameraHeading.nor();
-				
-				environment.setState(RunningState.BEGIN_ZOOM);
-			}
+			if (!reseted) reset();
 			
 			if (!cameraDoneMoving){
 				cameraPosition.x += cameraHeading.x * dt * BEGIN_CAMERA_SPEED;
@@ -224,15 +213,23 @@ public class TamerStage extends Stage{
 				
 				if ( cameraReturning && cameraPosition.dst( cameraStartPosition ) < 3.0f){
 					cameraDoneMoving = true;
+					environment.setState(RunningState.TAMER_ENTER);
 				} 
 				
 			}
 			else
 			{
+				help.set(Helper.worldToScreen(environment.getTamer().getPosition()));
+				help.y -= TAMER_OFFSET_ONSCREEN;
+				cameraPosition.set( help );	
+				
 				camera.zoom -= BEGIN_ZOOM_SPEED;
 				if(camera.zoom <= 1.0f) {
 					setCameraHolder(TAMER_CAMERA);
-					environment.setState(RunningState.TAMER_ENTER);
+//					environment.setState(RunningState.TAMER_ENTER);
+//					sound.play(TamerSound.OPENING);
+					environment.setState(RunningState.NORMAL);
+					controlContainer.enableInput();
 				}
 			}
 			break;
@@ -246,6 +243,22 @@ public class TamerStage extends Stage{
 		cameraReturning = false;
 		cameraDoneMoving = false;
 		fading = false;
+		
+		camera.zoom = BEGIN_ZOOM_AMOUNT;
+		
+		cameraStartPosition.set( Helper.worldToScreen( environment.getTamer().getPosition() ));
+		cameraPosition.set(cameraStartPosition);
+		
+		//CHANGE THIS 
+		cameraTargetPosition.set( Helper.worldToScreen( new Vector2(20,0)) );
+		//------------------//
+		
+		cameraHeading.set( cameraTargetPosition.tmp().sub(cameraPosition));
+		cameraHeading.nor();
+		
+		environment.setState(RunningState.BEGIN_ZOOM);
+		
+		reseted = true;
 	}
 	
 	public void dispose(){
@@ -255,6 +268,7 @@ public class TamerStage extends Stage{
 		
 		
 		environment = null;
+		level = null;
 		this.getActors().clear();
 		
 	}

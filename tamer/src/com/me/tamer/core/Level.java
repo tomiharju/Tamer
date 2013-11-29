@@ -25,7 +25,6 @@ public class Level {
 	public Level(int id) {
 		this.id = id;
 		hud = Hud.instance();
-		hud.resetHud();
 	}
 
 	public void setStage(TamerStage stage) {

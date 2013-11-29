@@ -12,7 +12,7 @@ public class MusicManager {
     public enum TamerMusic
     {
         MENU( "music/menu.ogg" ),
-        LEVEL( "music/Duke3.ogg" );
+        LEVEL( "music/Tamer_gameplay_theme.ogg" );
 
         private String fileName;
         private Music musicResource;

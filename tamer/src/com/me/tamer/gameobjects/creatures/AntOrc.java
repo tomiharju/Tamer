@@ -14,7 +14,7 @@ import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerAnimations;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
@@ -27,8 +27,8 @@ public class AntOrc extends DynamicObject implements Creature{
 	private final float WORM_SCAN_RADIUS = 10.0f; //ScanArea is a circle
 	private final float WAYPOINT_SCAN_RADIUS = 0.5f;
 	private final float ATTACK_DISTANCE = 0.3f;
-	private final float SPEED_INCREASE = 1.5f; //A number on which the velocity is multiplied with
-	private final float SPEED = 2.0f;
+	private final float SPEED_INCREASE = 2f; //A number on which the velocity is multiplied with
+	private final float SPEED = 3.0f;
 	private final float EATING_TIME = 3.0f;
 	private final Vector2 EATING_OFFSET = new Vector2 (1.0f,-1.0f);
 	private final float SIZE = 1.9f;
@@ -67,7 +67,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	public void wakeUp(Environment environment){
 		this.environment = environment;
 
-		setGraphics(TamerTexture.ANT);
+		setGraphics(TamerAnimations.ANT);
 		markAsActive();
 		
 		//Add the spawning position as a first waypoint
@@ -77,11 +77,11 @@ public class AntOrc extends DynamicObject implements Creature{
 		environment.getCreatures().add(this);	
 	}
 	
-	public void setGraphics(TamerTexture graphics) {
-		Renderer render = RenderPool.addRendererToPool("animated", graphics.name());
+	public void setGraphics(TamerAnimations graphics) {
+		Renderer render = RenderPool.addRendererToPool("animated", graphics.getFileName());
 		render.loadGraphics(graphics, 1, 8);
 		setSize(new Vector2(SIZE,SIZE));
-		setRenderType(graphics.name());
+		setRenderType(graphics.getFileName());
 	}
 	
 	public void update(float dt){

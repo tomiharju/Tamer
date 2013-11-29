@@ -70,10 +70,6 @@ public class Environment extends Actor {
 	private Vector2 isoPoint = new Vector2();
 	private Vector2 focusPoint = new Vector2();
 	
-	//fence
-	private Vector2 fenceUpLeft = new Vector2();
-	private Vector2 fenceBottomRight = new Vector2();
-
 	public Environment() {
 		RuntimeObjectFactory.createLinkToLevel(this);
 		controls = ControlContainer.instance();
@@ -86,14 +82,15 @@ public class Environment extends Actor {
 		
 		runCarbageCollection();
 		resolveObstacles(dt);
-
+		stepTimers(dt);
+		
 		int numObjects = gameobjects.size();
 
 		switch (state) {
 		case BEGIN_ZOOM:
 			break;
 		case NORMAL:
-			stepTimers(dt);
+			
 			for (int k = 0; k < numObjects; k++) {
 				gameobjects.get(k).update(dt);
 			}
@@ -101,16 +98,21 @@ public class Environment extends Actor {
 		case TAMER_ENTER:
 			if (tamer != null){
 				tamer.update(dt);
-				if (((Tamer) tamer).hasEnteredField()) {
-					setState(RunningState.NORMAL);
-					controls.enableInput();
-					// sound.play(TamerSound.OPENING);
-					
-					//quick fix to the issue where this is not updated before moving joystick
-					tamerShadowPosition = ((Tamer) tamer).getShadow().getCenterPosition();
-				}
+				
+				
+//				if (((Tamer) tamer).hasEnteredField()) {
+//					setState(RunningState.NORMAL);
+//					controls.enableInput();
+//					// sound.play(TamerSound.OPENING);
+//					
+//					//quick fix to the issue where this is not updated before moving joystick
+//					tamerShadowPosition = ((Tamer) tamer).getShadow().getCenterPosition();
+//				}
+				
+				
+				
+				
 			}
-			
 			break;
 		case END_FADE:
 			for (int k = 0; k < numObjects; k++) {

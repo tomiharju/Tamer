@@ -17,7 +17,6 @@ import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
-import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
@@ -38,6 +37,7 @@ public class SpawnPoint extends StaticObject{
 	//IMPORTANT: spawn number is used to distinguish spawns from each other.
 	private int spawnId = 0;
 	private final int TAMER_SPAWN_TIME = 3;
+	private String waypoint;
 		
 	//EXPERIMENTAL STUFF
 	private Tamer tamer;
@@ -55,7 +55,6 @@ public class SpawnPoint extends StaticObject{
 		this.environment = environment;
 		//EventPool.addEvent(new tEvent(this,"spawnTamer",TAMER_SPAWN_TIME,1));
 		spawnTamer();
-		System.out.println(tamer);
 		if(tamer!=null)environment.setTamer(tamer);
 
 		setZindex(1);
@@ -68,8 +67,9 @@ public class SpawnPoint extends StaticObject{
 	
 	public void setSpawnDirection(String vel){
 		float angle = Float.parseFloat(vel);
-		angle += 45;
-		this.spawnVelocity = new Vector2(1,0);
+		//angle += 45;
+		this.spawnVelocity = new Vector2(1,1);
+		spawnVelocity.nor();
 		this.spawnVelocity.setAngle(angle);		
 	}
 	
@@ -90,7 +90,6 @@ public class SpawnPoint extends StaticObject{
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		worm.setPosition(getPosition());
 		worm.setVelocity(spawnVelocity);
-		worm.setHeading(spawnVelocity);
 	}
 
 	
@@ -110,10 +109,22 @@ public class SpawnPoint extends StaticObject{
 		}else if(spawnType.equalsIgnoreCase("antorc")){
 			Gdx.app.debug(TamerGame.LOG, this.getClass()
 					.getSimpleName() + " :: Ant entered");
-			RuntimeObjectFactory.getObjectFromPool("antorc"+spawnId);
+			//RuntimeObjectFactory.getObjectFromPool("antorc"+spawnId);
+			
+			//CHANGE SPAWNING IMPLEMENTATION
+			AntOrc orc = new AntOrc();
+			orc.setPosition(getPosition());
+			orc.setWaypoint(waypoint);
+			environment.addNewObject(orc);
+			EventPool.addEvent(new tEvent(this,"spawnCreature",sleepTime,1));
 		}
 			
 	}
+	
+	public void setWaypoint(String wp){
+		this.waypoint = wp;
+	}
+	
 	/**
 	 * This method is called after "initialSleep"
 	 */

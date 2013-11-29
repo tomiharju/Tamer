@@ -6,7 +6,6 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
-import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public class SandPart extends StaticObject{
@@ -18,7 +17,8 @@ public class SandPart extends StaticObject{
 
 	public void setup(Environment environment){
 		environment.addStaticObject(this);
-		setZindex(0);
+//		environment.addNewObject(this);
+		setZindex(-1);
 		setAnimState(20);
 	}
 	
@@ -44,5 +44,7 @@ public class SandPart extends StaticObject{
 		setSize(Helper.TILESIZE);
 		render.loadGraphics(graphics);
 		setRenderType(graphics);
+		
+		
 	}
 }

@@ -17,23 +17,21 @@ import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerStatic;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.tEvent;
 
 public class GryphonScream extends DynamicObject {
-	private final float SCREAM_AREA_SIZE = 10.0f;
-	private final float COOL_DOWN = 2.0f;
-	private final float SCREAM_SPEED			= 13f;
+	private final float SCREAM_AREA_SIZE = 8.0f;
+	private final float COOL_DOWN = 1.5f;
+	private final float SCREAM_SPEED			= 30f;
 	private final float STARTING_POINT_ADJUSTMENT = 1;
-	private final int WAVE_AMOUNT		= 4;
+	private final int WAVE_AMOUNT		= 10;
 	private final float WAVE_FREQUENCY = 0.08f;
-	private final float WAVE_INITIAL_SIZE = 1f;
 	
 	//circle scream area
-	private final float SCREAM_CIRCLE_RADIUS = 6.0f;
 	private Tamer tamer					= null;
 	private boolean animationActive			= false;
 	private Vector2 wormPos				= new Vector2();
@@ -55,22 +53,23 @@ public class GryphonScream extends DynamicObject {
 		this.tamer = tamer;
 		//Z-index for drawing order
 		setZindex(-1);
-		setGraphics(TamerTexture.SCREAM);
+		setGraphics(TamerStatic.SCREAM.getFileName());
 		
 		sound = SoundManager.instance();
 		controls = ControlContainer.instance();
 	}
 	
-	public void setGraphics(TamerTexture graphics){
+	public void setGraphics(String graphics){
 		//Renderer render = RenderPool.addRendererToPool("static", graphics);
 		//render.loadGraphics(graphics);
-//		renderer.setColor(1, 0.2f, 0.5f, 1);
 		
-		Renderer renderer = RenderPool.addRendererToPool("animated",graphics.name());
+		
+		Renderer renderer = RenderPool.addRendererToPool("static",graphics);
 
-		renderer.loadGraphics(graphics,1,1);
+		renderer.loadGraphics(graphics);
+		renderer.setColor(1, 1f, 1f, 0.4f);
 		setSize(getSize());
-		setRenderType(graphics.name());
+		setRenderType(graphics);
 	}
 	
 	@Override
@@ -80,9 +79,6 @@ public class GryphonScream extends DynamicObject {
 				soundWaves.get(i).add(screamDirection.tmp().mul(SCREAM_SPEED*dt));
 				
 				help.set(soundWaves.get(i).x, soundWaves.get(i).y);
-				
-				
-				System.out.println(Helper.worldToScreen( help ).y +", "  +Helper.worldToScreen(help2).y );
 				
 				if ( Helper.worldToScreen( help ).y < Helper.worldToScreen(help2).y - SCREAM_AREA_SIZE / 4){
 					soundWaves.remove(i);
@@ -109,6 +105,17 @@ public class GryphonScream extends DynamicObject {
 				renderer.draw(batch);
 			}	
 		}
+		
+		//draw direction wave
+		if (soundWaves.size() > 0){
+			renderer.setSize(soundWaves.get(0).x,soundWaves.get(0).x  / 2);
+			help.set( Helper.worldToScreen(tamerShadowPos) );
+			help.y = help.y - soundWaves.get(0).x / 4;
+			renderer.setPosition(help);
+			renderer.draw(batch);
+		}
+		
+		
 		batch.setColor(Color.WHITE);
 	}
 
@@ -140,7 +147,7 @@ public class GryphonScream extends DynamicObject {
 				Worm worm = ((Worm)creatures.get(i));
 				wormPos.set(worm.getHead().getPosition());	
 				
-				if( wormPos.dst(tamerShadowPos) < SCREAM_CIRCLE_RADIUS){
+				if( wormPos.dst(tamerShadowPos) < SCREAM_AREA_SIZE){
 					newHeading.set(wormPos.x - tamerShadowPos.x, wormPos.y - tamerShadowPos.y);
 					newHeading.nor();
 					worm.setHeading(newHeading);
@@ -171,31 +178,7 @@ public class GryphonScream extends DynamicObject {
 	}
 
 	@Override
-	public void setup(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void debugDraw(ShapeRenderer shapeRndr) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setGraphics(String graphics) {
 		// TODO Auto-generated method stub
 		
 	}

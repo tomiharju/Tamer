@@ -9,7 +9,7 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerStatic;
 import com.me.tamer.utils.Helper;
 
 public class TamerShadow extends DynamicObject{
@@ -17,17 +17,17 @@ public class TamerShadow extends DynamicObject{
 	
 	public TamerShadow(Tamer tamer){
 		setPosition(new Vector2(0f,0f));
-		setGraphics(TamerTexture.TAMER_SHADOW);
+		setGraphics(TamerStatic.TAMER_SHADOW.getFileName());
 		setZindex(-1);
 		
 	}
 	
 	@Override
-	public void setGraphics(TamerTexture graphics){
-		Renderer renderer = RenderPool.addRendererToPool("animated",graphics.name());
-		renderer.loadGraphics(graphics,1,1);
+	public void setGraphics(String graphics){
+		Renderer renderer = RenderPool.addRendererToPool("static",graphics);
+		renderer.loadGraphics(graphics);
 		setSize(SIZE, SIZE / 2);
-		setRenderType(graphics.name());
+		setRenderType(graphics);
 	}
 	
 	@Override
@@ -63,13 +63,10 @@ public class TamerShadow extends DynamicObject{
 
 	}
 
-	public boolean getDebug() {
-		return true;
-	}
-
 	@Override
 	public void wakeUp(Environment level) {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

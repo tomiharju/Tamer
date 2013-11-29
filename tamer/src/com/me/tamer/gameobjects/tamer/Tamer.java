@@ -16,7 +16,8 @@ import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerAnimations;
+import com.me.tamer.services.TextureManager.TamerStatic;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
@@ -74,7 +75,7 @@ public class Tamer extends DynamicObject {
 		
 		// Z-index for drawing order
 		setZindex(-10);
-		setGraphics(TamerTexture.TAMER);
+		setGraphics(TamerAnimations.TAMER);
 		
 		controls = ControlContainer.instance();
 		
@@ -97,15 +98,15 @@ public class Tamer extends DynamicObject {
 		controls.addSpearsAvailable(SPEAR_AMOUNT);
 	}
 
-	public void setGraphics(TamerTexture graphics) {
-		Renderer render = RenderPool.addRendererToPool("animated", graphics.name());
+	public void setGraphics(TamerAnimations graphics) {
+		Renderer render = RenderPool.addRendererToPool("animated", graphics.getFileName());
 		render.loadGraphics(graphics, 1, 8);
 		setSize(5, 3.1f);
-		setRenderType(graphics.name());
+		setRenderType(graphics.getFileName());
 		
 		//create targettile renderer
-		Renderer render2 = RenderPool.addRendererToPool("animated", TamerTexture.TARGET_TILE.name() );
-		render2.loadGraphics(TamerTexture.TARGET_TILE, 1, 1);
+		Renderer render2 = RenderPool.addRendererToPool("static", TamerStatic.TARGET_TILE.getFileName() );
+		render2.loadGraphics(TamerStatic.TARGET_TILE.getFileName());
 		render2.setSize(Helper.TILESIZE);
 	}
 
@@ -148,6 +149,8 @@ public class Tamer extends DynamicObject {
 	}
 	
 	public void enterField(float dt){
+		enteredField = false;
+		
 		if (shadow.getPosition().dst(spawnPosition) > SPAWN_DISTANCE) {
 			enteredField = true;
 		}
@@ -167,7 +170,7 @@ public class Tamer extends DynamicObject {
 			
 			//Draw targetTile if spear not on range
 			if (!spearOnRange){
-				Renderer renderer2 = RenderPool.getRenderer( TamerTexture.TARGET_TILE.name() );
+				Renderer renderer2 = RenderPool.getRenderer( TamerStatic.TARGET_TILE.getFileName() );
 				renderer2.setSize(Helper.TILESIZE);
 				renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
 				batch.setColor(1, 1, 1, 0.5f);

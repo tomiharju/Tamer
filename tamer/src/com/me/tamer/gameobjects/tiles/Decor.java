@@ -11,8 +11,8 @@ import com.me.tamer.utils.Helper;
 public class Decor extends StaticObject{
 	
 	public void setup(Environment env) {
-//		env.addStaticObject(this);
-		env.addNewObject(this);
+		env.addStaticObject(this);
+
 	}
 	public void wakeup(Environment env){
 		env.addNewObject(this);

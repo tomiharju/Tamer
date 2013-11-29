@@ -8,11 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.services.MusicManager;
 
 public class LevelCompleteScreen extends AbstractMenu{
 	
 	private Image bgImage;
 	private boolean fadingDone;
+	MusicManager music;
 	
 	public LevelCompleteScreen(TamerGame game) {
 		super(game);
@@ -26,12 +28,16 @@ public class LevelCompleteScreen extends AbstractMenu{
 		bgImage.setFillParent(true);
 
 		stage.addActor(bgImage);
+		
+		music = game.getMusicManager();
 
 			
 	}
 	
-	public void createButtons(){
-		 // retrieve the default table actor
+	public void showScreenContent(){
+		 music.stop();
+		
+		// retrieve the default table actor
 		Table table = super.getTable();
 	    table.add( "TAMER" ).spaceBottom( 50 );
 	    table.row();
@@ -40,6 +46,8 @@ public class LevelCompleteScreen extends AbstractMenu{
 	    table.row();	
 	    table.add( exitButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
 	    table.row();
+	    
+	    
 	}
 	
 	@Override

@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.RendererFactory;
 
 public class RenderPool {

@@ -31,7 +31,7 @@ public class Hud extends Group {
 	private Skin skin;
 	private TamerStage stage;
 
-	private Label remainingLabel, survivedLabel, deadLabel, fpsLabel;
+	private Label remainingLabel, survivedLabel, deadLabel, fpsLabel, beginText;
 	public static final int LABEL_REMAINING = 0, LABEL_SURVIVED = 1,
 			LABEL_DEAD = 4, LABEL_FPS = 2;
 	private int remaining = 0, survived = 0, dead = 0;
@@ -95,6 +95,7 @@ public class Hud extends Group {
 		deadLabel = new Label("", labelStyle);
 		survivedLabel = new Label("", labelStyle);
 		fpsLabel = new Label("FPS: ", labelStyle);
+		
 
 		FileHandle skinFile = Gdx.files.internal("skin/uiskin.json");
 		skin = new Skin(skinFile);
@@ -108,10 +109,17 @@ public class Hud extends Group {
 		table.add(survivedLabel).uniform().spaceBottom(10);
 		table.add(deadLabel).uniform().spaceBottom(10);
 		table.add(fpsLabel).uniform().spaceBottom(10);
+		
+		
+		//BEGIN TEXT
+		beginText = new Label("DO NOT LET THE BEASTS ESCAPE!", labelStyle);
+		beginText.setPosition( ( Gdx.graphics.getWidth() - beginText.getWidth() ) / 2, Gdx.graphics.getHeight() / 2);
+		
 
 		// Register actors	
 		this.addActor(bgImage);
 		this.addActor(table);
+		this.addActor(beginText);
 		
 	}
 
@@ -123,18 +131,19 @@ public class Hud extends Group {
 		}
 	}
 
-	public void resetHud() {
-		remaining = 0;
-		remainingLabel.setText("R: " + remaining);
-
-		dead = 0;
-		deadLabel.setText("D: " + dead);
-
-		survived = 0;
-		survivedLabel.setText("S: " + survived);
-	}
 	
 	//old stuff
+//	public void resetHud() {
+//		remaining = 0;
+//		remainingLabel.setText("R: " + remaining);
+//
+//		dead = 0;
+//		deadLabel.setText("D: " + dead);
+//
+//		survived = 0;
+//		survivedLabel.setText("S: " + survived);
+//	}
+
 	public void updateLabel(int type, int amount) {
 		switch (type) {
 		case LABEL_REMAINING: {
