@@ -34,8 +34,9 @@ public class Prop extends StaticObject implements Obstacle {
 		env.addNewObject(this);
 		createVertices();
 	}
-	public void wakeup(Environment env){
-		env.addNewObject(this);
+	
+	@Override
+	public void wakeUp(Environment env){
 		env.addObstacle(this);
 		createVertices();
 	}
@@ -57,8 +58,6 @@ public class Prop extends StaticObject implements Obstacle {
 
 	}
 
-	
-
 	@Override
 	public void resolve(ArrayList<Creature> creatures) {
 		// Only collide with ground level obstacles
@@ -74,6 +73,8 @@ public class Prop extends StaticObject implements Obstacle {
 			// Creatures size
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
 			Vector2 center = getPosition();
+			
+			
 		
 			if (temp.x + s.x / 2 > center.x - getBounds()
 					&& temp.x - s.x / 2 < center.x
@@ -199,18 +200,6 @@ public class Prop extends StaticObject implements Obstacle {
 
 	public void dispose(Environment environment) {
 		environment.getObstacles().remove(this);
-	}
-
-	@Override
-	public void wakeUp(Environment level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setGraphics(TamerTexture tex) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

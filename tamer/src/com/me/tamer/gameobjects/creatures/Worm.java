@@ -21,8 +21,9 @@ import com.me.tamer.utils.DrawOrderComparator;
 public class Worm extends DynamicObject implements Creature {
 
 	private final int NUMBER_PARTS = 8;
+	private final float FINAL_SPEED = 100.0f;
 	private ArrayList<WormPart> parts;
-	private float SPEED = 7.0f;
+	private float speed = FINAL_SPEED;
 	private WormPart head = null;
 	private WormPart tail = null;
 
@@ -117,7 +118,9 @@ public class Worm extends DynamicObject implements Creature {
 		// kill worm when head has decayed
 		if (dead) markAsCarbage();
 			
-		head.getVelocity().set(head.getHeading().tmp().mul(SPEED));
+		
+		//SHOULD DELTA TIME BE ADDED HERE????????????
+		head.getVelocity().set(head.getHeading().tmp().mul(speed) );
 
 		solveEffects();
 	}
@@ -212,14 +215,14 @@ public class Worm extends DynamicObject implements Creature {
 		disableCollision();
 		parts.get(parts.size() - 1).setInvMass(0);
 
-		SPEED = 0;
+		speed = 0;
 	}
 
 	@Override
 	public void unBind() {
 		bound = false;
 		enableCollision();
-		SPEED = 5;
+		speed = FINAL_SPEED;
 		parts.get(parts.size() - 1).setInvMass(
 				1 / parts.get(parts.size() - 1).getMass());
 	}
@@ -261,8 +264,7 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void markAsCarbage() {
-		System.out.println("drownin: " +drowning +"beingEta: " +beingEaten);
-		if(drowning)stage.getLevel().setWormState(this, WormState.DEAD);
+		if(drowning || beingEaten)stage.getLevel().setWormState(this, WormState.DEAD);
 		else stage.getLevel().setWormState(this, WormState.FENCE);
 		
 		super.markAsCarbage();
@@ -270,10 +272,6 @@ public class Worm extends DynamicObject implements Creature {
 
 	public ArrayList<WormPart> getParts() {
 		return parts;
-	}
-
-	public float getSPEED() {
-		return SPEED;
 	}
 
 	@Override
@@ -286,7 +284,7 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public float getSpeed() {
-		return SPEED;
+		return speed;
 	}
 
 	public Vector2 getSize() {
@@ -356,7 +354,7 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public void setDrowning(boolean drowning) {
-		SPEED = 0;
+		speed = 0;
 		this.drowning = drowning;
 	}
 

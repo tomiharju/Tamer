@@ -24,7 +24,7 @@ public class TamerStage extends Stage{
 	
 	float ASPECT_RATIO =(float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
 	private final float BEGIN_ZOOM_SPEED = 0.01F;
-	private final float BEGIN_CAMERA_SPEED = 15f;
+	private final float BEGIN_CAMERA_SPEED = 30f;
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
 	private final float BEGIN_ZOOM_AMOUNT = 1.8f;
 	
@@ -37,7 +37,6 @@ public class TamerStage extends Stage{
 	private Hud hud;
 	private Environment environment;
 	private ControlContainer controlContainer;
-
 	
 	//GameStates
 	public static final int GAME_READY = 0; 
@@ -61,9 +60,6 @@ public class TamerStage extends Stage{
 	public static final int AIM_CAMERA = 2;
 	public static final int BEGIN_CAMERA = 3;
 	
-	
-	
-	
 	//Debug
 	ShapeRenderer debugRender = new ShapeRenderer();
 	
@@ -80,8 +76,6 @@ public class TamerStage extends Stage{
 	//Camera begin movement
 	private Vector2 currentPosition = new Vector2();
 	
-	
-	
 	//End fade tween
 	TweenManager tweenManager;
 	boolean fading = false;
@@ -97,14 +91,13 @@ public class TamerStage extends Stage{
 		//Cameras must be set up first
 		setupCamera();
 		
-		level = game.getLevelManager().getCurrentLevel() ;
+		level = game.getLevelManager().getCurrentLevel();
 		level.setStage(this);
 		createActors();	
 	}
 	
 	private TamerStage(){
 		//private constructor because this is singleton
-		
 	}
 	
 	public void createActors(){
@@ -113,31 +106,32 @@ public class TamerStage extends Stage{
         hud = Hud.instance();
         hud.initialize(this);
         
-        hud.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
-				System.out.println("hudi painettu");
-			}
-		});
+//        hud.addListener(new ChangeListener() {
+//			public void changed(ChangeEvent event, Actor actor) {
+//				System.out.println("hudi painettu");
+//			}
+//		});
         
 		//environment
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Adding level to PlayScreen and generating environment " +level.getId());
 		level.createEnvironment();
 		environment = level.getEnvironment();
 		
-		environment.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
-				System.out.println("envi painettu");
-			}
-		});
+//		environment.addListener(new ChangeListener() {
+//			public void changed(ChangeEvent event, Actor actor) {
+//				System.out.println("envi painettu");
+//			}
+//		});
 		
         //input controller
         controlContainer = ControlContainer.instance();
         controlContainer.initialize(this);
-        controlContainer.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
-				System.out.println("cont painettu");
-			}
-		});
+        
+//        controlContainer.addListener(new ChangeListener() {
+//			public void changed(ChangeEvent event, Actor actor) {
+//				System.out.println("cont painettu");
+//			}
+//		});
         
         //Register actors in drawing order
         this.addActor( environment );
@@ -170,7 +164,7 @@ public class TamerStage extends Stage{
 		if (!super.getRoot().isVisible()) return;
 		super.getRoot().draw(super.getSpriteBatch(), 1);
 //		environment.debugDraw(debugRender);
-//		Helper.debugDraw(debugRender, camera);
+		Helper.debugDraw(debugRender, camera);
 		super.getSpriteBatch().end();
 	}
 	
@@ -178,8 +172,6 @@ public class TamerStage extends Stage{
 		//test
 		camera = new OrthographicCamera(Helper.VIRTUAL_SIZE_X, Helper.VIRTUAL_SIZE_Y);
 //		camera = new OrthographicCamera(Helper.TILESIZE.x * 12, Helper.TILESIZE.y * 20);
-		
-		
 		uiCamera = new OrthographicCamera();
 		uiCamera.setToOrtho(false);
 		
@@ -204,6 +196,8 @@ public class TamerStage extends Stage{
 			break;	
 		case BEGIN_CAMERA:
 			if (environment.getState() != RunningState.BEGIN_ZOOM){
+				//reset when moving to next level
+				reset();
 				camera.zoom = BEGIN_ZOOM_AMOUNT;
 				
 				cameraStartPosition.set( Helper.worldToScreen( environment.getTamer().getPosition() ));
@@ -223,8 +217,6 @@ public class TamerStage extends Stage{
 				cameraPosition.x += cameraHeading.x * dt * BEGIN_CAMERA_SPEED;
 				cameraPosition.y += cameraHeading.y * dt * BEGIN_CAMERA_SPEED;
 		
-				
-				
 				if (!cameraReturning && cameraPosition.dst( cameraTargetPosition ) < 3.0f){
 					cameraHeading.mul(-1);
 					cameraReturning = true;
@@ -250,10 +242,18 @@ public class TamerStage extends Stage{
 		}	
 	}
 	
+	public void reset(){
+		cameraReturning = false;
+		cameraDoneMoving = false;
+		fading = false;
+	}
+	
 	public void dispose(){
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Disposing");
 		controlContainer.dispose();
 		environment.dispose();
+		
+		
 		environment = null;
 		this.getActors().clear();
 		

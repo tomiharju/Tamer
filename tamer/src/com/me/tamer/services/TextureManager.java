@@ -19,6 +19,7 @@ public class TextureManager {
 		//controls
 		BUTTON_SPEAR("button_spear"),
 		BUTTON_SPEAR_GLOW("button_spear_glow"),
+		BUTTON_SPEAR_GLOW_BLUE("button_spear_glow_blue"),
 		BUTTON_SCREAM("button_scream"),
 		BUTTON_SCREAM_GLOW("button_scream_glow"),
 		JOYSTICK("joystick"),
@@ -27,7 +28,8 @@ public class TextureManager {
 		//
 		TAMER_SHADOW("tamershadow"),
 		SCREAM("scream"),
-		TARGET_TILE("targetTile");
+		TARGET_TILE("targetTile"),
+		SPEAR_CRACK("spearCrack");
 		
 		private final String fileName;
 		private final String animationsPath = "data/graphics/";

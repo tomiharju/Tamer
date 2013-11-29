@@ -16,12 +16,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerGame.ScreenType;
+import com.me.tamer.services.LevelManager;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 
 public class AbstractMenu extends AbstractScreen {
 	TextButton continueButton, newGameButton, levelsButton, optionsButton,
-			mainMenuButton, exitButton;
+			mainMenuButton, exitButton, nextLevelButton;
 	Skin skin;
 	Table table;
 	TextButtonStyle textButtonStyle;
@@ -70,6 +71,17 @@ public class AbstractMenu extends AbstractScreen {
 		newGameButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				sound.play(TamerSound.MENU_CLICK);
+				game.setScreen( ScreenType.NEW_PLAY );
+			}
+		});
+		
+		nextLevelButton = new TextButton("Next Level", textButtonStyle);
+		nextLevelButton.addListener(new ChangeListener() {
+			public void changed(ChangeEvent event, Actor actor) {
+				sound.play(TamerSound.MENU_CLICK);
+				int levelNumber = game.getLevelManager().getCurrentLevel().getId();
+				levelNumber++;
+				game.getLevelManager().setCurrentLevel( levelNumber );
 				game.setScreen( ScreenType.NEW_PLAY );
 			}
 		});

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.me.tamer.core.TamerGame;
 
 public class LevelCompleteScreen extends AbstractMenu{
@@ -25,6 +26,20 @@ public class LevelCompleteScreen extends AbstractMenu{
 		bgImage.setFillParent(true);
 
 		stage.addActor(bgImage);
+
+			
+	}
+	
+	public void createButtons(){
+		 // retrieve the default table actor
+		Table table = super.getTable();
+	    table.add( "TAMER" ).spaceBottom( 50 );
+	    table.row();
+	
+	    table.add( nextLevelButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
+	    table.row();	
+	    table.add( exitButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
+	    table.row();
 	}
 	
 	@Override

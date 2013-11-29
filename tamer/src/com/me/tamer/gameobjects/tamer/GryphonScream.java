@@ -26,7 +26,7 @@ import com.me.tamer.utils.tEvent;
 public class GryphonScream extends DynamicObject {
 	private final float SCREAM_AREA_SIZE = 10.0f;
 	private final float COOL_DOWN = 2.0f;
-	private final float SCREAM_SPEED			= 18f;
+	private final float SCREAM_SPEED			= 13f;
 	private final float STARTING_POINT_ADJUSTMENT = 1;
 	private final int WAVE_AMOUNT		= 4;
 	private final float WAVE_FREQUENCY = 0.08f;
@@ -37,9 +37,11 @@ public class GryphonScream extends DynamicObject {
 	private Tamer tamer					= null;
 	private boolean animationActive			= false;
 	private Vector2 wormPos				= new Vector2();
-	private Vector2 tamerPos			= new Vector2();
+	private Vector2 tamerShadowPos			= new Vector2();
 	private Vector2 griffonHead			= new Vector2();
-	private Vector2 headingHelp			= new Vector2();
+	private Vector2 help			= new Vector2();
+	private Vector2 help3			= new Vector2();
+	private Vector2 help2			= new Vector2(1,-1);
 	private Vector2 newHeading			= new Vector2();
 	private Vector3 screamDirection		= new Vector3(1,-1,0);
 	private ArrayList<Vector3> soundWaves = new ArrayList<Vector3>();
@@ -76,7 +78,13 @@ public class GryphonScream extends DynamicObject {
 		if(animationActive){
 			for(int i = 0 ; i < soundWaves.size() ; i++){
 				soundWaves.get(i).add(screamDirection.tmp().mul(SCREAM_SPEED*dt));
-				if(griffonHead.tmp().add(soundWaves.get(i).x, soundWaves.get(i).y).dst(tamerPos) < 0.5f){
+				
+				help.set(soundWaves.get(i).x, soundWaves.get(i).y);
+				
+				
+				System.out.println(Helper.worldToScreen( help ).y +", "  +Helper.worldToScreen(help2).y );
+				
+				if ( Helper.worldToScreen( help ).y < Helper.worldToScreen(help2).y - SCREAM_AREA_SIZE / 4){
 					soundWaves.remove(i);
 				}
 				
@@ -87,7 +95,7 @@ public class GryphonScream extends DynamicObject {
 	
 	public void addWave(){
 		Vector3 newWave = new Vector3();
-		newWave.set(screamDirection.tmp().mul(WAVE_INITIAL_SIZE));
+		newWave.set( screamDirection.tmp() );
 		soundWaves.add(newWave);
 	}
 	
@@ -114,12 +122,14 @@ public class GryphonScream extends DynamicObject {
 
 		//headingHelp.set(tamer.getHeading().tmp().set(tamer.getHeading().x,tamer.getHeading().y*0.5f));
 		//headingHelp.set(tamer.getHeading());
-		griffonHead.set(tamer.getCenterPosition());//.tmp().add(headingHelp));
+		griffonHead.set(tamer.getPosition());//.getCenterPosition());//.tmp().add(headingHelp));
 		griffonHead.add(new Vector2(-STARTING_POINT_ADJUSTMENT, STARTING_POINT_ADJUSTMENT));
 		animationActive = true;
 		sound.setVolume(0.7f);
 		sound.play(TamerSound.HAWK);
-		tamerPos.set(tamer.getShadow().getPosition());
+		tamerShadowPos.set(tamer.getShadow().getPosition());
+		
+		help2.set(tamerShadowPos.tmp().sub(griffonHead));
 	
 		//Scream circle
 		ArrayList<Creature> creatures = tamer.getEnvironment().getCreatures();
@@ -130,8 +140,8 @@ public class GryphonScream extends DynamicObject {
 				Worm worm = ((Worm)creatures.get(i));
 				wormPos.set(worm.getHead().getPosition());	
 				
-				if( wormPos.dst(tamerPos) < SCREAM_CIRCLE_RADIUS){
-					newHeading.set(wormPos.x - tamerPos.x, wormPos.y - tamerPos.y);
+				if( wormPos.dst(tamerShadowPos) < SCREAM_CIRCLE_RADIUS){
+					newHeading.set(wormPos.x - tamerShadowPos.x, wormPos.y - tamerShadowPos.y);
 					newHeading.nor();
 					worm.setHeading(newHeading);
 					worm.doScreamEffect();

@@ -99,8 +99,6 @@ public class Level {
 			break;
 		}
 		
-		System.out.println("worms: " +worms +"dead:" +dead);
-		
 		updateHud();
 		if (worms<=0) setCompleted(true);
 	}
