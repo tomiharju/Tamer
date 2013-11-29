@@ -12,7 +12,6 @@ import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
-import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public abstract class DynamicObject implements GameObject {
@@ -212,10 +211,7 @@ public abstract class DynamicObject implements GameObject {
 	public void setRenderType(String renderType) {
 		this.renderType = renderType;
 	}
-	
-	public void setRenderType(TamerTexture tex) {
-		
-	}
+
 
 	public float getAngle() {
 		return angle;
@@ -283,11 +279,7 @@ public abstract class DynamicObject implements GameObject {
 		
 	}
 	
-	@Override
-	public void setGraphics(TamerTexture tex) {
-		// TODO Auto-generated method stub
 
-	}
 	
 	
 

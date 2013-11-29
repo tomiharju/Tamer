@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.me.tamer.gameobjects.renderers.UiRenderer;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerStatic;
 
 public class SpearButton extends Actor {
 
@@ -46,17 +46,17 @@ public class SpearButton extends Actor {
 		this.controlContainer = controlContainer;
 		
 		//on cooldown
-		renderer.loadGraphics(TamerTexture.BUTTON_SPEAR);
+		renderer.loadGraphics(TamerStatic.BUTTON_SPEAR.getFileName());
 		renderer.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer.setPosition(restingpoint);
 		
 		//ready to throw
-		renderer2.loadGraphics(TamerTexture.BUTTON_SPEAR_GLOW);
+		renderer2.loadGraphics(TamerStatic.BUTTON_SPEAR_GLOW.getFileName());
 		renderer2.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer2.setPosition(restingpoint);
 		
 		//pick up spear
-		renderer3.loadGraphics(TamerTexture.BUTTON_SPEAR_GLOW_BLUE);
+		renderer3.loadGraphics(TamerStatic.BUTTON_SPEAR_GLOW_BLUE.getFileName());
 		renderer3.setSize(BUTTON_SIZE,BUTTON_SIZE);
 		renderer3.setPosition(restingpoint);
 		

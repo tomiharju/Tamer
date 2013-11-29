@@ -6,10 +6,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.core.TamerStage;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerAnimations;
 
 /**
  * @author ville
@@ -37,14 +38,11 @@ public class UiRenderer implements Renderer {
 	 */
 	@Override
 	public void loadGraphics(String graphicsName) {
-		sprite 	= new Sprite(new Texture(Gdx.files.internal("data/graphics/"+graphicsName+".png")));
-		//sprite.setColor(0,0,0,0.3f);
+		sprite = new Sprite( assetManager.get("data/graphics/sheetData", TextureAtlas.class).findRegion(graphicsName) );
+		sprite.setColor(Color.WHITE);
 	}
 	
-	@Override
-	public void loadGraphics(TamerTexture tex) {
-		sprite 	= new Sprite( assetManager.get(tex.getFileName(), Texture.class ));
-	}
+	
 	
 	@Override
 	public void setSize(float w, float h) {
@@ -110,9 +108,12 @@ public class UiRenderer implements Renderer {
 	}
 
 	@Override
-	public void loadGraphics(TamerTexture animName, int FRAME_COLS,
+	public void loadGraphics(TamerAnimations animName, int FRAME_COLS,
 			int FRAME_ROWS) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	
 }

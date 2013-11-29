@@ -244,7 +244,7 @@ public class TamerStage extends Stage{
 	
 	public void reset(){
 		cameraReturning = false;
-		cameraDoneMoving = false;
+		cameraDoneMoving = true;
 		fading = false;
 	}
 	

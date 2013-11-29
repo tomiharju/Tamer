@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
-import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public abstract class StaticObject implements GameObject{
@@ -71,10 +70,7 @@ public abstract class StaticObject implements GameObject{
 		setRenderType(graphics);
 	}
 	
-	@Override
-	public void setGraphics(TamerTexture tex) {
-		// TODO Auto-generated method stub
-	}
+	
 	
 	@Override
 	public void setPosition(String pos) {

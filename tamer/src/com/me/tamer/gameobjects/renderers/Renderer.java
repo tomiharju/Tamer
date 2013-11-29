@@ -3,7 +3,7 @@ package com.me.tamer.gameobjects.renderers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.services.TextureManager.TamerTexture;
+import com.me.tamer.services.TextureManager.TamerAnimations;
 
 public interface Renderer {
 	/**
@@ -38,6 +38,6 @@ public interface Renderer {
 	public void setBounds(float x, float y, float width, float height);
 	
 	public Color getColor();
-	void loadGraphics(TamerTexture animName, int FRAME_COLS, int FRAME_ROWS);
-	void loadGraphics(TamerTexture animName);
+	void loadGraphics(TamerAnimations animName, int FRAME_COLS, int FRAME_ROWS);
+
 }

@@ -17,7 +17,6 @@ import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
-import com.me.tamer.services.TextureManager.TamerTexture;
 import com.me.tamer.utils.Helper;
 
 public class Quicksand extends StaticObject implements Obstacle{
@@ -111,14 +110,16 @@ public class Quicksand extends StaticObject implements Obstacle{
 			size = creatures_entered.size();
 			//Start pulling all the worms that are within the cluster
 			for(int i = 0 ; i < size ; i ++){
-				creatures_entered.get(i).applyPull(bogHoleCenter,PULL_MAGNITUDE);
+			
 				for(int k = 0; k < psize ; k ++){
 					if (creatures_entered.get(i).getType() == Creature.TYPE_WORM){
-						//Check if this creature is closer than 1 from any of this clusters parts
 						Worm casultyWorm = (Worm) creatures_entered.get(i);
 						//flag worm to be drowning, so it is not affected by stuff in the game anymore
 						casultyWorm.setDrowning(true);
+						if(casultyWorm.getHead().isWithinRange(parts.get(k).getPosition(),0.5f))
+						casultyWorm.applyPull(parts.get(k).getPosition(),PULL_MAGNITUDE);
 						for(int j = 0 ; j < casultyWorm.getParts().size() ; j ++){
+							
 							if(casultyWorm.getParts().get(j).isWithinRange(parts.get(k).getPosition(),0.5f))
 								casultyWorm.getParts().get(j).decay();
 						}
