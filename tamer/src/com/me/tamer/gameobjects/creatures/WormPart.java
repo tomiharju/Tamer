@@ -60,8 +60,7 @@ public class WormPart extends DynamicObject implements Creature{
 		this.worm = worm;
 		setGraphics(TamerAnimations.WORMHEAD);
 		partType = TYPE_HEAD;
-		mass = 10;
-		invMass = 1 / mass;
+		invMass = 0;//1 / mass;
 		setPosition(pos);
 		setVelocity(vel);
 		setHeading(vel);
@@ -97,20 +96,22 @@ public class WormPart extends DynamicObject implements Creature{
 			batch.setColor(0.7f, 1, 0.7f, 1.0f);
 		else if (blinking)
 			batch.setColor(0.7f, 0.7f, 1.0f, 1.0f);
+		
 		if (decaying) {
 			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
 			batch.setColor(1, 1, 1, levelOfDecay);
+			if(levelOfDecay < 0.1f)
+				levelOfDecay = 0.1f;
 		}
 		
 
 		// Fix position of the headpart
-		if (partType == TYPE_HEAD ) {
+	/*	if (partType == TYPE_HEAD ) {
 			help.set(Helper.worldToScreen(getPosition()));
 			help.y += HEAD_POS_FIX;
 			renderer.setPosition(help);
-		} else
-			renderer.setPosition(Helper.worldToScreen(getPosition()));
-
+		} else*/
+		renderer.setPosition(Helper.worldToScreen(getPosition()));
 		renderer.setOrientation(solveOrientation());
 		renderer.setAngle(getAngle());
 		renderer.draw(batch);
@@ -144,6 +145,8 @@ public class WormPart extends DynamicObject implements Creature{
 		} else if (partType == TYPE_BODY) {
 			solveJoint(dt);
 			lengthAngle += dt;
+			joint_length = MIN_LENGTH;
+
 			joint_length = MIN_LENGTH + Math.abs((float) Math.sin(lengthAngle))
 					* STRETCH_AMOUNT;
 		
@@ -168,7 +171,7 @@ public class WormPart extends DynamicObject implements Creature{
 		} 
 	
 		getPosition().add(getVelocity().tmp().mul(dt));
-		getVelocity().mul(0);
+		getVelocity().mul(0.5f);
 
 	}
 
@@ -183,15 +186,10 @@ public class WormPart extends DynamicObject implements Creature{
 		float relVelMagnitude = relativeVelocity.dot(unitAxis);
 		float relativeDistance = (currentDistance - joint_length);
 
-	//	if (relativeDistance > 0) {
 			float impulse = 0;
 			float remove = relVelMagnitude + relativeDistance / dt;
-			if (invMass == 0 && child.getInvMass() == 0)
-				impulse = 0;
-			else
-				impulse = remove / (invMass + child.getInvMass());
+			impulse = remove / (invMass + child.getInvMass());
 			applyImpulse(unitAxis.mul(impulse));
-	//	}
 	}
 
 	public void setOnSpearRange(boolean b) {

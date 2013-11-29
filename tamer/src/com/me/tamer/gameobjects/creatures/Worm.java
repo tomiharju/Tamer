@@ -5,9 +5,7 @@ import java.util.Collections;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.core.Level.WormState;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
@@ -21,7 +19,7 @@ import com.me.tamer.utils.DrawOrderComparator;
 public class Worm extends DynamicObject implements Creature {
 
 	private final int NUMBER_PARTS = 8;
-	private final float FINAL_SPEED = 8.0f;
+	private final float FINAL_SPEED = 4.0f;
 	private ArrayList<WormPart> parts;
 	private float speed = FINAL_SPEED;
 	private WormPart head = null;
@@ -159,9 +157,8 @@ public class Worm extends DynamicObject implements Creature {
 	@Override
 	public void applyPull(Vector2 point, float magnitude) {
 		Vector2 direction = point.tmp().sub(head.getPosition());
-		head.getPosition().add(direction.mul(Gdx.graphics.getDeltaTime()));
-		head.setHeading(direction);
-		
+		float distance = point.dst(head.getPosition());
+		head.getPosition().add(direction.mul(distance * Gdx.graphics.getDeltaTime()));
 	}
 
 	@Override
@@ -211,7 +208,6 @@ public class Worm extends DynamicObject implements Creature {
 		bound = true;
 		disableCollision();
 		parts.get(parts.size() - 1).setInvMass(0);
-
 		speed = 0;
 	}
 
@@ -351,7 +347,7 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public void setDrowning(boolean drowning) {
-		speed = 0;
+		speed = 0 ;
 		for(int i = 0 ; i < parts.size() ; i++)
 			parts.get(i).setJointlength(0.01f);
 		this.drowning = drowning;
