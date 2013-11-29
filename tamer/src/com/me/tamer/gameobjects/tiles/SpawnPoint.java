@@ -90,7 +90,6 @@ public class SpawnPoint extends StaticObject{
 		RuntimeObjectFactory.addToObjectPool("worm"+spawnId,(GameObject)worm);
 		worm.setPosition(getPosition());
 		worm.setVelocity(spawnVelocity);
-		worm.setHeading(spawnVelocity);
 	}
 
 	
