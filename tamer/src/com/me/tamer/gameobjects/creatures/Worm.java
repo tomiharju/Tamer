@@ -36,7 +36,6 @@ public class Worm extends DynamicObject implements Creature {
 	private boolean insideFence = false;
 	private boolean drowning = false;
 	private boolean dead = false;
-	private boolean killedOrEscaped = false;
 
 	// for effects
 	private DrawOrderComparator comparator;
@@ -143,11 +142,6 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public boolean isWithinRange(Vector2 point, float radius) {
-		// for(int i = 0 ; i < parts.size() ; i ++){
-		// if(parts.get(i).getPosition().dst(point) < radius)
-		// return true;
-		// }
-
 		if (head.getPosition().dst(point) < radius)
 			return true;
 		return false;
@@ -161,15 +155,9 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	@Override
-	public void lassoHit(String lasso) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public void decay() {
 		if(drowning || beingEaten) stage.getLevel().setWormState(this, WormState.DEAD);
 		else stage.getLevel().setWormState(this, WormState.FENCE);
-		
 		
 		for (int i = 0; i < parts.size(); i++) {
 			parts.get(i).decay();
@@ -256,18 +244,56 @@ public class Worm extends DynamicObject implements Creature {
 		head = part;
 	}
 
-	@Override
-	public void markAsCarbage() {
-//		if(drowning || beingEaten) stage.getLevel().setWormState(this, WormState.DEAD);
-//		else stage.getLevel().setWormState(this, WormState.FENCE);
-		
-		super.markAsCarbage();
-	}
-
 	public ArrayList<WormPart> getParts() {
 		return parts;
 	}
 
+	@Override
+	public boolean isDecaying() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setAttacked(boolean b) {
+		for (int i = 0; i < parts.size(); i++)
+			parts.get(i).setAttacked(b);
+	}
+
+	public void setBeingEaten(boolean b) {
+		beingEaten = b;
+	}
+
+	
+
+	public void setInsideFence(boolean b) {
+		if (!insideFence && b) {
+			insideFence = b;
+		} 
+	}
+
+	
+
+	public void setDrowning(boolean drowning) {
+		speed = 0 ;
+		for(int i = 0 ; i < parts.size() ; i++)
+			parts.get(i).setJointlength(0.01f);
+		this.drowning = drowning;
+	}
+
+	@Override
+	public void kill() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void lassoHit(String lasso) {
+		// TODO Auto-generated method stub
+	}
+	
+	//////////////////
+	//GETTERS////////
+	////////////////
 	@Override
 	public int getType() {
 		return Creature.TYPE_WORM;
@@ -296,22 +322,7 @@ public class Worm extends DynamicObject implements Creature {
 	public Vector2 getHeading() {
 		return head.getHeading();
 	}
-
-	@Override
-	public boolean isDecaying() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void setAttacked(boolean b) {
-		for (int i = 0; i < parts.size(); i++)
-			parts.get(i).setAttacked(b);
-	}
-
-	public void setBeingEaten(boolean b) {
-		beingEaten = b;
-	}
-
+	
 	public boolean isBeingEaten() {
 		return beingEaten;
 	}
@@ -323,31 +334,8 @@ public class Worm extends DynamicObject implements Creature {
 	public boolean isInsideFence() {
 		return insideFence;
 	}
-
-	public void setInsideFence(boolean b) {
-		if (!insideFence && b) {
-			insideFence = b;
-			
-			for (int i = 0; i < parts.size(); i++) {
-				parts.get(i).decay();
-			}
-		} 
-	}
-
+	
 	public boolean isDrowning() {
 		return drowning;
-	}
-
-	public void setDrowning(boolean drowning) {
-		speed = 0 ;
-		for(int i = 0 ; i < parts.size() ; i++)
-			parts.get(i).setJointlength(0.01f);
-		this.drowning = drowning;
-	}
-
-	@Override
-	public void kill() {
-		// TODO Auto-generated method stub
-		
 	}
 }
