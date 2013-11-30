@@ -23,22 +23,19 @@ public class Worm extends DynamicObject implements Creature {
 	private ArrayList<WormPart> parts;
 	private float speed = FINAL_SPEED;
 	private WormPart head = null;
-	private WormPart tail = null;
 
 	// for effects
 	private ControlContainer controls;
+	private DrawOrderComparator comparator;
 
-	// for draw order
-	ArrayList<GameObject> gameobjects = new ArrayList<GameObject>();
 
-	private boolean beingEaten = false;
-	private boolean bound = false;
-	private boolean insideFence = false;
-	private boolean drowning = false;
-	private boolean dead = false;
+	private boolean beingEaten 	= false;
+	private boolean bound 			= false;
+	private boolean insideFence 	= false;
+	private boolean submerged 		= false;
+	private boolean escaped		= false;
 
 	// for effects
-	private DrawOrderComparator comparator;
 
 	// for draw order
 	ArrayList<GameObject> drawParts = new ArrayList<GameObject>();
@@ -51,6 +48,7 @@ public class Worm extends DynamicObject implements Creature {
 		comparator = new DrawOrderComparator();
 		controls = ControlContainer.instance();
 		stage = TamerStage.instance();
+		setZindex(-1);
 	}
 
 	public void wakeUp(Environment environment) {
@@ -66,7 +64,6 @@ public class Worm extends DynamicObject implements Creature {
 		}
 
 		head = parts.get(0);
-		tail = parts.get(parts.size() - 1);
 
 		// for drawing order
 		// is there better way to do this?
@@ -96,23 +93,22 @@ public class Worm extends DynamicObject implements Creature {
 		for (int i = 0; i < parts.size(); i++) {
 			if ((i + 1) < parts.size()) {
 				parts.get(i + 1).attachToParent(parts.get(i));
-			} else if ((i + 1) == parts.size())
-				parts.get(i).setAsTail();
+			}
 		}
 	}
 
 	public void update(float dt) {
-		//reset dead to true and check parts to prove otherwise
-		dead = true;
+		//reset escaped to true and check parts to prove otherwise
+		escaped = true;
 		
 		for (int i = 0; i < parts.size(); i++){
 			parts.get(i).solveJoints(dt);
 			parts.get(i).update(dt);
-			if( parts.get(i).getLevelOfDecay() > 0.1f ) dead = false;
+			if( parts.get(i).getLevelOfDecay() > 0.1f ) escaped = false;
 		}
 
-		// kill worm when head has decayed
-		if (dead) markAsCarbage();
+		//Remove worm from gameobjects once it has fled
+		if (escaped) markAsCarbage();
 	
 		head.getVelocity().set(head.getHeading().tmp().mul(speed) );
 
@@ -144,22 +140,11 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public boolean isWithinRange(Vector2 point, float radius) {
-		// for(int i = 0 ; i < parts.size() ; i ++){
-		// if(parts.get(i).getPosition().dst(point) < radius)
-		// return true;
-		// }
-
 		if (head.getPosition().dst(point) < radius)
 			return true;
 		return false;
 	}
 
-	@Override
-	public void applyPull(Vector2 point, float magnitude) {
-		Vector2 direction = point.tmp().sub(head.getPosition());
-		float distance = point.dst(head.getPosition());
-		head.getPosition().add(direction.mul(distance * Gdx.graphics.getDeltaTime()));
-	}
 
 	@Override
 	public void lassoHit(String lasso) {
@@ -169,7 +154,6 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void kill() {
-		
 		for (int i = 0; i < parts.size(); i++) {
 			parts.get(i).decay();
 		}
@@ -194,7 +178,7 @@ public class Worm extends DynamicObject implements Creature {
 	@Override
 	public void spearHit(Spear spear) {
 		//this is double check. already checked on spear
-		if (!drowning) {
+		if (!submerged) {
 			// nail worm to center of a tile
 			getPosition().x = (float) Math.floor(getPosition().x) + 1;
 			getPosition().y = (float) Math.floor(getPosition().y);
@@ -234,7 +218,7 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	public void setOnSpearRange(boolean onRange) {
-		if ( !drowning && !beingEaten && !bound){
+		if ( !submerged && !beingEaten && !bound){
 			for (int i = 0; i < parts.size(); i++) {
 				parts.get(i).setOnSpearRange(onRange);
 			}
@@ -243,9 +227,7 @@ public class Worm extends DynamicObject implements Creature {
 		}
 	}
 
-	public void setTail(WormPart part) {
-		tail = part;
-	}
+	
 
 	public void setHeading(Vector2 newHeading) {
 		head.setHeading(newHeading);
@@ -257,7 +239,7 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void markAsCarbage() {
-		if(drowning || beingEaten)stage.getLevel().setWormState(this, WormState.DEAD);
+		if(submerged || beingEaten)stage.getLevel().setWormState(this, WormState.DEAD);
 		else stage.getLevel().setWormState(this, WormState.FENCE);
 		
 		super.markAsCarbage();
@@ -342,16 +324,21 @@ public class Worm extends DynamicObject implements Creature {
 
 	}
 
-	public boolean isDrowning() {
-		return drowning;
+	public boolean isSubmerged() {
+		return submerged;
 	}
 
-	public void setDrowning(boolean drowning) {
-		speed = 0 ;
-		for(int i = 0 ; i < parts.size() ; i++)
-			parts.get(i).setJointlength(0.01f);
-		this.drowning = drowning;
+	public void submerge() {
+		for(int i = 0 ; i < parts.size() ; i ++)
+			parts.get(i).decay();
+		this.submerged = true;
 	}
 
+	@Override
+	public void applyPull(Vector2 point, float magnitude) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 }

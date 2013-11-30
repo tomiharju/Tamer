@@ -17,10 +17,9 @@ import com.me.tamer.utils.Helper;
 
 public class WormPart extends DynamicObject implements Creature{
 	
-	private  float DECAY_SPEED = 0.5f;
+	private  float DECAY_SPEED = 1f;
 	private  float MIN_LENGTH = 0.09f;
 	private  float STRETCH_AMOUNT = 0.08f;
-	private  float HEAD_POS_FIX = 0.000f;
 	
 	// Container worm
 	private Worm worm = null;
@@ -219,9 +218,7 @@ public class WormPart extends DynamicObject implements Creature{
 		MIN_LENGTH = len;
 		STRETCH_AMOUNT = len;
 	}
-	public void setAsTail() {
-		worm.setTail(this);
-	}
+	
 
 	public boolean isTail() {
 		return isTail;
@@ -343,6 +340,12 @@ public class WormPart extends DynamicObject implements Creature{
 
 	public void setMass(float mass) {
 		this.mass = mass;
+	}
+
+	@Override
+	public float getSpeed() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

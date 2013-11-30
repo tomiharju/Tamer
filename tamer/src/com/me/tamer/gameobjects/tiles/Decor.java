@@ -9,13 +9,19 @@ import com.me.tamer.utils.Helper;
  *         affect with their rigidbodies and graphical aspect.
  */
 public class Decor extends StaticObject{
-	
+	boolean cacheable = true;
 	public void setup(Environment env) {
-		env.addStaticObject(this);
-
+		if(cacheable)
+			env.addStaticObject(this);
+		else
+			env.addNewObject(this);
 	}
 	public void wakeup(Environment env){
 		env.addNewObject(this);
+	}
+	public void setCacheable(String value){
+		cacheable = Boolean.parseBoolean(value);
+		
 	}
 
 	public void setPixelsX(String pixels){

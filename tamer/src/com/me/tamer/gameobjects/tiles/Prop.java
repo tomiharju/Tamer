@@ -24,18 +24,26 @@ public class Prop extends StaticObject implements Obstacle {
 	private Vector2 headingAdjust = new Vector2();
 	private Vector2 newHeading = new Vector2();
 	private Vector2 impulse = new Vector2();
-	private Vector2 movementAxis = new Vector2();
+	private Vector2 pos = new Vector2();
 	private ArrayList<Vector2> vertices;
 	private ArrayList<Vector2> axes;
-
+	
+	
+	private Vector2 projectResult1 = new Vector2();
+	private Vector2 projectResult2 = new Vector2();
+	private Vector2 projection1 = new Vector2();
+	private Vector2 projection2 = new Vector2();
+	private Vector2 closest = new Vector2();
+	private Vector2 axis = new Vector2();
+	private float overlap = 0;
 	public void setup(Environment env) {
 		env.addObstacle(this);
 		env.addNewObject(this);
 		createVertices();
 	}
-	
+
 	@Override
-	public void wakeUp(Environment env){
+	public void wakeUp(Environment env) {
 		env.addObstacle(this);
 		createVertices();
 	}
@@ -64,39 +72,36 @@ public class Prop extends StaticObject implements Obstacle {
 			return;
 		int size = creatures.size();
 		for (int i = 0; i < size; i++) {
-			if(((DynamicObject) creatures.get(i)).isCollisionDisabled()){
+			if (((DynamicObject) creatures.get(i)).isCollisionDisabled()) {
 				continue;
 			}
-				
-			temp.set(((DynamicObject) creatures.get(i)).getPosition());
+
+			temp.set(((Worm) creatures.get(i)).getHead().getCenterPosition());
 			// Creatures size
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
-			Vector2 center = getPosition();
-			
-			
-		
-			if (temp.x + s.x / 2 > center.x - getBounds()
-					&& temp.x - s.x / 2 < center.x
-					&& temp.y + s.y  > center.y
-					&& temp.y  < center.y + getBounds()) {
+			// Prop position help vector
+			pos.set(getPosition());
 
-				collisionAxis.set(getCollisionNormal(creatures.get(i)
-						.getHeading()));
-				headingAdjust.set(Helper.projection(creatures.get(i)
+			/*if (temp.x + s.x / 2 > pos.x - getBounds()
+					&& temp.x - s.x / 2 < pos.x 
+					&& temp.y + s.y > pos.y
+					&& temp.y < pos.y + getBounds()) {*/
+			if(temp.x + s.x / 2 > pos.x - getBounds()
+					&& temp.x - s.x / 2 < pos.x 
+					&& temp.y + s.y / 2> pos.y
+					&& temp.y - s.y / 2< pos.y + getBounds()){
+				
+				collisionAxis.set(getCollisionNormal(temp));
+			
+				impulse.set(collisionAxis.tmp().mul(-overlap));
+				headingAdjust.set(Helper.projection(((DynamicObject) creatures.get(i))
 						.getHeading(), collisionAxis));
 				newHeading.set(creatures.get(i).getHeading().tmp()
 						.sub(headingAdjust));
-
-				closestVertice.set(getClosestVertice(((DynamicObject) creatures
-						.get(i)).getPosition()));
-				float distance = closestVertice.dst(((Worm) creatures.get(i)).getHead().getPosition());
-				impulse.set(collisionAxis.mul(((Worm) creatures.get(i))
-						.getSpeed() * 3 * Gdx.graphics.getDeltaTime()));
-				//impulse.set(collisionAxis.mul(distance));
-				((Worm) creatures.get(i)).getHead().getPosition()
-						.add(impulse);
-				((DynamicObject)creatures.get(i)).setHeading(newHeading);
-
+			
+				//((DynamicObject) creatures.get(i)).setHeading(newHeading);
+				((DynamicObject) creatures.get(i)).setHeading(collisionAxis.rotate(90));
+				((Worm) creatures.get(i)).getHead().getPosition().add(impulse);
 			}
 		}
 	}
@@ -107,10 +112,10 @@ public class Prop extends StaticObject implements Obstacle {
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x, temp.y,-getBounds(),getBounds());
+		shapeRndr.rect(temp.x, temp.y, -getBounds(), getBounds());
 		shapeRndr.end();
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x-0.1f, temp.y-0.1f,.2f,.2f);
+		shapeRndr.rect(temp.x - 0.1f, temp.y - 0.1f, .2f, .2f);
 		shapeRndr.end();
 		/*
 		 * shapeRndr.setColor(1, 1, 1, 1);
@@ -133,8 +138,8 @@ public class Prop extends StaticObject implements Obstacle {
 	 * we need this?
 	 */
 	public Vector2 getCenterPosition() {
-		return getPosition().tmp().set(getPosition().x -  getBounds(),
-				getPosition().y +  getBounds());
+		return getPosition().tmp().set(getPosition().x - getBounds(),
+				getPosition().y + getBounds());
 
 	}
 
@@ -143,13 +148,13 @@ public class Prop extends StaticObject implements Obstacle {
 	 */
 	public void createVertices() {
 		vertices = new ArrayList<Vector2>(4);
-		Vector2 v1 = new Vector2((getPosition().x -  getBounds() / 2),
+		Vector2 v1 = new Vector2((getPosition().x - getBounds() / 2),
 				(getPosition().y));
-		Vector2 v2 = new Vector2((getPosition().x -  getBounds() / 2),
-				(getPosition().y +  getBounds()));
-		Vector2 v3 = new Vector2((getPosition().x +  getBounds() / 2),
-				(getPosition().y +  getBounds()));
-		Vector2 v4 = new Vector2((getPosition().x +  getBounds() / 2),
+		Vector2 v2 = new Vector2((getPosition().x - getBounds() / 2),
+				(getPosition().y + getBounds()));
+		Vector2 v3 = new Vector2((getPosition().x + getBounds() / 2),
+				(getPosition().y + getBounds()));
+		Vector2 v4 = new Vector2((getPosition().x + getBounds() / 2),
 				(getPosition().y));
 		vertices.add(v1);
 		vertices.add(v2);
@@ -162,25 +167,55 @@ public class Prop extends StaticObject implements Obstacle {
 			Vector2 p2 = this.vertices.get(i + 1 == this.vertices.size() ? 0
 					: i + 1);
 			Vector2 edge = p2.cpy().sub(p1);
-			Vector2 normal = edge.rotate(-90);
+			Vector2 normal = edge.rotate(90);
 			normal.nor();
 			axes.add(normal);
 		}
 	}
 
-	public Vector2 getCollisionNormal(Vector2 heading) {
-		float smallestDot = 10000;
-		Vector2 axis = null;
+	public Vector2 getCollisionNormal(Vector2 creaturePos) {
+
+		overlap = -10000f;
+		closest.set(getClosestVertice(creaturePos));
+		axis.set(closest.tmp().sub(creaturePos));
+		axis.nor();
+		
+		projection1.set(project(axis));
+		projection2.set(projectPoint(axis,creaturePos));
+		
+		float o = getOverlap(projection1, projection2);
+		if( o > overlap){
+			overlap = o;
+			collisionAxis.set(axis);
+		}
+		for( int i = 0 ; i < axes.size() ; i ++){
+			axis.set(axes.get(i));
+			projection1.set(project(axis));
+			projection2.set(projectPoint(axis,creaturePos));
+			
+			o = getOverlap(projection1, projection2);
+			if( o > overlap){
+				overlap = o ;
+				collisionAxis.set(axis);
+			
+			}
+		}
+		return collisionAxis;
+/*
+		float smallestDot = 100000;
+		Vector2 axis = axes.get(0);
+		float dot = 0;
 		for (int i = 0; i < axes.size(); i++) {
 			Vector2 normal = axes.get(i);
-			float dot = heading.dot(normal);
+			dot = heading.dot(normal);
+			System.out.println("Dot " + dot);
 			if (dot < smallestDot) {
 				smallestDot = dot;
 				axis = normal;
 			}
 		}
-
-		return axis.nor();
+		System.out.println("Coll axis " + axis.toString());
+		return axis;*/
 	}
 
 	public Vector2 getClosestVertice(Vector2 point) {
@@ -195,6 +230,35 @@ public class Prop extends StaticObject implements Obstacle {
 			}
 		}
 		return vertice;
+	}
+
+	public Vector2 project(Vector2 axis) {
+		float min = axis.dot(this.vertices.get(0));
+		float max = min;
+
+		for (int i = 0; i < this.vertices.size(); i++) {
+			float p = axis.dot(this.vertices.get(i));
+			if (p < min)
+				min = p;
+			else if (p > max)
+				max = p;
+		}
+		return projectResult1.set(min, max);
+	}
+
+	public Vector2 projectPoint(Vector2 axis,Vector2 creaturePos) {
+
+		float center = axis.dot(creaturePos);
+		float min = center - 0.6f;
+		float max = center + 0.6f;
+		return projectResult2.set(min, max);
+		
+	}
+
+	public float getOverlap(Vector2 a, Vector2 b) {
+		float max0 = a.y;
+		float min1 = b.x;
+		return min1 - max0;
 	}
 
 	public void dispose(Environment environment) {

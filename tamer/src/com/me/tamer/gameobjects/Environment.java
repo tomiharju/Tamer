@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.creatures.Creature;
+import com.me.tamer.gameobjects.creatures.Worm;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
@@ -193,6 +194,7 @@ public class Environment extends Actor {
 	 */
 	public void resolveObstacles(float dt) {
 		int size = obstacles.size();
+		
 		for (int i = 0; i < size; i++) {
 			obstacles.get(i).resolve(creatures);
 		}

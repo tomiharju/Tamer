@@ -39,4 +39,5 @@ public interface Creature{
 	public Creature affectedCreature(Vector2 poitn, float radius);
 	public Vector2 getHeading();
 	public int getType();
+	public float getSpeed();
 }

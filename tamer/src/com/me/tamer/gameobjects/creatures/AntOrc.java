@@ -125,7 +125,7 @@ public class AntOrc extends DynamicObject implements Creature{
 		if (targetPart == null) return false;
 		
 		//remove target if it is drowning
-		 if (targetWorm.isDrowning()){
+		 if (targetWorm.isSubmerged()){
 			targetWorm = null;
 			targetPart = null;
 			return false;
@@ -230,7 +230,7 @@ public class AntOrc extends DynamicObject implements Creature{
 					WormPart part = wormParts.get(j);
 					
 					//Check that worm is inside scan radius && not being eaten && not deacaying && not being attacked && not drowning
-					if ( part.getPosition().dst( getPosition() ) < WORM_SCAN_RADIUS && !worm.isBeingEaten() && !part.isDecaying() && !part.isAttacked() && !worm.isDrowning()){				
+					if ( part.getPosition().dst( getPosition() ) < WORM_SCAN_RADIUS && !worm.isBeingEaten() && !part.isDecaying() && !part.isAttacked() && !worm.isSubmerged()){				
 						//flag that worm is being attacked so it won't be attacked by other ants
 						targetWorm = worm;
 						targetWorm.setAttacked(true);
@@ -332,5 +332,10 @@ public class AntOrc extends DynamicObject implements Creature{
 	public void applyPull(Vector2 point,float magnitude) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public float getSpeed() {
+		return SPEED;
 	}
 }
