@@ -13,62 +13,61 @@ public class LevelManager {
     {
     	currentLevel = 0;
     	
-    	// create the level 4
         Level level9 = new Level( 9 );
         level9.setName( "Episode 10" );
     	
-    	// create the level 4
         Level level8 = new Level( 8 );
         level8.setName( "Episode 9" );
     	
-    	// create the level 4
         Level level7 = new Level( 7 );
         level7.setName( "Episode 8" );
     	
-    	// create the level 4
         Level level6 = new Level( 6 );
         level6.setName( "Episode 7" );
     	
-    	// create the level 4
         Level level5 = new Level( 5 );
         level5.setName( "Episode 6" );
     	
-    	// create the level 4
+        
+        //LEVELS FOR THE DEMO
+        
         Level level4 = new Level( 4 );
-        level4.setName( "Episode 5" );
-    	
+        level4.setName( "Advanced level" );
+        level4.setHelpText( "Get ready to test your skills" );
+        
     	 // create the level 3
         Level level3 = new Level( 3 );
-        level3.setName( "Episode 4" );
+        level3.setName( "Worbeast horde" );
+        level3.setHelpText( "Try to capture as many \n beasts as you can!" );
     	
         //create the level 2
         Level level2 = new Level( 2 );
-        level2.setName( "Episode 3" );
-        level2.setNextLevel( level3 );
+        level2.setName( "Enemy demo" );
+        level2.setHelpText( "Kill the enemies with spears!" );
         
         // create the level 1
         Level level1 = new Level( 1 );
-        level1.setName( "Episode 2" );
+        level1.setName( "Spear demo" );
         level1.setHelpText("Use your spears before \n beasts  dive in to the swamp!");
         
         // create the level 0
         Level level0 = new Level( 0 );
-        level0.setName( "Episode 1" );
-        level0.setHelpText("help test");
+        level0.setName( "Gryphon Scream demo" );
+        level0.setHelpText("Use scream to drive beasts inside the fence!");
 
         // register the levels
-        levels = new ArrayList<Level>( 10 );
+        levels = new ArrayList<Level>( 5 );
 
         levels.add( level0 );
         levels.add( level1 );
         levels.add( level2 );
         levels.add( level3 );
         levels.add( level4 );
-        levels.add( level5 );
-        levels.add( level6 );
-        levels.add( level7 );
-        levels.add( level8 );
-        levels.add( level9 );
+//        levels.add( level5 );
+//        levels.add( level6 );
+//        levels.add( level7 );
+//        levels.add( level8 );
+//        levels.add( level9 );
         
     }
     

@@ -67,7 +67,6 @@ public class SpawnPoint extends StaticObject{
 	
 	public void setSpawnDirection(String vel){
 		float angle = Float.parseFloat(vel);
-		//angle += 45;
 		this.spawnVelocity = new Vector2(1,1);
 		spawnVelocity.nor();
 		this.spawnVelocity.setAngle(angle);		

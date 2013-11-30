@@ -150,7 +150,7 @@ public class Spear extends DynamicObject {
 			if(creatures.get(i).getType() == Creature.TYPE_WORM){
 				if(((Worm)creatures.get(i)).isBeingEaten())creature = null;
 				else if (((Worm)creatures.get(i)).isBound())creature = null;
-				else if (((Worm)creatures.get(i)).isDrowning())creature = null;
+				else if (((Worm)creatures.get(i)).isSubmerged())creature = null;
 			}
 			
 			//latter one is because dispose is not implemented
