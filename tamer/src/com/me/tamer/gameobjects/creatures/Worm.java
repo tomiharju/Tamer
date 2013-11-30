@@ -166,7 +166,6 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public Creature affectedCreature(Vector2 point, float radius) {
-
 		float mindist = radius;
 		WormPart part = null;
 
@@ -244,16 +243,6 @@ public class Worm extends DynamicObject implements Creature {
 		head = part;
 	}
 
-	public ArrayList<WormPart> getParts() {
-		return parts;
-	}
-
-	@Override
-	public boolean isDecaying() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	public void setAttacked(boolean b) {
 		for (int i = 0; i < parts.size(); i++)
 			parts.get(i).setAttacked(b);
@@ -263,15 +252,11 @@ public class Worm extends DynamicObject implements Creature {
 		beingEaten = b;
 	}
 
-	
-
 	public void setInsideFence(boolean b) {
 		if (!insideFence && b) {
 			insideFence = b;
 		} 
 	}
-
-	
 
 	public void setDrowning(boolean drowning) {
 		speed = 0 ;
@@ -294,6 +279,11 @@ public class Worm extends DynamicObject implements Creature {
 	//////////////////
 	//GETTERS////////
 	////////////////
+	
+	public ArrayList<WormPart> getParts() {
+		return parts;
+	}
+	
 	@Override
 	public int getType() {
 		return Creature.TYPE_WORM;
@@ -323,6 +313,10 @@ public class Worm extends DynamicObject implements Creature {
 		return head.getHeading();
 	}
 	
+	public TamerStage getStage(){
+		return stage;
+	}
+	
 	public boolean isBeingEaten() {
 		return beingEaten;
 	}
@@ -337,5 +331,11 @@ public class Worm extends DynamicObject implements Creature {
 	
 	public boolean isDrowning() {
 		return drowning;
+	}
+	
+	@Override
+	public boolean isDecaying() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
