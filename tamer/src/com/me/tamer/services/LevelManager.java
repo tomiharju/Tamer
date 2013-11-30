@@ -25,7 +25,7 @@ public class LevelManager {
         //create the level 2
         Level level2 = new Level( 2 );
         level2.setName( "Episode 3" );
-        level2.setNextLevel( level2 );
+        level2.setNextLevel( level3 );
         
         
         // create the level 1
@@ -37,7 +37,7 @@ public class LevelManager {
         // create the level 0
         Level level0 = new Level( 0 );
         level0.setName( "Episode 1" );
-        level0.setNextLevel( level0 );
+        level0.setNextLevel( level1 );
 
         // register the levels
         levels = new ArrayList<Level>( 3 );

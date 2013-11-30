@@ -26,10 +26,10 @@ import com.me.tamer.utils.tEvent;
 public class GryphonScream extends DynamicObject {
 	private final float SCREAM_AREA_SIZE = 8.0f;
 	private final float COOL_DOWN = 1.5f;
-	private final float SCREAM_SPEED			= 30f;
+	private final float SCREAM_SPEED			= 40f;
 	private final float STARTING_POINT_ADJUSTMENT = 1;
-	private final int WAVE_AMOUNT		= 10;
-	private final float WAVE_FREQUENCY = 0.08f;
+	private final int WAVE_AMOUNT		= 30;
+	private final float WAVE_FREQUENCY = 0.02f;//0.08f;
 	
 	//circle scream area
 	private Tamer tamer					= null;
@@ -67,7 +67,7 @@ public class GryphonScream extends DynamicObject {
 		Renderer renderer = RenderPool.addRendererToPool("static",graphics);
 
 		renderer.loadGraphics(graphics);
-		renderer.setColor(1, 1f, 1f, 0.4f);
+		renderer.setColor(1, 1f, 1f, 0.2f);
 		setSize(getSize());
 		setRenderType(graphics);
 	}
@@ -97,7 +97,6 @@ public class GryphonScream extends DynamicObject {
 	
 	public void draw(SpriteBatch batch){
 		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		batch.setColor(0.7f,0.7f,1,0.4f);
 		for(int i = 0 ; i < soundWaves.size() ; i++){
 			if(soundWaves.get(i).z == 0){
 				renderer.setSize(soundWaves.get(i).x,soundWaves.get(i).x  / 2);
@@ -108,14 +107,15 @@ public class GryphonScream extends DynamicObject {
 		
 		//draw direction wave
 		if (soundWaves.size() > 0){
-			renderer.setSize(soundWaves.get(0).x,soundWaves.get(0).x  / 2);
-			help.set( Helper.worldToScreen(tamerShadowPos) );
-			help.y = help.y - soundWaves.get(0).x / 4;
-			renderer.setPosition(help);
-			renderer.draw(batch);
+			for(int i = 0 ; i < soundWaves.size() ; i++){
+				renderer.setSize(soundWaves.get(i).x,soundWaves.get(i).x  / 2);
+				help.set( Helper.worldToScreen( tamerShadowPos ) );
+				help.y += tamer.getShadow().getSize().y / 2;
+				help.y = help.y - soundWaves.get(i).x / 4;
+				renderer.setPosition(help);
+				renderer.draw(batch);
+			}
 		}
-		
-		
 		batch.setColor(Color.WHITE);
 	}
 

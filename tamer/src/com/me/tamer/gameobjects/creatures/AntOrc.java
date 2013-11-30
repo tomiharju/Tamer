@@ -86,7 +86,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	
 	public void update(float dt){
 		
-		solveEffects();
+		solveIfSpearRange();
 		
 		//how often should this scan
 		if (!decaying){
@@ -134,9 +134,11 @@ public class AntOrc extends DynamicObject implements Creature{
 		return true;
 	}
 	
-	public void solveEffects(){
+	public void solveIfSpearRange(){
 		onSpearRange = false;
-		if (getPosition().dst( environment.getTamer().getShadow().getPosition()) < SIZE){
+		
+		//which conditions are actually needed here?
+		if (getPosition().dst( environment.getTamer().getShadow().getPosition()) < SIZE && !decaying && !markedDead){
 			onSpearRange = true;
 			environment.getTamer().setCreatureOnSpearRange( getCenterPosition() );
 		}

@@ -93,8 +93,7 @@ public class TamerStage extends Stage{
 		//Cameras must be set up first
 		setupCamera();
 		
-		level = game.getLevelManager().getCurrentLevel();
-		level.setStage(this);
+		
 		createActors();	
 	}
 	
@@ -104,6 +103,9 @@ public class TamerStage extends Stage{
 	}
 	
 	public void createActors(){
+		
+		level = game.getLevelManager().getCurrentLevel();
+		level.setStage(this);
 		
 		//Hud
         hud = Hud.instance();

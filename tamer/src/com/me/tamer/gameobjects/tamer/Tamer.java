@@ -50,6 +50,7 @@ public class Tamer extends DynamicObject {
 	private Spear spearToBePicked = null;
 	private Vector2 targetTilePosition = new Vector2();
 	private boolean creatureOnSpearRange = false;
+	private boolean throwSpearPossible = false;
 
 	// Variables for entering the field
 	private Vector2 spawnPosition = new Vector2();
@@ -138,9 +139,13 @@ public class Tamer extends DynamicObject {
 			
 			//set target tile position
 			if (!creatureOnSpearRange){
-				targetTilePosition.set( shadow.getPosition().tmp().add(-0.5f,0.5f) );
-				targetTilePosition.x = (float) Math.floor(targetTilePosition.x) + 1;
-				targetTilePosition.y = (float) Math.floor(targetTilePosition.y);
+//				targetTilePosition.set( shadow.getPosition().tmp().add(-0.5f,0.5f) );
+//				targetTilePosition.x = (float) Math.floor(targetTilePosition.x) + 1;
+//				targetTilePosition.y = (float) Math.floor(targetTilePosition.y);
+				
+				throwSpearPossible = false;
+			} else {
+				throwSpearPossible = true;
 			}
 				
 			//reset this after every loop
@@ -169,7 +174,7 @@ public class Tamer extends DynamicObject {
 			super.draw(batch);
 			
 			//Draw targetTile if spear not on range
-			if (!spearOnRange){
+			if (!spearOnRange && throwSpearPossible){
 				Renderer renderer2 = RenderPool.getRenderer( TamerStatic.TARGET_TILE.getFileName() );
 				renderer2.setSize(Helper.TILESIZE);
 				renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
@@ -238,20 +243,23 @@ public class Tamer extends DynamicObject {
 	public void throwSpear() {
 		if(onSpearCoolDown) return;
 		
-		Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
-		if (spear != null) {
-			spear.setPosition(getPosition());
-			spears.add(spear);
-			
-			//Cool down
-			onSpearCoolDown = true;
-			controls.setSpearCooldown(true);
-			EventPool.addEvent(new tEvent(this,"enable",SPEAR_COOL_DOWN,1));
-			
-			controls.addSpearsAvailable(-1);
-			playSound(TamerSound.TAMER_SPEAR);
-		} else
-			System.err.println("No spears remaining");
+		if (throwSpearPossible){
+			Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
+			if (spear != null) {
+				spear.setPosition(getPosition());
+				spears.add(spear);
+				
+				//Cool down
+				onSpearCoolDown = true;
+				controls.setSpearCooldown(true);
+				EventPool.addEvent(new tEvent(this,"enable",SPEAR_COOL_DOWN,1));
+				
+				controls.addSpearsAvailable(-1);
+				playSound(TamerSound.TAMER_SPEAR);
+			} else
+				Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
+						+ " :: no spears remaining");
+		}
 	}
 	
 	public void pickUpSpear(){
