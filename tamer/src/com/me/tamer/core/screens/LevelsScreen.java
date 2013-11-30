@@ -3,6 +3,7 @@ package com.me.tamer.core.screens;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -48,14 +49,13 @@ public class LevelsScreen extends AbstractMenu{
 		}
 		
 		Table table = super.getTable();
-	    table.add( "Levels" ).spaceBottom( 50 );
-	    table.row();
 	    
 	    for (int i = 0; i < levelButtons.size(); i++){
-	    	table.add(levelButtons.get(i)).size( 300, 60 ).uniform().spaceBottom( 10 );
+	    	table.add(levelButtons.get(i)).size( Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / (levelButtons.size() + 3) ).uniform().spaceBottom( 10 );
 	    	table.row();
 	    }
-	    table.add(mainMenuButton).size( 300, 60 ).uniform().spaceBottom( 10 );
+	    
+	    table.add(mainMenuButton).size( Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / (levelButtons.size() + 3) ).uniform().spaceBottom( 10 );
 	}
 	
 	@Override

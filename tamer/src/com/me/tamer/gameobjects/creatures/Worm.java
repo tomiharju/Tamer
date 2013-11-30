@@ -18,7 +18,7 @@ import com.me.tamer.utils.DrawOrderComparator;
 
 public class Worm extends DynamicObject implements Creature {
 
-	private final int NUMBER_PARTS = 8;
+	private final int NUMBER_PARTS = 13;
 	private final float FINAL_SPEED = 2.0f;
 	private ArrayList<WormPart> parts;
 	private float speed = FINAL_SPEED;
@@ -36,6 +36,7 @@ public class Worm extends DynamicObject implements Creature {
 	private boolean insideFence = false;
 	private boolean drowning = false;
 	private boolean dead = false;
+	private boolean killedOrEscaped = false;
 
 	// for effects
 	private DrawOrderComparator comparator;
@@ -113,9 +114,7 @@ public class Worm extends DynamicObject implements Creature {
 
 		// kill worm when head has decayed
 		if (dead) markAsCarbage();
-	
 		head.getVelocity().set(head.getHeading().tmp().mul(speed) );
-
 		solveEffects();
 	}
 
@@ -164,11 +163,13 @@ public class Worm extends DynamicObject implements Creature {
 	@Override
 	public void lassoHit(String lasso) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
-	public void kill() {
+	public void decay() {
+		if(drowning || beingEaten) stage.getLevel().setWormState(this, WormState.DEAD);
+		else stage.getLevel().setWormState(this, WormState.FENCE);
+		
 		
 		for (int i = 0; i < parts.size(); i++) {
 			parts.get(i).decay();
@@ -257,8 +258,8 @@ public class Worm extends DynamicObject implements Creature {
 
 	@Override
 	public void markAsCarbage() {
-		if(drowning || beingEaten)stage.getLevel().setWormState(this, WormState.DEAD);
-		else stage.getLevel().setWormState(this, WormState.FENCE);
+//		if(drowning || beingEaten) stage.getLevel().setWormState(this, WormState.DEAD);
+//		else stage.getLevel().setWormState(this, WormState.FENCE);
 		
 		super.markAsCarbage();
 	}
@@ -297,10 +298,6 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	@Override
-	public void decay() {
-	}
-
-	@Override
 	public boolean isDecaying() {
 		// TODO Auto-generated method stub
 		return false;
@@ -334,12 +331,7 @@ public class Worm extends DynamicObject implements Creature {
 			for (int i = 0; i < parts.size(); i++) {
 				parts.get(i).decay();
 			}
-			
-		} else if (insideFence && !b) {
-//			insideFence = b;
-			//stage.getLevel().setWormState(this, WormState.DEFAULT);
-		}
-
+		} 
 	}
 
 	public boolean isDrowning() {
@@ -353,5 +345,9 @@ public class Worm extends DynamicObject implements Creature {
 		this.drowning = drowning;
 	}
 
-	
+	@Override
+	public void kill() {
+		// TODO Auto-generated method stub
+		
+	}
 }

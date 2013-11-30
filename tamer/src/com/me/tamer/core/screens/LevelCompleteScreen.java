@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.services.MusicManager;
+import com.me.tamer.services.SoundManager.TamerSound;
 
 public class LevelCompleteScreen extends AbstractMenu{
 	
@@ -19,6 +22,7 @@ public class LevelCompleteScreen extends AbstractMenu{
 	public LevelCompleteScreen(TamerGame game) {
 		super(game);
 		bgColor = new Color(1,1,1,0);
+		create();
 	}
 	
 	@Override
@@ -26,28 +30,37 @@ public class LevelCompleteScreen extends AbstractMenu{
 		super.create();
 		bgImage = new Image((new Texture(Gdx.files.internal("data/graphics/levelcomplete_bg.png"))));
 		bgImage.setFillParent(true);
-
 		stage.addActor(bgImage);
-		
 		music = game.getMusicManager();
-
-			
-	}
-	
-	public void showScreenContent(){
-		 music.stop();
 		
 		// retrieve the default table actor
 		Table table = super.getTable();
-	    table.add( "TAMER" ).spaceBottom( 50 );
+	    table.add( endCapturedWorms ).uniform().spaceBottom(10);
 	    table.row();
+	    table.add( nextLevelButton ).size(Gdx.graphics.getWidth() /3, Gdx.graphics.getHeight() / 15).uniform().spaceBottom(10);
+	    table.row();
+	    table.add( playAgainButton ).size(Gdx.graphics.getWidth() /3, Gdx.graphics.getHeight() / 15).uniform().spaceBottom(10);
+	    table.row();
+	    table.add( exitButton ).size(Gdx.graphics.getWidth() /3, Gdx.graphics.getHeight() / 15).uniform().spaceBottom(10);
+	    
+	    stage.addActor(table);
+	    table.setVisible(false);
+	}
 	
-	    table.add( nextLevelButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
-	    table.row();	
-	    table.add( exitButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
-	    table.row();
-	    
-	    
+	public void showScreenContent(){
+		music.stop();
+		
+		//Good and bad ending for a level
+		if ( game.getPlayScreen().getStage().getLevel().getCaptured() > 0){
+			endCapturedWorms.setText("You captured " + game.getPlayScreen().getStage().getLevel().getCaptured() +" beasts");
+			sound.play(TamerSound.LEVEL_END_GOOD);
+		} else {
+			endCapturedWorms.setText("You failed");
+			sound.play(TamerSound.LEVEL_END_BAD);
+		}
+		
+		Table table = super.getTable();
+		table.setVisible(true);
 	}
 	
 	@Override
@@ -60,5 +73,13 @@ public class LevelCompleteScreen extends AbstractMenu{
 	
 	public boolean getFadingDone(){
 		return fadingDone;
+	}
+	
+	public void resetFadingDone(){
+		bgColor = new Color(1,1,1,0);
+		fadingDone = false;
+		
+		Table table = super.getTable();
+		if (table!=null)table.setVisible(false);
 	}
 }

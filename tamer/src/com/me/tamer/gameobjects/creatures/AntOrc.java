@@ -31,7 +31,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	private final float SPEED = 3.0f;
 	private final float EATING_TIME = 3.0f;
 	private final Vector2 EATING_OFFSET = new Vector2 (1.0f,-1.0f);
-	private final float SIZE = 1.9f;
+	private final float SIZE = 2.4f;
 	
 	private Environment environment;
 	private ArrayList<Vector2> waypoints;
@@ -168,7 +168,7 @@ public class AntOrc extends DynamicObject implements Creature{
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Ant detached");
 		attached = false;
 		
-		targetWorm.kill();
+		targetWorm.decay();
 		targetPart=null;
 		
 		//returning means that ant won't take new targets

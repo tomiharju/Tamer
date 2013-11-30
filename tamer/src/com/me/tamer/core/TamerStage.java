@@ -21,7 +21,7 @@ public class TamerStage extends Stage{
 	public static TamerStage instance;
 	
 	float ASPECT_RATIO =(float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
-	private final float BEGIN_ZOOM_SPEED = 0.01F;
+	private final float BEGIN_ZOOM_SPEED = 0.005F;
 	private final float BEGIN_CAMERA_SPEED = 8f;
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
 	private final float BEGIN_ZOOM_AMOUNT = 1.8f;
@@ -92,8 +92,6 @@ public class TamerStage extends Stage{
 		this.game = game;
 		//Cameras must be set up first
 		setupCamera();
-		
-		
 		createActors();	
 	}
 	
@@ -107,36 +105,21 @@ public class TamerStage extends Stage{
 		level = game.getLevelManager().getCurrentLevel();
 		level.setStage(this);
 		
-		//Hud
-        hud = Hud.instance();
-        hud.initialize(this);
-        
-//        hud.addListener(new ChangeListener() {
-//			public void changed(ChangeEvent event, Actor actor) {
-//				System.out.println("hudi painettu");
-//			}
-//		});
+		
         
 		//environment
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Adding level to PlayScreen and generating environment " +level.getId());
 		level.createEnvironment();
 		environment = level.getEnvironment();
 		
-//		environment.addListener(new ChangeListener() {
-//			public void changed(ChangeEvent event, Actor actor) {
-//				System.out.println("envi painettu");
-//			}
-//		});
+		//Hud
+		//should be created after level because needs info from it
+        hud = Hud.instance();
+        hud.initialize(this);
 		
         //input controller
         controlContainer = ControlContainer.instance();
         controlContainer.initialize(this);
-        
-//        controlContainer.addListener(new ChangeListener() {
-//			public void changed(ChangeEvent event, Actor actor) {
-//				System.out.println("cont painettu");
-//			}
-//		});
         
         //Register actors in drawing order
         this.addActor( environment );
@@ -146,6 +129,8 @@ public class TamerStage extends Stage{
         setGameState(GAME_RUNNING);
                 
 //        setCameraHolder(BEGIN_CAMERA);
+        
+        reset();
         
 	}  
 
@@ -176,18 +161,13 @@ public class TamerStage extends Stage{
 	}
 	
 	public void setupCamera(){	
-		//test
 		camera = new OrthographicCamera(Helper.VIRTUAL_SIZE_X, Helper.VIRTUAL_SIZE_Y);
-//		camera = new OrthographicCamera(Helper.TILESIZE.x * 12, Helper.TILESIZE.y * 20);
 		uiCamera = new OrthographicCamera();
 		uiCamera.setToOrtho(false);
-		
 	}
 	
-	//Think this through
 	public void updateCamera(float dt){
 		controlCamera(dt);
-		
 		camera.position.set(cameraPosition.x,cameraPosition.y,0);
 		camera.update();
 	}
@@ -202,8 +182,6 @@ public class TamerStage extends Stage{
 			}
 			break;	
 		case BEGIN_CAMERA:
-			if (!reseted) reset();
-			
 			if (!cameraDoneMoving){
 				cameraPosition.x += cameraHeading.x * dt * BEGIN_CAMERA_SPEED;
 				cameraPosition.y += cameraHeading.y * dt * BEGIN_CAMERA_SPEED;
@@ -216,6 +194,8 @@ public class TamerStage extends Stage{
 				if ( cameraReturning && cameraPosition.dst( cameraStartPosition ) < 3.0f){
 					cameraDoneMoving = true;
 					environment.setState(RunningState.TAMER_ENTER);
+					hud.showHelp(false);
+					hud.startNoEscape();
 				} 
 				
 			}
@@ -248,7 +228,8 @@ public class TamerStage extends Stage{
 		
 		camera.zoom = BEGIN_ZOOM_AMOUNT;
 		
-		cameraStartPosition.set( Helper.worldToScreen( environment.getTamer().getPosition() ));
+//		cameraStartPosition.set( Helper.worldToScreen( environment.getTamer().getPosition() ));
+		cameraStartPosition.set( Helper.worldToScreen( new Vector2(-20,0) ));
 		cameraPosition.set(cameraStartPosition);
 		
 		//CHANGE THIS 
@@ -260,7 +241,7 @@ public class TamerStage extends Stage{
 		
 		environment.setState(RunningState.BEGIN_ZOOM);
 		
-		reseted = true;
+		hud.showHelp(true);
 	}
 	
 	public void dispose(){
@@ -290,10 +271,6 @@ public class TamerStage extends Stage{
 	
 	public TamerGame getGame(){
 		return game;
-	}
-	
-	public int getCameraHolder(){
-		return cameraHolder;
 	}
 	
 	public void setGameState(int s){

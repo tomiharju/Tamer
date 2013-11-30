@@ -7,11 +7,15 @@ import com.me.tamer.utils.EnvironmentCreator;
 
 public class Level {
 
+	private final int DEFAULT_SPEARS = 5;
+
 	private TamerStage stage;
 	private final int id;
 	private String name;
 	private boolean completed;
 	private Level nextLevel;
+	private int spears = DEFAULT_SPEARS;
+	private String helpText = "";
 
 	Environment environment = null;
 	Hud hud = null;
@@ -38,6 +42,11 @@ public class Level {
 	 *            properly add objects to gameobjects
 	 */
 	public void createEnvironment() {
+		worms = 0;
+		normal = 0;
+		dead = 0;
+		fence = 0;
+		environment = null;
 		environment = EnvironmentCreator.create(id);
 		environment.setStage(stage);
 	}
@@ -97,9 +106,10 @@ public class Level {
 		default:
 			break;
 		}
-		
+
 		updateHud();
-		if (worms<=0) setCompleted(true);
+		if (worms <= 0)
+			setCompleted(true);
 	}
 
 	public void updateHud() {
@@ -107,4 +117,25 @@ public class Level {
 		hud.updateLabel(WormState.DEAD, dead);
 		hud.updateLabel(WormState.FENCE, fence);
 	}
+
+	public void setSpears(int spears) {
+		this.spears = spears;
+	}
+
+	public int getSpears() {
+		return spears;
+	}
+
+	public int getCaptured() {
+		return fence;
+	}
+
+	public String getHelpText() {
+		return helpText;
+	}
+
+	public void setHelpText(String helpText) {
+		this.helpText = helpText;
+	}
+	
 }

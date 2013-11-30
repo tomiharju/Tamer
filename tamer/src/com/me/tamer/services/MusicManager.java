@@ -12,7 +12,8 @@ public class MusicManager {
     public enum TamerMusic
     {
         MENU( "music/menu.ogg" ),
-        LEVEL( "music/Tamer_gameplay_theme.ogg" );
+        LEVEL( "music/Tamer_gameplay_theme.ogg" ),
+        AMBIENCE( "music/Ambience.ogg" );
 
         private String fileName;
         private Music musicResource;
@@ -121,6 +122,18 @@ public class MusicManager {
         if( musicBeingPlayed != null ) {
             musicBeingPlayed.getMusicResource().setVolume( volume );
         }
+    }
+    
+    public float getVolume() {
+		return volume;
+	}
+    
+    public void pause(){
+    	if( musicBeingPlayed != null ) musicBeingPlayed.getMusicResource().pause();
+    }
+    
+    public void resume(){
+    	if( musicBeingPlayed != null ) musicBeingPlayed.getMusicResource().play();
     }
 
     /**

@@ -8,10 +8,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.tamer.core.screens.AbstractScreen;
 import com.me.tamer.core.screens.LevelCompleteScreen;
 import com.me.tamer.core.screens.LevelsScreen;
@@ -23,6 +20,7 @@ import com.me.tamer.services.LevelManager;
 import com.me.tamer.services.MusicManager;
 import com.me.tamer.services.PreferenceManager;
 import com.me.tamer.services.SoundManager;
+import com.me.tamer.utils.MusicAccessor;
 import com.me.tamer.utils.ScreenAccessor;
 
 /**
@@ -94,8 +92,6 @@ public class TamerGame extends Game {
 		loadingScreen.initialize(assetManager);
 		
 		levelCompleteScreen = new LevelCompleteScreen(this);
-		levelCompleteScreen.create();
-		
 
 		// start the game with main menu screen
 		setScreen(ScreenType.LOADING);
@@ -121,24 +117,36 @@ public class TamerGame extends Game {
 			fadingScreen.render(Gdx.graphics.getDeltaTime());
 			if (((LevelCompleteScreen) getScreen()).getFadingDone()) {
 				((LevelCompleteScreen) getScreen()).showScreenContent();
+				
 				fadingScreen = null;
 				tweenManager = null;
+				
 			}
 		}
 		if (getScreen() != null)
 			getScreen().render(Gdx.graphics.getDeltaTime());
 		if (tweenManager != null)
 			tweenManager.update(Gdx.graphics.getDeltaTime());
-		
-		
 	}
 
 	public void changeLevelCompleteScreen() {
 		fadingScreen = getScreen();
+		
+		levelCompleteScreen.resetFadingDone();
 		setScreen(levelCompleteScreen);
+		
 		tweenManager = new TweenManager();
+		
+		
+		
+		//fade screen tween
 		Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
 		Tween.to(levelCompleteScreen, ScreenAccessor.ALPHA, 5.0f).target(1)
+				.delay(0.0f).start(tweenManager);
+		
+		//fade music tween
+		Tween.registerAccessor(MusicManager.class, new MusicAccessor());
+		Tween.to(musicManager, MusicAccessor.VOLUME, 5.0f).target(0)
 				.delay(0.0f).start(tweenManager);
 	}
 
@@ -190,7 +198,11 @@ public class TamerGame extends Game {
 		Gdx.app.log(TamerGame.LOG, "Disposing game");
 		musicManager.dispose();
 	}
-
+	
+	public PlayScreen getPlayScreen(){
+		return playScreen;
+	}
+	
 	public MusicManager getMusicManager() {
 		return musicManager;
 	}
