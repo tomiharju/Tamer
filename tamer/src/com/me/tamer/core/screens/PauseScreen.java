@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.core.TamerStage;
 import com.me.tamer.core.TamerGame.ScreenType;
 
 public class PauseScreen extends AbstractMenu{
@@ -51,5 +52,6 @@ public class PauseScreen extends AbstractMenu{
 	@Override
 	public void show(){
 		super.show();
+		game.getMusicManager().pause();
 	}
 }

@@ -53,5 +53,4 @@ public class LoadingScreen extends AbstractScreen{
 		//Atlas
 		assetManager.load("data/graphics/sheetData", TextureAtlas.class);
 	}
-
 }

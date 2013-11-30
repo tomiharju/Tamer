@@ -1,7 +1,6 @@
 package com.me.tamer.core.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -9,20 +8,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerGame.ScreenType;
-import com.me.tamer.services.LevelManager;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 
 public class AbstractMenu extends AbstractScreen {
 	TextButton continueButton, newGameButton, levelsButton, optionsButton,
-			mainMenuButton, exitButton, nextLevelButton;
+			mainMenuButton, exitButton, nextLevelButton, playAgainButton;
+	
+	Label endCapturedWorms;
 	Skin skin;
 	Table table;
 	TextButtonStyle textButtonStyle;
@@ -67,6 +69,9 @@ public class AbstractMenu extends AbstractScreen {
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
 
+		
+		
+		//Buttons
 		newGameButton = new TextButton("New Game", textButtonStyle);
 		newGameButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
@@ -82,6 +87,14 @@ public class AbstractMenu extends AbstractScreen {
 				int levelNumber = game.getLevelManager().getCurrentLevel().getId();
 				levelNumber++;
 				game.getLevelManager().setCurrentLevel( levelNumber );
+				game.setScreen( ScreenType.NEW_PLAY );
+			}
+		});
+		
+		playAgainButton = new TextButton("Play again", textButtonStyle);
+		playAgainButton.addListener(new ChangeListener() {
+			public void changed(ChangeEvent event, Actor actor) {
+				sound.play(TamerSound.MENU_CLICK);
 				game.setScreen( ScreenType.NEW_PLAY );
 			}
 		});
@@ -118,6 +131,13 @@ public class AbstractMenu extends AbstractScreen {
 				Gdx.app.exit();
 			}
 		});
+		
+		//Labels
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = skin.getFont("default");
+		
+		endCapturedWorms = new Label("", labelStyle);
+		
 	}
 
 	public void resize(int width, int height) {

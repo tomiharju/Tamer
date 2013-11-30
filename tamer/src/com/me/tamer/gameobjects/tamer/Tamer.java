@@ -45,7 +45,7 @@ public class Tamer extends DynamicObject {
 	private Vector2 movementAxis = new Vector2();
 
 	// spear related variables
-	private final int SPEAR_AMOUNT = 5; //this should be set by the level
+	private int spearAmount;
 	private ArrayList<Spear> spears = null;
 	private Spear spearToBePicked = null;
 	private Vector2 targetTilePosition = new Vector2();
@@ -62,11 +62,7 @@ public class Tamer extends DynamicObject {
 	private ControlContainer controls;
 
 	public Tamer() {
-		// Spears
-		spears = new ArrayList<Spear>();
-		for (int i = 0; i < SPEAR_AMOUNT; i++) {
-			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
-		}
+		
 		
 		// Scream
 		scream = new GryphonScream(this);
@@ -96,7 +92,16 @@ public class Tamer extends DynamicObject {
 
 		spawnPosition.set(shadow.getPosition());
 		
-		controls.addSpearsAvailable(SPEAR_AMOUNT);
+		//Get amount of spears from the level
+		spearAmount = environment.getStage().getLevel().getSpears();
+				
+		// Spears
+		spears = new ArrayList<Spear>();
+		for (int i = 0; i < spearAmount; i++) {
+			RuntimeObjectFactory.addToObjectPool("spear", new Spear());
+		}
+		
+		controls.addSpearsAvailable(spearAmount);
 	}
 
 	public void setGraphics(TamerAnimations graphics) {

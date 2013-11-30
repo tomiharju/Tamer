@@ -21,22 +21,33 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.me.tamer.core.Level.WormState;
 import com.me.tamer.core.TamerGame.ScreenType;
+import com.me.tamer.utils.EventPool;
+import com.me.tamer.utils.tEvent;
 
 public class Hud extends Group {
 	public static final int SIZE = Gdx.graphics.getHeight() / 5;
+	
+	private enum helpText{
+		DRIVE_BEAST, NO_ESCAPE;
+	}
 
 	private static Hud instance;
 	private TextButton menuButton;
 	private TextButtonStyle textButtonStyle;
 	private Skin skin;
 	private TamerStage stage;
-
-	private Label remainingLabel, survivedLabel, deadLabel, fpsLabel, beginText;
-	public static final int LABEL_REMAINING = 0, LABEL_SURVIVED = 1,
-			LABEL_DEAD = 4, LABEL_FPS = 2;
-	private int remaining = 0, survived = 0, dead = 0;
 	private Image bgImage;
 
+	private Label remainingLabel, survivedLabel, deadLabel, fpsLabel;
+	
+	
+	public static final int LABEL_REMAINING = 0, LABEL_SURVIVED = 1,
+			LABEL_DEAD = 4, LABEL_FPS = 2;
+	
+	//Help text hud
+	private Label noEscapeLabel, helpLabel;
+	private Image fenceArrow;
+	
 	private Hud() {
 		create();
 	}
@@ -52,16 +63,18 @@ public class Hud extends Group {
 	}
 
 	public void create() {
-		float h = Gdx.graphics.getHeight() /12;
+		float h = Gdx.graphics.getHeight() / 10;
 		float w = Gdx.graphics.getWidth();
 		float x = 0;
 		float y = Gdx.graphics.getHeight() - h;
-		setBounds(x, y, w, h);
-
+		
+		//For some reason position can not be set or actors don't work as supposed to
+		setSize(w,h);
+		
 		bgImage = new Image(new Texture(
 				Gdx.files.internal("data/graphics/levelcomplete_bg.png")));
 		bgImage.setFillParent(true);
-		//bgImage.setPosition(x, y);
+		bgImage.setPosition(x, y);
 
 		// Skin and font
 		skin = new Skin();
@@ -88,13 +101,18 @@ public class Hud extends Group {
 			}
 		});
 
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = skin.getFont("default");
+		LabelStyle labelStyle_white = new LabelStyle();
+		labelStyle_white.font = skin.getFont("default");
+		
+		//Red color label
+		LabelStyle labelStyle_red = new LabelStyle();
+		labelStyle_red.font = skin.getFont("default");
+		labelStyle_red.fontColor = new Color(Color.RED);
 
-		remainingLabel = new Label("", labelStyle);
-		deadLabel = new Label("", labelStyle);
-		survivedLabel = new Label("", labelStyle);
-		fpsLabel = new Label("FPS: ", labelStyle);
+		remainingLabel = new Label("", labelStyle_white);
+		deadLabel = new Label("", labelStyle_white);
+		survivedLabel = new Label("", labelStyle_white);
+		fpsLabel = new Label("FPS: ", labelStyle_white);
 		
 
 		FileHandle skinFile = Gdx.files.internal("skin/uiskin.json");
@@ -103,70 +121,46 @@ public class Hud extends Group {
 		Table table = new Table(skin);
 		table.setFillParent(true);
 
-		//table.setPosition(x, y);
-		table.add(menuButton).uniform().spaceBottom(10);
-		table.add(remainingLabel).uniform().spaceBottom(10);
-		table.add(survivedLabel).uniform().spaceBottom(10);
-		table.add(deadLabel).uniform().spaceBottom(10);
-		table.add(fpsLabel).uniform().spaceBottom(10);
+		table.add(menuButton).uniform();
+		table.add(remainingLabel).uniform();
+		table.add(survivedLabel).uniform();
+		table.add(deadLabel).uniform();
+		table.add(fpsLabel).uniform();
 		
+		table.setBounds(x, y,w, h);
 		
-		//BEGIN TEXT
-		beginText = new Label("DO NOT LET THE BEASTS ESCAPE!", labelStyle);
-		beginText.setPosition( ( Gdx.graphics.getWidth() - beginText.getWidth() ) / 2, Gdx.graphics.getHeight() / 2);
+		//BEGIN ADVICE
+		noEscapeLabel = new Label("DO NOT LET THE BEASTS ESCAPE!", labelStyle_red);
+		noEscapeLabel.setPosition( ( Gdx.graphics.getWidth() - noEscapeLabel.getWidth() ) / 2, Gdx.graphics.getHeight() / 2);
+		noEscapeLabel.setVisible(false);
+		
+		helpLabel = new Label("", labelStyle_white);
+		helpLabel.setVisible(false);
+//		helpLabel.setPosition( ( Gdx.graphics.getWidth() - noEscapeLabel.getWidth() ) / 2, Gdx.graphics.getHeight() / 2);
+		
+//		fenceArrow = new Image(new Texture(
+//				Gdx.files.internal("data/graphics/.png")));
 		
 
 		// Register actors	
 		this.addActor(bgImage);
 		this.addActor(table);
-		this.addActor(beginText);
-		
+		this.addActor(helpLabel);
+		this.addActor(noEscapeLabel);
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.setProjectionMatrix(stage.getUiCamera().combined);
 		SnapshotArray<Actor> actors = getChildren();
 		for (int i = 0; i < actors.size; i++) {
-			actors.get(i).draw(batch, parentAlpha);
+			if (actors.get(i).isVisible()) actors.get(i).draw(batch, parentAlpha);
 		}
 	}
-
 	
-	//old stuff
-//	public void resetHud() {
-//		remaining = 0;
-//		remainingLabel.setText("R: " + remaining);
-//
-//		dead = 0;
-//		deadLabel.setText("D: " + dead);
-//
-//		survived = 0;
-//		survivedLabel.setText("S: " + survived);
-//	}
-
-	public void updateLabel(int type, int amount) {
-		switch (type) {
-		case LABEL_REMAINING: {
-			remaining += amount;
-			remainingLabel.setText("R: " + remaining);
-			break;
-		}
-		case LABEL_SURVIVED: {
-			survived += amount;
-			survivedLabel.setText("S: " + survived);
-			break;
-		}
-		case LABEL_DEAD: {
-			dead += amount;
-			survivedLabel.setText("D: " + survived);
-		}
-		case LABEL_FPS: {
-			fpsLabel.setText("FPS: " + amount);
-			break;
-		}
-		}
-	}
-
+	 public void updateLabel(int type, int amount) {
+		 fpsLabel.setText("FPS: " +amount);
+	 }
+	
 	public void updateLabel(WormState state, int amount){
 		switch(state){
 		case DEFAULT: {
@@ -182,5 +176,26 @@ public class Hud extends Group {
 			break;
 		}
 		}
+	}
+	//Help -label implementation
+	public void showHelp(boolean show){
+		helpLabel.setVisible(show);
+		if(show){
+			
+			helpLabel.setText( stage.getLevel().getHelpText() );
+			helpLabel.setPosition( ( Gdx.graphics.getWidth() - helpLabel.getPrefWidth() ) / 2, Gdx.graphics.getHeight() / 2);
+		}
+		
+	}
+	
+	//No escape -label implementation
+	public void startNoEscape(){
+		noEscapeLabel.setVisible(true);
+		EventPool.addEvent(new tEvent(this, "blinkNoEscape", 1f, 3));
+	}
+	
+	public void blinkNoEscape(){
+		if(!noEscapeLabel.isVisible()) noEscapeLabel.setVisible(true);
+		else noEscapeLabel.setVisible(false);
 	}
 }

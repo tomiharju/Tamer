@@ -44,10 +44,16 @@ public class SoundManager  {
 		SPEAR_SWAMP("Keihas_suo10.ogg"),
 		SPEAR_GROUND("Keihas_nurmi02.ogg"),
 		
+		//level end
+		LEVEL_END_GOOD("Tamer_levelend_good.ogg"),
+		LEVEL_END_BAD("Tamer_levelend_bad.ogg"),
+		
 		//old
 		OPENING("01taunt00a.wav"),
 		HIT("06kill03.wav"),
 		HAWK("hawk.wav");
+		
+	
 		
 
 		private final String fileName;
@@ -116,6 +122,10 @@ public class SoundManager  {
 					"The volume must be inside the range: [0,1]");
 		}
 		this.volume = volume;
+	}
+	
+	public float getVolume() {
+		return volume;
 	}
 
 	/**
