@@ -15,6 +15,8 @@ public class Decor extends StaticObject{
 			env.addStaticObject(this);
 		else
 			env.addNewObject(this);
+		
+		setSize(getSize().x + 0.1f, getSize().y + 0.05f);
 	}
 	public void wakeup(Environment env){
 		env.addNewObject(this);
