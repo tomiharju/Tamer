@@ -79,18 +79,18 @@ public class TamerGame extends Game {
 
 		// create the level manager
 		levelManager = new LevelManager();
-		
-		//Create asset manager
+
+		// Create asset manager
 		assetManager = new AssetManager();
 
 		// create menu screens
 		mainMenuScreen = new MainMenuScreen(this);
 		pauseScreen = new PauseScreen(this);
 		levelsScreen = new LevelsScreen(this);
-		
+
 		loadingScreen = new LoadingScreen(this);
 		loadingScreen.initialize(assetManager);
-		
+
 		levelCompleteScreen = new LevelCompleteScreen(this);
 
 		// start the game with main menu screen
@@ -117,10 +117,10 @@ public class TamerGame extends Game {
 			fadingScreen.render(Gdx.graphics.getDeltaTime());
 			if (((LevelCompleteScreen) getScreen()).getFadingDone()) {
 				((LevelCompleteScreen) getScreen()).showScreenContent();
-				
+
 				fadingScreen = null;
 				tweenManager = null;
-				
+
 			}
 		}
 		if (getScreen() != null)
@@ -131,47 +131,48 @@ public class TamerGame extends Game {
 
 	public void changeLevelCompleteScreen() {
 		fadingScreen = getScreen();
-		
+
 		levelCompleteScreen.resetFadingDone();
 		setScreen(levelCompleteScreen);
-		
+
 		tweenManager = new TweenManager();
-		
-		//fade screen tween
+
+		// fade screen tween
 		Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
 		Tween.to(levelCompleteScreen, ScreenAccessor.ALPHA, 5.0f).target(1)
 				.delay(0.0f).start(tweenManager);
-		
-		//fade music tween
+
+		// fade music tween
 		Tween.registerAccessor(MusicManager.class, new MusicAccessor());
 		Tween.to(musicManager, MusicAccessor.VOLUME, 5.0f).target(0)
 				.delay(0.0f).start(tweenManager);
 	}
 
 	public void setScreen(ScreenType type) {
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Setting screen " +type);
-		
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
+				+ " :: Setting screen " + type);
+
 		switch (type) {
 		case NEW_PLAY:
-			super.setScreen( createNewPlayScreen() );
+			super.setScreen(createNewPlayScreen());
 			break;
 		case RESUME_PLAY:
-			super.setScreen( playScreen );
+			super.setScreen(playScreen);
 			break;
 		case LOADING:
-			super.setScreen( loadingScreen );
+			super.setScreen(loadingScreen);
 			break;
 		case MENU:
-			super.setScreen( mainMenuScreen );
+			super.setScreen(mainMenuScreen);
 			break;
 		case LEVELS:
-			super.setScreen( levelsScreen );
+			super.setScreen(levelsScreen);
 			break;
 		case COMPLETE:
-			super.setScreen( levelCompleteScreen );
+			super.setScreen(levelCompleteScreen);
 			break;
 		case PAUSE:
-			super.setScreen( pauseScreen );
+			super.setScreen(pauseScreen);
 			break;
 		default:
 			break;
@@ -188,19 +189,21 @@ public class TamerGame extends Game {
 	public void resume() {
 		super.resume();
 		Gdx.app.log(TamerGame.LOG, "Resuming game");
+		System.out.println("---------------LOL RESUME---------------------");
 	}
 
 	@Override
 	public void dispose() {
 		super.dispose();
 		Gdx.app.log(TamerGame.LOG, "Disposing game");
-		musicManager.dispose();
+		assetManager.dispose();
+
 	}
-	
-	public PlayScreen getPlayScreen(){
+
+	public PlayScreen getPlayScreen() {
 		return playScreen;
 	}
-	
+
 	public MusicManager getMusicManager() {
 		return musicManager;
 	}
@@ -208,7 +211,7 @@ public class TamerGame extends Game {
 	public LevelManager getLevelManager() {
 		return levelManager;
 	}
-	
+
 	public AssetManager getAssetManager() {
 		return assetManager;
 	}
