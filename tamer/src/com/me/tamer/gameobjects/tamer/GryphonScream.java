@@ -84,7 +84,11 @@ public class GryphonScream extends DynamicObject {
 					soundWaves.remove(i);
 				}
 				
-			if (soundWaves.size() == 0) animationActive = false;		
+			if (soundWaves.size() == 0) {
+				animationActive = false;
+				controls.getJoystick().enableMovement();
+			}
+			
 			}
 		}
 	}
@@ -164,6 +168,8 @@ public class GryphonScream extends DynamicObject {
 		
 		//start animation
 		EventPool.addEvent(new tEvent(this,"addWave", WAVE_FREQUENCY, WAVE_AMOUNT));
+		
+		controls.getJoystick().disableMovement();
 	}
 
 	public void enable(){

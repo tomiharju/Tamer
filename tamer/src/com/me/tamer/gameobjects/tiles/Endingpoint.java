@@ -58,7 +58,6 @@ public class Endingpoint extends StaticObject implements Obstacle {
 						&& temp.y + s.y  > center.y
 						&& temp.y  < center.y + bounds) {
 					worm.setInsideFence(true);
-					worm.decay();
 				} else worm.setInsideFence(false);
 			}
 		}

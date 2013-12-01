@@ -79,7 +79,7 @@ public class Joystick extends Actor{
 			else if (controlContainer.getStage().getCamera().zoom + ZOOM_MIN_AMOUNT < ZOOM_DEFAULT + ZOOM_MAX_COEFFIENT * delta.len())
 				controlContainer.getStage().getCamera().zoom += ZOOM_OUT_SPEED;
 			
-			if (pressed){
+			if (pressed && !movementDisabled){
 //				if(movementDisabled)
 //					environment.getTamer().turn(delta);
 //				else{			
@@ -93,7 +93,7 @@ public class Joystick extends Actor{
 		addListener(new InputListener(){
 			 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {	 
 				input.set(x,y);
-				if(input.dst(localCenter) < BUTTON_SIZE / 2){
+				if(input.dst(localCenter) < BUTTON_SIZE / 2 ){
 					joystickPoint.set(x,y);
 					pressed = true;
 					return true;
@@ -107,7 +107,7 @@ public class Joystick extends Actor{
 	        }
 	        
 	        public void touchDragged(InputEvent event, float x, float y, int pointer){
-	        	if(input.dst(localCenter) < BUTTON_SIZE / 2){
+	        	if(input.dst(localCenter) < BUTTON_SIZE / 2 ){
 	        		joystickPoint.set(x,y);
 	        	}
 			 }

@@ -78,7 +78,28 @@ public class Quicksand extends StaticObject implements Obstacle {
 				}
 			}
 			
+//<<<<<<< HEAD
+//				for(int k = 0; k < psize ; k ++){
+//					if (creatures_entered.get(i).getType() == Creature.TYPE_WORM){
+//						Worm casultyWorm = (Worm) creatures_entered.get(i);
+//					
+//						if(casultyWorm.getHead().isWithinRange(parts.get(k).getPosition(),0.5f) && !casultyWorm.isDrowning()){
+//							//flag worm to be drowning, so it is not affected by stuff in the game anymore
+//							casultyWorm.setDrowning(true);
+//							
+//							casultyWorm.applyPull(parts.get(k).getPosition(),PULL_MAGNITUDE);
+//						}
+//							
+//						for(int j = 0 ; j < casultyWorm.getParts().size() ; j ++){
+//							if(casultyWorm.getParts().get(j).isWithinRange(parts.get(k).getPosition(),0.5f))
+//								casultyWorm.getParts().get(j).decay();
+//						}
+//					}
+//				}
+//			}		
+//=======
 
+//>>>>>>> 1fba1efddb076442e19d15731d53516028cbe832
 		}
 		creatures.removeAll(submerged_creatures);
 		submerged_creatures.clear();

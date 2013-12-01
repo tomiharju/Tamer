@@ -51,7 +51,7 @@ public class LevelsScreen extends AbstractMenu{
 		Table table = super.getTable();
 	    
 	    for (int i = 0; i < levelButtons.size(); i++){
-	    	table.add(levelButtons.get(i)).size( Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / (levelButtons.size() + 3) ).uniform().spaceBottom( 10 );
+	    	table.add(levelButtons.get(i)).size( Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight() / (levelButtons.size() + 3) ).uniform().spaceBottom( 10 );
 	    	table.row();
 	    }
 	    

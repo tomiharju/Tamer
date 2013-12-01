@@ -181,7 +181,6 @@ public class Hud extends Group {
 	public void showHelp(boolean show){
 		helpLabel.setVisible(show);
 		if(show){
-			
 			helpLabel.setText( stage.getLevel().getHelpText() );
 			helpLabel.setPosition( ( Gdx.graphics.getWidth() - helpLabel.getPrefWidth() ) / 2, Gdx.graphics.getHeight() / 2);
 		}
