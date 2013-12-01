@@ -21,10 +21,10 @@ public class TamerStage extends Stage{
 	public static TamerStage instance;
 	
 	float ASPECT_RATIO =(float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
-	private final float BEGIN_ZOOM_SPEED = 0.005F;
+	private final float BEGIN_ZOOM_SPEED = 0.003F;
 	private final float BEGIN_CAMERA_SPEED = 8f;
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
-	private final float BEGIN_ZOOM_AMOUNT = 1.8f;
+	private final float BEGIN_ZOOM_AMOUNT = 1.4f;
 	
 	private OrthographicCamera camera, uiCamera;
 	

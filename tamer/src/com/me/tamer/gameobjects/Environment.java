@@ -116,12 +116,11 @@ public class Environment extends Actor {
 //					controls.enableInput();
 //					// sound.play(TamerSound.OPENING);
 //					
-//					//quick fix to the issue where this is not updated before moving joystick
-//					tamerShadowPosition = ((Tamer) tamer).getShadow().getCenterPosition();
+//					
 //				}
 				
-				
-				
+				//quick fix to the issue where this is not updated before moving joystick
+				tamerShadowPosition = ((Tamer) tamer).getShadow().getCenterPosition();
 				
 			}
 			break;

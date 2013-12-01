@@ -1734,7 +1734,7 @@
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
 		<property type="Position">-6:5</property>
 		<property type="SpawnType">Worm</property>
-		<property type="SpawnDirection">0</property>
+		<property type="SpawnDirection">235</property>
 		<property type="SpawnId">2</property>
 		<property type="InitialSleep">0</property>
 		<property type="SleepTime">0</property>
@@ -1764,7 +1764,7 @@
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
 		<property type="Position">-3:2</property>
 		<property type="SpawnType">Worm</property>
-		<property type="SpawnDirection">0</property>
+		<property type="SpawnDirection">235</property>
 		<property type="SpawnId">1</property>
 		<property type="InitialSleep">0</property>
 		<property type="SleepTime">0</property>
@@ -1781,7 +1781,7 @@
 		<property type="Position">11:14</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1</property>
@@ -1797,7 +1797,7 @@
 		<property type="Position">11:13</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">3</property>
@@ -1813,7 +1813,7 @@
 		<property type="Position">11:12</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1</property>
@@ -1821,7 +1821,7 @@
 		<property type="Position">11:11</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1</property>
@@ -1829,7 +1829,7 @@
 		<property type="Position">11:10</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">2</property>
@@ -1869,7 +1869,7 @@
 		<property type="Position">11:9</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1.5</property>
@@ -1885,7 +1885,7 @@
 		<property type="Position">11:8</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">2</property>
@@ -1901,7 +1901,7 @@
 		<property type="Position">11:7</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1</property>
@@ -1917,7 +1917,7 @@
 		<property type="Position">11:6</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">2</property>
@@ -1941,7 +1941,7 @@
 		<property type="Position">11:5</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">2</property>
@@ -1957,7 +1957,7 @@
 		<property type="Position">11:4</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1</property>
@@ -1965,7 +1965,7 @@
 		<property type="Position">11:3</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">2</property>
@@ -1981,7 +1981,7 @@
 		<property type="Position">11:2</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">2</property>
@@ -2027,7 +2027,7 @@
 		<property type="Position">11:-5</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1</property>
@@ -2049,7 +2049,7 @@
 		<property type="Position">11:-6</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1</property>
@@ -2057,7 +2057,7 @@
 		<property type="Position">11:-7</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1</property>
@@ -2065,7 +2065,7 @@
 		<property type="Position">11:-8</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">2</property>
@@ -2089,12 +2089,12 @@
 		<property type="Position">12:-8</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.SpawnPoint">
 		<property type="Position">18:-2</property>
 		<property type="SpawnType">Worm</property>
-		<property type="SpawnDirection">0</property>
+		<property type="SpawnDirection">180</property>
 		<property type="SpawnId">0</property>
 		<property type="InitialSleep">0</property>
 		<property type="SleepTime">0</property>
@@ -2131,7 +2131,7 @@
 		<property type="Position">13:-8</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">1</property>
@@ -2139,7 +2139,7 @@
 		<property type="Position">14:-8</property>
 		<property type="PixelsX">40</property>
 		<property type="PixelsY">40</property>
-		<property type="Graphics">vRocks5.png</property>
+		<property type="Graphics">hitboxInvisible.png</property>
 	</GameObject>
 	<GameObject type="com.me.tamer.gameobjects.tiles.Prop">
 		<property type="HitBox">2</property>
