@@ -26,10 +26,6 @@ import com.me.tamer.utils.tEvent;
 
 public class Hud extends Group {
 	public static final int SIZE = Gdx.graphics.getHeight() / 5;
-	
-	private enum helpText{
-		DRIVE_BEAST, NO_ESCAPE;
-	}
 
 	private static Hud instance;
 	private TextButton menuButton;
@@ -196,5 +192,12 @@ public class Hud extends Group {
 	public void blinkNoEscape(){
 		if(!noEscapeLabel.isVisible()) noEscapeLabel.setVisible(true);
 		else noEscapeLabel.setVisible(false);
+	}
+	
+	public void showNoEscape(boolean show){
+		noEscapeLabel.setVisible(show);
+		if(show){
+			noEscapeLabel.setPosition( ( Gdx.graphics.getWidth() - noEscapeLabel.getPrefWidth() ) / 2, Gdx.graphics.getHeight() / 2);
+		}
 	}
 }

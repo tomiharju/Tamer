@@ -195,7 +195,7 @@ public class TamerStage extends Stage{
 					cameraDoneMoving = true;
 					environment.setState(RunningState.TAMER_ENTER);
 					hud.showHelp(false);
-					hud.startNoEscape();
+					hud.showNoEscape(true);
 				} 
 				
 			}
@@ -212,6 +212,7 @@ public class TamerStage extends Stage{
 //					sound.play(TamerSound.OPENING);
 					environment.setState(RunningState.NORMAL);
 					controlContainer.enableInput();
+					hud.showNoEscape(false);
 				}
 			}
 			break;
@@ -242,6 +243,7 @@ public class TamerStage extends Stage{
 		environment.setState(RunningState.BEGIN_ZOOM);
 		
 		hud.showHelp(true);
+		hud.showNoEscape(false);
 	}
 	
 	public void dispose(){

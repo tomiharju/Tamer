@@ -71,6 +71,9 @@ public class Environment extends Actor {
 	private Vector2 isoPoint = new Vector2();
 	private Vector2 focusPoint = new Vector2();
 	
+	//first update
+	private boolean firstUpdate = false;
+	
 	public Environment() {
 		RuntimeObjectFactory.createLinkToLevel(this);
 		controls = ControlContainer.instance();
@@ -83,15 +86,22 @@ public class Environment extends Actor {
 		
 		runCarbageCollection();
 		resolveObstacles(dt);
-		stepTimers(dt);
+		
 		
 		int numObjects = gameobjects.size();
-
+		
 		switch (state) {
 		case BEGIN_ZOOM:
+			if(!firstUpdate){
+				stepTimers(dt);
+				for (int k = 0; k < numObjects; k++) {
+					gameobjects.get(k).update(dt);
+				}
+				firstUpdate = true;
+			}
 			break;
 		case NORMAL:
-			
+			stepTimers(dt);
 			for (int k = 0; k < numObjects; k++) {
 				gameobjects.get(k).update(dt);
 			}

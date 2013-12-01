@@ -137,8 +137,6 @@ public class TamerGame extends Game {
 		
 		tweenManager = new TweenManager();
 		
-		
-		
 		//fade screen tween
 		Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
 		Tween.to(levelCompleteScreen, ScreenAccessor.ALPHA, 5.0f).target(1)

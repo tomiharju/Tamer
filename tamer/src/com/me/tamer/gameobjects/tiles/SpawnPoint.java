@@ -53,12 +53,9 @@ public class SpawnPoint extends StaticObject{
 		environment.addNewObject(this);
 		environment.addStaticObject(this);
 		this.environment = environment;
-		//EventPool.addEvent(new tEvent(this,"spawnTamer",TAMER_SPAWN_TIME,1));
 		spawnTamer();
 		if(tamer!=null)environment.setTamer(tamer);
-
 		setZindex(1);
-		
 	}
 	
 	public void setSpawnCount(String count){

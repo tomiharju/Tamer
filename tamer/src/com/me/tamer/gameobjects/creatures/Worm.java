@@ -18,16 +18,14 @@ import com.me.tamer.utils.DrawOrderComparator;
 
 public class Worm extends DynamicObject implements Creature {
 
-	private final int NUMBER_PARTS = 13;
+	private final int NUMBER_PARTS = 9;
 	private final float FINAL_SPEED = 2.0f;
 	private ArrayList<WormPart> parts;
 	private float speed = FINAL_SPEED;
 	private WormPart head = null;
 
-	// for effects
 	private ControlContainer controls;
 	private DrawOrderComparator comparator;
-
 
 	private boolean beingEaten 	= false;
 	private boolean bound 			= false;
@@ -36,9 +34,6 @@ public class Worm extends DynamicObject implements Creature {
 	private boolean escaped		= false;
 	private boolean drowning = false;
 	private boolean dead = false;
-	private boolean killedOrEscaped = false;
-
-	// for effects
 
 	// for draw order
 	ArrayList<GameObject> drawParts = new ArrayList<GameObject>();
