@@ -29,20 +29,13 @@ public class Worm extends DynamicObject implements Creature {
 	private DrawOrderComparator comparator;
 
 
-<<<<<<< HEAD
-	private boolean beingEaten 	= false;
-	private boolean bound 			= false;
-	private boolean insideFence 	= false;
-	private boolean submerged 		= false;
-	private boolean escaped		= false;
-=======
+
 	private boolean beingEaten = false;
 	private boolean bound = false;
 	private boolean insideFence = false;
 	private boolean drowning = false;
 	private boolean dead = false;
 	private boolean killedOrEscaped = false;
->>>>>>> c346e8274d5bbcba656611c29956e14b837d7a70
 
 	// for effects
 
@@ -108,22 +101,18 @@ public class Worm extends DynamicObject implements Creature {
 
 	public void update(float dt) {
 		//reset escaped to true and check parts to prove otherwise
-		escaped = true;
+		killedOrEscaped = true;
 		
 		for (int i = 0; i < parts.size(); i++){
 			parts.get(i).solveJoints(dt);
 			parts.get(i).update(dt);
-			if( parts.get(i).getLevelOfDecay() > 0.1f ) escaped = false;
+			if( parts.get(i).getLevelOfDecay() > 0.1f ) killedOrEscaped = false;
 		}
 
-<<<<<<< HEAD
 		//Remove worm from gameobjects once it has fled
-		if (escaped) markAsCarbage();
+		if (killedOrEscaped) markAsCarbage();
 	
-=======
-		// kill worm when head has decayed
-		if (dead) markAsCarbage();
->>>>>>> c346e8274d5bbcba656611c29956e14b837d7a70
+
 		head.getVelocity().set(head.getHeading().tmp().mul(speed) );
 		solveEffects();
 	}
@@ -165,15 +154,12 @@ public class Worm extends DynamicObject implements Creature {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public void kill() {
-=======
+
 	public void decay() {
 		if(drowning || beingEaten) stage.getLevel().setWormState(this, WormState.DEAD);
 		else stage.getLevel().setWormState(this, WormState.FENCE);
 		
 		
->>>>>>> c346e8274d5bbcba656611c29956e14b837d7a70
 		for (int i = 0; i < parts.size(); i++) {
 			parts.get(i).decay();
 		}
