@@ -51,7 +51,6 @@ public class TamerStage extends Stage{
 	private Vector2 cameraHeading = new Vector2();
 	private boolean cameraReturning = false;
 	private boolean cameraDoneMoving = false;
-	private boolean reseted = false;
 	
 	private int cameraHolder;
 	public static final int TAMER_CAMERA = 0;
@@ -105,8 +104,6 @@ public class TamerStage extends Stage{
 		level = game.getLevelManager().getCurrentLevel();
 		level.setStage(this);
 		
-		
-        
 		//environment
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Adding level to PlayScreen and generating environment " +level.getId());
 		level.createEnvironment();

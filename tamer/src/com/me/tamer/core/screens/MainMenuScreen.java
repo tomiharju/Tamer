@@ -21,13 +21,13 @@ public class MainMenuScreen extends AbstractMenu{
 	    table.add( "TAMER" ).spaceBottom( 50 );
 	    table.row();
 	
-	    table.add( newGameButton ).size( Gdx.graphics.getWidth() / 2, 60 ).uniform().spaceBottom( 10 );
+	    table.add( newGameButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom( 10 );
 	    table.row();
-	    table.add( levelsButton ).size( Gdx.graphics.getWidth() / 2, 60 ).uniform().spaceBottom( 10 );
+	    table.add( levelsButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom( 10 );
 	    table.row();
-	    table.add( optionsButton ).size( Gdx.graphics.getWidth() / 2, 60 ).uniform().spaceBottom( 10 );
+	    table.add( optionsButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom( 10 );
 	    table.row();	
-	    table.add( exitButton ).size( Gdx.graphics.getWidth() / 2, 60 ).uniform().spaceBottom( 10 );
+	    table.add( exitButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom( 10 );
 	    table.row();	
 	}
 	
