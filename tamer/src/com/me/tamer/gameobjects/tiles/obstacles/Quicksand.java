@@ -56,11 +56,13 @@ public class Quicksand extends StaticObject implements Obstacle {
 		int psize = parts.size();
 		for (int k = 0; k < psize; k++) {
 			for (int i = 0; i < creatures.size(); i++) {
+				if(((DynamicObject) creatures.get(i)).getPosition().dst(parts.get(k).getPosition()) > 2)
+					continue;
 			if(submerged_creatures.contains(creatures.get(i)))
 				continue;
 
 				// Check if some wormhead is inside swamp
-				if (creatures.get(i).getType() == Creature.TYPE_WORM) {
+				if (creatures.get(i).getType() == Creature.TYPE_WORM && !((Worm) creatures.get(i)).isBound()) {
 					Worm targetWorm = (Worm) creatures.get(i);
 					if (targetWorm.getHead().isWithinRange(
 							parts.get(k).getPosition(), 0.5f)) {

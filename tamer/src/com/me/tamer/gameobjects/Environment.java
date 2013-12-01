@@ -33,12 +33,12 @@ public class Environment extends Actor {
 
 	private TamerStage stage;
 	private ControlContainer controls;
-	private DrawOrderComparator comparator =  new DrawOrderComparator();
+	private DrawOrderComparator comparator = new DrawOrderComparator();
 
 	// Settings
 	private Vector2 mapBounds = null;
 	private Vector2 cameraBounds = null;
-	//TEst
+	// TEst
 	private TileMap tilemap;
 	// Gameobject data
 	private ArrayList<GameObject> gameobjects = new ArrayList<GameObject>();
@@ -54,26 +54,29 @@ public class Environment extends Actor {
 	// Optimization variables
 	Vector2 tamerShadowPosition = new Vector2();
 
-	// Drawing-order
+	// Variables for optimization
 	private int loopCount = 0;
 	private int sortRate = 6;
+	private int resolveRate = 10;
+	private int resolveLoopCount = 0;
 
 	// States during GAME_RUNNING
-	public enum RunningState{
-		BEGIN_ZOOM,NORMAL,TAMER_ENTER,END_FADE;
+	public enum RunningState {
+		BEGIN_ZOOM, NORMAL, TAMER_ENTER, END_FADE;
 	}
+
 	private RunningState state;
 
 	// SoundManager
 	SoundManager sound;
-	
+
 	// Help vectors used in "isVisible function"
 	private Vector2 isoPoint = new Vector2();
 	private Vector2 focusPoint = new Vector2();
-	
-	//first update
+
+	// first update
 	private boolean firstUpdate = false;
-	
+
 	public Environment() {
 		RuntimeObjectFactory.createLinkToLevel(this);
 		controls = ControlContainer.instance();
@@ -83,16 +86,15 @@ public class Environment extends Actor {
 
 	public void act(float dt) {
 		addNewObjects();
-		
+
 		runCarbageCollection();
 		resolveObstacles(dt);
-		
-		
+
 		int numObjects = gameobjects.size();
-		
+
 		switch (state) {
 		case BEGIN_ZOOM:
-			if(!firstUpdate){
+			if (!firstUpdate) {
 				stepTimers(dt);
 				for (int k = 0; k < numObjects; k++) {
 					gameobjects.get(k).update(dt);
@@ -107,9 +109,8 @@ public class Environment extends Actor {
 			}
 			break;
 		case TAMER_ENTER:
-			if (tamer != null){
+			if (tamer != null) {
 				tamer.update(dt);
-				
 				
 //				if (((Tamer) tamer).hasEnteredField()) {
 //					setState(RunningState.NORMAL);
@@ -175,18 +176,19 @@ public class Environment extends Actor {
 	public boolean isVisible(Vector2 point) {
 		float zoom = getStage().getCamera().zoom;
 		isoPoint.set(Helper.worldToScreen(point));
-		
-		//draw everything in the beginning
-		if (getState() == RunningState.BEGIN_ZOOM || getState() == RunningState.TAMER_ENTER){
+
+		// draw everything in the beginning
+		if (getState() == RunningState.BEGIN_ZOOM
+				|| getState() == RunningState.TAMER_ENTER) {
 			return true;
-		} else{
+		} else {
 			focusPoint.set(Helper.worldToScreen(tamerShadowPosition));
 		}
-		
+
 		return (isoPoint.x > focusPoint.x - Helper.TILESIZE.x * 7 * zoom
 				&& isoPoint.x < focusPoint.x + Helper.TILESIZE.x * 7 * zoom
-				&& isoPoint.y > focusPoint.y - Helper.TILESIZE.y * 21 * zoom && isoPoint.y < focusPoint.y
-				+ Helper.TILESIZE.y * 21 * zoom);
+				&& isoPoint.y > focusPoint.y - Helper.TILESIZE.y * 21 * zoom 
+				&& isoPoint.y < focusPoint.y + Helper.TILESIZE.y * 21 * zoom);
 
 	}
 
@@ -202,11 +204,12 @@ public class Environment extends Actor {
 	 * 
 	 */
 	public void resolveObstacles(float dt) {
-		int size = obstacles.size();
+	
+			int size = obstacles.size();
+			for (int i = 0; i < size; i++) {
+				obstacles.get(i).resolve(creatures);
+			}
 		
-		for (int i = 0; i < size; i++) {
-			obstacles.get(i).resolve(creatures);
-		}
 
 	}
 
@@ -249,47 +252,53 @@ public class Environment extends Actor {
 	 * to it)
 	 */
 	public void setupGame() {
-		
+
 		generateSpriteCache();
-		
-//		setState(RunningState.BEGIN_ZOOM);
-		//Camera mode will change Running_state when it's done
+
+		// setState(RunningState.BEGIN_ZOOM);
+		// Camera mode will change Running_state when it's done
 		stage.setCameraHolder(TamerStage.BEGIN_CAMERA);
-		
+
 	}
+
 	/**
 	 * @param tilemap
-	 * This method is called from TileMap at setup()
-	 * It creates a link between TileMap and environment.
-	 * This link is used to call tilemap.drawTileMap which draws the cached terrain
+	 *            This method is called from TileMap at setup() It creates a
+	 *            link between TileMap and environment. This link is used to
+	 *            call tilemap.drawTileMap which draws the cached terrain
 	 */
-	public void setTileMapObject(TileMap tilemap){
+	public void setTileMapObject(TileMap tilemap) {
 		this.tilemap = tilemap;
 	}
-	
-	public void generateSpriteCache(){
-		environmentCache = new SpriteCache(staticObjects.size() + tilemap.getNumTiles(),false);
+
+	public void generateSpriteCache() {
+		environmentCache = new SpriteCache(staticObjects.size()
+				+ tilemap.getNumTiles(), false);
 		environmentCache.beginCache();
 		tilemap.generate(environmentCache);
 		Collections.sort(staticObjects, comparator);
 		TamerStage stage = TamerStage.instance();
 
 		AssetManager assetManager = stage.getGame().getAssetManager();
-	
+
 		Vector2 help = new Vector2();
-		
+
 		for (int i = 0; i < staticObjects.size(); i++) {
 			TextureRegion texture = assetManager.get("data/graphics/sheetData",
-					TextureAtlas.class).findRegion(staticObjects.get(i).getRenderType());
+					TextureAtlas.class).findRegion(
+					staticObjects.get(i).getRenderType());
 			help.set(Helper.worldToScreen(staticObjects.get(i).getPosition()));
-			environmentCache.add(texture, help.x-staticObjects.get(i).getSize().x/2,
-					help.y, staticObjects.get(i).getSize().x,staticObjects.get(i).getSize().y);
-			
+			environmentCache.add(texture, help.x
+					- staticObjects.get(i).getSize().x / 2, help.y,
+					staticObjects.get(i).getSize().x, staticObjects.get(i)
+							.getSize().y);
+
 		}
-		
+
 		cacheID = environmentCache.endCache();
 		environmentCache.setProjectionMatrix(stage.getCamera().combined);
-		System.out.println("CAche created with "+staticObjects.size() + " objects");
+		System.out.println("CAche created with " + staticObjects.size()
+				+ " objects");
 		staticObjects.clear();
 	}
 
@@ -304,7 +313,8 @@ public class Environment extends Actor {
 	public void addObstacle(Obstacle obstacle) {
 		this.obstacles.add(obstacle);
 	}
-	public void addStaticObject(StaticObject obj){
+
+	public void addStaticObject(StaticObject obj) {
 		staticObjects.add(obj);
 	}
 
@@ -326,7 +336,7 @@ public class Environment extends Actor {
 		this.tamer = tamer;
 		tamerShadowPosition = tamer.getShadow().getCenterPosition();
 	}
-	
+
 	public void setStage(TamerStage stage) {
 		this.stage = stage;
 	}
@@ -335,7 +345,7 @@ public class Environment extends Actor {
 		for (GameObject go : gameobjects) {
 			go.dispose(this);
 		}
-		environmentCache.dispose();//This is important
+		environmentCache.dispose();// This is important
 		gameobjects.clear();
 		carbages.clear();
 		newobjects.clear();
@@ -358,7 +368,7 @@ public class Environment extends Actor {
 	public ArrayList<Obstacle> getObstacles() {
 		return obstacles;
 	}
-	
+
 	public Vector2 getTamerShadowPosition() {
 		return tamerShadowPosition;
 	}

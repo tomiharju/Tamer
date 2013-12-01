@@ -1,24 +1,16 @@
 package com.me.tamer.gameobjects.tiles;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tamer.core.Hud;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.AntOrc;
-import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
-import com.me.tamer.gameobjects.renderers.RenderPool;
-import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.GameObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tamer.Tamer;
 import com.me.tamer.utils.EventPool;
-import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.tEvent;
 
@@ -66,7 +58,10 @@ public class SpawnPoint extends StaticObject{
 		float angle = Float.parseFloat(vel);
 		this.spawnVelocity = new Vector2(1,1);
 		spawnVelocity.nor();
+		
 		this.spawnVelocity.setAngle(angle);		
+		//Add small value to angle to avoid even numbers ( fucks up collision )
+		spawnVelocity.set(spawnVelocity.x + 0.01f, spawnVelocity.y + 0.01f);
 	}
 	
 	public void setSleepTime(String time){
