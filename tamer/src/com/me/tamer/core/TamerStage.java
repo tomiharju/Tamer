@@ -25,7 +25,7 @@ public class TamerStage extends Stage{
 	private final float BEGIN_CAMERA_SPEED = 8f;
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
 	private final float BEGIN_ZOOM_AMOUNT = 1.8f;
-	
+	private final float ZOOM_DEFAULT = 1.1f;
 	private OrthographicCamera camera, uiCamera;
 	
 	private TamerGame game;
@@ -206,7 +206,8 @@ public class TamerStage extends Stage{
 				cameraPosition.set( help );	
 				
 				camera.zoom -= BEGIN_ZOOM_SPEED;
-				if(camera.zoom <= 1.0f) {
+				if(camera.zoom < ZOOM_DEFAULT) {
+					camera.zoom = ZOOM_DEFAULT;
 					setCameraHolder(TAMER_CAMERA);
 //					environment.setState(RunningState.TAMER_ENTER);
 //					sound.play(TamerSound.OPENING);

@@ -28,7 +28,7 @@ public class WormPart extends DynamicObject implements Creature{
 	private float levelOfDecay = 1;
 	private boolean attacked = false;
 	
-	private float joint_length = 0.4f;
+	private float joint_length = 0.3f;
 	private float lengthAngle = 0;
 	private int ordinal;
 	private float invMass;
@@ -60,7 +60,8 @@ public class WormPart extends DynamicObject implements Creature{
 		this.worm = worm;
 		setGraphics(TamerAnimations.WORMHEAD);
 		partType = TYPE_HEAD;
-		invMass = 0;//1 / mass;
+		mass = 10;
+		invMass = 1 / mass;
 		setPosition(pos);
 		setVelocity(vel);
 		setHeading(vel);

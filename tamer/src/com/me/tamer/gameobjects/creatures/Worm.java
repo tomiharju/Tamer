@@ -19,7 +19,7 @@ import com.me.tamer.utils.DrawOrderComparator;
 public class Worm extends DynamicObject implements Creature {
 
 	private final int NUMBER_PARTS = 9;
-	private final float FINAL_SPEED = 2.0f;
+	private final float FINAL_SPEED = 10.0f;
 	private ArrayList<WormPart> parts;
 	private float speed = FINAL_SPEED;
 	private WormPart head = null;
@@ -190,7 +190,7 @@ public class Worm extends DynamicObject implements Creature {
 		bound = true;
 		disableCollision();
 		parts.get(parts.size() - 1).setInvMass(0);
-		speed = 0;
+		//speed = 0;
 	}
 
 	@Override
