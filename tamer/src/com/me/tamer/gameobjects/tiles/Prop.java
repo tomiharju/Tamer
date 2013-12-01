@@ -81,11 +81,6 @@ public class Prop extends StaticObject implements Obstacle {
 			Vector2 s = ((DynamicObject) creatures.get(i)).getSize();
 			// Prop position help vector
 			pos.set(getPosition());
-
-			/*if (temp.x + s.x / 2 > pos.x - getBounds()
-					&& temp.x - s.x / 2 < pos.x 
-					&& temp.y + s.y > pos.y
-					&& temp.y < pos.y + getBounds()) {*/
 			if(temp.x + s.x / 2 > pos.x - getBounds() 
 					&& temp.x - s.x / 2 < pos.x  
 					&& temp.y + s.y / 2 > pos.y 
@@ -93,17 +88,8 @@ public class Prop extends StaticObject implements Obstacle {
 				
 				collisionAxis.set(getCollisionNormal(temp));
 				impulse.set(collisionAxis.tmp().mul(-overlap));
-			//	impulse.set(collisionAxis.tmp().mul(creatures.get(i).getSpeed() * 3 * Gdx.graphics.getDeltaTime()));
 				newHeading.set(creatures.get(i).getHeading().tmp().add(collisionAxis));
-			
 				newHeading.add(collisionAxis.tmp().mul(0.1f));
-			/*	headingAdjust.set(Helper.projection(((DynamicObject) creatures.get(i))
-						.getHeading(), collisionAxis));
-				newHeading.set(creatures.get(i).getHeading().tmp()
-						.sub(headingAdjust));
-			*/
-				//((DynamicObject) creatures.get(i)).setHeading(newHeading);
-				
 				((DynamicObject) creatures.get(i)).setHeading(newHeading);
 				((Worm) creatures.get(i)).getHead().getPosition().add(impulse);
 			}
