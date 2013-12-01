@@ -86,21 +86,25 @@ public class Prop extends StaticObject implements Obstacle {
 					&& temp.x - s.x / 2 < pos.x 
 					&& temp.y + s.y > pos.y
 					&& temp.y < pos.y + getBounds()) {*/
-			if(temp.x + s.x / 2 > pos.x - getBounds()
-					&& temp.x - s.x / 2 < pos.x 
-					&& temp.y + s.y / 2> pos.y
-					&& temp.y - s.y / 2< pos.y + getBounds()){
+			if(temp.x + s.x / 2 > pos.x - getBounds() 
+					&& temp.x - s.x / 2 < pos.x  
+					&& temp.y + s.y / 2 > pos.y 
+					&& temp.y - s.y / 2 < pos.y + getBounds() ){
 				
 				collisionAxis.set(getCollisionNormal(temp));
-			
 				impulse.set(collisionAxis.tmp().mul(-overlap));
-				headingAdjust.set(Helper.projection(((DynamicObject) creatures.get(i))
+			//	impulse.set(collisionAxis.tmp().mul(creatures.get(i).getSpeed() * 3 * Gdx.graphics.getDeltaTime()));
+				newHeading.set(creatures.get(i).getHeading().tmp().add(collisionAxis));
+			
+				newHeading.add(collisionAxis.tmp().mul(0.1f));
+			/*	headingAdjust.set(Helper.projection(((DynamicObject) creatures.get(i))
 						.getHeading(), collisionAxis));
 				newHeading.set(creatures.get(i).getHeading().tmp()
 						.sub(headingAdjust));
-			
+			*/
 				//((DynamicObject) creatures.get(i)).setHeading(newHeading);
-				((DynamicObject) creatures.get(i)).setHeading(collisionAxis.rotate(90));
+				
+				((DynamicObject) creatures.get(i)).setHeading(newHeading);
 				((Worm) creatures.get(i)).getHead().getPosition().add(impulse);
 			}
 		}
@@ -111,12 +115,12 @@ public class Prop extends StaticObject implements Obstacle {
 
 		shapeRndr.setColor(1, 1, 1, 1);
 		temp.set(Helper.worldToScreen(getPosition()));
+		for(int i = 0 ; i < vertices.size() ; i ++){
 		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x, temp.y, -getBounds(), getBounds());
+		temp.set(Helper.worldToScreen(vertices.get(i)));
+		shapeRndr.rect(temp.x - 0.1f, temp.y - 0.1f, 0.2f, 0.2f);
 		shapeRndr.end();
-		shapeRndr.begin(ShapeType.Rectangle);
-		shapeRndr.rect(temp.x - 0.1f, temp.y - 0.1f, .2f, .2f);
-		shapeRndr.end();
+		}
 		/*
 		 * shapeRndr.setColor(1, 1, 1, 1);
 		 * temp.set(Helper.worldToScreen(getPosition()));
@@ -148,7 +152,7 @@ public class Prop extends StaticObject implements Obstacle {
 	 */
 	public void createVertices() {
 		vertices = new ArrayList<Vector2>(4);
-		Vector2 v1 = new Vector2((getPosition().x - getBounds() / 2),
+	/*	Vector2 v1 = new Vector2((getPosition().x - getBounds() / 2),
 				(getPosition().y));
 		Vector2 v2 = new Vector2((getPosition().x - getBounds() / 2),
 				(getPosition().y + getBounds()));
@@ -156,6 +160,15 @@ public class Prop extends StaticObject implements Obstacle {
 				(getPosition().y + getBounds()));
 		Vector2 v4 = new Vector2((getPosition().x + getBounds() / 2),
 				(getPosition().y));
+		*/
+		Vector2 v1 = new Vector2((getPosition().x),
+				(getPosition().y));
+		Vector2 v2 = new Vector2((getPosition().x - getBounds()),
+				(getPosition().y));
+		Vector2 v3 = new Vector2((getPosition().x - getBounds()),
+				(getPosition().y + getBounds()));
+		Vector2 v4 = new Vector2((getPosition().x),
+				(getPosition().y) + getBounds());
 		vertices.add(v1);
 		vertices.add(v2);
 		vertices.add(v3);
@@ -249,8 +262,8 @@ public class Prop extends StaticObject implements Obstacle {
 	public Vector2 projectPoint(Vector2 axis,Vector2 creaturePos) {
 
 		float center = axis.dot(creaturePos);
-		float min = center - 0.6f;
-		float max = center + 0.6f;
+		float min = center - 0.5f;
+		float max = center - 0.5f;
 		return projectResult2.set(min, max);
 		
 	}
