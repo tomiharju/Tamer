@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
+import com.badlogic.gdx.scenes.scene2d.ui.SplitPane.SplitPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -33,9 +35,9 @@ public class Hud extends Group {
 	private Skin skin;
 	private TamerStage stage;
 	private Image bgImage;
+	private Image lostImage;
 
-	private Label remainingLabel, survivedLabel, deadLabel, fpsLabel;
-	
+	private Label beastsLabel, capturedLabel, lostLabel, fpsLabel;
 	
 	public static final int LABEL_REMAINING = 0, LABEL_SURVIVED = 1,
 			LABEL_DEAD = 4, LABEL_FPS = 2;
@@ -90,7 +92,7 @@ public class Hud extends Group {
 		skin.add("default", textButtonStyle);
 
 		// Actors
-		menuButton = new TextButton("Menu", textButtonStyle);
+		menuButton = new TextButton("I I", textButtonStyle);
 		menuButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
 				stage.getGame().setScreen(ScreenType.PAUSE);
@@ -105,22 +107,28 @@ public class Hud extends Group {
 		labelStyle_red.font = skin.getFont("default");
 		labelStyle_red.fontColor = new Color(Color.RED);
 
-		remainingLabel = new Label("", labelStyle_white);
-		deadLabel = new Label("", labelStyle_white);
-		survivedLabel = new Label("", labelStyle_white);
+		beastsLabel = new Label("", labelStyle_white);
+		lostLabel = new Label("", labelStyle_white);
+		capturedLabel = new Label("", labelStyle_white);
 		fpsLabel = new Label("FPS: ", labelStyle_white);
 		
 
 		FileHandle skinFile = Gdx.files.internal("skin/uiskin.json");
 		skin = new Skin(skinFile);
-
+		
+		
+		//Hud icons
+		lostImage = new Image(new Texture(
+				Gdx.files.internal("data/graphics/x.png")));
+		
+		SplitPaneStyle sty = new SplitPaneStyle();
 		Table table = new Table(skin);
 		table.setFillParent(true);
 
 		table.add(menuButton).uniform();
-		table.add(remainingLabel).uniform();
-		table.add(survivedLabel).uniform();
-		table.add(deadLabel).uniform();
+		table.add(beastsLabel).uniform();
+		table.add(capturedLabel).uniform();
+		table.add(lostLabel).uniform();
 		table.add(fpsLabel).uniform();
 		
 		table.setBounds(x, y,w, h);
@@ -134,15 +142,16 @@ public class Hud extends Group {
 		helpLabel.setVisible(false);
 //		helpLabel.setPosition( ( Gdx.graphics.getWidth() - noEscapeLabel.getWidth() ) / 2, Gdx.graphics.getHeight() / 2);
 		
-//		fenceArrow = new Image(new Texture(
-//				Gdx.files.internal("data/graphics/.png")));
-		
+		fenceArrow = new Image(new Texture(
+				Gdx.files.internal("data/graphics/arrow.png")));
+		fenceArrow.setVisible(false);
 
 		// Register actors	
 		this.addActor(bgImage);
 		this.addActor(table);
 		this.addActor(helpLabel);
 		this.addActor(noEscapeLabel);
+		this.addActor(fenceArrow);
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha) {
@@ -160,15 +169,15 @@ public class Hud extends Group {
 	public void updateLabel(WormState state, int amount){
 		switch(state){
 		case DEFAULT: {
-			remainingLabel.setText("R: " + amount);
+			beastsLabel.setText("Beasts: " + amount);
 			break;
 		}
 		case FENCE: {
-			survivedLabel.setText("S: " + amount);
+			capturedLabel.setText("Captured: " + amount);
 			break;
 		}	
 		case DEAD: {
-			deadLabel.setText("D: " + amount);
+			lostLabel.setText("Lost: " + amount);
 			break;
 		}
 		}

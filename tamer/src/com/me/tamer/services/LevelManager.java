@@ -44,12 +44,12 @@ public class LevelManager {
         //create the level 2
         Level level2 = new Level( 2 );
         level2.setName( "Enemy demo" );
-        level2.setHelpText( "Kill the enemies with spears!" );
+        level2.setHelpText( "Kill enemies with spears!" );
         
         // create the level 1
         Level level1 = new Level( 1 );
         level1.setName( "Spear demo" );
-        level1.setHelpText("Catch them with spears \n before they dive into swamp!");
+        level1.setHelpText("Catch the beasts with spears \n before they dive into swamp!");
         
         // create the level 0
         Level level0 = new Level( 0 );

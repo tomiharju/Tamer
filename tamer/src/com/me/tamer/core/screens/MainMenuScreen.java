@@ -18,7 +18,7 @@ public class MainMenuScreen extends AbstractMenu{
 		super.create();
 		 // retrieve the default table actor
 		Table table = super.getTable();
-	    table.add( "TAMER" ).spaceBottom( 50 );
+	    table.add( "the Tamer" ).spaceBottom( 50 );
 	    table.row();
 	
 	    table.add( newGameButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom( 10 );
@@ -26,9 +26,7 @@ public class MainMenuScreen extends AbstractMenu{
 	    table.add( levelsButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom( 10 );
 	    table.row();
 	    table.add( optionsButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom( 10 );
-	    table.row();	
-	    table.add( exitButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom( 10 );
-	    table.row();	
+	    table.row();		
 	}
 	
 	@Override

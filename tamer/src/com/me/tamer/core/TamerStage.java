@@ -244,6 +244,7 @@ public class TamerStage extends Stage{
 		hud.showNoEscape(false);
 	}
 	
+	//Propably lacking stuff
 	public void dispose(){
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Disposing");
 		controlContainer.dispose();
