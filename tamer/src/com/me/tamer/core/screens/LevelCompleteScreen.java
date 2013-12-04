@@ -37,11 +37,11 @@ public class LevelCompleteScreen extends AbstractMenu{
 		Table table = super.getTable();
 	    table.add( endCapturedWorms ).uniform().spaceBottom(10);
 	    table.row();
-	    table.add( nextLevelButton ).size(Gdx.graphics.getWidth() /3, Gdx.graphics.getHeight() / 15).uniform().spaceBottom(10);
+	    table.add( nextLevelButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom(10);
 	    table.row();
-	    table.add( playAgainButton ).size(Gdx.graphics.getWidth() /3, Gdx.graphics.getHeight() / 15).uniform().spaceBottom(10);
+	    table.add( playAgainButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom(10);
 	    table.row();
-	    table.add( exitButton ).size(Gdx.graphics.getWidth() /3, Gdx.graphics.getHeight() / 15).uniform().spaceBottom(10);
+	    table.add( mainMenuButton ).size(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() / 12).uniform().spaceBottom(10);
 	    
 	    stage.addActor(table);
 	    table.setVisible(false);
@@ -50,6 +50,8 @@ public class LevelCompleteScreen extends AbstractMenu{
 	public void showScreenContent(){
 		music.stop();
 		
+		nextLevelButton.setVisible(true);
+		
 		//Good and bad ending for a level
 		if ( game.getPlayScreen().getStage().getLevel().getCaptured() > 0){
 			endCapturedWorms.setText("You captured " + game.getPlayScreen().getStage().getLevel().getCaptured() +" beasts");
@@ -57,10 +59,15 @@ public class LevelCompleteScreen extends AbstractMenu{
 		} else {
 			endCapturedWorms.setText("You failed");
 			sound.play(TamerSound.LEVEL_END_BAD);
+			nextLevelButton.setVisible(false);
 		}
 		
 		Table table = super.getTable();
 		table.setVisible(true);
+		
+		if ( game.getPlayScreen().getStage().getLevel().getId() == 3){
+			nextLevelButton.setVisible(false);
+		}
 	}
 	
 	@Override

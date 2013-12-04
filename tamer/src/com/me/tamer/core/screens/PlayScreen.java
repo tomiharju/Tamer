@@ -9,8 +9,6 @@ import com.me.tamer.services.MusicManager.TamerMusic;
 
 public class PlayScreen extends AbstractScreen{
 
-	private Stage stage;
-	
 	public PlayScreen(final TamerGame game){
 		super(game);
 		create();

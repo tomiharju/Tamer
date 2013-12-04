@@ -188,6 +188,7 @@ public class TamerGame extends Game {
 	@Override
 	public void resume() {
 		super.resume();
+		System.out.println("resuming game");
 		Gdx.app.log(TamerGame.LOG, "Resuming game");
 		System.out.println("---------------LOL RESUME---------------------");
 	}

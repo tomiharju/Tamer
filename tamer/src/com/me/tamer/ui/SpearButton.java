@@ -25,7 +25,7 @@ public class SpearButton extends Actor {
 	private Vector2 input = new Vector2();
 	private Vector2 localCenter = new Vector2();
 	
-	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 165,100);
+	final Vector2 restingpoint = new Vector2(Gdx.graphics.getWidth() - 180,120);
 	final float BUTTON_SIZE = 180;
 
 	boolean buttonPressed = false;
