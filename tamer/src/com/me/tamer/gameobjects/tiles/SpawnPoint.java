@@ -73,7 +73,6 @@ public class SpawnPoint extends StaticObject{
 	}
 	
 	public void addWorm(Worm worm){
-		//update level when worm is added
 		if(stage == null ) stage = TamerStage.instance();
 		stage.getLevel().addWorm(worm);
 		

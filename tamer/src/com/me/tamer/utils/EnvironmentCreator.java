@@ -14,7 +14,7 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
 
 
 /**
- * @author tharju
+ * @author kesyttajat
  * Utility class that handles the environment creation
  * Is responsible for creating gameobjects via GameObjectFactory
  * Reads level data from level[x].properties
@@ -28,12 +28,7 @@ public class EnvironmentCreator {
 	 * Creates a hashtable to hold configurations for each object read from xml file
 	 * Calls GameObjectFactory.createGameObject with desired object type, and read configuration map.
 	 */
-	
-	
-	
 	public static Environment create(int level_number){
-
-		
 		Environment environment = new Environment();
 		XmlReader reader = new XmlReader();
 		try {
@@ -83,7 +78,6 @@ public class EnvironmentCreator {
 					addSubObjects(gameobject, objectToAdd, objectToAdd.getClass().getName(),environment);
 				}
 				objectToAdd.setup(environment);
-				
 			}
 			
 			//Once xml file is completely read, and all objects are added, return new fresh level.

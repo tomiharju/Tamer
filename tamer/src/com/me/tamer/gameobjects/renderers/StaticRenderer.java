@@ -49,7 +49,6 @@ public class StaticRenderer implements Renderer {
 	@Override
 	public void setPosition(Vector2 pos) {
 		sprite.setPosition(pos.x - sprite.getWidth() / 2, pos.y);
-//		sprite.setPosition(pos.x, pos.y);
 	}
 
 	public void setBounds(float x, float y, float width, float height) {

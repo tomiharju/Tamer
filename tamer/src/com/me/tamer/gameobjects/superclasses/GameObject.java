@@ -26,7 +26,6 @@ public interface GameObject{
 	 */
 	public void draw(SpriteBatch batch);
 	public void debugDraw(ShapeRenderer shapeRndr);
-	
 
 	/**
 	 * Sets the value isCarbage = true

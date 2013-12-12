@@ -21,7 +21,7 @@ public class TextureManager {
 		//Tamer skil graphics
 		TAMER_SHADOW("tamershadow"),
 		SCREAM("scream"),
-		TARGET_TILE("targetTile"),
+		TARGET_INDICATOR("targetTile"),
 		SPEAR_CRACK("spearCrack");
 
 		private final String fileName;

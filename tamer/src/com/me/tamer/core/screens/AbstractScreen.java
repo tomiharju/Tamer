@@ -18,7 +18,7 @@ public class AbstractScreen implements Screen{
     protected final TamerGame game;
     protected Stage stage;
     private BitmapFont font;
-    private SpriteBatch batch;
+//    private SpriteBatch batch;
     private Skin skin;
     private Table table;
     protected Color bgColor = new Color(Color.BLACK);
@@ -42,13 +42,13 @@ public class AbstractScreen implements Screen{
         return font;
     }
 
-    public SpriteBatch getBatch()
-    {
-        if( batch == null ) {
-            batch = new SpriteBatch();
-        }
-        return batch;
-    }
+//    public SpriteBatch getBatch()
+//    {
+//        if( batch == null ) {
+//            batch = new SpriteBatch();
+//        }
+//        return batch;
+//    }
     
     protected Skin getSkin()
     {
@@ -130,7 +130,7 @@ public class AbstractScreen implements Screen{
 
         // as the collaborators are lazily loaded, they may be null
         if( font != null ) font.dispose();
-        if( batch != null ) batch.dispose();
+//        if( batch != null ) batch.dispose();
         if( skin != null ) skin.dispose();
     }
 }

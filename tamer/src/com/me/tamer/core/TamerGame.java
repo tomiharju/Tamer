@@ -87,7 +87,6 @@ public class TamerGame extends Game {
 		mainMenuScreen = new MainMenuScreen(this);
 		pauseScreen = new PauseScreen(this);
 		levelsScreen = new LevelsScreen(this);
-		
 		loadingScreen = new LoadingScreen(this);
 		loadingScreen.initialize(assetManager);
 		
@@ -187,7 +186,6 @@ public class TamerGame extends Game {
 	@Override
 	public void resume() {
 		super.resume();
-		System.out.println("resuming game");
 		Gdx.app.log(TamerGame.LOG, "Resuming game");
 	}
 
