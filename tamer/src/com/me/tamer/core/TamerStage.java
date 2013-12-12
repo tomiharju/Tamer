@@ -238,6 +238,8 @@ public class TamerStage extends Stage{
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Disposing");
 		controlContainer.dispose();
 		environment.dispose();
+
+		super.getSpriteBatch().dispose();
 		
 		environment = null;
 		level = null;
