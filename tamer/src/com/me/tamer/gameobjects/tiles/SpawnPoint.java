@@ -15,9 +15,9 @@ import com.me.tamer.utils.RuntimeObjectFactory;
 import com.me.tamer.utils.tEvent;
 
 /**
- * @author tharju
- * Spawn point object for worms.
- * Knows how many worms to spawn, and the time interval to spawn them
+ * @author Tamer
+ * Spawn point object for worms, tamer and ants.
+ * Knows how many creatures to spawn, and the time interval to spawn them
  */
 public class SpawnPoint extends StaticObject{
 	private String spawnType;
@@ -28,7 +28,6 @@ public class SpawnPoint extends StaticObject{
 	private boolean isTamerSpawn = false;
 	//IMPORTANT: spawn number is used to distinguish spawns from each other.
 	private int spawnId = 0;
-	private final int TAMER_SPAWN_TIME = 3;
 	private String waypoint;
 		
 	//EXPERIMENTAL STUFF
@@ -98,9 +97,7 @@ public class SpawnPoint extends StaticObject{
 			RuntimeObjectFactory.getObjectFromPool("worm"+spawnId);
 		}else if(spawnType.equalsIgnoreCase("antorc")){
 			Gdx.app.debug(TamerGame.LOG, this.getClass()
-					.getSimpleName() + " :: Ant entered");
-			//RuntimeObjectFactory.getObjectFromPool("antorc"+spawnId);
-			
+					.getSimpleName() + " :: Ant entered");			
 			//CHANGE SPAWNING IMPLEMENTATION
 			AntOrc orc = new AntOrc();
 			orc.setPosition(getPosition());

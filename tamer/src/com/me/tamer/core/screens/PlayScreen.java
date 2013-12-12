@@ -1,14 +1,17 @@
 package com.me.tamer.core.screens;
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Color;
+
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.services.MusicManager.TamerMusic;
 
 public class PlayScreen extends AbstractScreen{
+
 	Color bgColor;
-	
+
 	public PlayScreen(final TamerGame game){
 		super(game);
 		create();
@@ -20,29 +23,24 @@ public class PlayScreen extends AbstractScreen{
 		game.getMusicManager().setVolume(1.0f);
 		game.getMusicManager().play( TamerMusic.LEVEL ); 
 
-		stage = TamerStage.instance();
-		((TamerStage)stage).setup(game);
+		tamerStage = TamerStage.instance();
+		tamerStage.setup(game);
 	}
 	
 	@Override
 	public void show() {
 		super.show();
 		game.getMusicManager().resume();
-		
-		Gdx.input.setInputProcessor( stage );
-//		if(((TamerStage)stage).getGameState() == TamerStage.GAME_PAUSED){
-//				((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
-//		}	
+		Gdx.input.setInputProcessor( tamerStage );
 	}
 	
 	public void dispose(){
-		stage.dispose();
+		tamerStage.dispose();
 	}
 
 	@Override
 	public void hide(){
 		super.hide();
-		
 	}
 	
 	@Override
@@ -59,13 +57,13 @@ public class PlayScreen extends AbstractScreen{
 	
 	@Override
     public void render( float delta ){
-		((TamerStage)stage).updateCamera(delta);
-		stage.act( delta );
-		stage.draw();
+		tamerStage.updateCamera(delta);
+		tamerStage.act( delta );
+		tamerStage.draw();
     }
 	
 	public TamerStage getStage(){
-		return (TamerStage)stage;
+		return tamerStage;
 	}
 }
 	

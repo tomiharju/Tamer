@@ -4,16 +4,13 @@ import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.Environment.RunningState;
 import com.me.tamer.services.SoundManager;
-import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.ui.ControlContainer;
 import com.me.tamer.utils.Helper;
 
@@ -21,8 +18,8 @@ public class TamerStage extends Stage{
 	public static TamerStage instance;
 	
 	float ASPECT_RATIO =(float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
-	private final float BEGIN_ZOOM_SPEED = 0.003F;
-	private final float BEGIN_CAMERA_SPEED = 8f;
+	private final float BEGIN_ZOOM_SPEED = 0.009F;
+	private final float BEGIN_CAMERA_SPEED = 15f;
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
 	private final float BEGIN_ZOOM_AMOUNT = 1.4f;
 	private final float ZOOM_DEFAULT = 1.1f;
@@ -75,7 +72,7 @@ public class TamerStage extends Stage{
 	SoundManager sound = null;
 	
 	public static TamerStage instance(){
-		if(instance==null) instance = new TamerStage();
+		if(instance == null) instance = new TamerStage();
 		return instance;
 	}
 	
@@ -238,12 +235,12 @@ public class TamerStage extends Stage{
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Disposing");
 		controlContainer.dispose();
 		environment.dispose();
-
+		hud.dispose();
 		super.getSpriteBatch().dispose();
-		
 		environment = null;
 		level = null;
 		this.getActors().clear();
+		instance = null;
 	}
 	
 	public void setCameraHolder(int holder){

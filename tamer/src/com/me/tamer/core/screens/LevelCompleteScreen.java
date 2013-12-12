@@ -2,13 +2,9 @@ package com.me.tamer.core.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.services.MusicManager;
 import com.me.tamer.services.SoundManager.TamerSound;
@@ -22,6 +18,7 @@ public class LevelCompleteScreen extends AbstractMenu{
 	public LevelCompleteScreen(TamerGame game) {
 		super(game);
 		bgColor = new Color(1,1,1,0);
+		fadingDone = false;
 		create();
 	}
 	
@@ -75,7 +72,7 @@ public class LevelCompleteScreen extends AbstractMenu{
 		System.out.println("color Alpha: " +bgColor.a);
         bgImage.setColor(bgColor.r,bgColor.g,bgColor.b,bgColor.a);
         if (bgColor.a==1.0f)fadingDone = true;
-		stage.act( delta );
+        stage.act( delta );
         stage.draw();
     }
 	
@@ -89,5 +86,11 @@ public class LevelCompleteScreen extends AbstractMenu{
 		
 		Table table = super.getTable();
 		if (table!=null)table.setVisible(false);
+	}
+	
+	@Override
+	public void hide(){
+		super.hide();
+//		resetFadingDone();
 	}
 }

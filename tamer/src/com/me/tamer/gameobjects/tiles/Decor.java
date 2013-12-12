@@ -4,9 +4,12 @@ import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.utils.Helper;
 /**
- * @author tomi Decor are all the non-interactive gameobjects in the level,
- *         props are trees, rocks, stumps and all the other objects which only
- *         affect with their rigidbodies and graphical aspect.
+ * @author Tamer
+ *  Decor are all the non-interactive gameobjects in the level.
+ *  Decor can be drawn with spritecache or as independet sprite ( Selectable in TamerWorldEditor )
+ *  We can draw a lot of decor with spritecache, but if we need to make objects "hide" behind a decor
+ *  it needs to be drawn as a normal sprite.
+ *  
  */
 public class Decor extends StaticObject{
 	boolean cacheable = true;

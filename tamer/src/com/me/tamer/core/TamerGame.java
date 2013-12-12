@@ -6,7 +6,6 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.me.tamer.core.screens.AbstractScreen;
@@ -19,7 +18,6 @@ import com.me.tamer.core.screens.PlayScreen;
 import com.me.tamer.services.LevelManager;
 import com.me.tamer.services.MusicManager;
 import com.me.tamer.services.PreferenceManager;
-import com.me.tamer.services.SoundManager;
 import com.me.tamer.utils.MusicAccessor;
 import com.me.tamer.utils.ScreenAccessor;
 
@@ -36,16 +34,10 @@ public class TamerGame extends Game {
 		NEW_PLAY, RESUME_PLAY, MENU, PAUSE, LEVELS, COMPLETE, LOADING
 	}
 
-	// FPS limiting
-	int FPS = 30;
-	long lastFrame = 0;
-	long curFrame = System.currentTimeMillis();
-
 	// Services
 	private MusicManager musicManager;
 	private PreferenceManager preferenceManager;
 	private LevelManager levelManager;
-	private SoundManager soundManager;
 	private AssetManager assetManager;
 	protected TweenManager tweenManager;
 
@@ -85,24 +77,10 @@ public class TamerGame extends Game {
 		mainMenuScreen = new MainMenuScreen(this);
 		pauseScreen = new PauseScreen(this);
 		levelsScreen = new LevelsScreen(this);
-		loadingScreen = new LoadingScreen(this);
-		loadingScreen.initialize(assetManager);
-
-		levelCompleteScreen = new LevelCompleteScreen(this);
+		loadingScreen = new LoadingScreen(this,assetManager);
 
 		// start the game with main menu screen
 		setScreen(ScreenType.LOADING);
-	}
-
-	public PlayScreen createNewPlayScreen() {
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
-				+ " :: Reseting hud");
-
-		// dispose old before making new one
-		if (playScreen != null)
-			playScreen.dispose();
-		playScreen = new PlayScreen(this);
-		return playScreen;
 	}
 
 	@Override
@@ -119,6 +97,7 @@ public class TamerGame extends Game {
 				levelCompleteScreen.showScreenContent();
 				tweenManager = null;
 				fading = false;
+				
 				//set levelComplete screen officially
 				setScreen(levelCompleteScreen);
 			}
@@ -130,7 +109,8 @@ public class TamerGame extends Game {
 				+ " :: Setting screen " + type);
 		switch (type) {
 		case NEW_PLAY:
-			super.setScreen(createNewPlayScreen());
+			this.playScreen = new PlayScreen(this);
+			super.setScreen( playScreen );
 			break;
 		case RESUME_PLAY:
 			super.setScreen(playScreen);
@@ -145,7 +125,8 @@ public class TamerGame extends Game {
 			super.setScreen(levelsScreen);
 			break;
 		case COMPLETE:
-			levelCompleteScreen.resetFadingDone();
+//			levelCompleteScreen.resetFadingDone();
+			levelCompleteScreen = new LevelCompleteScreen(this);
 			tweenManager = new TweenManager();
 			// fade screen tween
 			Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
@@ -187,6 +168,10 @@ public class TamerGame extends Game {
 		Gdx.app.log(TamerGame.LOG, "Disposing game");
 		assetManager.dispose();
 
+	}
+	
+	public LevelCompleteScreen getLevelCompleteScreen(){
+		return levelCompleteScreen;
 	}
 
 	public PlayScreen getPlayScreen() {

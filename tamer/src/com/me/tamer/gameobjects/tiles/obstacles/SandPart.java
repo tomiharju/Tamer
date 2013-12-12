@@ -1,7 +1,6 @@
 package com.me.tamer.gameobjects.tiles.obstacles;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
@@ -17,7 +16,6 @@ public class SandPart extends StaticObject{
 
 	public void setup(Environment environment){
 		environment.addStaticObject(this);
-//		environment.addNewObject(this);
 		setZindex(-1);
 		setAnimState(20);
 	}

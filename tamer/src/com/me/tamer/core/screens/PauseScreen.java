@@ -31,7 +31,7 @@ public class PauseScreen extends AbstractMenu{
 		restartButton = new TextButton("Restart",textButtonStyle);
 		restartButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                game.setScreen( game.createNewPlayScreen() );
+                game.setScreen( ScreenType.NEW_PLAY );
             }
         });
 		

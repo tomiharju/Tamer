@@ -12,33 +12,32 @@ import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.utils.Helper;
 
+/**
+ * @author Tamer
+ * Superclass for all the moving objects in game.
+ *
+ */
 public abstract class DynamicObject implements GameObject {
 
-	// Someone has to fix these to private
-	private Vector2 position = new Vector2(); // "World position"
+	private Vector2 position = new Vector2(); 			// "World position"
 	private Vector2 centerPosition = new Vector2();
-	private Vector2 velocity = new Vector2(); // "World velocity"
-	private Vector2 heading = new Vector2(); // Unit vector of current velocity
+	private Vector2 velocity = new Vector2(); 			// "World velocity"
+	private Vector2 heading = new Vector2(); 			// Unit vector of current velocity
 	private Vector2 spriteHeading = new Vector2();
-	private Vector2 force = new Vector2(); // Magnitude and direction of per
-											// loop velocity increment
-	private Vector2 size = new Vector2(); // Graphics sprite size
+	private Vector2 force = new Vector2(); 			// Magnitude and direction of per
+														// loop velocity increment
+	private Vector2 size = new Vector2(); 				// Graphics sprite size
 	private float angle = 0;
-	private String renderType = null; // Graphics name, used for fetching
+	private String renderType = null; 					// Graphics name, used for fetching
 										// correct renderer for object
 	private boolean isCarbage = false; // Setting to true, causes carbage
 										// collection loop to remove this object
 										// from game
 	private boolean debug = false;
 	private int zIndex = 0; // Forced drawing order
-	private Vector2 isoHeading = new Vector2(); // Used for determining the
-												// sprite
+												
 	protected float borderOffset = 0;
-	private Vector2 zeroHeading = new Vector2(-0.5f, 1);// -1 +
-														// (float)Math.sin(Math.PI/8),1
-														// +
-														// (float)Math.cos(Math.PI/8));//-0.5f,
-														// 2.0f);//;
+	private Vector2 zeroHeading = new Vector2(-0.5f, 1);
 	private float headingAngle = 0;
 	private float spriteNumber = 0;
 	private boolean collisionDisabled = false;
@@ -57,26 +56,22 @@ public abstract class DynamicObject implements GameObject {
 	}
 
 	public void update(float dt) {
+		//Override to do nothing by default
 	}
 
 	public int solveOrientation() {
 
 		zeroHeading.nor();
 		spriteHeading.set(heading);
-		//quick fix to the issue
 		if (spriteHeading.y == 0) spriteHeading.y = 0.001f;
 		else if(spriteHeading.x == 0) spriteHeading.x = 0.001f;
 		
 		headingAngle = ((float) Math.acos(spriteHeading.dot(zeroHeading)
 				/ (spriteHeading.len() * zeroHeading.len())));
 		spriteNumber = ((float) (headingAngle / Math.PI * 180 / 45));
-
 		// cannot be below zero
 		if (spriteNumber <= 0)
 			spriteNumber = 0.001f;
-//		if(spriteNumber == 1)
-//			spriteNumber = -0.001f;
-		
 		if (spriteHeading.x > zeroHeading.x && spriteHeading.y > 0)
 			spriteNumber = (8 - spriteNumber);
 		else if (spriteHeading.x > -zeroHeading.x && spriteHeading.y < 0)
@@ -86,11 +81,11 @@ public abstract class DynamicObject implements GameObject {
 		return (int)(spriteNumber);
 	}
 	
-	public void playSound(TamerSound s){
+	public void playSound(TamerSound newsound){
 		if (sound == null) sound = SoundManager.instance();
 		
-		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Playing sound: " +s.name());
-		sound.play(s);
+		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Playing sound: " +newsound.name());
+		sound.play(newsound);
 	}
 
 	@Override

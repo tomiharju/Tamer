@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.tamer.GryphonScream;
 
 public class ControlContainer extends Group {
 	private static ControlContainer instance = null;

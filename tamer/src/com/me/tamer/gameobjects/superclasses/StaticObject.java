@@ -10,7 +10,14 @@ import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.utils.Helper;
 
+/**
+ * @author Tamer
+ * Superclass for all the static objects in game.
+ * Static objects can be drawn either by using a spritecache or by batching. ( selectable in TamerWorldEditor )
+ *
+ */
 public abstract class StaticObject implements GameObject{
+	
 	private Vector2 position		= new Vector2();
 	private Vector2 size 			= new Vector2();
 	private Vector2 centerPosition 	= new Vector2();
@@ -18,10 +25,8 @@ public abstract class StaticObject implements GameObject{
 
 	private String renderType		= null;
 	private boolean isCarbage 		= false;
-	private boolean debug 			= false;
 	private int zIndex 				= 0;
 	private float bounds = 0;
-	private boolean fading = false;
 	
 	TweenManager tweenManager;
 
@@ -29,20 +34,19 @@ public abstract class StaticObject implements GameObject{
 	public void draw(SpriteBatch batch) {
 		//Don't draw if this is dummy object
 		if(renderType != null){
-			
 			Renderer renderer = RenderPool.getRenderer(getRenderType());
 			renderer.setSize(getSize());
 			renderer.setPosition(Helper.worldToScreen(position));
 			renderer.draw(batch);
 		}	
 	}
+	public void update(float dt){
+		//Do nothing by default
+	}
 	public boolean isWithinRange(Vector2 poitn, float radius){
 		return false;
 	}
 	
-	public void update(float dt){
-		//
-	}
 	
 	@Override
 	public void markAsCarbage() {
@@ -63,14 +67,15 @@ public abstract class StaticObject implements GameObject{
 		this.size.set(x,y);
 	}
 	
+	//-------------------------------------------------------------------------
+	//Object creation methods
+	//-------------------------------------------------------------------------
 	public void setGraphics(String graphics){
 		graphics = graphics.split("\\.")[0];
 		Renderer render = RenderPool.addRendererToPool("static",graphics);
 		render.loadGraphics(graphics);
 		setRenderType(graphics);
 	}
-	
-	
 	
 	@Override
 	public void setPosition(String pos) {
@@ -80,6 +85,9 @@ public abstract class StaticObject implements GameObject{
 		this.position.set(x,y);
 	}
 	
+	//-------------------------------------------------------------------------
+	//Setters and getters
+	//-------------------------------------------------------------------------
 	public void setPosition(Vector2 pos){
 		this.position.set(pos);
 	}
