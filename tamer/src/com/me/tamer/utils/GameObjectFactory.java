@@ -14,12 +14,8 @@ import com.me.tamer.gameobjects.superclasses.GameObject;
 
 
 public class GameObjectFactory {
-	
-	
-	
 	public static GameObject createGameObject(String className, LinkedHashMap<String,String> propertyConfig){
 		try {
-			
 			Class<?> objectClass = Class.forName(className);
 			Constructor<?> constructor = objectClass.getConstructor();
 			GameObject object = (GameObject) constructor.newInstance(new Object[]{});
@@ -40,7 +36,6 @@ public class GameObjectFactory {
 				  Gdx.app.debug(TamerGame.LOG, " :: set" + entry.getKey() +" Failed to run succesfully\n" + i.getMessage());
 				  return null;
 			  }
-			 
 			}
 			Gdx.app.debug(TamerGame.LOG, " :: GameObject created {" + object.getClass().getSimpleName() + "} In memory as "+object.toString()+" \n");
 		
@@ -51,10 +46,8 @@ public class GameObjectFactory {
 			System.err.println("Unknown object type "+className+"\n");
 		} catch(Exception e){
 			e.printStackTrace();
-			
 		}
 		//If error
 		return null;
 	}
-
 }

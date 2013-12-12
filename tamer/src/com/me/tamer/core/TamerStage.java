@@ -64,13 +64,6 @@ public class TamerStage extends Stage{
 	//Helper
 	private Vector2 help = new Vector2();
 	
-	//Shaders
-	ShaderProgram shader;
-	Texture tex0,tex1,mask;
-	SpriteBatch vbatch;
-	OrthographicCamera vcam;
-	float vtime;
-	
 	//Camera begin movement
 	private Vector2 currentPosition = new Vector2();
 	
@@ -80,7 +73,6 @@ public class TamerStage extends Stage{
 	
 	//Sound
 	SoundManager sound = null;
-	
 	
 	public static TamerStage instance(){
 		if(instance == null) instance = new TamerStage();
@@ -125,10 +117,7 @@ public class TamerStage extends Stage{
         
         setGameState(GAME_RUNNING);
                 
-//        setCameraHolder(BEGIN_CAMERA);
-        
         reset();
-        
 	}  
 
 	@Override
@@ -255,7 +244,6 @@ public class TamerStage extends Stage{
 		environment = null;
 		level = null;
 		this.getActors().clear();
-		
 	}
 	
 	public void setCameraHolder(int holder){

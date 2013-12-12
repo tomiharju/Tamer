@@ -1,7 +1,5 @@
 package com.me.tamer.gameobjects.superclasses;
 
-import aurelienribon.tweenengine.TweenManager;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -46,8 +44,6 @@ public abstract class DynamicObject implements GameObject {
 	private boolean collisionDisabled = false;
 	protected boolean fading = false;
 
-	protected TweenManager tweenManager;
-	
 	//Sound
 	SoundManager sound;
 
@@ -279,8 +275,9 @@ public abstract class DynamicObject implements GameObject {
 		
 	}
 	
+	@Override
+	public void wakeUp(Environment level) {
+		// TODO Auto-generated method stub
 
-	
-	
-
+	}
 }

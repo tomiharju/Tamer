@@ -50,7 +50,6 @@ public class TileMap extends StaticObject {
 			terrain.add(tile);
 		}
 		numTiles = terrain.size();
-
 	}
 
 	public void generate(SpriteCache cache){

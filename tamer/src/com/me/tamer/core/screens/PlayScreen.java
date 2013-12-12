@@ -18,24 +18,17 @@ public class PlayScreen extends AbstractScreen{
 		game.getMusicManager().setVolume(1.0f);
 		game.getMusicManager().play( TamerMusic.LEVEL ); 
 
-		//stage has to be created after state is set to GAME_RUNNING because of the threads
 		tamerStage = TamerStage.instance();
 		tamerStage.setup(game);
-		
-//		TamerStage.gameState = TamerStage.GAME_READY;
-		//((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
+	
+
 	}
 	
 	@Override
 	public void show() {
 		super.show();
 		game.getMusicManager().resume();
-		
 		Gdx.input.setInputProcessor( tamerStage );
-		
-		//if(((TamerStage)stage).getGameState() == TamerStage.GAME_PAUSED){
-			//	((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
-		//}	
 	}
 	
 	public void dispose(){
@@ -45,8 +38,20 @@ public class PlayScreen extends AbstractScreen{
 	@Override
 	public void hide(){
 		super.hide();
-		//((TamerStage)stage).setGameState(TamerStage.GAME_PAUSED);
 	}
+	
+	@Override
+    public void pause(){
+		((TamerStage)stage).setGameState(TamerStage.GAME_PAUSED);
+        Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Pausing screen: " + getName() );
+    }
+
+    @Override
+    public void resume(){
+    	((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
+        Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Resuming screen: " + getName() );
+    }
+	
 	
 	@Override
     public void render( float delta ){

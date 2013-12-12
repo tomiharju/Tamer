@@ -23,10 +23,7 @@ import com.me.tamer.services.SoundManager;
 import com.me.tamer.utils.MusicAccessor;
 import com.me.tamer.utils.ScreenAccessor;
 
-/**
- * @author ville
- *
- */
+
 /**
  * @author ville
  * 
@@ -81,7 +78,6 @@ public class TamerGame extends Game {
 		mainMenuScreen = new MainMenuScreen(this);
 		pauseScreen = new PauseScreen(this);
 		levelsScreen = new LevelsScreen(this);
-
 		loadingScreen = new LoadingScreen(this,assetManager);
 
 		levelCompleteScreen = new LevelCompleteScreen(this);

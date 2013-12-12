@@ -20,6 +20,7 @@ public class AbstractScreen implements Screen{
     protected Stage stage;
     protected TamerStage tamerStage;
     private BitmapFont font;
+
     private Skin skin;
     private Table table;
     protected Color bgColor = new Color(Color.BLACK);
@@ -42,6 +43,7 @@ public class AbstractScreen implements Screen{
         }
         return font;
     }
+
     
     protected Skin getSkin()
     {

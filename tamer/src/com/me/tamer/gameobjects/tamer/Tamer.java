@@ -26,48 +26,44 @@ import com.me.tamer.utils.tEvent;
 
 public class Tamer extends DynamicObject {
 	
+	//Higher level entities
+	private Environment environment;
+	private ControlContainer controls;
+	
+	//Finals
 	public final static float FLYING_HEIGHT = 7.0f;
-	private float SPEED = 0f;
-	private final float AIM_SPEED = 0.001f; // heading interpolating coefficient
-
 	private final float DISTANCE_BOUNDS = 5.0f;
-	private final float SPAWN_DISTANCE = 8.0f;
 	private final float SPAWN_SPEED = 5.0f;
 	private final float SPEAR_COOL_DOWN = 0.5f;
 	
-	private boolean onSpearCoolDown = false;
-	private boolean spearOnRange = false;
-
+	//Children
 	private TamerShadow shadow = null;
 	private GryphonScream scream = null;
-	private Environment environment;
-	private Vector2 help = new Vector2();
-	private Vector2 movementAxis = new Vector2();
+	
+	//Movement
+	private float speed = 0f;
+	private Vector2 mapBounds = new Vector2();
 
-	// spear related variables
+	//Spear
 	private int spearAmount;
 	private ArrayList<Spear> spears = null;
 	private Spear spearToBePicked = null;
-	private Vector2 targetTilePosition = new Vector2();
+	private Vector2 targetIndicator = new Vector2();
 	private boolean creatureOnSpearRange = false;
 	private boolean throwSpearPossible = false;
+	private boolean onSpearCoolDown = false;
+	private boolean spearOnRange = false;
 
-	// Variables for entering the field
+	//Enter the field
 	private Vector2 spawnPosition = new Vector2();
 	private Vector2 spawnDirection = new Vector2();
-	private Vector2 isoPosition = new Vector2();
-	private Vector2 mapBounds = new Vector2();
-	private boolean enteredField = false;
-
-	private ControlContainer controls;
-
+	
+	//Help
+	private Vector2 help = new Vector2();
+	private Vector2 movementAxis = new Vector2();
+	
 	public Tamer() {
-		
-		
-		// Scream
 		scream = new GryphonScream(this);
-
-		// Shadow
 		shadow = new TamerShadow(this);
 		
 		// Z-index for drawing order
@@ -75,10 +71,9 @@ public class Tamer extends DynamicObject {
 		setGraphics(TamerAnimations.TAMER);
 		
 		controls = ControlContainer.instance();
-		
 	}
 	
-	public void wakeUp(Environment environment) {		
+	public void wakeUp(Environment environment) {	
 		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName()
 				+ " :: Tamer has woken up! " + this.toString());
 		
@@ -110,154 +105,69 @@ public class Tamer extends DynamicObject {
 		setSize(5, 3.1f);
 		setRenderType(graphics.getFileName());
 		
-		//create targettile renderer
-		Renderer render2 = RenderPool.addRendererToPool("static", TamerStatic.TARGET_TILE.getFileName() );
-		render2.loadGraphics(TamerStatic.TARGET_TILE.getFileName());
+		//create target indicator renderer
+		Renderer render2 = RenderPool.addRendererToPool("static", TamerStatic.TARGET_INDICATOR.getFileName() );
+		render2.loadGraphics(TamerStatic.TARGET_INDICATOR.getFileName());
 		render2.setSize(Helper.TILESIZE);
 	}
 
 	@Override
 	public void update(float dt) {
-		super.update(dt);
-		
 		if (environment.getState() == RunningState.TAMER_ENTER) enterField(dt);
-		else {
-			
-			shadow.getPosition().add(getHeading().tmp().mul(SPEED * dt));
-			getPosition().set(shadow.getPosition().x - FLYING_HEIGHT,
-					shadow.getPosition().y + FLYING_HEIGHT);
-			SPEED = 0;
-
-			spearToBePicked = null;
-			spearOnRange = false;
-			for (int i = 0; i < spears.size(); i++) {
-				if (shadow.getPosition().dst(spears.get(i).getPosition()) < 1) {
-					if (spears.get(i).isAttached()) {
-						spearToBePicked = spears.get(i);
-						spearOnRange = true;
-					}
-				}
-			}
-			
-			controls.setSpearOnRange( spearOnRange );
-			scream.update(dt);
-			
-			//set target tile position
-			if (!creatureOnSpearRange){
-//				targetTilePosition.set( shadow.getPosition().tmp().add(-0.5f,0.5f) );
-//				targetTilePosition.x = (float) Math.floor(targetTilePosition.x) + 1;
-//				targetTilePosition.y = (float) Math.floor(targetTilePosition.y);
-				
-				throwSpearPossible = false;
-			} else {
-				throwSpearPossible = true;
-			}
-				
-			//reset this after every loop
-			creatureOnSpearRange = false;	
-		}			
+		getPosition().add(getHeading().tmp().mul(speed * dt));
+		speed = 0;
+		resolvePossibleActions();
+		
+		scream.update(dt);
+		shadow.update(dt);
 	}
 	
-	public void enterField(float dt){
-		enteredField = false;
-		
-		if (shadow.getPosition().dst(spawnPosition) > SPAWN_DISTANCE) {
-			enteredField = true;
-		}
-
-		shadow.getPosition()
-				.add(spawnDirection.tmp().mul(SPAWN_SPEED * dt));
-		getPosition().set(shadow.getPosition().x - FLYING_HEIGHT,
-				shadow.getPosition().y + FLYING_HEIGHT);
-	}
-
 	@Override
 	public void draw(SpriteBatch batch) {
-		
 		//Quick fix to issue that tamer is drawn before he is supposed to
 		if (environment.getState() == RunningState.TAMER_ENTER || environment.getState() == RunningState.NORMAL){
 			super.draw(batch);
 			
-			//Draw targetTile if spear not on range
 			if (!spearOnRange && throwSpearPossible){
-				Renderer renderer2 = RenderPool.getRenderer( TamerStatic.TARGET_TILE.getFileName() );
+				Renderer renderer2 = RenderPool.getRenderer( TamerStatic.TARGET_INDICATOR.getFileName() );
 				renderer2.setSize(Helper.TILESIZE);
-				renderer2.setPosition(Helper.worldToScreen( targetTilePosition ));
+				renderer2.setPosition(Helper.worldToScreen( targetIndicator ));
 				batch.setColor(1, 1, 1, 0.5f);
 				renderer2.draw(batch);	
 				batch.setColor(Color.WHITE);
 			}
-			
 			shadow.draw(batch);
 			scream.draw(batch);
 		}
 	}
 
-	/**
-	 * @param direction
-	 *            Joystick uses this method to move tamer around
-	 */
+	//-------------------------------------------------------------------------
+	//Actions
+	//-------------------------------------------------------------------------
+	
 	public void manouver(Vector2 direction) {
 		direction.set(checkBounds(direction));
-
 		direction.rotate(45);
 		float power = direction.len();
-		SPEED = 0.2f * power;
-
-		if (power > 0.5) {
-			setHeading(direction);
-		}
+		speed = 0.2f * power;
+		if (power > 0.5) setHeading(direction);
 	}
-
-	public Vector2 checkBounds(Vector2 movement) {
-		Vector2 mapBounds = environment.getMapBounds();
-		help.set(shadow.getCenterPosition());
-		
-		help.set(Helper.worldToScreen(help));
-
-		if (help.x > mapBounds.x) {
-			float distance = help.x - mapBounds.x;
-			movementAxis.set(-1, 0);
-			movementAxis.rotate(45);
-			shadow.getPosition().add(movementAxis.mul(distance));
-
-		}
-		if (help.x < -mapBounds.x) {
-			float distance = help.x - -mapBounds.x;
-			movementAxis.set(-1, 0);
-			movementAxis.rotate(45);
-			shadow.getPosition().add(movementAxis.mul(distance));
-		}
-
-		if (help.y > mapBounds.y) {
-			float distance = help.y - mapBounds.y;
-			movementAxis.set(0, -1);
-			movementAxis.rotate(45);
-			shadow.getPosition().add(movementAxis.mul(distance));
-		}
-		if (help.y < -mapBounds.y) {
-			float distance = help.y - -mapBounds.y;
-			movementAxis.set(0, -1);
-			movementAxis.rotate(45);
-			shadow.getPosition().add(movementAxis.mul(distance));
-		}
-
-		return movement;
+	
+	public void enterField(float dt){
+		speed = SPAWN_SPEED;
 	}
-
+	
 	public void throwSpear() {
 		if(onSpearCoolDown) return;
-		
 		if (throwSpearPossible){
 			Spear spear = (Spear) RuntimeObjectFactory.getObjectFromPool("spear");
 			if (spear != null) {
 				spear.setPosition(getPosition());
 				spears.add(spear);
 				
-				//Cool down
 				onSpearCoolDown = true;
 				controls.setSpearCooldown(true);
-				EventPool.addEvent(new tEvent(this,"enable",SPEAR_COOL_DOWN,1));
+				EventPool.addEvent(new tEvent(this,"stopSpearCooldown",SPEAR_COOL_DOWN,1));
 				
 				controls.addSpearsAvailable(-1);
 				playSound(TamerSound.TAMER_SPEAR);
@@ -273,11 +183,76 @@ public class Tamer extends DynamicObject {
 		spears.remove( spearToBePicked );
 	}
 	
-	public void enable(){
+	public void stopSpearCooldown(){
 		onSpearCoolDown = false;
 		controls.setSpearCooldown(false);
 	}
 
+	public void useScream() {
+		scream.activate();
+	}
+	
+	//-------------------------------------------------------------------------
+	//Helpers
+	//-------------------------------------------------------------------------
+	
+	public Vector2 checkBounds(Vector2 movement) {
+		Vector2 mapBounds = environment.getMapBounds();
+		help.set(shadow.getCenterPosition());
+		help.set(Helper.worldToScreen(help));
+
+		if (help.x > mapBounds.x) {
+			float distance = help.x - mapBounds.x;
+			movementAxis.set(-1, 0);
+			movementAxis.rotate(45);
+			shadow.getPosition().add(movementAxis.mul(distance));
+
+		}
+		if (help.x < -mapBounds.x) {
+			float distance = help.x - -mapBounds.x;
+			movementAxis.set(-1, 0);
+			movementAxis.rotate(45);
+			shadow.getPosition().add(movementAxis.mul(distance));
+		}
+		if (help.y > mapBounds.y) {
+			float distance = help.y - mapBounds.y;
+			movementAxis.set(0, -1);
+			movementAxis.rotate(45);
+			shadow.getPosition().add(movementAxis.mul(distance));
+		}
+		if (help.y < -mapBounds.y) {
+			float distance = help.y - -mapBounds.y;
+			movementAxis.set(0, -1);
+			movementAxis.rotate(45);
+			shadow.getPosition().add(movementAxis.mul(distance));
+		}
+		return movement;
+	}
+	
+	public void resolvePossibleActions(){
+		spearToBePicked = null;
+		spearOnRange = false;
+		for (int i = 0; i < spears.size(); i++) {
+			if (shadow.getPosition().dst(spears.get(i).getPosition()) < 1) {
+				if (spears.get(i).isAttached()) {
+					spearToBePicked = spears.get(i);
+					spearOnRange = true;
+				}
+			}
+		}
+		controls.setSpearOnRange( spearOnRange );
+		
+		if (!creatureOnSpearRange) throwSpearPossible = false;
+		else throwSpearPossible = true;
+		
+		//reset this after every loop
+		creatureOnSpearRange = false;	
+	}
+	
+	//-------------------------------------------------------------------------
+	//Setters and getters
+	//-------------------------------------------------------------------------
+	
 	public void setSpawnDirection(Vector2 spawnDirection) {
 		this.spawnDirection.set(spawnDirection);
 	}
@@ -285,33 +260,25 @@ public class Tamer extends DynamicObject {
 	public void setCreatureOnSpearRange(Vector2 creaturePosition){
 		if(creaturePosition!=null){
 			creatureOnSpearRange=true;
-			targetTilePosition.set(creaturePosition);
+			targetIndicator.set(creaturePosition);
 		}	
 	}
-
-	public void useScream() {
-		scream.activate();
-	}
-
-	public boolean hasEnteredField() {
-		return enteredField;
-	}
-
+	
 	public TamerShadow getShadow() {
 		return shadow;
 	}
-
+	
+	public Vector2 getShadowPosition(){
+		return shadow.getPosition();
+	}
+	
 	public Environment getEnvironment() {
 		return environment;
 	}
-
-	public Spear getActiveSpear() {
-		for (int i = 0; i < spears.size(); i++) {
-			if (!spears.get(i).isAttached())
-				return spears.get(i);
-		}
-		return null;
-	}
+	
+	//-------------------------------------------------------------------------
+	//Debug
+	//-------------------------------------------------------------------------
 
 	@Override
 	public void debugDraw(ShapeRenderer shapeRndr) {
@@ -329,6 +296,5 @@ public class Tamer extends DynamicObject {
 		shapeRndr.begin(ShapeType.Rectangle);
 		shapeRndr.rect(-0.25f, -0.25f, .5f, .5f);
 		shapeRndr.end();
-
 	}
 }
