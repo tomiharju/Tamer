@@ -84,6 +84,7 @@ public class TamerGame extends Game {
 		setScreen(ScreenType.LOADING);
 	}
 
+
 	@Override
 	public void render() {
 		Gdx.gl.glClearColor(7f / 255, 10f / 255, 27f / 255, 1);
@@ -98,7 +99,7 @@ public class TamerGame extends Game {
 				levelCompleteScreen.showScreenContent();
 				tweenManager = null;
 				fading = false;
-				
+
 				//set levelComplete screen officially
 				playScreen = null;
 				setScreen(levelCompleteScreen);
@@ -130,6 +131,7 @@ public class TamerGame extends Game {
 //			levelCompleteScreen.resetFadingDone();
 			
 			tweenManager = new TweenManager();
+
 			// fade screen tween
 			Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
 			Tween.to(levelCompleteScreen, ScreenAccessor.ALPHA, 5.0f).target(1)

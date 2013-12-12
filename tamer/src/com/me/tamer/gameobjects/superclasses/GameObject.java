@@ -31,8 +31,6 @@ public interface GameObject{
 	 * Sets the value isCarbage = true
 	 * Causes the carbage collection cycle to remove this object
 	 */
-	public void setGraphics(String graphics);
-	
 	public void markAsCarbage();
 	/**
 	 * Sets isCarbage to false
@@ -48,6 +46,11 @@ public interface GameObject{
 	 * Calls this.renderer.setSize(w,h);
 	 */
 	public void setSize(Vector2 size);
+	/**
+	 * @param graphics
+	 * Loads graphics with string name
+	 */
+	public void setGraphics(String graphics);
 	public void setPosition(String pos);
 	public void setSize(float x,float y);
 	public boolean getDebug();
@@ -62,11 +65,6 @@ public interface GameObject{
 	 * @param level 
 	 */
 	public void setup(Environment level);
-	/**
-	 * @param Gets level as parameter, needed to be able to add rigidbodies to world etc.
-	 * Used when object is fetched from objectpool and put into gameworld.
-	 * 
-	 */
 	/**
 	 * Wakeup is called when object is put into play. For example when worm is fetched from object pool, wakeup method adds that worm and its parts to active gameobjects
 	 *
