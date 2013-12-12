@@ -95,6 +95,8 @@ public class TamerGame extends Game {
 		// dispose old before making new one
 		//if (playScreen != null)
 			//playScreen.dispose();
+		
+
 		playScreen = new PlayScreen(this);
 		return playScreen;
 	}
@@ -113,7 +115,6 @@ public class TamerGame extends Game {
 				levelCompleteScreen.showScreenContent();
 				tweenManager = null;
 				fading = false;
-				levelCompleteScreen.resetFadingDone();
 				//set levelComplete screen officially
 				setScreen(levelCompleteScreen);
 			}
@@ -143,7 +144,8 @@ public class TamerGame extends Game {
 		case COMPLETE:
 			
 			tweenManager = new TweenManager();
-
+			levelCompleteScreen.hide();
+			levelCompleteScreen = new LevelCompleteScreen(this);
 			// fade screen tween
 			Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
 			Tween.to(levelCompleteScreen, ScreenAccessor.ALPHA, 5.0f).target(1)
