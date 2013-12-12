@@ -4,15 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
-import com.me.tamer.services.SoundManager;
 
 public class AbstractScreen implements Screen{
 
@@ -95,10 +92,7 @@ public class AbstractScreen implements Screen{
     public void hide()
     {
         Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Hiding screen: " + getName() );
-        // dispose the screen when leaving the screen;
-        // note that the dispose() method is not called automatically by the
-        // framework, so we must figure out when it's appropriate to call it
-        dispose();
+      
     }
 
     @Override
@@ -124,6 +118,5 @@ public class AbstractScreen implements Screen{
         // as the collaborators are lazily loaded, they may be null
         if( font != null ) font.dispose();
         if( skin != null ) skin.dispose();
-        if( stage != null ) stage.dispose();
     }
 }
