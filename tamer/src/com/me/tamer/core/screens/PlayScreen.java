@@ -25,8 +25,6 @@ public class PlayScreen extends AbstractScreen{
 
 		tamerStage = TamerStage.instance();
 		tamerStage.setup(game);
-	
-
 	}
 	
 	@Override
@@ -56,7 +54,6 @@ public class PlayScreen extends AbstractScreen{
     	((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
         Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Resuming screen: " + getName() );
     }
-	
 	
 	@Override
     public void render( float delta ){

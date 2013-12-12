@@ -94,6 +94,7 @@ public class AbstractMenu extends AbstractScreen {
 		playAgainButton = new TextButton("Play again", textButtonStyle);
 		playAgainButton.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor) {
+				game.getLevelCompleteScreen().hide();
 				sound.play(TamerSound.MENU_CLICK);
 				game.setScreen( ScreenType.NEW_PLAY );
 			}

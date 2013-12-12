@@ -18,6 +18,7 @@ public class LevelCompleteScreen extends AbstractMenu{
 	public LevelCompleteScreen(TamerGame game) {
 		super(game);
 		bgColor = new Color(1,1,1,0);
+		fadingDone = false;
 		create();
 	}
 	
@@ -78,15 +79,18 @@ public class LevelCompleteScreen extends AbstractMenu{
 		return fadingDone;
 	}
 	
-	public void hide(){
-		super.hide();
-		resetFadingDone();
-	}
+
 	public void resetFadingDone(){
 		bgColor = new Color(1,1,1,0);
 		fadingDone = false;
 		
 		Table table = super.getTable();
 		if (table!=null)table.setVisible(false);
+	}
+	
+	@Override
+	public void hide(){
+		super.hide();
+//		resetFadingDone();
 	}
 }

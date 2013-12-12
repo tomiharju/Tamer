@@ -18,8 +18,8 @@ public class TamerStage extends Stage{
 	public static TamerStage instance;
 	
 	float ASPECT_RATIO =(float)Gdx.graphics.getWidth() / ((float)Gdx.graphics.getHeight());
-	private final float BEGIN_ZOOM_SPEED = 0.003F;
-	private final float BEGIN_CAMERA_SPEED = 8f;
+	private final float BEGIN_ZOOM_SPEED = 0.009F;
+	private final float BEGIN_CAMERA_SPEED = 15f;
 	private final float TAMER_OFFSET_ONSCREEN = 40 / 10;
 	private final float BEGIN_ZOOM_AMOUNT = 1.4f;
 	private final float ZOOM_DEFAULT = 1.1f;
@@ -237,10 +237,10 @@ public class TamerStage extends Stage{
 		environment.dispose();
 		hud.dispose();
 		super.getSpriteBatch().dispose();
-		instance = null;
 		environment = null;
 		level = null;
 		this.getActors().clear();
+		instance = null;
 	}
 	
 	public void setCameraHolder(int holder){

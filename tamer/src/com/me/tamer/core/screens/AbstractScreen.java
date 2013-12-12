@@ -98,7 +98,7 @@ public class AbstractScreen implements Screen{
         // dispose the screen when leaving the screen;
         // note that the dispose() method is not called automatically by the
         // framework, so we must figure out when it's appropriate to call it
-        dispose();
+        //dispose();
     }
 
     @Override
