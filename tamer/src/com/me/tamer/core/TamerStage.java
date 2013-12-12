@@ -279,4 +279,8 @@ public class TamerStage extends Stage{
 	public Level getLevel() {
 		return level;
 	}
+	
+	public SpriteBatch getSpriteBatch(){
+		return super.getSpriteBatch();
+	}
 }

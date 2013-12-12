@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.core.TamerGame.ScreenType;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
@@ -86,7 +87,6 @@ public class Environment extends Actor {
 
 	public void act(float dt) {
 		addNewObjects();
-
 		runCarbageCollection();
 		resolveObstacles(dt);
 
@@ -111,25 +111,16 @@ public class Environment extends Actor {
 		case TAMER_ENTER:
 			if (tamer != null) {
 				tamer.update(dt);
-				
-//				if (((Tamer) tamer).hasEnteredField()) {
-//					setState(RunningState.NORMAL);
-//					controls.enableInput();
-//					// sound.play(TamerSound.OPENING);
-//					
-//					
-//				}
-				
 				//quick fix to the issue where this is not updated before moving joystick
 				tamerShadowPosition = ((Tamer) tamer).getShadow().getCenterPosition();
-				
 			}
 			break;
 		case END_FADE:
 			for (int k = 0; k < numObjects; k++) {
 				gameobjects.get(k).update(dt);
 			}
-			stage.getGame().changeLevelCompleteScreen();
+			stage.getGame().setScreen(ScreenType.COMPLETE);
+			setState(RunningState.NORMAL);
 			break;
 		default:
 			break;
@@ -153,9 +144,7 @@ public class Environment extends Actor {
 	}
 
 	public void debugDraw(ShapeRenderer sr) {
-
 		sr.setProjectionMatrix(stage.getCamera().combined);
-
 		int size = gameobjects.size();
 		for (int i = 0; i < size; i++)
 			if (gameobjects.get(i).getDebug()) {
