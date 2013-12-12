@@ -52,6 +52,8 @@ public class TamerGame extends Game {
 	private LoadingScreen loadingScreen;
 	private Screen fadingScreen;
 
+	boolean fading = false;
+	
 	@Override
 	public void create() {
 		// Set log level
@@ -102,39 +104,19 @@ public class TamerGame extends Game {
 		Gdx.gl.glClearColor(7f / 255, 10f / 255, 27f / 255, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		Gdx.gl.glEnable(GL20.GL_BLEND);
-		if (fadingScreen != null) {
-			fadingScreen.render(Gdx.graphics.getDeltaTime());
-			if (((LevelCompleteScreen) getScreen()).getFadingDone()) {
-				((LevelCompleteScreen) getScreen()).showScreenContent();
-
-				fadingScreen = null;
+		getScreen().render(Gdx.graphics.getDeltaTime());
+		
+		if (fading) {
+			levelCompleteScreen.render(Gdx.graphics.getDeltaTime());
+			tweenManager.update(Gdx.graphics.getDeltaTime());
+			if (levelCompleteScreen.getFadingDone()) {
+				levelCompleteScreen.showScreenContent();
 				tweenManager = null;
-
+				fading = false;
+				//set levelComplete screen officially
+				setScreen(levelCompleteScreen);
 			}
 		}
-		if (getScreen() != null)
-			getScreen().render(Gdx.graphics.getDeltaTime());
-		if (tweenManager != null)
-			tweenManager.update(Gdx.graphics.getDeltaTime());
-	}
-
-	public void changeLevelCompleteScreen() {
-		fadingScreen = getScreen();
-
-		levelCompleteScreen.resetFadingDone();
-		setScreen(levelCompleteScreen);
-
-		tweenManager = new TweenManager();
-
-		// fade screen tween
-		Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
-		Tween.to(levelCompleteScreen, ScreenAccessor.ALPHA, 5.0f).target(1)
-				.delay(0.0f).start(tweenManager);
-
-		// fade music tween
-		Tween.registerAccessor(MusicManager.class, new MusicAccessor());
-		Tween.to(musicManager, MusicAccessor.VOLUME, 5.0f).target(0)
-				.delay(0.0f).start(tweenManager);
 	}
 
 	public void setScreen(ScreenType type) {
@@ -158,7 +140,24 @@ public class TamerGame extends Game {
 			super.setScreen(levelsScreen);
 			break;
 		case COMPLETE:
-			super.setScreen(levelCompleteScreen);
+			//levelCompleteScreen.resetFadingDone();
+			tweenManager = new TweenManager();
+
+			// fade screen tween
+			Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
+			Tween.to(levelCompleteScreen, ScreenAccessor.ALPHA, 5.0f).target(1)
+					.delay(0.0f).start(tweenManager);
+
+			// fade music tween
+			Tween.registerAccessor(MusicManager.class, new MusicAccessor());
+			Tween.to(musicManager, MusicAccessor.VOLUME, 5.0f).target(0)
+					.delay(0.0f).start(tweenManager);
+			
+			this.levelCompleteScreen.show();
+			this.levelCompleteScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			
+			fading=true;
+			
 			break;
 		case PAUSE:
 			super.setScreen(pauseScreen);
