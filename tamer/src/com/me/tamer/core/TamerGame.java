@@ -78,6 +78,7 @@ public class TamerGame extends Game {
 		pauseScreen = new PauseScreen(this);
 		levelsScreen = new LevelsScreen(this);
 		loadingScreen = new LoadingScreen(this,assetManager);
+		levelCompleteScreen = new LevelCompleteScreen(this);
 
 		// start the game with main menu screen
 		setScreen(ScreenType.LOADING);
@@ -100,6 +101,7 @@ public class TamerGame extends Game {
 				fading = false;
 
 				//set levelComplete screen officially
+				playScreen = null;
 				setScreen(levelCompleteScreen);
 			}
 		}
@@ -127,7 +129,7 @@ public class TamerGame extends Game {
 			break;
 		case COMPLETE:
 //			levelCompleteScreen.resetFadingDone();
-			levelCompleteScreen = new LevelCompleteScreen(this);
+			
 			tweenManager = new TweenManager();
 
 			// fade screen tween
@@ -169,7 +171,12 @@ public class TamerGame extends Game {
 		super.dispose();
 		Gdx.app.log(TamerGame.LOG, "Disposing game");
 		assetManager.dispose();
-
+		
+		mainMenuScreen.dispose();
+		pauseScreen.dispose();
+		levelsScreen.dispose();
+		levelCompleteScreen.dispose();
+		loadingScreen.dispose();
 	}
 	
 	public LevelCompleteScreen getLevelCompleteScreen(){

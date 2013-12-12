@@ -41,6 +41,7 @@ public class PlayScreen extends AbstractScreen{
 	@Override
 	public void hide(){
 		super.hide();
+		dispose();
 	}
 	
 	@Override

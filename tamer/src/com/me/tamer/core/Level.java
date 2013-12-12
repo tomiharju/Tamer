@@ -27,12 +27,12 @@ public class Level {
 	}
 
 	public Level(int id) {
-		this.id = id;
-		hud = Hud.instance();
+		this.id = id;		
 	}
 
-	public void setStage(TamerStage stage) {
+	public void initialize(TamerStage stage) {
 		this.stage = stage;
+		hud = Hud.instance();
 	}
 
 	/**

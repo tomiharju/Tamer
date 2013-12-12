@@ -146,12 +146,6 @@ public class AbstractMenu extends AbstractScreen {
 	}
 
 	@Override
-	public void dispose() {
-		stage.dispose();
-		skin.dispose();
-	}
-
-	@Override
 	public void show() {
 		super.show();
 		Gdx.input.setInputProcessor(stage);

@@ -91,6 +91,6 @@ public class LevelCompleteScreen extends AbstractMenu{
 	@Override
 	public void hide(){
 		super.hide();
-//		resetFadingDone();
+		resetFadingDone();
 	}
 }
