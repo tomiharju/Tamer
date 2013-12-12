@@ -52,9 +52,6 @@ public class SoundManager  {
 		OPENING("01taunt00a.wav"),
 		HIT("06kill03.wav"),
 		HAWK("hawk.wav");
-		
-	
-		
 
 		private final String fileName;
 		private final String path = "sound/";
@@ -133,17 +130,5 @@ public class SoundManager  {
 	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	/**
-	 * Disposes the sound manager.
-	 * TODO
-	 */
-	public void dispose() {
-//		Gdx.app.log(TamerGame.LOG, "Disposing sound manager");
-//		for (Sound sound : soundCache.retrieveAll()) {
-//			sound.stop();
-//			sound.dispose();
-//		}
 	}
 }

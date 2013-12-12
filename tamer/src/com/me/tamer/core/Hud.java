@@ -35,16 +35,12 @@ public class Hud extends Group {
 	private Skin skin;
 	private TamerStage stage;
 	private Image bgImage;
-	private Image lostImage;
-
 	private Label beastsLabel, capturedLabel, lostLabel, fpsLabel;
 	
 	public static final int LABEL_REMAINING = 0, LABEL_SURVIVED = 1,
 			LABEL_DEAD = 4, LABEL_FPS = 2;
-	
 	//Help text hud
 	private Label noEscapeLabel, helpLabel;
-	private Image fenceArrow;
 	
 	private Hud() {
 		create();
@@ -112,16 +108,9 @@ public class Hud extends Group {
 		capturedLabel = new Label("", labelStyle_white);
 		fpsLabel = new Label("FPS: ", labelStyle_white);
 		
-
 		FileHandle skinFile = Gdx.files.internal("skin/uiskin.json");
 		skin = new Skin(skinFile);
 		
-		
-		//Hud icons
-		lostImage = new Image(new Texture(
-				Gdx.files.internal("data/graphics/x.png")));
-		
-		SplitPaneStyle sty = new SplitPaneStyle();
 		Table table = new Table(skin);
 		table.setFillParent(true);
 
@@ -140,18 +129,12 @@ public class Hud extends Group {
 		
 		helpLabel = new Label("", labelStyle_white);
 		helpLabel.setVisible(false);
-//		helpLabel.setPosition( ( Gdx.graphics.getWidth() - noEscapeLabel.getWidth() ) / 2, Gdx.graphics.getHeight() / 2);
 		
-		fenceArrow = new Image(new Texture(
-				Gdx.files.internal("data/graphics/arrow.png")));
-		fenceArrow.setVisible(false);
-
 		// Register actors	
 		this.addActor(bgImage);
 		this.addActor(table);
 		this.addActor(helpLabel);
 		this.addActor(noEscapeLabel);
-		this.addActor(fenceArrow);
 	}
 
 	public void draw(SpriteBatch batch, float parentAlpha) {
@@ -182,6 +165,7 @@ public class Hud extends Group {
 		}
 		}
 	}
+	
 	//Help -label implementation
 	public void showHelp(boolean show){
 		helpLabel.setVisible(show);
@@ -189,7 +173,6 @@ public class Hud extends Group {
 			helpLabel.setText( stage.getLevel().getHelpText() );
 			helpLabel.setPosition( ( Gdx.graphics.getWidth() - helpLabel.getPrefWidth() ) / 2, Gdx.graphics.getHeight() / 2);
 		}
-		
 	}
 	
 	//No escape -label implementation
@@ -212,6 +195,5 @@ public class Hud extends Group {
 
 	public void dispose() {
 		instance = null;
-		
 	}
 }

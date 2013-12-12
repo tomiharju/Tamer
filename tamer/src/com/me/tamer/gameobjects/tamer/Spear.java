@@ -3,27 +3,20 @@ package com.me.tamer.gameobjects.tamer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
-import com.me.tamer.gameobjects.creatures.AntOrc;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
+import com.me.tamer.gameobjects.renderers.AnimatedRenderer;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
-import com.me.tamer.gameobjects.tiles.Prop;
-import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerAnimations;
-import com.me.tamer.services.TextureManager.TamerStatic;
-import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.RuntimeObjectFactory;
-import com.me.tamer.utils.tEvent;
 
 public class Spear extends DynamicObject {
 
@@ -84,7 +77,7 @@ public class Spear extends DynamicObject {
 	@Override
 	public void draw(SpriteBatch batch) {
 		//overrided to adjust spear draw position
-		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		AnimatedRenderer renderer = (AnimatedRenderer)RenderPool.getRenderer(getRenderType());
 		renderer.setSize(getSize());
 		
 		help.set(getPosition());

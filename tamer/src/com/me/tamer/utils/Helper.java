@@ -2,7 +2,6 @@ package com.me.tamer.utils;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -16,7 +15,6 @@ public class Helper {
 	public static float TILE_HEIGHT_PIXEL = TILE_WIDTH_PIXEL / 2;
 	public static float VIRTUAL_SIZE_X = (float) (12 * Math.sqrt(2));
 	public static float VIRTUAL_SIZE_Y = (float) (40 * Math.sqrt(2) / 2);
-	
 	
 	static Vector2 projection = new Vector2();
 	static Vector2 unit = new Vector2();

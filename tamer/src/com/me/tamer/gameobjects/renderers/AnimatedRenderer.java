@@ -24,11 +24,10 @@ import com.me.tamer.services.TextureManager.TamerAnimations;
  *
  */
 
-/**
- * @author ville
- * 
- */
 public class AnimatedRenderer implements Renderer {
+	//Higher level entities
+	private TamerStage stage;
+	private AssetManager assetManager;
 
 	private Sprite sprite;
 	private ArrayList<Animation> animations;
@@ -36,7 +35,6 @@ public class AnimatedRenderer implements Renderer {
 
 	private Texture spriteSheet;
 	private TextureRegion[][] frames;
-	private TextureRegion[] effectFrames;
 	private TextureRegion currentFrame;
 	private float stateTime;
 	private float animationDuration = 3;
@@ -45,18 +43,7 @@ public class AnimatedRenderer implements Renderer {
 	private float angle = 0;
 
 	private Color batchColor = new Color(Color.WHITE);
-
-	// Shader test
-	private ShaderProgram shader;
-	private ShaderProgram defaultShader;
-	private float vtime = 0;
-	private Texture tex0, tex1;
-	int u_worldView, a_position;
-
-	private TamerStage stage;
-
-	private AssetManager assetManager;
-
+	
 	public AnimatedRenderer() {
 		animations = new ArrayList<Animation>();
 		stage = TamerStage.instance();
@@ -80,9 +67,6 @@ public class AnimatedRenderer implements Renderer {
 		}
 	}
 	
-	/*
-	 * Old stuff
-	 */
 	@Override
 	public void loadGraphics(String graphicsName) {
 		sprite = new Sprite(new Texture(Gdx.files.internal("data/graphics/"
@@ -108,9 +92,6 @@ public class AnimatedRenderer implements Renderer {
 		stateTime = 0f;
 	}
 
-	/*
-	 * Old stuff
-	 */
 	@Override
 	public void loadGraphics(String animName, int FRAME_COLS, int FRAME_ROWS) {
 		spriteSheet = new Texture(
@@ -148,26 +129,12 @@ public class AnimatedRenderer implements Renderer {
 		this.pos.set(pos.x, pos.y);
 	}
 
-	@Override
 	public void setOrientation(int orientation) {
 		this.currentAnimation = orientation;
 	}
 
 	public void setAngle(float a) {
 		this.angle = a;
-	}
-
-	@Override
-	public void setBounds(float x, float y, float width, float height) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS,
-			boolean looping, float speed) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

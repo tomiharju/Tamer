@@ -5,24 +5,26 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.renderers.AnimatedRenderer;
 import com.me.tamer.gameobjects.renderers.RenderPool;
 import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.tamer.Spear;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.services.TextureManager.TamerAnimations;
-import com.me.tamer.ui.ControlContainer;
-import com.me.tamer.utils.EventPool;
 import com.me.tamer.utils.Helper;
 import com.me.tamer.utils.tEvent;
 
 
 public class AntOrc extends DynamicObject implements Creature{
 	
+	//Higher level entities
+	private Environment environment;
+	
+	//finals
 	private final float DECAY_SPEED = 0.4f; // move to higher level
 	private final float WORM_SCAN_RADIUS = 10.0f; //ScanArea is a circle
 	private final float WAYPOINT_SCAN_RADIUS = 0.5f;
@@ -33,10 +35,7 @@ public class AntOrc extends DynamicObject implements Creature{
 	private final Vector2 EATING_OFFSET = new Vector2 (1.0f,-1.0f);
 	private final float SIZE = 2.4f;
 	
-	private Environment environment;
-	private ArrayList<Vector2> waypoints;
-	
-	private boolean eating = false;
+	//booleans
 	private boolean attached = false;
 	private boolean destinationReached = false;
 	private boolean markedDead = false;
@@ -48,21 +47,70 @@ public class AntOrc extends DynamicObject implements Creature{
 	private int loopCount = 0;
 	private float shakeRate = 5;
 	private float shakeSpeed = SPEED / 3;
-	
-	private int nextWaypoint = 1;
+	private tEvent eatingTimer;
 	private Worm targetWorm = null;
 	private WormPart targetPart = null;
 	private ArrayList<Creature> creatures;
 	
+	//Waypoints
+	private ArrayList<Vector2> waypoints;
+	private int nextWaypoint = 1;
 	private float levelOfDecay = 1;
 	
+	//help
 	private Vector2 help = new Vector2();
-	private tEvent eatingTimer;
 	
 	public AntOrc(){
 		waypoints = new ArrayList<Vector2>();
 		waypoints.add(new Vector2(0,0));//place holder for the first value
 	}
+	
+	public void update(float dt){
+		solveIfSpearRange();
+		if (!decaying){
+			if(!returning && targetPart==null)scanWorms();
+			if (attached){	
+				if(loopCount % shakeRate == 0){
+					//shake that booty
+					setHeading(-1,1);
+					shakeSpeed = shakeSpeed * -1;
+				}loopCount++;
+				
+				setVelocity(getHeading().tmp().mul(shakeSpeed));
+				getPosition().add(getVelocity().tmp().mul(dt));
+				if(!eatingTimer.isFinished())eatingTimer.step(dt);
+			}else if( checkTargetState() ) followTarget();
+			else followPath();
+			
+			if (!attached){
+				setVelocity(getHeading().tmp().mul(SPEED));
+				getPosition().add(getVelocity().tmp().mul(dt));	
+			}	
+		}else{
+			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
+			if(levelOfDecay < 0){
+				kill();
+			}
+		}
+	}
+	
+	public void draw(SpriteBatch batch){
+		if (onSpearRange) batch.setColor(1, 0.6f, 0.6f, 1.0f);
+		if (decaying) batch.setColor(1, 1, 1, levelOfDecay);
+		
+		AnimatedRenderer renderer = (AnimatedRenderer)RenderPool.getRenderer(getRenderType());
+		renderer.setSize(getSize());
+		renderer.setPosition(Helper.worldToScreen(getPosition()));
+		renderer.setOrientation(solveOrientation());
+		renderer.draw(batch);
+
+		// reset to default color
+		batch.setColor(Color.WHITE);
+	}
+	
+	//---------------------------------
+	//initialization
+	//---------------------------------
 	
 	public void wakeUp(Environment environment){
 		this.environment = environment;
@@ -84,103 +132,17 @@ public class AntOrc extends DynamicObject implements Creature{
 		setRenderType(graphics.getFileName());
 	}
 	
-	public void update(float dt){
-		
-		solveIfSpearRange();
-		
-		//how often should this scan
-		if (!decaying){
-			if(!returning && targetPart==null)scanWorms();
-			if (attached){	
-				if(loopCount % shakeRate == 0){
-					//shake that booty
-					setHeading(-1,1);
-					shakeSpeed = shakeSpeed * -1;
-					
-				}loopCount++;
-				
-				setVelocity(getHeading().tmp().mul(shakeSpeed));
-				getPosition().add(getVelocity().tmp().mul(dt));
-				
-				if(!eatingTimer.isFinished())eatingTimer.step(dt);
-				
-			}else if( checkTargetState() ) {
-				followTarget();
-			}
-			else followPath();
-			
-			if (!attached){
-				setVelocity(getHeading().tmp().mul(SPEED));
-				getPosition().add(getVelocity().tmp().mul(dt));	
-			}	
-		}else{
-			levelOfDecay -= DECAY_SPEED * Gdx.graphics.getDeltaTime();
-			if(levelOfDecay < 0){
-				kill();
-			}
-		}
+	public void setWaypoint(String s){
+		String[] values = s.split(":");
+		int x = Integer.parseInt(values[0]);
+		int y = Integer.parseInt(values[1]);
+		Vector2 waypoint = new Vector2(x,y);
+		waypoints.add(waypoint);
 	}
 	
-	public boolean checkTargetState(){
-		if (targetPart == null) return false;
-		
-		//remove target if it is drowning
-		 if (targetWorm.isSubmerged()){
-			targetWorm = null;
-			targetPart = null;
-			return false;
-		}
-		 
-		return true;
-	}
-	
-	public void solveIfSpearRange(){
-		onSpearRange = false;
-		
-		//which conditions are actually needed here?
-		if (getPosition().dst( environment.getTamer().getShadow().getPosition()) < SIZE && !decaying && !markedDead){
-			onSpearRange = true;
-			environment.getTamer().setCreatureOnSpearRange( getCenterPosition() );
-		}
-	}
-
-	public void lockToTarget(WormPart wp){
-		//Increase speed and set target
-		targetPart = wp;
-		getVelocity().mul(SPEED_INCREASE) ;
-	}
-	
-	public void draw(SpriteBatch batch){
-		if (onSpearRange) batch.setColor(1, 0.6f, 0.6f, 1.0f);
-		if (decaying) batch.setColor(1, 1, 1, levelOfDecay);
-		
-		Renderer renderer = RenderPool.getRenderer(getRenderType());
-		renderer.setSize(getSize());
-		renderer.setPosition(Helper.worldToScreen(getPosition()));
-		renderer.setOrientation(solveOrientation());
-		renderer.draw(batch);
-
-		// reset to default color
-		batch.setColor(Color.WHITE);
-	}
-	
-	public void detach(){
-		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Ant detached");
-		attached = false;
-		
-		targetWorm.decay();
-		targetPart=null;
-		
-		//returning means that ant won't take new targets
-		returning = true;
-		
-		//return to home
-		destinationReached = true;
-		nextWaypoint = 0;
-		
-		//reset z-index after eating
-		setZindex(0);
-	}
+	//---------------------------------
+	//Ant 
+	//---------------------------------
 	
 	public void followTarget(){
 		//Check if target is close enough to be attacked and update heading to target
@@ -192,7 +154,7 @@ public class AntOrc extends DynamicObject implements Creature{
 			attached = true;
 			eatingTimer = new tEvent(this, "detach", EATING_TIME, 1);
 			
-			//set
+			//set eating position
 			setPosition( targetPart.getPosition().tmp().add(EATING_OFFSET));
 			
 			//eating ant has higher z-index
@@ -243,38 +205,71 @@ public class AntOrc extends DynamicObject implements Creature{
 		}
 	}
 	
-	@Override
-	public Creature affectedCreature(Vector2 point,float radius) {
-		if( this.getPosition().dst(point) - SIZE /2 < radius)
-			return this;
-		else
-			return null;
+	public void lockToTarget(WormPart wp){
+		//Increase speed and set target
+		targetPart = wp;
+		getVelocity().mul(SPEED_INCREASE) ;
 	}
 
-	public void setWaypoint(String s){
-		String[] values = s.split(":");
-		int x = Integer.parseInt(values[0]);
-		int y = Integer.parseInt(values[1]);
-		Vector2 waypoint = new Vector2(x,y);
-		waypoints.add(waypoint);
+	public void detach(){
+		Gdx.app.debug(TamerGame.LOG, this.getClass().getSimpleName() + " :: Ant detached");
+		attached = false;
+		
+		targetWorm.decay();
+		targetPart=null;
+		
+		//returning means that ant won't take new targets
+		returning = true;
+		
+		//return to home
+		destinationReached = true;
+		nextWaypoint = 0;
+		
+		//reset z-index after eating
+		setZindex(0);
+	}
+
+	public boolean checkTargetState(){
+		if (targetPart == null) return false;
+		//remove target if it is drowning
+		 if (targetWorm.isSubmerged()){
+			targetWorm = null;
+			targetPart = null;
+			return false;
+		}
+		return true;
+	}
+	
+	public void solveIfSpearRange(){
+		onSpearRange = false;
+		if (getPosition().dst( environment.getTamer().getShadow().getPosition()) < SIZE && !decaying && !markedDead){
+			onSpearRange = true;
+			environment.getTamer().setCreatureOnSpearRange( getCenterPosition() );
+		}
+	}
+
+	@Override
+	public int getType() {
+		return Creature.TYPE_ANT;
+	}
+
+	public Worm getTargetWorm(){
+		return targetWorm;
 	}
 	
 	@Override
-	public void kill() {
-		markAsCarbage();	
+	public boolean isCollisionDisabled() {
+		return true;
 	}
+	
+	//-----------------------------------------
+	//Creature implementation
+	//-----------------------------------------
 	
 	@Override
 	public void spearHit(Spear spear) {
-		
-		//move position to center of a tile
-		//not needed because spears are not obstacles atm
-//		getPosition().x = (float) Math.floor(getPosition().x) + 1; //+ 0.5f;
-//		getPosition().y = (float) Math.floor(getPosition().y);// + 0.5f;
-		
 		if(targetPart != null){
 			targetWorm.unBind();
-//			targetPart.spearHit(spear);
 			targetWorm.setBeingEaten(false);
 		}
 		
@@ -283,43 +278,20 @@ public class AntOrc extends DynamicObject implements Creature{
 			targetWorm.setAttacked(false);
 		}
 		
-		//just kill when spear hits for now
 		decay();
 		playSound(TamerSound.SPEAR_ANT);
 	}
 	
 	@Override
-	public int getType() {
-		return Creature.TYPE_ANT;
+	public void kill() {
+		markAsCarbage();	
 	}
-
+	
 	@Override
 	public void decay() {
 		decaying = true;
 	}
-
-	@Override
-	public boolean isCollisionDisabled() {
-		return true;
-	}
-
-	@Override
-	public boolean isDecaying() {
-		return decaying;
-	}
 	
-	public Worm getTargetWorm(){
-		return targetWorm;
-	}
-	
-	//Creature implementation
-	
-	@Override
-	public void lassoHit(String lasso) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void unBind() {
 		// TODO Auto-generated method stub
@@ -333,7 +305,20 @@ public class AntOrc extends DynamicObject implements Creature{
 	}
 
 	@Override
+	public Creature affectedCreature(Vector2 point,float radius) {
+		if( this.getPosition().dst(point) - SIZE /2 < radius)
+			return this;
+		else
+			return null;
+	}
+	
+	@Override
 	public float getSpeed() {
 		return SPEED;
+	}
+
+	@Override
+	public boolean isDecaying() {
+		return decaying;
 	}
 }

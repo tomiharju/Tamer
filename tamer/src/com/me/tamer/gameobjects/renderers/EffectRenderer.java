@@ -28,9 +28,18 @@ public class EffectRenderer implements Renderer{
 			currentFrame = effectAnimation.getKeyFrame(stateTime,looping);
 			batch.draw(currentFrame,pos.x - size.x / 2, pos.y,size.x, size.y);
 	}
+	
 	public void setAnimSeed(float seed){
 		animSeed = seed;
 	}
+	
+	@Override
+	public void loadGraphics(TamerAnimations animName, int FRAME_COLS,
+			int FRAME_ROWS) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void loadGraphics(String objectName) {
 		// TODO Auto-generated method stub
@@ -43,7 +52,6 @@ public class EffectRenderer implements Renderer{
 		
 	}
 
-	@Override
 	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS,boolean looping,float animSpeed) {
 		this.looping = looping;
 		numFrames = FRAME_COLS * FRAME_ROWS;
@@ -59,16 +67,16 @@ public class EffectRenderer implements Renderer{
                  }
          }
         effectAnimation = new Animation(animSpeed, effectFrames);
-		
 	}
 	
-	
-	public boolean effectFinished(){
+	public boolean isEffectFinished(){
 		return effectAnimation.isAnimationFinished(stateTime);
 	}
+	
 	public int getFrameCount(){
 		return numFrames;
 	}
+	
 	public void resetEffect(){
 		stateTime = 0;
 	}
@@ -92,38 +100,13 @@ public class EffectRenderer implements Renderer{
 	}
 
 	@Override
-	public void setOrientation(int orientation) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setAngle(float angle) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setBounds(float x, float y, float width, float height) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
 	public void setColor(float r, float g, float b, float a) {
 		// TODO Auto-generated method stub
-		
 	}
+	
 	@Override
 	public Color getColor() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
-	public void loadGraphics(TamerAnimations animName, int FRAME_COLS,
-			int FRAME_ROWS) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 }

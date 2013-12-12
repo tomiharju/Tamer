@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.gameobjects.Environment;
+import com.me.tamer.gameobjects.renderers.AnimatedRenderer;
 import com.me.tamer.gameobjects.renderers.RenderPool;
-import com.me.tamer.gameobjects.renderers.Renderer;
 import com.me.tamer.services.SoundManager;
 import com.me.tamer.services.SoundManager.TamerSound;
 import com.me.tamer.utils.Helper;
@@ -48,7 +48,7 @@ public abstract class DynamicObject implements GameObject {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		Renderer renderer = RenderPool.getRenderer(getRenderType());
+		AnimatedRenderer renderer = (AnimatedRenderer)RenderPool.getRenderer(getRenderType());
 		renderer.setSize(getSize());
 		renderer.setPosition(Helper.worldToScreen(position));
 		renderer.setOrientation( solveOrientation() );

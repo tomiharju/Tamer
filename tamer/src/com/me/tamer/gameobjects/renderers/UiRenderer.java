@@ -33,16 +33,11 @@ public class UiRenderer implements Renderer {
 		
 	}
 	
-	/* 
-	 *Old stuff
-	 */
 	@Override
 	public void loadGraphics(String graphicsName) {
 		sprite = new Sprite( assetManager.get("data/graphics/sheetData", TextureAtlas.class).findRegion(graphicsName) );
 		sprite.setColor(Color.WHITE);
 	}
-	
-	
 	
 	@Override
 	public void setSize(float w, float h) {
@@ -54,6 +49,7 @@ public class UiRenderer implements Renderer {
 		sprite.setSize(size.x,size.y);
 		
 	}
+	
 	@Override
 	public void setPosition(Vector2 pos) {
 		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - sprite.getHeight() / 2 );
@@ -62,11 +58,6 @@ public class UiRenderer implements Renderer {
 	public void setPosition2(Vector2 pos){
 		sprite.setPosition(pos.x - sprite.getWidth()/2, pos.y - 0.5f );
 
-	}
-	@Override
-	public void setOrientation(int orientation) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public void setColor(float r, float g, float b,float a){
@@ -83,25 +74,6 @@ public class UiRenderer implements Renderer {
 	}
 
 	@Override
-	public void setAngle(float angle) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setBounds(float x, float y, float width, float height) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS,
-			boolean looping, float speed) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public Color getColor() {
 		// TODO Auto-generated method stub
 		return null;
@@ -113,7 +85,4 @@ public class UiRenderer implements Renderer {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	
 }

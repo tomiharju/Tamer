@@ -17,10 +17,6 @@ public interface Creature{
 	 */
 	public void unBind();
 	/**
-	 * What happens when this object is hit by a lasso
-	 */
-	public void lassoHit(String lasso);
-	/**
 	 * What needs to be done when specific creature is killed
 	 */
 	public void kill();
@@ -30,11 +26,6 @@ public interface Creature{
 	 */
 	public void decay();
 	public boolean isDecaying();
-	
-	/**
-	 * @return wether this object should react to collision
-	 */
-
 	public void applyPull(Vector2 point,float magnitude);
 	public Creature affectedCreature(Vector2 poitn, float radius);
 	public Vector2 getHeading();

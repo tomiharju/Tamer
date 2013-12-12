@@ -3,7 +3,6 @@ package com.me.tamer.gameobjects.creatures;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.core.Level.WormState;
@@ -133,20 +132,10 @@ public class Worm extends DynamicObject implements Creature {
 			}
 	}
 
-	public void dispose(){
-		parts.clear();
-		parts = null;
-		head = null;
-	}
-
 	public boolean isWithinRange(Vector2 point, float radius) {
 		if (head.getPosition().dst(point) < radius)
 			return true;
 		return false;
-	}
-
-	public void lassoHit(String lasso) {
-		// TODO Auto-generated method stub
 	}
 
 	public void decay() {
@@ -215,6 +204,35 @@ public class Worm extends DynamicObject implements Creature {
 		}
 	}
 
+	public void submerge() {
+		stage.getLevel().setWormState(this, WormState.DEAD);
+		
+		for(int i = 0 ; i < parts.size() ; i ++)
+			parts.get(i).decay();
+		this.submerged = true;
+	}
+
+	@Override
+	public void kill() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void applyPull(Vector2 point, float magnitude) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void dispose(){
+		parts.clear();
+		parts = null;
+		head = null;
+	}
+	
+	//---------------------------------------------
+	//Setters
+	//---------------------------------------------
+
 	public void setOnSpearRange(boolean onRange) {
 		if ( !submerged && !beingEaten && !bound){
 			for (int i = 0; i < parts.size(); i++) {
@@ -256,9 +274,9 @@ public class Worm extends DynamicObject implements Creature {
 		this.drowning = drowning;
 	}
 
-	//////////////////
-	//GETTERS////////
-	////////////////
+	//---------------------------------------------
+	//Getters
+	//---------------------------------------------
 	
 	public ArrayList<WormPart> getParts() {
 		return parts;
@@ -317,28 +335,9 @@ public class Worm extends DynamicObject implements Creature {
 		return submerged;
 	}
 
-	public void submerge() {
-		stage.getLevel().setWormState(this, WormState.DEAD);
-		
-		for(int i = 0 ; i < parts.size() ; i ++)
-			parts.get(i).decay();
-		this.submerged = true;
-	}
-
-	@Override
-	public void kill() {
-		// TODO Auto-generated method stub
-	}
-
 	@Override
 	public boolean isDecaying() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public void applyPull(Vector2 point, float magnitude) {
-		// TODO Auto-generated method stub
-		
 	}
 }

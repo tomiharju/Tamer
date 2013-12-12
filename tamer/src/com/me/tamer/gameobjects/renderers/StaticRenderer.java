@@ -37,6 +37,19 @@ public class StaticRenderer implements Renderer {
 	}
 
 	@Override
+	public void loadGraphics(String animName, int FRAME_COLS, int FRAME_ROWS) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	@Override
+	public void loadGraphics(TamerAnimations animName, int FRAME_COLS,
+			int FRAME_ROWS) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public void setSize(float w, float h) {
 		sprite.setSize(w, h);
 	}
@@ -57,31 +70,6 @@ public class StaticRenderer implements Renderer {
 	}
 
 	@Override
-	public void setOrientation(int orientation) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void loadGraphics(String animName, int FRAME_COLS, int FRAME_ROWS) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setAngle(float angle) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void loadEffect(String animName, int FRAME_COLS, int FRAME_ROWS,
-			boolean looping, float speed) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void setColor(float r, float g, float b, float a) {
 		if (sprite != null)
 			sprite.setColor(r, g, b, a);
@@ -94,13 +82,4 @@ public class StaticRenderer implements Renderer {
 		else
 			return Color.WHITE;
 	}
-
-	@Override
-	public void loadGraphics(TamerAnimations animName, int FRAME_COLS,
-			int FRAME_ROWS) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 }

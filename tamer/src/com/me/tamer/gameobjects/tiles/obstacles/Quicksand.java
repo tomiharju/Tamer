@@ -21,22 +21,11 @@ public class Quicksand extends StaticObject implements Obstacle {
 	private ArrayList<Creature> submerged_creatures;
 	private Vector2 bogHoleCenter;
 	private Vector2 temp = new Vector2();
-	private EffectRenderer effectRenderer;
-
+	
 	public Quicksand() {
 		parts = new ArrayList<SandPart>();
 		submerged_creatures = new ArrayList<Creature>();
 		bogHoleCenter = new Vector2();
-		// loadEffectGraphics();
-	
-	}
-
-	public void loadEffectGraphics() {
-		Renderer render = RenderPool.addRendererToPool("effect", "bubbles");
-		render.loadEffect("bubbles", 20, 1, true, 0.2f);
-		render.setSize(Helper.TILESIZE.x, Helper.TILESIZE.y * 2);
-
-		setRenderType("bubbles");
 	}
 
 	public void setup(Environment environment) {
@@ -55,7 +44,6 @@ public class Quicksand extends StaticObject implements Obstacle {
 					continue;
 			if(submerged_creatures.contains(creatures.get(i)))
 				continue;
-
 				// Check if some wormhead is inside swamp
 				if (creatures.get(i).getType() == Creature.TYPE_WORM && !((Worm) creatures.get(i)).isBound()) {
 					Worm targetWorm = (Worm) creatures.get(i);
@@ -71,13 +59,11 @@ public class Quicksand extends StaticObject implements Obstacle {
 						// gameobjects.
 						submerged_creatures.add(targetWorm);
 					}
-
 				}
 			}
 		}
 		creatures.removeAll(submerged_creatures);
 		submerged_creatures.clear();
-
 	}
 
 	@Override
