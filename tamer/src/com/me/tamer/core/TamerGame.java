@@ -56,7 +56,6 @@ public class TamerGame extends Game {
 	private LevelsScreen levelsScreen;
 	private LevelCompleteScreen levelCompleteScreen;
 	private LoadingScreen loadingScreen;
-	private Screen fadingScreen;
 
 	boolean fading = false;
 	
@@ -129,7 +128,6 @@ public class TamerGame extends Game {
 	public void setScreen(ScreenType type) {
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName()
 				+ " :: Setting screen " + type);
-
 		switch (type) {
 		case NEW_PLAY:
 			super.setScreen(createNewPlayScreen());
@@ -147,9 +145,8 @@ public class TamerGame extends Game {
 			super.setScreen(levelsScreen);
 			break;
 		case COMPLETE:
-			//levelCompleteScreen.resetFadingDone();
+			levelCompleteScreen.resetFadingDone();
 			tweenManager = new TweenManager();
-
 			// fade screen tween
 			Tween.registerAccessor(AbstractScreen.class, new ScreenAccessor());
 			Tween.to(levelCompleteScreen, ScreenAccessor.ALPHA, 5.0f).target(1)
@@ -162,9 +159,7 @@ public class TamerGame extends Game {
 			
 			this.levelCompleteScreen.show();
 			this.levelCompleteScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			
 			fading=true;
-			
 			break;
 		case PAUSE:
 			super.setScreen(pauseScreen);
@@ -184,7 +179,6 @@ public class TamerGame extends Game {
 	public void resume() {
 		super.resume();
 		Gdx.app.log(TamerGame.LOG, "Resuming game");
-		System.out.println("---------------LOL RESUME---------------------");
 	}
 
 	@Override

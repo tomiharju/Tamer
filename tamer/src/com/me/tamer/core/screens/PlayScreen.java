@@ -57,7 +57,6 @@ public class PlayScreen extends AbstractScreen{
         Gdx.app.log( TamerGame.LOG, this.getClass().getSimpleName() + " :: Resuming screen: " + getName() );
     }
 	
-	
 	@Override
     public void render( float delta ){
 		((TamerStage)stage).updateCamera(delta);
