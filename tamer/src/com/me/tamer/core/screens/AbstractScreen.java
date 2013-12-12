@@ -124,5 +124,6 @@ public class AbstractScreen implements Screen{
         // as the collaborators are lazily loaded, they may be null
         if( font != null ) font.dispose();
         if( skin != null ) skin.dispose();
+        if( stage != null ) stage.dispose();
     }
 }

@@ -91,7 +91,7 @@ public class TamerStage extends Stage{
 	public void createActors(){
 		
 		level = game.getLevelManager().getCurrentLevel();
-		level.setStage(this);
+		level.initialize(this);
 		
 		//environment
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Adding level to PlayScreen and generating environment " +level.getId());
