@@ -113,6 +113,7 @@ public class TamerGame extends Game {
 				levelCompleteScreen.showScreenContent();
 				tweenManager = null;
 				fading = false;
+				levelCompleteScreen.resetFadingDone();
 				//set levelComplete screen officially
 				setScreen(levelCompleteScreen);
 			}
@@ -140,7 +141,7 @@ public class TamerGame extends Game {
 			super.setScreen(levelsScreen);
 			break;
 		case COMPLETE:
-			//levelCompleteScreen.resetFadingDone();
+			
 			tweenManager = new TweenManager();
 
 			// fade screen tween
