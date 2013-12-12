@@ -16,7 +16,7 @@ public class LassoButton extends Actor{
 	private ControlContainer inputcontroller 	= null;
 	private UiRenderer renderer 				= null;
 	private Tamer tamer 						= null;
-	private Environment environment 						= null;
+	private Environment environment 			= null;
 	
 	//Button variables
 	Vector2 restingpoint 	= null;

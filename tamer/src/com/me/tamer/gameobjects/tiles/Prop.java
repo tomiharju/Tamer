@@ -16,12 +16,16 @@ import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.utils.Helper;
 
+/**
+ * @author Tamer
+ * Props are all the gameobjects which are static and which can be collided with.
+ * Prop uses Separating axis theorem to resolve collisions. 
+ *
+ */
 public class Prop extends StaticObject implements Obstacle {
 	private float scale = 0;
 	private Vector2 temp = new Vector2();
 	private Vector2 collisionAxis = new Vector2();
-	private Vector2 closestVertice = new Vector2();
-	private Vector2 headingAdjust = new Vector2();
 	private Vector2 newHeading = new Vector2();
 	private Vector2 impulse = new Vector2();
 	private Vector2 pos = new Vector2();
@@ -120,13 +124,6 @@ public class Prop extends StaticObject implements Obstacle {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.me.tamer.gameobjects.superclasses.StaticObject#getCenterPosition() Do
-	 * we need this?
-	 */
 	public Vector2 getCenterPosition() {
 		return getPosition().tmp().set(getPosition().x - getBounds(),
 				getPosition().y + getBounds());
@@ -138,15 +135,6 @@ public class Prop extends StaticObject implements Obstacle {
 	 */
 	public void createVertices() {
 		vertices = new ArrayList<Vector2>(4);
-	/*	Vector2 v1 = new Vector2((getPosition().x - getBounds() / 2),
-				(getPosition().y));
-		Vector2 v2 = new Vector2((getPosition().x - getBounds() / 2),
-				(getPosition().y + getBounds()));
-		Vector2 v3 = new Vector2((getPosition().x + getBounds() / 2),
-				(getPosition().y + getBounds()));
-		Vector2 v4 = new Vector2((getPosition().x + getBounds() / 2),
-				(getPosition().y));
-		*/
 		Vector2 v1 = new Vector2((getPosition().x),
 				(getPosition().y));
 		Vector2 v2 = new Vector2((getPosition().x - getBounds()),
@@ -200,21 +188,7 @@ public class Prop extends StaticObject implements Obstacle {
 			}
 		}
 		return collisionAxis;
-/*
-		float smallestDot = 100000;
-		Vector2 axis = axes.get(0);
-		float dot = 0;
-		for (int i = 0; i < axes.size(); i++) {
-			Vector2 normal = axes.get(i);
-			dot = heading.dot(normal);
-			System.out.println("Dot " + dot);
-			if (dot < smallestDot) {
-				smallestDot = dot;
-				axis = normal;
-			}
-		}
-		System.out.println("Coll axis " + axis.toString());
-		return axis;*/
+
 	}
 
 	public Vector2 getClosestVertice(Vector2 point) {

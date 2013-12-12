@@ -10,9 +10,6 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 
 public class Helper {
-	//Global scaleing variables
-	//ELI IHAN SUOMEKSI TÄMÄ TILE_WIDTH ON NYT SE ARVO, JOKA KERROTTUNA TILEN LEVEYDELLÄ
-	//ELI SQRT(2) JOTTA SAADAAN TILEN LEVEYS PIXELEISSÄ, SIITÄKU LASKEE NIIN TULEE 40 PIXELIÄ.
 	
 	public static Vector2 TILESIZE = new Vector2((float)Math.sqrt(2)+0.1f,((float)Math.sqrt(2) / 2)+0.05f);
 	public static float TILE_WIDTH_PIXEL =  480 / (float) (12 * Math.sqrt(2));
@@ -26,10 +23,6 @@ public class Helper {
 	
 	private static Matrix3 worldMatrix = new Matrix3().scale(1f,0.5f).rotate(-45);
 	private static Matrix3 screenMatrix = new Matrix3().scale(1f,0.5f).rotate(-45).inv();
-	
-//	private static Matrix3 worldMatrix = new Matrix3().scale(TILESIZE.x,TILESIZE.y).rotate(-45);
-//	private static Matrix3 screenMatrix = new Matrix3().scale(TILESIZE.x,TILESIZE.y).rotate(-45).inv();
-	
 	
 	private static Vector2 temp = new Vector2(0,0), temp1 = new Vector2(0,0);
 	

@@ -6,13 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.tamer.gameobjects.Environment;
 import com.me.tamer.gameobjects.creatures.Creature;
 import com.me.tamer.gameobjects.creatures.Worm;
-import com.me.tamer.gameobjects.renderers.RenderPool;
-import com.me.tamer.gameobjects.renderers.Renderer;
-import com.me.tamer.gameobjects.superclasses.DynamicObject;
 import com.me.tamer.gameobjects.superclasses.StaticObject;
 import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
-import com.me.tamer.utils.Helper;
 
+/**
+ * @author Tamer
+ * Invisible dummy objects which check whether a worm has reached the finish.
+ *
+ */
 public class Endingpoint extends StaticObject implements Obstacle {
 	Vector2 temp = new Vector2();
 	private float scale = 0;

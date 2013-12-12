@@ -20,9 +20,10 @@ import com.me.tamer.gameobjects.tiles.obstacles.Obstacle;
 import com.me.tamer.utils.Helper;
 
 /**
- * @author tomi The terrrain object for the environment. Hold the grid info,
- *         which is used to draw tiles and obstacles on it. Is also the lowest
- *         lvl layer, under which objects are drawn if they fall underground.
+ * @author Tamer
+ *  The terrrain object for the environment. Hold the grid info,
+ *  which is used to draw tiles on it. Is also the lowest
+ *  lvl layer, under which objects are drawn if they fall underground.
  * 
  */
 public class TileMap extends StaticObject {
