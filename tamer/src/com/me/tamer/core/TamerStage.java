@@ -83,7 +83,7 @@ public class TamerStage extends Stage{
 	
 	
 	public static TamerStage instance(){
-		if(instance==null) instance = new TamerStage();
+		if(instance == null) instance = new TamerStage();
 		return instance;
 	}
 	
@@ -249,8 +249,9 @@ public class TamerStage extends Stage{
 		Gdx.app.log(TamerGame.LOG, this.getClass().getSimpleName() + " :: Disposing");
 		controlContainer.dispose();
 		environment.dispose();
+		hud.dispose();
 		super.getSpriteBatch().dispose();
-		
+		instance = null;
 		environment = null;
 		level = null;
 		this.getActors().clear();

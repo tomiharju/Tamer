@@ -1,14 +1,13 @@
 package com.me.tamer.core.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.tamer.core.TamerGame;
 import com.me.tamer.core.TamerStage;
 import com.me.tamer.services.MusicManager.TamerMusic;
 
 public class PlayScreen extends AbstractScreen{
 
+	
 	public PlayScreen(final TamerGame game){
 		super(game);
 		create();
@@ -20,8 +19,8 @@ public class PlayScreen extends AbstractScreen{
 		game.getMusicManager().play( TamerMusic.LEVEL ); 
 
 		//stage has to be created after state is set to GAME_RUNNING because of the threads
-		stage = TamerStage.instance();
-		((TamerStage)stage).setup(game);
+		tamerStage = TamerStage.instance();
+		tamerStage.setup(game);
 		
 //		TamerStage.gameState = TamerStage.GAME_READY;
 		//((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
@@ -32,32 +31,32 @@ public class PlayScreen extends AbstractScreen{
 		super.show();
 		game.getMusicManager().resume();
 		
-		Gdx.input.setInputProcessor( stage );
+		Gdx.input.setInputProcessor( tamerStage );
 		
-		if(((TamerStage)stage).getGameState() == TamerStage.GAME_PAUSED){
-				((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
-		}	
+		//if(((TamerStage)stage).getGameState() == TamerStage.GAME_PAUSED){
+			//	((TamerStage)stage).setGameState(TamerStage.GAME_RUNNING);
+		//}	
 	}
 	
 	public void dispose(){
-		stage.dispose();
+		tamerStage.dispose();
 	}
 
 	@Override
 	public void hide(){
 		super.hide();
-		((TamerStage)stage).setGameState(TamerStage.GAME_PAUSED);
+		//((TamerStage)stage).setGameState(TamerStage.GAME_PAUSED);
 	}
 	
 	@Override
     public void render( float delta ){
-		((TamerStage)stage).updateCamera(delta);
-		stage.act( delta );
-		stage.draw();
+		tamerStage.updateCamera(delta);
+		tamerStage.act( delta );
+		tamerStage.draw();
     }
 	
 	public TamerStage getStage(){
-		return (TamerStage)stage;
+		return tamerStage;
 	}
 }
 	

@@ -209,4 +209,9 @@ public class Hud extends Group {
 			noEscapeLabel.setPosition( ( Gdx.graphics.getWidth() - noEscapeLabel.getPrefWidth() ) / 2, Gdx.graphics.getHeight() / 2);
 		}
 	}
+
+	public void dispose() {
+		instance = null;
+		
+	}
 }

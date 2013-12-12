@@ -39,16 +39,10 @@ public class TamerGame extends Game {
 		NEW_PLAY, RESUME_PLAY, MENU, PAUSE, LEVELS, COMPLETE, LOADING
 	}
 
-	// FPS limiting
-	int FPS = 30;
-	long lastFrame = 0;
-	long curFrame = System.currentTimeMillis();
-
 	// Services
 	private MusicManager musicManager;
 	private PreferenceManager preferenceManager;
 	private LevelManager levelManager;
-	private SoundManager soundManager;
 	private AssetManager assetManager;
 	protected TweenManager tweenManager;
 
@@ -88,8 +82,7 @@ public class TamerGame extends Game {
 		pauseScreen = new PauseScreen(this);
 		levelsScreen = new LevelsScreen(this);
 
-		loadingScreen = new LoadingScreen(this);
-		loadingScreen.initialize(assetManager);
+		loadingScreen = new LoadingScreen(this,assetManager);
 
 		levelCompleteScreen = new LevelCompleteScreen(this);
 
@@ -102,8 +95,8 @@ public class TamerGame extends Game {
 				+ " :: Reseting hud");
 
 		// dispose old before making new one
-		if (playScreen != null)
-			playScreen.dispose();
+		//if (playScreen != null)
+			//playScreen.dispose();
 		playScreen = new PlayScreen(this);
 		return playScreen;
 	}
@@ -188,9 +181,7 @@ public class TamerGame extends Game {
 	@Override
 	public void resume() {
 		super.resume();
-		System.out.println("resuming game");
 		Gdx.app.log(TamerGame.LOG, "Resuming game");
-		System.out.println("---------------LOL RESUME---------------------");
 	}
 
 	@Override

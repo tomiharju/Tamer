@@ -12,13 +12,12 @@ import com.me.tamer.services.TextureManager;
 public class LoadingScreen extends AbstractScreen{
 	AssetManager assetManager;
 	
-	public LoadingScreen(TamerGame game) {
+	public LoadingScreen(TamerGame game,AssetManager manager) {
 		super(game);
+		this.assetManager = manager;
 	}
 	
-	public void initialize(AssetManager assetManager){
-		this.assetManager = assetManager;
-	}
+	
 	
 	@Override 
 	public void show(){

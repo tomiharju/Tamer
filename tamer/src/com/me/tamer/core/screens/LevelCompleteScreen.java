@@ -74,7 +74,7 @@ public class LevelCompleteScreen extends AbstractMenu{
     public void render( float delta ){
         bgImage.setColor(bgColor.r,bgColor.g,bgColor.b,bgColor.a);
         if (bgColor.a==1.0f)fadingDone = true;
-		stage.act( delta );
+        stage.act( delta );
         stage.draw();
     }
 	

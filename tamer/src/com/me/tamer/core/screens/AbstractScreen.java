@@ -11,14 +11,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.me.tamer.core.TamerGame;
+import com.me.tamer.core.TamerStage;
 import com.me.tamer.services.SoundManager;
 
 public class AbstractScreen implements Screen{
 
     protected final TamerGame game;
     protected Stage stage;
+    protected TamerStage tamerStage;
     private BitmapFont font;
-    private SpriteBatch batch;
     private Skin skin;
     private Table table;
     protected Color bgColor = new Color(Color.BLACK);
@@ -40,14 +41,6 @@ public class AbstractScreen implements Screen{
             font = new BitmapFont();
         }
         return font;
-    }
-
-    public SpriteBatch getBatch()
-    {
-        if( batch == null ) {
-            batch = new SpriteBatch();
-        }
-        return batch;
     }
     
     protected Skin getSkin()
@@ -92,10 +85,8 @@ public class AbstractScreen implements Screen{
 
     @Override
     public void render( float delta ){
-        //Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		stage.act( delta );
-        stage.draw();
+		stage.draw();
     }
 
     @Override
@@ -105,7 +96,7 @@ public class AbstractScreen implements Screen{
         // dispose the screen when leaving the screen;
         // note that the dispose() method is not called automatically by the
         // framework, so we must figure out when it's appropriate to call it
-        //dispose();
+        dispose();
     }
 
     @Override
@@ -130,7 +121,6 @@ public class AbstractScreen implements Screen{
 
         // as the collaborators are lazily loaded, they may be null
         if( font != null ) font.dispose();
-        if( batch != null ) batch.dispose();
         if( skin != null ) skin.dispose();
     }
 }
